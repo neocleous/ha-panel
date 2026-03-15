@@ -1,4 +1,7 @@
+import sys
 import os
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from config import BACKLIGHT_PATH, BACKLIGHT_ON, BACKLIGHT_OFF
 
 def set_backlight(state):
