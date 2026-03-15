@@ -3,17 +3,24 @@ import smbus2
 
 class BME680:
     def __init__(self):
-        self.sensor = bme680.BME680(i2c_addr=0x76, i2c_device=smbus2.SMBus(1))
-        self.sensor.set_humidity_oversample(bme680.OS_2X)
-        self.sensor.set_pressure_oversample(bme680.OS_4X)
-        self.sensor.set_temperature_oversample(bme680.OS_8X)
-        self.sensor.set_filter(bme680.FILTER_SIZE_3)
-        self.sensor.set_gas_status(bme680.ENABLE_GAS_MEAS)
-        self.sensor.set_gas_heater_temperature(320)
-        self.sensor.set_gas_heater_duration(150)
-        self.sensor.select_gas_heater_profile(0)
+        try:
+            self.sensor = bme680.BME680(i2c_addr=0x76, i2c_device=smbus2.SMBus(1))
+            self.sensor.set_humidity_oversample(bme680.OS_2X)
+            self.sensor.set_pressure_oversample(bme680.OS_4X)
+            self.sensor.set_temperature_oversample(bme680.OS_8X)
+            self.sensor.set_filter(bme680.FILTER_SIZE_3)
+            self.sensor.set_gas_status(bme680.ENABLE_GAS_MEAS)
+            self.sensor.set_gas_heater_temperature(320)
+            self.sensor.set_gas_heater_duration(150)
+            self.sensor.select_gas_heater_profile(0)
+            self._available = True
+        except Exception as e:
+            self._available = False
+            self.sensor = None
 
     def read(self):
+        if not self._available:
+            return None
         try:
             if self.sensor.get_sensor_data():
                 return {
