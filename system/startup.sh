@@ -1,10 +1,8 @@
 #!/bin/bash
 
-PROVISIONING_DIR="/opt/ha-panel/repo/provisioning-ui"
 HA_URL="http://192.168.1.145:8123"
 BACKLIGHT_PATH="/sys/class/backlight/10-0045/brightness"
 LOG_FILE="/var/log/ha-panel-startup.log"
-VENV_PYTHON="/opt/ha-panel/venv/bin/python"
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1" | tee -a "$LOG_FILE" 2>/dev/null || true
@@ -34,32 +32,18 @@ else
     DISPLAY_URL="$HA_URL"
 fi
 
-log "Launching wayfire with Chromium: $DISPLAY_URL"
+log "Writing wayfire config"
 
-mkdir -p ~/.config/wayfire
+mkdir -p ~/.config
 cat > ~/.config/wayfire.ini << WFEOF
 [core]
 plugins = autostart
 
 [autostart]
-chromium = chromium-browser \
-    --kiosk \
-    --no-first-run \
-    --disable-infobars \
-    --disable-translate \
-    --disable-features=TranslateUI \
-    --disable-sync \
-    --disable-background-networking \
-    --disable-default-apps \
-    --no-default-browser-check \
-    --incognito \
-    --disable-session-crashed-bubble \
-    --disable-component-update \
-    $DISPLAY_URL
-
-autostart_exit = true
+chromium = chromium --kiosk --no-first-run --disable-infobars --disable-translate --disable-features=TranslateUI --disable-sync --disable-background-networking --disable-default-apps --no-default-browser-check --incognito --disable-session-crashed-bubble --disable-component-update $DISPLAY_URL
 WFEOF
 
+log "Launching wayfire"
 wayfire
 
 log "Wayfire exited — restarting"
