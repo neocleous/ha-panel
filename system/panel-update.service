@@ -1,0 +1,10 @@
+[Unit]
+Description=HA Panel Nightly Update
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/ha-panel/repo/system/update.sh
+StandardOutput=journal
+StandardError=journal
