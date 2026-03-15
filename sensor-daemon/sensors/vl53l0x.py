@@ -1,6 +1,7 @@
 import adafruit_vl53l0x
 import busio
 import board
+import digitalio
 
 class VL53L0X:
     def __init__(self):
