@@ -1,5 +1,6 @@
 import time
 import threading
+import json
 import smbus2
 import paho.mqtt.client as mqtt
 import sys
@@ -23,8 +24,161 @@ screen_on = True
 last_proximity_trigger = time.time()
 mqtt_client = mqtt.Client(client_id=PANEL_ID)
 
+DEVICE = {
+    "identifiers": [PANEL_ID],
+    "name": f"Panel {PANEL_ID.split('-')[1] if '-' in PANEL_ID else PANEL_ID}",
+    "model": "HA Touch Panel",
+    "manufacturer": "Custom"
+}
+
+DISCOVERY_ENTITIES = [
+    {
+        "component": "sensor",
+        "object_id": f"{PANEL_ID}_temperature",
+        "config": {
+            "name": "Temperature",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/sensor/temperature",
+            "unit_of_measurement": "°C",
+            "device_class": "temperature",
+            "state_class": "measurement",
+            "unique_id": f"{PANEL_ID}_temperature",
+            "device": DEVICE
+        }
+    },
+    {
+        "component": "sensor",
+        "object_id": f"{PANEL_ID}_humidity",
+        "config": {
+            "name": "Humidity",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/sensor/humidity",
+            "unit_of_measurement": "%",
+            "device_class": "humidity",
+            "state_class": "measurement",
+            "unique_id": f"{PANEL_ID}_humidity",
+            "device": DEVICE
+        }
+    },
+    {
+        "component": "sensor",
+        "object_id": f"{PANEL_ID}_pressure",
+        "config": {
+            "name": "Pressure",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/sensor/pressure",
+            "unit_of_measurement": "hPa",
+            "device_class": "atmospheric_pressure",
+            "state_class": "measurement",
+            "unique_id": f"{PANEL_ID}_pressure",
+            "device": DEVICE
+        }
+    },
+    {
+        "component": "sensor",
+        "object_id": f"{PANEL_ID}_voc",
+        "config": {
+            "name": "VOC",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/sensor/voc",
+            "unit_of_measurement": "Ω",
+            "state_class": "measurement",
+            "unique_id": f"{PANEL_ID}_voc",
+            "device": DEVICE
+        }
+    },
+    {
+        "component": "sensor",
+        "object_id": f"{PANEL_ID}_light",
+        "config": {
+            "name": "Light",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/sensor/light",
+            "unit_of_measurement": "lx",
+            "device_class": "illuminance",
+            "state_class": "measurement",
+            "unique_id": f"{PANEL_ID}_light",
+            "device": DEVICE
+        }
+    },
+    {
+        "component": "sensor",
+        "object_id": f"{PANEL_ID}_proximity",
+        "config": {
+            "name": "Proximity",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/sensor/proximity",
+            "unit_of_measurement": "mm",
+            "state_class": "measurement",
+            "unique_id": f"{PANEL_ID}_proximity",
+            "device": DEVICE
+        }
+    },
+    {
+        "component": "binary_sensor",
+        "object_id": f"{PANEL_ID}_button0",
+        "config": {
+            "name": "Button 0",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/touch/button0",
+            "payload_on": "pressed",
+            "payload_off": "released",
+            "unique_id": f"{PANEL_ID}_button0",
+            "device": DEVICE
+        }
+    },
+    {
+        "component": "binary_sensor",
+        "object_id": f"{PANEL_ID}_button1",
+        "config": {
+            "name": "Button 1",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/touch/button1",
+            "payload_on": "pressed",
+            "payload_off": "released",
+            "unique_id": f"{PANEL_ID}_button1",
+            "device": DEVICE
+        }
+    },
+    {
+        "component": "binary_sensor",
+        "object_id": f"{PANEL_ID}_button2",
+        "config": {
+            "name": "Button 2",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/touch/button2",
+            "payload_on": "pressed",
+            "payload_off": "released",
+            "unique_id": f"{PANEL_ID}_button2",
+            "device": DEVICE
+        }
+    },
+    {
+        "component": "binary_sensor",
+        "object_id": f"{PANEL_ID}_button3",
+        "config": {
+            "name": "Button 3",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/touch/button3",
+            "payload_on": "pressed",
+            "payload_off": "released",
+            "unique_id": f"{PANEL_ID}_button3",
+            "device": DEVICE
+        }
+    },
+    {
+        "component": "switch",
+        "object_id": f"{PANEL_ID}_backlight",
+        "config": {
+            "name": "Backlight",
+            "command_topic": f"{MQTT_TOPIC_ROOT}/backlight/set",
+            "state_topic": f"{MQTT_TOPIC_ROOT}/backlight/state",
+            "payload_on": "on",
+            "payload_off": "off",
+            "unique_id": f"{PANEL_ID}_backlight",
+            "device": DEVICE
+        }
+    }
+]
+
+def publish_discovery():
+    for entity in DISCOVERY_ENTITIES:
+        topic = f"homeassistant/{entity['component']}/{PANEL_ID}/{entity['object_id']}/config"
+        mqtt_client.publish(topic, json.dumps(entity['config']), retain=True)
+
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
+        publish_discovery()
         client.subscribe(f"{MQTT_TOPIC_ROOT}/backlight/set")
     else:
         print(f"MQTT connection failed: {rc}")
@@ -36,9 +190,11 @@ def on_message(client, userdata, msg):
         if payload == "on":
             set_backlight(True)
             screen_on = True
+            mqtt_client.publish(f"{MQTT_TOPIC_ROOT}/backlight/state", "on", retain=True)
         elif payload == "off":
             set_backlight(False)
             screen_on = False
+            mqtt_client.publish(f"{MQTT_TOPIC_ROOT}/backlight/state", "off", retain=True)
 
 def publish(topic, payload):
     mqtt_client.publish(f"{MQTT_TOPIC_ROOT}/{topic}", payload, retain=True)
@@ -64,10 +220,12 @@ def proximity_loop(sensor):
                 if not screen_on:
                     set_backlight(True)
                     screen_on = True
+                    mqtt_client.publish(f"{MQTT_TOPIC_ROOT}/backlight/state", "on", retain=True)
         if screen_on:
             if time.time() - last_proximity_trigger > SCREEN_TIMEOUT:
                 set_backlight(False)
                 screen_on = False
+                mqtt_client.publish(f"{MQTT_TOPIC_ROOT}/backlight/state", "off", retain=True)
         time.sleep(POLL_INTERVAL_PROXIMITY)
 
 def environment_loop(sensor):
