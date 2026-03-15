@@ -22,7 +22,7 @@ from backlight import set_backlight
 
 screen_on = True
 last_proximity_trigger = time.time()
-mqtt_client = mqtt.Client(client_id=PANEL_ID)
+mqtt_client = mqtt.Client(client_id=PANEL_ID, callback_api_version=mqtt.CallbackAPIVersion.VERSION1)
 
 DEVICE = {
     "identifiers": [PANEL_ID],
@@ -173,107 +173,4 @@ DISCOVERY_ENTITIES = [
 
 def publish_discovery():
     for entity in DISCOVERY_ENTITIES:
-        topic = f"homeassistant/{entity['component']}/{PANEL_ID}/{entity['object_id']}/config"
-        mqtt_client.publish(topic, json.dumps(entity['config']), retain=True)
-
-def on_connect(client, userdata, flags, rc):
-    if rc == 0:
-        publish_discovery()
-        client.subscribe(f"{MQTT_TOPIC_ROOT}/backlight/set")
-    else:
-        print(f"MQTT connection failed: {rc}")
-
-def on_message(client, userdata, msg):
-    global screen_on
-    payload = msg.payload.decode().strip().lower()
-    if msg.topic == f"{MQTT_TOPIC_ROOT}/backlight/set":
-        if payload == "on":
-            set_backlight(True)
-            screen_on = True
-            mqtt_client.publish(f"{MQTT_TOPIC_ROOT}/backlight/state", "on", retain=True)
-        elif payload == "off":
-            set_backlight(False)
-            screen_on = False
-            mqtt_client.publish(f"{MQTT_TOPIC_ROOT}/backlight/state", "off", retain=True)
-
-def publish(topic, payload):
-    mqtt_client.publish(f"{MQTT_TOPIC_ROOT}/{topic}", payload, retain=True)
-
-def touch_loop(sensor):
-    while True:
-        events = sensor.read()
-        for event in events:
-            publish(
-                f"touch/button{event['button']}",
-                event['state']
-            )
-        time.sleep(POLL_INTERVAL_TOUCH)
-
-def proximity_loop(sensor):
-    global screen_on, last_proximity_trigger
-    while True:
-        distance = sensor.read()
-        if distance is not None:
-            publish("sensor/proximity", distance)
-            if distance <= PROXIMITY_WAKE_THRESHOLD_MM:
-                last_proximity_trigger = time.time()
-                if not screen_on:
-                    set_backlight(True)
-                    screen_on = True
-                    mqtt_client.publish(f"{MQTT_TOPIC_ROOT}/backlight/state", "on", retain=True)
-        if screen_on:
-            if time.time() - last_proximity_trigger > SCREEN_TIMEOUT:
-                set_backlight(False)
-                screen_on = False
-                mqtt_client.publish(f"{MQTT_TOPIC_ROOT}/backlight/state", "off", retain=True)
-        time.sleep(POLL_INTERVAL_PROXIMITY)
-
-def environment_loop(sensor):
-    while True:
-        data = sensor.read()
-        if data:
-            publish("sensor/temperature", data["temperature"])
-            publish("sensor/humidity", data["humidity"])
-            publish("sensor/pressure", data["pressure"])
-            publish("sensor/voc", data["voc"])
-        time.sleep(POLL_INTERVAL_ENV)
-
-def light_loop(sensor):
-    while True:
-        lux = sensor.read()
-        if lux is not None:
-            publish("sensor/light", lux)
-        time.sleep(POLL_INTERVAL_LIGHT)
-
-def main():
-    mqtt_client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
-    mqtt_client.on_connect = on_connect
-    mqtt_client.on_message = on_message
-    mqtt_client.connect(MQTT_BROKER, MQTT_PORT, 60)
-    mqtt_client.loop_start()
-
-    bus = smbus2.SMBus(I2C_BUS)
-    touch = AT42QT1070(bus)
-    proximity = VL53L0X()
-    environment = BME680()
-    light = VEML6030()
-
-    threads = [
-        threading.Thread(target=touch_loop, args=(touch,), daemon=True),
-        threading.Thread(target=proximity_loop, args=(proximity,), daemon=True),
-        threading.Thread(target=environment_loop, args=(environment,), daemon=True),
-        threading.Thread(target=light_loop, args=(light,), daemon=True),
-    ]
-
-    for t in threads:
-        t.start()
-
-    try:
-        while True:
-            time.sleep(1)
-    except KeyboardInterrupt:
-        mqtt_client.loop_stop()
-        bus.close()
-
-if __name__ == "__main__":
-    main()
+        topic = f"homeassistant/{entity['compon
