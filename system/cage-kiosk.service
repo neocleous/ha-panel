@@ -1,0 +1,31 @@
+[Unit]
+Description=HA Panel Kiosk Display
+After=graphical.target sensor-daemon.service
+Wants=graphical.target
+
+[Service]
+Type=simple
+User=pi
+Environment=XDG_RUNTIME_DIR=/run/user/1000
+Environment=WAYLAND_DISPLAY=wayland-1
+ExecStart=/usr/bin/cage -- /usr/bin/chromium-browser \
+    --kiosk \
+    --no-first-run \
+    --disable-infobars \
+    --disable-translate \
+    --disable-features=TranslateUI \
+    --disable-sync \
+    --disable-background-networking \
+    --disable-default-apps \
+    --no-default-browser-check \
+    --incognito \
+    --disable-session-crashed-bubble \
+    --disable-component-update \
+    http://192.168.1.145:8123
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=graphical.target
