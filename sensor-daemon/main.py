@@ -260,7 +260,7 @@ def main():
         touch = None
 
     try:
-        proximity = VL53L0X()
+        proximity = VL53L0X(bus)
     except Exception:
         proximity = None
 
