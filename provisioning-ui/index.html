@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connect to Wi-Fi</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0f1117;
+    color: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    width: 1280px;
+    height: 800px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 64px;
+  }
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  .header h1 { font-size: 28px; font-weight: 500; margin-bottom: 6px; }
+  .header p { font-size: 16px; color: rgba(255,255,255,0.5); }
+  .refresh-btn {
+    background: rgba(255,255,255,0.07);
+    border: none;
+    border-radius: 40px;
+    padding: 10px 20px;
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .refresh-btn:active { background: rgba(255,255,255,0.12); }
+  .network-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    flex: 1;
+  }
+  .network-card {
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
+  }
+  .network-card:active { background: rgba(255,255,255,0.1); }
+  .network-card.strong {
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(99,180,255,0.6);
+  }
+  .network-name { font-size: 18px; font-weight: 500; margin-bottom: 3px; }
+  .network-quality { font-size: 13px; color: rgba(255,255,255,0.45); }
+  .signal-bars {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  .signal-bars span {
+    width: 5px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.2);
+  }
+  .signal-bars span.active { background: #63b4ff; }
+  .loading {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .spinner {
+    width: 40px; height: 40px;
+    border: 3px solid rgba(255,255,255,0.1);
+    border-top-color: #63b4ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading p { color: rgba(255,255,255,0.5); font-size: 16px; }
+</style>
+</head>
+<body>
+<div class="header">
+  <div>
+    <h1>Connect to Wi-Fi</h1>
+    <p>Select your network below</p>
+  </div>
+  <button class="refresh-btn" onclick="loadNetworks()">&#8635; Refresh</button>
+</div>
+<div id="content" class="loading">
+  <div class="spinner"></div>
+  <p>Scanning for networks...</p>
+</div>
+<script>
+  function signalQuality(signal) {
+    if (signal >= 75) return { label: 'Excellent signal', bars: 4 };
+    if (signal >= 50) return { label: 'Good signal', bars: 3 };
+    if (signal >= 25) return { label: 'Fair signal', bars: 2 };
+    return { label: 'Weak signal', bars: 1 };
+  }
+
+  function signalBars(bars) {
+    const heights = [8, 12, 16, 20];
+    return heights.map((h, i) =>
+      `<span style="height:${h}px" class="${i < bars ? 'active' : ''}"></span>`
+    ).join('');
+  }
+
+  function loadNetworks() {
+    document.getElementById('content').innerHTML =
+      '<div class="spinner"></div><p>Scanning for networks...</p>';
+    document.getElementById('content').className = 'loading';
+
+    fetch('/networks')
+      .then(r => r.json())
+      .then(networks => {
+        if (networks.length === 0) {
+          document.getElementById('content').innerHTML =
+            '<p style="color:rgba(255,255,255,0.5)">No networks found. Tap Refresh to try again.</p>';
+          return;
+        }
+        const grid = document.createElement('div');
+        grid.className = 'network-grid';
+        networks.slice(0, 4).forEach(n => {
+          const q = signalQuality(n.signal);
+          const card = document.createElement('div');
+          card.className = 'network-card' + (q.bars >= 3 ? ' strong' : '');
+          card.innerHTML = `
+            <div class="signal-bars">${signalBars(q.bars)}</div>
+            <div style="flex:1">
+              <div class="network-name">${n.ssid}</div>
+              <div class="network-quality">${q.label}</div>
+            </div>`;
+          card.onclick = () => {
+            sessionStorage.setItem('ssid', n.ssid);
+            sessionStorage.setItem('secured', n.secured);
+            window.location.href = 'password.html';
+          };
+          grid.appendChild(card);
+        });
+        document.getElementById('content').className = '';
+        document.getElementById('content').innerHTML = '';
+        document.getElementById('content').appendChild(grid);
+      })
+      .catch(() => {
+        document.getElementById('content').innerHTML =
+          '<p style="color:rgba(255,255,255,0.5)">Could not scan networks. Tap Refresh to try again.</p>';
+      });
+  }
+
+  loadNetworks();
+</script>
+</body>
+</html>
