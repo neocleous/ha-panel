@@ -12,14 +12,3 @@ class VEML6030:
             return round(self.sensor.lux, 1)
         except Exception as e:
             return None
-```
-
----
-
-### File 5 — `sensor-daemon/sensors/__init__.py`
-
-This file is required to make the sensors folder a Python module. It is intentionally empty — just create the file with no content and commit it.
-
-Filename:
-```
-sensor-daemon/sensors/__init__.py
