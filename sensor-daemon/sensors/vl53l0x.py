@@ -1,24 +1,31 @@
-import adafruit_vl53l0x
-import busio
-import board
+import smbus2
+
+VL53L0X_ADDR = 0x29
+REG_IDENTIFICATION_MODEL_ID = 0xC0
 
 class VL53L0X:
-    def __init__(self):
+    def __init__(self, bus):
+        self.bus = bus
+        self._available = False
         try:
-            i2c = busio.I2C(board.SCL, board.SDA)
-            self.sensor = adafruit_vl53l0x.VL53L0X(i2c)
-            self._available = True
-        except Exception as e:
+            model_id = self.bus.read_byte_data(VL53L0X_ADDR, REG_IDENTIFICATION_MODEL_ID)
+            if model_id == 0xEE:
+                self._available = True
+        except Exception:
             self._available = False
-            self.sensor = None
 
     def read(self):
         if not self._available:
             return None
         try:
-            distance = self.sensor.range
+            import adafruit_vl53l0x
+            import busio
+            import board
+            i2c = busio.I2C(board.SCL, board.SDA)
+            sensor = adafruit_vl53l0x.VL53L0X(i2c)
+            distance = sensor.range
             if distance >= 8190:
                 return None
             return distance
-        except Exception as e:
+        except Exception:
             return None
