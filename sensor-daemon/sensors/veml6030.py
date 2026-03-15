@@ -1,6 +1,7 @@
 import adafruit_veml7700
 import busio
 import board
+import digitalio
 
 class VEML6030:
     def __init__(self):
