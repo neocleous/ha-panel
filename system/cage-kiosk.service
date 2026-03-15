@@ -6,8 +6,11 @@ Wants=network-online.target
 [Service]
 Type=simple
 User=pi
+PAMName=login
 Environment=XDG_RUNTIME_DIR=/run/user/1000
 Environment=WAYLAND_DISPLAY=wayland-1
+Environment=WLR_BACKENDS=drm
+Environment=WLR_DRM_DEVICES=/dev/dri/card0
 ExecStart=/opt/ha-panel/repo/system/startup.sh
 Restart=always
 RestartSec=10
