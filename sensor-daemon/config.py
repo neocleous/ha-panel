@@ -5,7 +5,7 @@ PANEL_ID = "panel-01"
 MQTT_BROKER = "192.168.1.145"
 MQTT_PORT = 1883
 MQTT_USERNAME = "ha-panel"
-MQTT_PASSWORD = "your-mqtt-password-here"
+MQTT_PASSWORD = "!7MoXVJFzEZfMg*Bz9gV"
 
 # MQTT topic root — do not change
 MQTT_TOPIC_ROOT = f"home/{PANEL_ID}"
