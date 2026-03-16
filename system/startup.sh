@@ -40,7 +40,7 @@ cat > ~/.config/labwc/autostart << EOAUTO
 squeekboard &
 while true; do sleep 3600; done &
 while true; do
-    /usr/lib/chromium/chromium --start-maximized --no-first-run --disable-infobars --disable-translate --disable-features=TranslateUI --disable-sync --disable-background-networking --disable-default-apps --no-default-browser-check --incognito --disable-session-crashed-bubble --disable-component-update --ozone-platform=wayland --disable-gpu-vsync --enable-wayland-ime $DISPLAY_URL
+    /usr/lib/chromium/chromium --app=$DISPLAY_URL --start-maximized --no-first-run --disable-infobars --disable-translate --disable-features=TranslateUI --disable-sync --disable-background-networking --disable-default-apps --no-default-browser-check --disable-session-crashed-bubble --disable-component-update --ozone-platform=wayland --disable-gpu-vsync --enable-wayland-ime
     sleep 2
 done &
 EOAUTO
