@@ -42,13 +42,13 @@ EOAUTO
 
 cat > ~/.config/labwc/rc.xml << 'EORC'
 <?xml version="1.0"?>
-<openbox_config>
+<labwc_config>
   <touch>
     <deviceName>11-0014 Goodix Capacitive TouchScreen</deviceName>
     <mapToOutput>DSI-2</mapToOutput>
     <mouseEmulation>no</mouseEmulation>
   </touch>
-</openbox_config>
+</labwc_config>
 EORC
 
 log "Launching labwc"
