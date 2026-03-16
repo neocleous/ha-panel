@@ -32,28 +32,32 @@ else
     DISPLAY_URL="$HA_URL"
 fi
 
-log "Writing wayfire config"
+log "Writing labwc config"
 
-mkdir -p ~/.config
-cat > ~/.config/wayfire.ini << WFEOF
-[core]
-plugins = autostart
+mkdir -p ~/.config/labwc
 
-[output:DSI-2]
-mode = 1280x800@60000
-position = 0,0
-transform = normal
+cat > ~/.config/labwc/autostart << EOAUTO
+chromium --kiosk --no-first-run --disable-infobars --disable-translate --disable-features=TranslateUI --disable-sync --disable-background-networking --disable-default-apps --no-default-browser-check --incognito --disable-session-crashed-bubble --disable-component-update --ozone-platform=wayland --enable-features=UseOzonePlatform $DISPLAY_URL &
+EOAUTO
 
-[input-device:/dev/input/event1]
-output = DSI-2
+cat > ~/.config/labwc/rc.xml << 'EORC'
+<?xml version="1.0"?>
+<openbox_config>
+  <keyboard>
+    <keybind key="Super_L"><action name="None"/></keybind>
+  </keyboard>
+  <mouse>
+    <context name="Desktop">
+      <mousebind button="Right" action="Press">
+        <action name="None"/>
+      </mousebind>
+    </context>
+  </mouse>
+</openbox_config>
+EORC
 
-[autostart]
-squeekboard = squeekboard
-chromium = chromium --kiosk --no-first-run --disable-infobars --disable-translate --disable-features=TranslateUI --disable-sync --disable-background-networking --disable-default-apps --no-default-browser-check --incognito --disable-session-crashed-bubble --disable-component-update $DISPLAY_URL
-WFEOF
+log "Launching labwc"
+labwc
 
-log "Launching wayfire"
-wayfire
-
-log "Wayfire exited — restarting"
+log "labwc exited — restarting"
 exec "$0"
