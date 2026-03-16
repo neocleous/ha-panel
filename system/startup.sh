@@ -57,6 +57,7 @@ cat > ~/.config/labwc/rc.xml << 'EORC'
     <windowRule identifier="chromium" matchType="contains">
       <action name="Maximize"/>
     </windowRule>
+    <windowRule identifier="chromium" matchType="contains" decorations="no"/>
   </windowRules>
 </labwc_config>
 EORC
