@@ -37,22 +37,17 @@ log "Writing labwc config"
 mkdir -p ~/.config/labwc
 
 cat > ~/.config/labwc/autostart << EOAUTO
-WAYLAND_DISPLAY=wayland-0 chromium --kiosk --no-first-run --disable-infobars --disable-translate --disable-features=TranslateUI --disable-sync --disable-background-networking --disable-default-apps --no-default-browser-check --incognito --disable-session-crashed-bubble --disable-component-update --ozone-platform=wayland $DISPLAY_URL &
+/usr/lib/chromium/chromium --kiosk --no-first-run --disable-infobars --disable-translate --disable-features=TranslateUI --disable-sync --disable-background-networking --disable-default-apps --no-default-browser-check --incognito --disable-session-crashed-bubble --disable-component-update --ozone-platform=wayland $DISPLAY_URL &
 EOAUTO
 
 cat > ~/.config/labwc/rc.xml << 'EORC'
 <?xml version="1.0"?>
 <openbox_config>
-  <keyboard>
-    <keybind key="Super_L"><action name="None"/></keybind>
-  </keyboard>
-  <mouse>
-    <context name="Desktop">
-      <mousebind button="Right" action="Press">
-        <action name="None"/>
-      </mousebind>
-    </context>
-  </mouse>
+  <touch>
+    <deviceName>11-0014 Goodix Capacitive TouchScreen</deviceName>
+    <mapToOutput>DSI-2</mapToOutput>
+    <mouseEmulation>no</mouseEmulation>
+  </touch>
 </openbox_config>
 EORC
 
