@@ -48,6 +48,12 @@ EOAUTO
 cat > ~/.config/labwc/rc.xml << 'EORC'
 <?xml version="1.0"?>
 <labwc_config>
+  <core>
+    <decoration>client</decoration>
+  </core>
+  <theme>
+    <maximizedDecoration>none</maximizedDecoration>
+  </theme>
   <touch>
     <deviceName>11-0014 Goodix Capacitive TouchScreen</deviceName>
     <mapToOutput>DSI-2</mapToOutput>
@@ -57,7 +63,6 @@ cat > ~/.config/labwc/rc.xml << 'EORC'
     <windowRule identifier="chromium" matchType="contains">
       <action name="Maximize"/>
     </windowRule>
-    <windowRule identifier="chromium" matchType="contains" decorations="no"/>
   </windowRules>
 </labwc_config>
 EORC
