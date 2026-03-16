@@ -37,7 +37,7 @@ log "Writing labwc config"
 mkdir -p ~/.config/labwc
 
 cat > ~/.config/labwc/autostart << EOAUTO
-chromium --kiosk --no-first-run --disable-infobars --disable-translate --disable-features=TranslateUI --disable-sync --disable-background-networking --disable-default-apps --no-default-browser-check --incognito --disable-session-crashed-bubble --disable-component-update --ozone-platform=wayland --enable-features=UseOzonePlatform $DISPLAY_URL &
+WAYLAND_DISPLAY=wayland-0 chromium --kiosk --no-first-run --disable-infobars --disable-translate --disable-features=TranslateUI --disable-sync --disable-background-networking --disable-default-apps --no-default-browser-check --incognito --disable-session-crashed-bubble --disable-component-update --ozone-platform=wayland $DISPLAY_URL &
 EOAUTO
 
 cat > ~/.config/labwc/rc.xml << 'EORC'
