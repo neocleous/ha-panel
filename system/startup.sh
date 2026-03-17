@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HA_URL="http://192.168.1.145:8123"
+HA_URL="http://192.168.1.145:8123/panel-01/0"
 BACKLIGHT_PATH="/sys/class/backlight/11-0045/brightness"
 LOG_FILE="/var/log/ha-panel-startup.log"
 
