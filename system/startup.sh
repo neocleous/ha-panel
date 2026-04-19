@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HA_URL="http://192.168.1.145:8123/panel-01/0?kiosk"
+CONFIG_FILE="/opt/ha-panel/config"
 BACKLIGHT_PATH="/sys/class/backlight/11-0045/brightness"
 LOG_FILE="/var/log/ha-panel-startup.log"
 
@@ -10,8 +10,19 @@ log() {
 
 log "=== Startup ==="
 
-echo 255 > "$BACKLIGHT_PATH" 2>/dev/null || true
+# Load config if it exists
+if [ -f "$CONFIG_FILE" ]; then
+    # shellcheck source=/dev/null
+    source "$CONFIG_FILE"
+else
+    log "WARNING: No config file found at $CONFIG_FILE — provisioning mode"
+fi
 
+# Use backlight path from config if set, otherwise use default
+BACKLIGHT="${BACKLIGHT_PATH_OVERRIDE:-$BACKLIGHT_PATH}"
+echo 255 > "$BACKLIGHT" 2>/dev/null || true
+
+# Wait for network
 ATTEMPTS=0
 while [ $ATTEMPTS -lt 30 ]; do
     STATE=$(nmcli -t -f STATE general 2>/dev/null)
@@ -25,6 +36,11 @@ done
 
 if [ $ATTEMPTS -eq 30 ]; then
     log "No network — starting provisioning"
+    systemctl --user start provisioning-server.service
+    sleep 2
+    DISPLAY_URL="http://localhost:8080"
+elif [ -z "$HA_URL" ]; then
+    log "No HA_URL in config — starting provisioning"
     systemctl --user start provisioning-server.service
     sleep 2
     DISPLAY_URL="http://localhost:8080"
