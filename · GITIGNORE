@@ -1,0 +1,13 @@
+# Sensor daemon local config — contains credentials, never commit
+sensor-daemon/config.py
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
