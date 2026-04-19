@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Service]
 Type=simple
-User=pi
+User=
 WorkingDirectory=/opt/ha-panel/repo/sensor-daemon
 ExecStart=/opt/ha-panel/venv/bin/python main.py
 Restart=always
