@@ -4,7 +4,7 @@ import smbus2
 class BME680:
     def __init__(self):
         try:
-            self.sensor = bme680.BME680(i2c_addr=0x76, i2c_device=smbus2.SMBus(1))
+            self.sensor = bme680.BME680(i2c_addr=0x77, i2c_device=smbus2.SMBus(1))
             self.sensor.set_humidity_oversample(bme680.OS_2X)
             self.sensor.set_pressure_oversample(bme680.OS_4X)
             self.sensor.set_temperature_oversample(bme680.OS_8X)
