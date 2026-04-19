@@ -10,7 +10,8 @@ set -e
 REPO_URL="git@github.com:neocleous/ha-panel.git"
 REPO_DIR="/opt/ha-panel/repo"
 VENV_DIR="/opt/ha-panel/venv"
-DEPLOY_KEY="/home/pi/.ssh/github_deploy"
+PANEL_USER="neocleous"
+DEPLOY_KEY="/home/${PANEL_USER}/.ssh/github_deploy"
 HA_URL="http://192.168.1.145:8123"
 MQTT_HOST="192.168.1.145"
 MQTT_PORT="1883"
@@ -48,6 +49,8 @@ if [[ "$confirm" =~ ^[Nn]$ ]]; then
     read -rp "    Enter panel ID (e.g. panel-02): " PANEL_ID
     hostnamectl set-hostname "$PANEL_ID"
     log "Hostname set to ${PANEL_ID}"
+else
+    log "Hostname set to ${PANEL_ID}"
 fi
 
 # ─────────────────────────────────────────────
@@ -75,7 +78,6 @@ apt-get install -y -qq \
     i2c-tools \
     git \
     curl \
-    nmcli \
     nftables \
     unattended-upgrades \
     swig \
@@ -122,11 +124,11 @@ log "Autologin configured"
 section "User groups"
 
 for group in video input render spi i2c gpio; do
-    if ! groups pi | grep -q "$group"; then
-        usermod -aG "$group" pi
-        log "Added pi to group: ${group}"
+    if ! groups "${PANEL_USER}" | grep -q "$group"; then
+        usermod -aG "$group" "${PANEL_USER}"
+        log "Added ${PANEL_USER} to group: ${group}"
     else
-        log "pi already in group: ${group}"
+        log "${PANEL_USER} already in group: ${group}"
     fi
 done
 
@@ -138,14 +140,14 @@ section "GitHub deploy key"
 
 if [ ! -f "$DEPLOY_KEY" ]; then
     info "Generating deploy key for ${PANEL_ID}..."
-    sudo -u pi ssh-keygen -t ed25519 -C "${PANEL_ID}-deploy" -f "$DEPLOY_KEY" -N ""
+    sudo -u "${PANEL_USER}" ssh-keygen -t ed25519 -C "${PANEL_ID}-deploy" -f "$DEPLOY_KEY" -N ""
     log "Deploy key generated"
 else
     log "Deploy key already exists"
 fi
 
 # Configure SSH to use the deploy key for GitHub
-SSHCONFIG="/home/pi/.ssh/config"
+SSHCONFIG="/home/${PANEL_USER}/.ssh/config"
 if ! grep -q "github_deploy" "$SSHCONFIG" 2>/dev/null; then
     cat >> "$SSHCONFIG" << 'EOF'
 
@@ -153,7 +155,7 @@ Host github.com
     IdentityFile ~/.ssh/github_deploy
     StrictHostKeyChecking no
 EOF
-    chown pi:pi "$SSHCONFIG"
+    chown "${PANEL_USER}:${PANEL_USER}" "$SSHCONFIG"
     chmod 600 "$SSHCONFIG"
     log "SSH config updated"
 fi
@@ -181,15 +183,15 @@ echo ""
 section "Cloning repository"
 
 mkdir -p /opt/ha-panel
-chown pi:pi /opt/ha-panel
+chown "${PANEL_USER}:${PANEL_USER}" /opt/ha-panel
 
 if [ ! -d "$REPO_DIR" ]; then
     info "Cloning repo to ${REPO_DIR}..."
-    sudo -u pi git clone "$REPO_URL" "$REPO_DIR"
+    sudo -u "${PANEL_USER}" git clone "$REPO_URL" "$REPO_DIR"
     log "Repository cloned"
 else
     info "Repo already exists, pulling latest..."
-    sudo -u pi git -C "$REPO_DIR" pull
+    sudo -u "${PANEL_USER}" git -C "$REPO_DIR" pull
     log "Repository updated"
 fi
 
@@ -210,7 +212,7 @@ chmod +x "${REPO_DIR}/.git/hooks/post-checkout"
 chmod +x "${REPO_DIR}/.git/hooks/post-merge"
 chmod +x "${REPO_DIR}/system/startup.sh"
 chmod +x "${REPO_DIR}/system/update.sh"
-chown -R pi:pi "$REPO_DIR"
+chown -R "${PANEL_USER}:${PANEL_USER}" "$REPO_DIR"
 log "Git hooks installed"
 
 # ─────────────────────────────────────────────
@@ -221,18 +223,16 @@ section "Python virtual environment"
 
 if [ ! -d "$VENV_DIR" ]; then
     info "Creating venv at ${VENV_DIR}..."
-    sudo -u pi python3 -m venv "$VENV_DIR"
+    sudo -u "${PANEL_USER}" python3 -m venv "$VENV_DIR"
     log "Venv created"
 fi
 
 info "Installing Python dependencies..."
-sudo -u pi "${VENV_DIR}/bin/pip" install --quiet --upgrade pip
-sudo -u pi "${VENV_DIR}/bin/pip" install --quiet \
-    --break-system-packages \
-    -r "${REPO_DIR}/sensor-daemon/requirements.txt" 2>/dev/null || \
-sudo -u pi "${VENV_DIR}/bin/pip" install --quiet \
-    -r "${REPO_DIR}/sensor-daemon/requirements.txt"
-log "Python dependencies installed"
+sudo -u "${PANEL_USER}" "${VENV_DIR}/bin/pip" install --quiet --upgrade pip
+sudo -u "${PANEL_USER}" "${VENV_DIR}/bin/pip" install --quiet \
+    -r "${REPO_DIR}/sensor-daemon/requirements.txt" || \
+    warn "Could not install Python dependencies — sensor-daemon/requirements.txt may not exist yet"
+log "Python environment ready"
 
 # ─────────────────────────────────────────────
 # Systemd services
@@ -240,23 +240,31 @@ log "Python dependencies installed"
 
 section "Systemd services"
 
-info "Installing sensor-daemon service..."
-cp "${REPO_DIR}/system/sensor-daemon.service" /etc/systemd/system/
-systemctl daemon-reload
-systemctl enable sensor-daemon
-systemctl start sensor-daemon
-log "sensor-daemon enabled and started"
+if [ -f "${REPO_DIR}/system/sensor-daemon.service" ]; then
+    info "Installing sensor-daemon service..."
+    cp "${REPO_DIR}/system/sensor-daemon.service" /etc/systemd/system/
+    systemctl daemon-reload
+    systemctl enable sensor-daemon
+    systemctl start sensor-daemon
+    log "sensor-daemon enabled and started"
+else
+    warn "sensor-daemon.service not found in repo — skipping"
+fi
 
 info "Disabling cage-kiosk service (startup via .bash_profile instead)..."
 systemctl --user disable cage-kiosk 2>/dev/null || true
 
-info "Installing nightly update timer..."
-cp "${REPO_DIR}/system/panel-update.service" /etc/systemd/system/
-cp "${REPO_DIR}/system/panel-update.timer" /etc/systemd/system/
-systemctl daemon-reload
-systemctl enable panel-update.timer
-systemctl start panel-update.timer
-log "Nightly update timer enabled"
+if [ -f "${REPO_DIR}/system/panel-update.service" ] && [ -f "${REPO_DIR}/system/panel-update.timer" ]; then
+    info "Installing nightly update timer..."
+    cp "${REPO_DIR}/system/panel-update.service" /etc/systemd/system/
+    cp "${REPO_DIR}/system/panel-update.timer" /etc/systemd/system/
+    systemctl daemon-reload
+    systemctl enable panel-update.timer
+    systemctl start panel-update.timer
+    log "Nightly update timer enabled"
+else
+    warn "panel-update service/timer not found in repo — skipping"
+fi
 
 # ─────────────────────────────────────────────
 # Bash profile (kiosk startup)
@@ -264,7 +272,7 @@ log "Nightly update timer enabled"
 
 section "Kiosk startup"
 
-BASH_PROFILE="/home/pi/.bash_profile"
+BASH_PROFILE="/home/${PANEL_USER}/.bash_profile"
 if ! grep -q "ha-panel" "$BASH_PROFILE" 2>/dev/null; then
     cat >> "$BASH_PROFILE" << 'EOF'
 
@@ -273,7 +281,7 @@ if [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     exec /opt/ha-panel/repo/system/startup.sh
 fi
 EOF
-    chown pi:pi "$BASH_PROFILE"
+    chown "${PANEL_USER}:${PANEL_USER}" "$BASH_PROFILE"
     log ".bash_profile updated"
 else
     log ".bash_profile already configured"
