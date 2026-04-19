@@ -7,11 +7,9 @@ set -e
 # Hardware:  Raspberry Pi 5 + Waveshare 8" DSI
 # ─────────────────────────────────────────────
 
-REPO_URL="git@github.com:neocleous/ha-panel.git"
+REPO_URL="https://github.com/neocleous/ha-panel.git"
 REPO_DIR="/opt/ha-panel/repo"
 VENV_DIR="/opt/ha-panel/venv"
-PANEL_USER="neocleous"
-DEPLOY_KEY="/home/${PANEL_USER}/.ssh/github_deploy"
 HA_URL="http://192.168.1.145:8123"
 MQTT_HOST="192.168.1.145"
 MQTT_PORT="1883"
@@ -42,15 +40,20 @@ section "Preflight"
 [ "$(id -u)" != "0" ] && error "Run as root: sudo bash install.sh"
 [ "$(uname -m)" != "aarch64" ] && error "This script requires a 64-bit ARM system (aarch64)"
 
+# Detect the calling user (the user who invoked sudo)
+PANEL_USER=$(logname 2>/dev/null || echo "${SUDO_USER:-pi}")
+PANEL_HOME="/home/${PANEL_USER}"
+info "Detected user: ${PANEL_USER}"
+
 PANEL_ID=$(hostname)
 info "Panel ID detected from hostname: ${PANEL_ID}"
 read -rp "    Use '${PANEL_ID}' as the panel ID? [Y/n] " confirm
 if [[ "$confirm" =~ ^[Nn]$ ]]; then
     read -rp "    Enter panel ID (e.g. panel-02): " PANEL_ID
     hostnamectl set-hostname "$PANEL_ID"
-    log "Hostname set to ${PANEL_ID}"
+    log "Hostname updated to ${PANEL_ID}"
 else
-    log "Hostname set to ${PANEL_ID}"
+    log "Using hostname: ${PANEL_ID}"
 fi
 
 # ─────────────────────────────────────────────
@@ -133,53 +136,9 @@ for group in video input render spi i2c gpio; do
 done
 
 # ─────────────────────────────────────────────
-# Deploy key + repo
+# Clone repo (public, no deploy key needed)
 # ─────────────────────────────────────────────
 
-section "GitHub deploy key"
-
-if [ ! -f "$DEPLOY_KEY" ]; then
-    info "Generating deploy key for ${PANEL_ID}..."
-    sudo -u "${PANEL_USER}" ssh-keygen -t ed25519 -C "${PANEL_ID}-deploy" -f "$DEPLOY_KEY" -N ""
-    log "Deploy key generated"
-else
-    log "Deploy key already exists"
-fi
-
-# Configure SSH to use the deploy key for GitHub
-SSHCONFIG="/home/${PANEL_USER}/.ssh/config"
-if ! grep -q "github_deploy" "$SSHCONFIG" 2>/dev/null; then
-    cat >> "$SSHCONFIG" << 'EOF'
-
-Host github.com
-    IdentityFile ~/.ssh/github_deploy
-    StrictHostKeyChecking no
-EOF
-    chown "${PANEL_USER}:${PANEL_USER}" "$SSHCONFIG"
-    chmod 600 "$SSHCONFIG"
-    log "SSH config updated"
-fi
-
-echo ""
-echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "${YELLOW}  ACTION REQUIRED — Add deploy key to GitHub${NC}"
-echo -e "${YELLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo ""
-echo "  Public key for ${PANEL_ID}:"
-echo ""
-cat "${DEPLOY_KEY}.pub"
-echo ""
-echo "  1. Go to: https://github.com/neocleous/ha-panel/settings/keys"
-echo "  2. Click 'Add deploy key'"
-echo "  3. Title: ${PANEL_ID}"
-echo "  4. Paste the key above"
-echo "  5. Leave 'Allow write access' UNCHECKED"
-echo "  6. Click 'Add key'"
-echo ""
-read -rp "  Press Enter once the key has been added to GitHub..."
-echo ""
-
-# Clone repo
 section "Cloning repository"
 
 mkdir -p /opt/ha-panel
@@ -195,24 +154,19 @@ else
     log "Repository updated"
 fi
 
-# Git hooks to restore executable permissions
-info "Installing git hooks..."
-cat > "${REPO_DIR}/.git/hooks/post-checkout" << 'EOF'
-#!/bin/bash
-git diff --name-only HEAD@{1} HEAD | xargs -I{} chmod +x {} 2>/dev/null || true
-chmod +x /opt/ha-panel/repo/system/*.sh 2>/dev/null || true
-EOF
-
-cat > "${REPO_DIR}/.git/hooks/post-merge" << 'EOF'
-#!/bin/bash
-chmod +x /opt/ha-panel/repo/system/*.sh 2>/dev/null || true
-EOF
-
-chmod +x "${REPO_DIR}/.git/hooks/post-checkout"
-chmod +x "${REPO_DIR}/.git/hooks/post-merge"
+# Make scripts executable
 chmod +x "${REPO_DIR}/system/startup.sh"
-chmod +x "${REPO_DIR}/system/update.sh"
+chmod +x "${REPO_DIR}/system/update.sh" 2>/dev/null || true
 chown -R "${PANEL_USER}:${PANEL_USER}" "$REPO_DIR"
+log "Permissions set"
+
+# Git hooks to restore executable permissions on pull
+info "Installing git hooks..."
+cat > "${REPO_DIR}/.git/hooks/post-merge" << 'HOOK'
+#!/bin/bash
+chmod +x /opt/ha-panel/repo/system/*.sh 2>/dev/null || true
+HOOK
+chmod +x "${REPO_DIR}/.git/hooks/post-merge"
 log "Git hooks installed"
 
 # ─────────────────────────────────────────────
@@ -227,12 +181,15 @@ if [ ! -d "$VENV_DIR" ]; then
     log "Venv created"
 fi
 
-info "Installing Python dependencies..."
-sudo -u "${PANEL_USER}" "${VENV_DIR}/bin/pip" install --quiet --upgrade pip
-sudo -u "${PANEL_USER}" "${VENV_DIR}/bin/pip" install --quiet \
-    -r "${REPO_DIR}/sensor-daemon/requirements.txt" || \
-    warn "Could not install Python dependencies — sensor-daemon/requirements.txt may not exist yet"
-log "Python environment ready"
+if [ -f "${REPO_DIR}/sensor-daemon/requirements.txt" ]; then
+    info "Installing Python dependencies..."
+    sudo -u "${PANEL_USER}" "${VENV_DIR}/bin/pip" install --quiet --upgrade pip
+    sudo -u "${PANEL_USER}" "${VENV_DIR}/bin/pip" install --quiet \
+        -r "${REPO_DIR}/sensor-daemon/requirements.txt"
+    log "Python dependencies installed"
+else
+    warn "sensor-daemon/requirements.txt not found — skipping Python dependencies"
+fi
 
 # ─────────────────────────────────────────────
 # Systemd services
@@ -250,9 +207,6 @@ if [ -f "${REPO_DIR}/system/sensor-daemon.service" ]; then
 else
     warn "sensor-daemon.service not found in repo — skipping"
 fi
-
-info "Disabling cage-kiosk service (startup via .bash_profile instead)..."
-systemctl --user disable cage-kiosk 2>/dev/null || true
 
 if [ -f "${REPO_DIR}/system/panel-update.service" ] && [ -f "${REPO_DIR}/system/panel-update.timer" ]; then
     info "Installing nightly update timer..."
@@ -272,8 +226,13 @@ fi
 
 section "Kiosk startup"
 
-BASH_PROFILE="/home/${PANEL_USER}/.bash_profile"
-if ! grep -q "ha-panel" "$BASH_PROFILE" 2>/dev/null; then
+BASH_PROFILE="${PANEL_HOME}/.bash_profile"
+
+# Create .bash_profile if it doesn't exist
+touch "$BASH_PROFILE"
+chown "${PANEL_USER}:${PANEL_USER}" "$BASH_PROFILE"
+
+if ! grep -q "ha-panel" "$BASH_PROFILE"; then
     cat >> "$BASH_PROFILE" << 'EOF'
 
 # HA Panel kiosk — start labwc on TTY1 login
@@ -281,7 +240,6 @@ if [ -z "$WAYLAND_DISPLAY" ] && [ "$(tty)" = "/dev/tty1" ]; then
     exec /opt/ha-panel/repo/system/startup.sh
 fi
 EOF
-    chown "${PANEL_USER}:${PANEL_USER}" "$BASH_PROFILE"
     log ".bash_profile updated"
 else
     log ".bash_profile already configured"
@@ -345,6 +303,7 @@ echo -e "${GREEN}  HA Panel installation complete!${NC}"
 echo -e "${GREEN}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 echo "  Panel ID:   ${PANEL_ID}"
+echo "  User:       ${PANEL_USER}"
 echo "  HA server:  ${HA_URL}"
 echo "  MQTT:       ${MQTT_HOST}:${MQTT_PORT}"
 echo "  Repo:       ${REPO_DIR}"
