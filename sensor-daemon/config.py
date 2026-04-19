@@ -1,11 +1,17 @@
-# Panel identity — change this per panel (panel-01, panel-02, etc.)
+# ─────────────────────────────────────────────────────────────────────────────
+# HA Panel — Sensor Daemon Configuration
+# Copy this file to config.py and fill in your values.
+# config.py is listed in .gitignore and will never be committed to the repo.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Panel identity — must match the hostname set during imaging (e.g. panel-01)
 PANEL_ID = "panel-01"
 
 # Home Assistant MQTT broker
-MQTT_BROKER = "192.168.1.145"
+MQTT_BROKER = "192.168.1.x"        # Your HA server IP
 MQTT_PORT = 1883
-MQTT_USERNAME = "ha-panel"
-MQTT_PASSWORD = "!7MoXVJFzEZfMg*Bz9gV"
+MQTT_USERNAME = "ha-panel"         # MQTT username configured in HA
+MQTT_PASSWORD = ""                 # MQTT password configured in HA
 
 # MQTT topic root — do not change
 MQTT_TOPIC_ROOT = f"home/{PANEL_ID}"
@@ -23,7 +29,7 @@ POLL_INTERVAL_ENV = 30          # BME680 — 30s
 PROXIMITY_WAKE_THRESHOLD_MM = 120   # 12cm
 
 # Backlight sysfs path
-BACKLIGHT_PATH = "/sys/class/backlight/10-0045/brightness"
+BACKLIGHT_PATH = "/sys/class/backlight/11-0045/brightness"
 BACKLIGHT_MAX = 255
 BACKLIGHT_ON = 255
 BACKLIGHT_OFF = 0
