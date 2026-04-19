@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280, initial-scale=1.0">
+  <title>Panel Setup</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #0e1520;
+      --surface:   #182030;
+      --surface2:  #1e2a3d;
+      --border:    #243348;
+      --primary:   #41b3ff;
+      --primary-d: #1a9ee0;
+      --success:   #34d399;
+      --error:     #f87171;
+      --text:      #e8edf3;
+      --dim:       #8ca0b8;
+      --muted:     #3d5166;
+      --input-bg:  #0a1018;
+    }
+
+    *, *::before, *::after {
+      margin: 0; padding: 0; box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      width: 1280px; height: 800px; overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    /* ── Layout shells ───────────────────────────── */
+    #app {
+      display: flex;
+      flex-direction: column;
+      height: 800px;
+      transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    #app.osk-open {
+      transform: translateY(-340px);
+    }
+
+    /* ── Header ──────────────────────────────────── */
+    #header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 56px;
+      height: 68px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      color: var(--dim);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .brand svg { color: var(--primary); }
+
+    /* Progress pip row */
+    #progress {
+      display: flex; align-items: center; gap: 0;
+    }
+    .pip {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600;
+      background: var(--surface2);
+      color: var(--muted);
+      border: 1.5px solid var(--border);
+      transition: all .25s ease;
+      flex-shrink: 0;
+    }
+    .pip.active { background: var(--primary); color: #0e1520; border-color: var(--primary); }
+    .pip.done   { background: var(--success);  color: #0e1520; border-color: var(--success); font-size: 11px; }
+    .pip-line {
+      width: 28px; height: 1.5px;
+      background: var(--border);
+      transition: background .25s ease;
+    }
+    .pip-line.done { background: var(--success); }
+
+    /* ── Content ─────────────────────────────────── */
+    #content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 120px;
+      overflow: hidden;
+    }
+
+    /* Steps */
+    .step { display: none; flex-direction: column; width: 100%; max-width: 800px; }
+    .step.on { display: flex; animation: fadeUp .25s ease forwards; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .step-icon { margin-bottom: 16px; color: var(--primary); }
+
+    h1.step-title {
+      font-size: 34px; font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    p.step-sub {
+      font-size: 16px; color: var(--dim);
+      margin-bottom: 36px; line-height: 1.55;
+    }
+
+    /* Fields */
+    .fields { display: flex; flex-direction: column; gap: 18px; }
+    .field  { display: flex; flex-direction: column; gap: 7px; }
+    .field-label {
+      font-size: 12px; font-weight: 500;
+      color: var(--dim);
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+    .field-box {
+      background: var(--input-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      padding: 0 20px;
+      height: 64px;
+      display: flex; align-items: center;
+      cursor: pointer;
+      transition: border-color .18s, box-shadow .18s;
+      user-select: none;
+    }
+    .field-box:active  { border-color: var(--primary); }
+    .field-box.focused { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(65,179,255,.12); }
+    .field-box.err     { border-color: var(--error); }
+
+    .field-val {
+      flex: 1;
+      font-size: 20px; color: var(--text);
+      overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    }
+    .field-val.ph { color: var(--muted); font-size: 18px; }
+
+    .cursor-blink {
+      display: none;
+      width: 2px; height: 24px;
+      background: var(--primary);
+      margin-left: 1px;
+      animation: blink 1s step-end infinite;
+      flex-shrink: 0;
+    }
+    .field-box.focused .cursor-blink { display: block; }
+
+    @keyframes blink {
+      0%,100% { opacity:1; } 50% { opacity:0; }
+    }
+
+    .field-hint { font-size: 13px; color: var(--muted); padding-left: 2px; line-height: 1.5; }
+    .field-error { font-size: 13px; color: var(--error); padding-left: 2px; display: none; }
+    .field-box.err ~ .field-error { display: block; }
+
+    .field-row { display: grid; gap: 16px; grid-template-columns: 3fr 1fr; }
+
+    /* Review step */
+    .review-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .review-row {
+      display: flex; align-items: center;
+      padding: 14px 22px;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .review-row:last-child { border-bottom: none; }
+    .rk { font-size: 12px; font-weight: 500; color: var(--dim); text-transform: uppercase; letter-spacing: .07em; width: 130px; flex-shrink: 0; }
+    .rv { font-size: 16px; color: var(--text); word-break: break-all; }
+
+    /* ── Nav bar ─────────────────────────────────── */
+    #nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 56px 24px;
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 16px 36px;
+      border-radius: 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px; font-weight: 600;
+      border: none; cursor: pointer;
+      transition: all .15s ease;
+      user-select: none;
+    }
+    .btn-back {
+      background: var(--surface);
+      color: var(--dim);
+      border: 1.5px solid var(--border);
+    }
+    .btn-back:active { background: var(--surface2); }
+    .btn-next {
+      background: var(--primary);
+      color: #0e1520;
+      min-width: 200px;
+      justify-content: center;
+    }
+    .btn-next:active  { background: var(--primary-d); }
+    .btn-next.loading { opacity: .6; pointer-events: none; }
+
+    /* ── OSK ─────────────────────────────────────── */
+    #osk {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 356px;
+      background: #0a1320;
+      border-top: 1px solid var(--border);
+      padding: 10px 28px 14px;
+      display: flex; flex-direction: column; gap: 6px;
+      transform: translateY(100%);
+      transition: transform .35s cubic-bezier(.4,0,.2,1);
+      z-index: 100;
+    }
+    #osk.open { transform: translateY(0); }
+
+    .osk-row {
+      display: flex; justify-content: center; gap: 5px;
+    }
+    .key {
+      height: 62px;
+      flex: 1;
+      max-width: 88px;
+      border-radius: 9px;
+      background: #182535;
+      border: 1px solid #1e3248;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px; font-weight: 500;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: background .08s;
+    }
+    .key:active, .key.tap { background: #2a3f58; }
+    .key-w  { min-width: 100px; max-width: 130px; font-size: 14px; }
+    .key-sp { flex: 4; max-width: 380px; font-size: 14px; color: var(--dim); }
+    .key-fn { background: #142030; color: var(--dim); border-color: #1a2d40; }
+    .key-del { background: #142030; color: var(--error); }
+    .key-shift.on { background: var(--primary); color: #0e1520; }
+    .key-enter { background: var(--primary); color: #0e1520; font-size: 14px; font-weight: 600; min-width: 110px; }
+
+    /* ── Overlay screens ─────────────────────────── */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: var(--bg);
+      flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: 20px; text-align: center;
+      z-index: 200;
+    }
+    .overlay.show { display: flex; }
+
+    .spin {
+      width: 56px; height: 56px;
+      border: 3px solid var(--border);
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .check-circle {
+      width: 76px; height: 76px; border-radius: 50%;
+      background: rgba(52,211,153,.1);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--success);
+    }
+    .big-text { font-size: 28px; font-weight: 600; }
+    .sub-text  { font-size: 16px; color: var(--dim); max-width: 460px; line-height: 1.6; }
+    .count-text { font-size: 15px; color: var(--primary); margin-top: 6px; }
+  </style>
+</head>
+<body>
+
+<div id="app">
+
+  <!-- ─── Header ─── -->
+  <div id="header">
+    <div class="brand">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+        <path d="M9 21V12h6v9"/>
+      </svg>
+      Panel Setup
+    </div>
+    <div id="progress"></div>
+  </div>
+
+  <!-- ─── Content ─── -->
+  <div id="content">
+
+    <!-- Step 1: HA URL -->
+    <div class="step on" id="s1">
+      <svg class="step-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/>
+      </svg>
+      <h1 class="step-title">Home Assistant</h1>
+      <p class="step-sub">Enter the address of your Home Assistant server on your local network.</p>
+      <div class="fields">
+        <div class="field">
+          <div class="field-label">Server URL</div>
+          <div class="field-box" id="box-ha_url" onclick="tap('ha_url')">
+            <span class="field-val ph" id="val-ha_url">http://192.168.1.x:8123</span>
+            <span class="cursor-blink"></span>
+          </div>
+          <div class="field-error" id="err-ha_url">Enter a valid URL starting with http://</div>
+          <div class="field-hint">Include the port — usually :8123</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: MQTT host + port -->
+    <div class="step" id="s2">
+      <svg class="step-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="2" width="20" height="8" rx="2"/>
+        <rect x="2" y="14" width="20" height="8" rx="2"/>
+        <line x1="6" y1="6" x2="6.01" y2="6" stroke-linecap="round" stroke-width="2"/>
+        <line x1="6" y1="18" x2="6.01" y2="18" stroke-linecap="round" stroke-width="2"/>
+      </svg>
+      <h1 class="step-title">MQTT Broker</h1>
+      <p class="step-sub">Your MQTT broker handles messages between the panel and Home Assistant. It's usually on the same server.</p>
+      <div class="fields">
+        <div class="field-row">
+          <div class="field">
+            <div class="field-label">Host / IP Address</div>
+            <div class="field-box" id="box-mqtt_host" onclick="tap('mqtt_host')">
+              <span class="field-val ph" id="val-mqtt_host">192.168.1.x</span>
+              <span class="cursor-blink"></span>
+            </div>
+            <div class="field-error" id="err-mqtt_host">Host address is required</div>
+          </div>
+          <div class="field">
+            <div class="field-label">Port</div>
+            <div class="field-box" id="box-mqtt_port" onclick="tap('mqtt_port')">
+              <span class="field-val" id="val-mqtt_port">1883</span>
+              <span class="cursor-blink"></span>
+            </div>
+            <div class="field-error" id="err-mqtt_port">Invalid port</div>
+          </div>
+        </div>
+        <div class="field-hint">Standard port is 1883. Use 8883 for TLS-encrypted MQTT.</div>
+      </div>
+    </div>
+
+    <!-- Step 3: MQTT credentials -->
+    <div class="step" id="s3">
+      <svg class="step-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="3" y="11" width="18" height="11" rx="2"/>
+        <path d="M7 11V7a5 5 0 0110 0v4"/>
+      </svg>
+      <h1 class="step-title">MQTT Credentials</h1>
+      <p class="step-sub">Create an MQTT user in Home Assistant under Settings → People → Add Person, then enter the credentials here.</p>
+      <div class="fields">
+        <div class="field">
+          <div class="field-label">Username</div>
+          <div class="field-box" id="box-mqtt_user" onclick="tap('mqtt_user')">
+            <span class="field-val ph" id="val-mqtt_user">ha-panel</span>
+            <span class="cursor-blink"></span>
+          </div>
+          <div class="field-error" id="err-mqtt_user">Username is required</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Password</div>
+          <div class="field-box" id="box-mqtt_pass" onclick="tap('mqtt_pass')">
+            <span class="field-val ph" id="val-mqtt_pass">••••••••</span>
+            <span class="cursor-blink"></span>
+          </div>
+          <div class="field-error" id="err-mqtt_pass">Password is required</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4: Panel ID -->
+    <div class="step" id="s4">
+      <svg class="step-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="2" y="3" width="20" height="14" rx="2"/>
+        <path d="M8 21h8M12 17v4"/>
+      </svg>
+      <h1 class="step-title">Panel Identity</h1>
+      <p class="step-sub">This is how the panel identifies itself to Home Assistant. Each panel on your network needs a unique ID.</p>
+      <div class="fields">
+        <div class="field">
+          <div class="field-label">Panel ID</div>
+          <div class="field-box" id="box-panel_id" onclick="tap('panel_id')">
+            <span class="field-val" id="val-panel_id">panel-01</span>
+            <span class="cursor-blink"></span>
+          </div>
+          <div class="field-error" id="err-panel_id">Lowercase letters, numbers and hyphens only</div>
+          <div class="field-hint">Pre-filled from hostname. Change only if you have multiple panels.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5: Review -->
+    <div class="step" id="s5">
+      <h1 class="step-title">Review &amp; Confirm</h1>
+      <p class="step-sub" style="margin-bottom:20px">Check your settings. Tap Save &amp; Reboot to apply — the panel will restart automatically.</p>
+
+      <div class="review-card">
+        <div class="review-row">
+          <span class="rk">HA URL</span>
+          <span class="rv" id="r-ha_url">—</span>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-row">
+          <span class="rk">MQTT Host</span>
+          <span class="rv" id="r-mqtt_host">—</span>
+        </div>
+        <div class="review-row">
+          <span class="rk">MQTT Port</span>
+          <span class="rv" id="r-mqtt_port">—</span>
+        </div>
+        <div class="review-row">
+          <span class="rk">MQTT User</span>
+          <span class="rv" id="r-mqtt_user">—</span>
+        </div>
+        <div class="review-row">
+          <span class="rk">Password</span>
+          <span class="rv" id="r-mqtt_pass">••••••••</span>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-row">
+          <span class="rk">Panel ID</span>
+          <span class="rv" id="r-panel_id">—</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── Nav ─── -->
+  <div id="nav">
+    <button class="btn btn-back" id="btn-back" onclick="back()" style="visibility:hidden">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      Back
+    </button>
+    <button class="btn btn-next" id="btn-next" onclick="next()">
+      Continue
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+
+</div>
+
+<!-- Overlay: saving -->
+<div class="overlay" id="ov-saving">
+  <div class="spin"></div>
+  <div class="big-text">Saving configuration…</div>
+  <div class="sub-text">Writing config files to disk.</div>
+</div>
+
+<!-- Overlay: done -->
+<div class="overlay" id="ov-done">
+  <div class="check-circle">
+    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+  </div>
+  <div class="big-text">All done!</div>
+  <div class="sub-text">Your panel is configured. It will restart and connect to Home Assistant automatically.</div>
+  <div class="count-text">Rebooting in <span id="reboot-n">3</span>…</div>
+</div>
+
+<!-- On-screen keyboard -->
+<div id="osk"></div>
+
+<script>
+// ───────────────────────────────────────────────────────
+//  State
+// ───────────────────────────────────────────────────────
+const vals = {
+  ha_url:    'http://homeassistant.local:8123',
+  mqtt_host: '',
+  mqtt_port: '1883',
+  mqtt_user: '',
+  mqtt_pass: '',
+  panel_id:  'panel-01'
+};
+
+const HA_URL_DEFAULT = 'http://homeassistant.local:8123';
+
+const PH = {
+  ha_url:    'http://homeassistant.local:8123',
+  mqtt_host: '192.168.1.x',
+  mqtt_port: '1883',
+  mqtt_user: 'ha-panel',
+  mqtt_pass: '',
+  panel_id:  'panel-01'
+};
+
+let step       = 1;
+const STEPS    = 5;
+let active     = null;   // currently focused field name
+let shifted    = false;
+let symMode    = false;  // true = numbers/symbols layout
+
+// ───────────────────────────────────────────────────────
+//  Boot
+// ───────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  drawProgress();
+  drawOSK();
+  prefill();
+});
+
+async function prefill() {
+  // Show the default HA URL immediately as a real pre-filled value
+  refreshDisplay('ha_url');
+
+  try {
+    const r = await fetch('/panel-info');
+    const d = await r.json();
+    if (d.hostname) { vals.panel_id = d.hostname; refreshDisplay('panel_id'); }
+    // Pre-fill MQTT host from gateway IP as a helpful suggestion.
+    // Don't override ha_url — homeassistant.local is the right default.
+    if (d.gateway) {
+      setVal('mqtt_host', d.gateway);
+    }
+  } catch (_) {
+    refreshDisplay('panel_id');
+  }
+}
+
+// ───────────────────────────────────────────────────────
+//  Progress pips
+// ───────────────────────────────────────────────────────
+function drawProgress() {
+  const c = document.getElementById('progress');
+  c.innerHTML = '';
+  for (let i = 1; i <= STEPS; i++) {
+    const pip = document.createElement('div');
+    pip.className = 'pip' + (i < step ? ' done' : i === step ? ' active' : '');
+    pip.textContent = i < step ? '✓' : i;
+    c.appendChild(pip);
+    if (i < STEPS) {
+      const ln = document.createElement('div');
+      ln.className = 'pip-line' + (i < step ? ' done' : '');
+      c.appendChild(ln);
+    }
+  }
+}
+
+// ───────────────────────────────────────────────────────
+//  Navigation
+// ───────────────────────────────────────────────────────
+function next() {
+  if (!validate(step)) return;
+  if (step === STEPS) { submit(); return; }
+
+  // When leaving step 1, resolve the HA URL hostname to a raw IP address and
+  // use that for the MQTT broker. paho-mqtt can resolve hostnames but
+  // homeassistant.local is mDNS — not guaranteed to work in all network configs.
+  // An IP is unambiguously reliable.
+  if (step === 1) {
+    resolveAndAdvance();
+    return;
+  }
+
+  advanceStep();
+}
+
+async function resolveAndAdvance() {
+  let hostname = '';
+  try {
+    hostname = new URL(vals.ha_url.trim()).hostname;
+  } catch (_) {
+    advanceStep();
+    return;
+  }
+
+  // Show resolving state on the Next button
+  const btn = document.getElementById('btn-next');
+  const originalHTML = btn.innerHTML;
+  btn.innerHTML = 'Resolving…';
+  btn.classList.add('loading');
+
+  try {
+    const res = await fetch('/resolve', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({ host: hostname })
+    });
+    const data = await res.json();
+
+    if (data.success && data.ip) {
+      setVal('mqtt_host', data.ip);
+    } else {
+      // Resolution failed — fall back to hostname and let paho-mqtt try
+      setVal('mqtt_host', hostname);
+    }
+  } catch (_) {
+    // Network error talking to provisioning server — use hostname as fallback
+    setVal('mqtt_host', hostname);
+  }
+
+  btn.innerHTML = originalHTML;
+  btn.classList.remove('loading');
+  advanceStep();
+}
+
+function advanceStep() {
+  hideStep(step);
+  step++;
+  showStep(step);
+  closeOSK();
+  drawProgress();
+  updateNav();
+  if (step === STEPS) fillReview();
+}
+
+function back() {
+  if (step === 1) return;
+  hideStep(step);
+  step--;
+  showStep(step);
+  closeOSK();
+  drawProgress();
+  updateNav();
+}
+
+function hideStep(n) { document.getElementById(`s${n}`).classList.remove('on'); }
+function showStep(n) {
+  const el = document.getElementById(`s${n}`);
+  el.classList.remove('on');
+  void el.offsetWidth; // reflow to re-trigger animation
+  el.classList.add('on');
+}
+
+function updateNav() {
+  const bb = document.getElementById('btn-back');
+  const bn = document.getElementById('btn-next');
+  bb.style.visibility = step > 1 ? 'visible' : 'hidden';
+
+  if (step === STEPS) {
+    bn.innerHTML = `Save &amp; Reboot <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>`;
+  } else {
+    bn.innerHTML = `Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>`;
+  }
+}
+
+// ───────────────────────────────────────────────────────
+//  Validation
+// ───────────────────────────────────────────────────────
+function validate(s) {
+  let ok = true;
+
+  function fail(f) {
+    document.getElementById(`box-${f}`).classList.add('err');
+    ok = false;
+  }
+  function pass(f) {
+    document.getElementById(`box-${f}`).classList.remove('err');
+  }
+
+  if (s === 1) {
+    const u = vals.ha_url.trim();
+    u.startsWith('http') ? pass('ha_url') : fail('ha_url');
+  }
+  if (s === 2) {
+    vals.mqtt_host.trim()                    ? pass('mqtt_host') : fail('mqtt_host');
+    /^\d+$/.test(vals.mqtt_port.trim())      ? pass('mqtt_port') : fail('mqtt_port');
+  }
+  if (s === 3) {
+    vals.mqtt_user.trim() ? pass('mqtt_user') : fail('mqtt_user');
+    vals.mqtt_pass        ? pass('mqtt_pass') : fail('mqtt_pass');
+  }
+  if (s === 4) {
+    /^[a-z0-9-]+$/.test(vals.panel_id.trim()) ? pass('panel_id') : fail('panel_id');
+  }
+
+  return ok;
+}
+
+// ───────────────────────────────────────────────────────
+//  Review
+// ───────────────────────────────────────────────────────
+function fillReview() {
+  document.getElementById('r-ha_url').textContent    = vals.ha_url    || '—';
+  document.getElementById('r-mqtt_host').textContent = vals.mqtt_host || '—';
+  document.getElementById('r-mqtt_port').textContent = vals.mqtt_port || '—';
+  document.getElementById('r-mqtt_user').textContent = vals.mqtt_user || '—';
+  document.getElementById('r-panel_id').textContent  = vals.panel_id  || '—';
+}
+
+// ───────────────────────────────────────────────────────
+//  Submit
+// ───────────────────────────────────────────────────────
+async function submit() {
+  document.getElementById('ov-saving').classList.add('show');
+
+  try {
+    const res = await fetch('/configure', {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify({
+        panel_id:  vals.panel_id.trim(),
+        ha_url:    vals.ha_url.trim(),
+        mqtt_host: vals.mqtt_host.trim(),
+        mqtt_port: vals.mqtt_port.trim(),
+        mqtt_user: vals.mqtt_user.trim(),
+        mqtt_pass: vals.mqtt_pass
+      })
+    });
+
+    const data = await res.json();
+
+    document.getElementById('ov-saving').classList.remove('show');
+
+    if (data.success) {
+      document.getElementById('ov-done').classList.add('show');
+      let n = 3;
+      document.getElementById('reboot-n').textContent = n;
+      const t = setInterval(() => {
+        n--;
+        document.getElementById('reboot-n').textContent = n;
+        if (n <= 0) clearInterval(t);
+      }, 1000);
+    } else {
+      showError(data.error || 'Configuration failed — check your values and try again.');
+    }
+  } catch (e) {
+    document.getElementById('ov-saving').classList.remove('show');
+    showError('Could not reach the provisioning server. Please try again.');
+  }
+}
+
+function showError(msg) {
+  // Surface error on review step
+  const sub = document.querySelector('#s5 .step-sub');
+  sub.style.color = 'var(--error)';
+  sub.textContent = '⚠ ' + msg;
+}
+
+// ───────────────────────────────────────────────────────
+//  Field interaction
+// ───────────────────────────────────────────────────────
+function tap(name) {
+  if (active && active !== name) {
+    document.getElementById(`box-${active}`).classList.remove('focused');
+  }
+  active = name;
+  document.getElementById(`box-${name}`).classList.add('focused');
+  document.getElementById(`box-${name}`).classList.remove('err');
+
+  // Auto-mode: numbers/URL for IP/URL fields, alpha for text
+  const numericFields = ['mqtt_port'];
+  const urlFields     = ['ha_url', 'mqtt_host'];
+  if (numericFields.includes(name)) {
+    symMode = true; shifted = false;
+  } else if (urlFields.includes(name)) {
+    symMode = true; shifted = false;
+  } else {
+    symMode = false; shifted = false;
+  }
+
+  drawOSK();
+  openOSK();
+}
+
+function setVal(name, str) {
+  vals[name] = str;
+  refreshDisplay(name);
+}
+
+function refreshDisplay(name) {
+  const el  = document.getElementById(`val-${name}`);
+  if (!el) return;
+  const v   = vals[name];
+  const isPass = name === 'mqtt_pass';
+
+  if (!v) {
+    el.className = 'field-val ph';
+    el.textContent = PH[name] || '';
+  } else {
+    el.className = 'field-val';
+    el.textContent = isPass ? '•'.repeat(v.length) : v;
+  }
+}
+
+// ───────────────────────────────────────────────────────
+//  OSK control
+// ───────────────────────────────────────────────────────
+function openOSK() {
+  document.getElementById('osk').classList.add('open');
+  document.getElementById('app').classList.add('osk-open');
+}
+
+function closeOSK() {
+  document.getElementById('osk').classList.remove('open');
+  document.getElementById('app').classList.remove('osk-open');
+  if (active) {
+    document.getElementById(`box-${active}`).classList.remove('focused');
+    active = null;
+  }
+}
+
+// Tap outside field/OSK to dismiss
+document.addEventListener('pointerdown', e => {
+  if (!active) return;
+  const osk = document.getElementById('osk');
+  if (osk.contains(e.target)) return;
+  if (e.target.closest('.field-box')) return;
+  closeOSK();
+});
+
+// ───────────────────────────────────────────────────────
+//  OSK rendering
+// ───────────────────────────────────────────────────────
+function drawOSK() {
+  const osk = document.getElementById('osk');
+  osk.innerHTML = '';
+
+  if (symMode) {
+    buildSymRow(osk, ['1','2','3','4','5','6','7','8','9','0','⌫']);
+    buildSymRow(osk, ['.','/',':','@','-','_','(',')',',','?']);
+    buildSymRow(osk, ['ABC','!','#','$','&','*','+','=','~','http://']);
+    buildSymRow(osk, ['⌃',                    ' ',              '.com', '↵']);
+  } else {
+    buildAlphaRow(osk, ['q','w','e','r','t','y','u','i','o','p','⌫']);
+    buildAlphaRow(osk, ['a','s','d','f','g','h','j','k','l']);
+    buildAlphaRow(osk, ['⇧','z','x','c','v','b','n','m','⇧']);
+    buildAlphaRow(osk, ['123',               ' ',              '.', '↵']);
+  }
+}
+
+function buildAlphaRow(parent, keys) {
+  const row = document.createElement('div');
+  row.className = 'osk-row';
+  keys.forEach(k => {
+    const btn = document.createElement('div');
+    btn.className = 'key';
+    let label = k;
+
+    if (k === '⌫')  { btn.classList.add('key-del'); }
+    if (k === '⇧')  { btn.classList.add('key-fn', 'key-shift'); if (shifted) btn.classList.add('on'); }
+    if (k === '123') { btn.classList.add('key-fn', 'key-w'); }
+    if (k === ' ')   { btn.classList.add('key-sp'); label = 'space'; }
+    if (k === '.')   { btn.classList.add('key-w'); }
+    if (k === '↵')   { btn.classList.add('key-enter', 'key-w'); label = 'Next ↵'; }
+
+    if (k.length === 1 && k !== ' ' && shifted) label = k.toUpperCase();
+
+    btn.textContent = label;
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); pressKey(k); flash(btn); });
+    row.appendChild(btn);
+  });
+  parent.appendChild(row);
+}
+
+function buildSymRow(parent, keys) {
+  const row = document.createElement('div');
+  row.className = 'osk-row';
+  keys.forEach(k => {
+    const btn = document.createElement('div');
+    btn.className = 'key';
+
+    if (k === '⌫')      { btn.classList.add('key-del'); }
+    if (k === 'ABC')     { btn.classList.add('key-fn', 'key-w'); }
+    if (k === '⌃')       { btn.classList.add('key-fn', 'key-w'); btn.textContent = 'Done'; }
+    if (k === 'http://')  { btn.classList.add('key-fn', 'key-w'); }
+    if (k === ' ')        { btn.classList.add('key-sp'); btn.textContent = 'space'; }
+    if (k === '.com')     { btn.classList.add('key-w'); }
+    if (k === '↵')        { btn.classList.add('key-enter', 'key-w'); btn.textContent = 'Next ↵'; }
+    if (!btn.textContent) btn.textContent = k;
+
+    btn.addEventListener('pointerdown', e => { e.preventDefault(); e.stopPropagation(); pressKey(k); flash(btn); });
+    row.appendChild(btn);
+  });
+  parent.appendChild(row);
+}
+
+function flash(btn) {
+  btn.classList.add('tap');
+  setTimeout(() => btn.classList.remove('tap'), 90);
+}
+
+// ───────────────────────────────────────────────────────
+//  Key press handling
+// ───────────────────────────────────────────────────────
+function pressKey(k) {
+  if (!active) return;
+
+  let v = vals[active] || '';
+
+  switch (k) {
+    case '⌫':
+      v = v.slice(0, -1);
+      break;
+
+    case '⇧':
+      shifted = !shifted;
+      drawOSK();
+      return;
+
+    case '123':
+      symMode = true; shifted = false;
+      drawOSK(); return;
+
+    case 'ABC':
+      symMode = false; shifted = false;
+      drawOSK(); return;
+
+    case '⌃':          // Done key
+      closeOSK(); return;
+
+    case '↵':          // Enter / Next
+      closeOSK();
+      next();
+      return;
+
+    case 'http://':
+      if (!v.startsWith('http://') && !v.startsWith('https://')) {
+        v = 'http://' + v;
+      }
+      break;
+
+    case '.com':
+      v += '.com';
+      break;
+
+    case ' ':
+      v += ' ';
+      break;
+
+    default:
+      const ch = (shifted && k.length === 1) ? k.toUpperCase() : k;
+      v += ch;
+      if (shifted) { shifted = false; drawOSK(); }
+  }
+
+  vals[active] = v;
+  refreshDisplay(active);
+
+  // Clear error on the field being edited
+  const box = document.getElementById(`box-${active}`);
+  if (box) box.classList.remove('err');
+}
+</script>
+</body>
+</html>
