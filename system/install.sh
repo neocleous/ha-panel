@@ -13,15 +13,17 @@
 #    1. Verify platform and root
 #    2. Confirm or change hostname / panel ID
 #    3. Install apt packages
-#    4. Configure: display overlay, I2C, Bluetooth off, TTY1 autologin
+#    4. Configure: display overlay, I2C, Bluetooth off, console rotation,
+#       TTY1 autologin
 #    5. Add user to required groups
 #    6. Clone or update repo → /opt/ha-panel/repo
 #    7. Create Python venv (--system-site-packages for lgpio)
 #    8. Install systemd services
 #    9. Create ~/.bash_profile kiosk hook
-#   10. Configure nftables firewall
-#   11. Configure unattended-upgrades
-#   12. Offer reboot
+#   10. Backlight udev rule + pre-created log files
+#   11. Configure nftables firewall
+#   12. Configure unattended-upgrades
+#   13. Offer reboot
 #
 #  V2 changes from V1:
 #    - Removed config prompts (HA URL, MQTT) — handled by provisioning UI
@@ -29,6 +31,11 @@
 #    - Venv uses --system-site-packages (required for lgpio)
 #    - Creates sensor-config.py symlink if canonical config already exists
 #    - Firewall subnet auto-detected from default gateway (not hardcoded)
+#    - Package is 'chromium' on Trixie (not 'chromium-browser')
+#    - python3-evdev for screen-sleep.py (idle sleep + wake-touch swallowing)
+#    - udev rule: video group write access to backlight brightness node
+#    - Pre-creates /var/log/ha-panel-*.log owned by the panel user
+#    - fbcon=rotate:3 in cmdline.txt (portrait console matching display)
 # ──────────────────────────────────────────────────────────────────────────────
 
 set -euo pipefail
@@ -121,7 +128,7 @@ APT_PACKAGES=(
   labwc
   squeekboard
   wlr-randr               # display rotation for portrait mounting
-  chromium-browser
+  chromium                 # NOTE: 'chromium' on Trixie, not 'chromium-browser'
   xdg-utils
 
   # Network
@@ -129,10 +136,11 @@ APT_PACKAGES=(
   curl
   wget
 
-  # I2C / GPIO
+  # I2C / GPIO / input
   python3-smbus2
   i2c-tools
   python3-lgpio            # lgpio — only available as system package, not via pip
+  python3-evdev            # screen-sleep.py — touch idle detection + evdev grab
 
   # Python
   python3
@@ -160,6 +168,7 @@ success "Packages installed"
 step "Configuring boot"
 
 CONFIG_TXT="/boot/firmware/config.txt"
+CMDLINE_TXT="/boot/firmware/cmdline.txt"
 
 # Waveshare 8" DSI display overlay
 if ! grep -q "vc4-kms-dsi-waveshare-panel" "${CONFIG_TXT}" 2>/dev/null; then
@@ -175,6 +184,14 @@ info "I2C enabled"
 if ! grep -q "dtoverlay=disable-bt" "${CONFIG_TXT}" 2>/dev/null; then
   echo "dtoverlay=disable-bt" >> "${CONFIG_TXT}"
   info "Bluetooth disabled"
+fi
+
+# Console rotation to portrait — matches the panel's mounted orientation.
+# (Wayland rotation is handled separately by wlr-randr in startup.sh;
+#  fbcon=rotate:3 covers the text console before/without the compositor.)
+if ! grep -q "fbcon=rotate:" "${CMDLINE_TXT}" 2>/dev/null; then
+  sed -i 's/$/ fbcon=rotate:3/' "${CMDLINE_TXT}"
+  info "Console rotated to portrait (fbcon=rotate:3)"
 fi
 
 # TTY1 autologin (required for Wayland kiosk — do NOT use systemd user services)
@@ -269,9 +286,12 @@ step "Setting up kiosk autostart"
 
 BASH_PROFILE="${PANEL_HOME}/.bash_profile"
 
+# NOTE: invoked via 'bash <path>' deliberately — git checkouts do not
+# guarantee the execute bit, and a bare exec on a non-executable file
+# kills the login shell and rate-limits getty (blinking-cursor boot).
 KIOSK_BLOCK="
 # ── HA Panel kiosk startup ─────────────────────────────────────────────────
-if [[ \"\$(tty)\" == '/dev/tty1' ]]; then
+if [[ -z \"\${WAYLAND_DISPLAY:-}\" && \"\$(tty)\" == '/dev/tty1' ]]; then
   exec bash ${REPO_DIR}/system/startup.sh
 fi
 # ──────────────────────────────────────────────────────────────────────────
@@ -285,7 +305,35 @@ else
   success "Kiosk hook added to ~/.bash_profile"
 fi
 
-# ── Step 10: nftables firewall ────────────────────────────────────────────────
+# ── Step 10: Backlight udev rule + log files ─────────────────────────────────
+
+step "Backlight permissions and log files"
+
+# screen-sleep.py (run as ${PANEL_USER}) writes the brightness node directly.
+# Grant the video group write access, persistently, on every boot.
+cat > /etc/udev/rules.d/90-backlight.rules <<'UDEV'
+SUBSYSTEM=="backlight", ACTION=="add", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
+UDEV
+info "udev rule installed (video group can write backlight)"
+
+# Apply immediately for any backlight already present (rule fires on add only)
+for BL in /sys/class/backlight/*/brightness; do
+  if [[ -f "${BL}" ]]; then
+    chgrp video "${BL}" 2>/dev/null || true
+    chmod g+w  "${BL}" 2>/dev/null || true
+    info "Applied to ${BL}"
+  fi
+done
+
+# Pre-create log files owned by the panel user — startup.sh and update.sh
+# run as ${PANEL_USER} and cannot create files in /var/log themselves.
+for LOGF in /var/log/ha-panel-startup.log /var/log/ha-panel-update.log; do
+  touch "${LOGF}"
+  chown "${PANEL_USER}:${PANEL_USER}" "${LOGF}"
+done
+success "Log files pre-created and owned by ${PANEL_USER}"
+
+# ── Step 11: nftables firewall ────────────────────────────────────────────────
 
 step "Configuring firewall"
 
@@ -351,7 +399,7 @@ systemctl enable nftables
 systemctl restart nftables
 success "Firewall configured (SSH allowed from ${LOCAL_SUBNET})"
 
-# ── Step 11: Unattended upgrades ──────────────────────────────────────────────
+# ── Step 12: Unattended upgrades ──────────────────────────────────────────────
 
 step "Configuring unattended upgrades"
 
