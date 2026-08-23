@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-HA Panel — screen sleep + auto-brightness daemon.
+HA Panel — screen sleep + auto-brightness + theme-switch daemon.
 
 Sleep: turns the backlight off after a period of touch inactivity and wakes
 it on the next touch. While the screen is asleep the touchscreen is held
@@ -29,13 +29,21 @@ all are optional, defaults in brackets:
                                # under-reads vs the screen face; tune against
                                # sensor.panel_XX_light, not a lux app
 
+Theme switch: subscribes to the retained topic <MQTT_TOPIC_ROOT>/theme
+(payload "dark" or "light", published by an HA automation on sunset/sunrise).
+On a change it writes/removes the /tmp/panel-dark marker and kills chromium;
+the kiosk loop in labwc autostart restarts chromium within seconds, adding
+--force-dark-mode when the marker exists, which makes the browser report
+prefers-color-scheme: dark so HA renders its real dark theme. Duplicate
+retained messages are ignored (no restart unless the state actually flips).
+
 Replaces swayidle: do not run both.
 
 Requirements:
   - evdev + paho-mqtt: run with /opt/ha-panel/venv/bin/python3 — the venv is
     created with --system-site-packages, so apt's python3-evdev is visible
     inside it alongside pip's paho-mqtt. Under system python3 (no paho) the
-    daemon still runs, with auto-brightness disabled.
+    daemon still runs, with auto-brightness and theme switching disabled.
   - user in 'input' group (read/grab /dev/input/event*)
   - write access to the backlight brightness node (udev rule: video group g+w)
 
@@ -48,7 +56,9 @@ Usage (from labwc autostart):
 import argparse
 import importlib.util
 import math
+import os
 import select
+import subprocess
 import sys
 import threading
 import time
@@ -58,6 +68,12 @@ from evdev import InputDevice, ecodes, list_devices
 # Minimum change (0–255 scale) before a new brightness level is written —
 # stops the backlight visibly hunting on small lux fluctuations.
 BRIGHTNESS_DEADBAND = 6
+
+# Marker file checked by the chromium loop in labwc autostart on every
+# (re)launch: present = add --force-dark-mode. Lives in /tmp so a reboot
+# starts clean; the retained MQTT theme message re-establishes the correct
+# state within seconds of the MQTT connection coming up.
+DARK_MARKER = "/tmp/panel-dark"
 
 
 def log(msg):
@@ -105,31 +121,51 @@ def load_config(path):
         spec.loader.exec_module(mod)
         return mod
     except Exception as e:
-        log(f"config load failed ({path}): {e} — auto-brightness disabled")
+        log(f"config load failed ({path}): {e} — mqtt features disabled")
         return None
 
 
-class AmbientLight:
-    """Latest lux from the sensor daemon via MQTT (retained topic).
+def apply_theme(payload):
+    """Reconcile the dark-mode marker with the requested theme; restart
+    chromium only when the state actually changes."""
+    want_dark = payload.strip().lower() == "dark"
+    have_dark = os.path.exists(DARK_MARKER)
+    if want_dark == have_dark:
+        return
+    try:
+        if want_dark:
+            with open(DARK_MARKER, "w"):
+                pass
+        else:
+            os.remove(DARK_MARKER)
+    except OSError as e:
+        log(f"theme marker update failed: {e}")
+        return
+    log(f"theme -> {'dark' if want_dark else 'light'} — restarting chromium")
+    # The kiosk while-loop in labwc autostart relaunches chromium ~3s later,
+    # re-evaluating the marker to add/remove --force-dark-mode.
+    subprocess.run(["pkill", "-x", "chromium"], check=False)
 
-    .enabled is True only when the MQTT subscription was set up; .read()
+
+class MqttLink:
+    """MQTT subscriptions shared by auto-brightness (lux) and theme switch.
+
+    .enabled is True only when the MQTT subscription was set up; .read_lux()
     returns the latest lux or None if nothing has been received yet.
     """
 
     def __init__(self, cfg):
         self.enabled = False
+        self.auto_brightness = False
         self._lux = None
         self._lock = threading.Lock()
 
         if cfg is None:
             return
-        if not getattr(cfg, "AUTO_BRIGHTNESS", True):
-            log("auto-brightness disabled in config")
-            return
         try:
             import paho.mqtt.client as mqtt
         except ImportError:
-            log("paho-mqtt not importable — auto-brightness disabled "
+            log("paho-mqtt not importable — auto-brightness/theme disabled "
                 "(run with /opt/ha-panel/venv/bin/python3)")
             return
         try:
@@ -138,11 +174,13 @@ class AmbientLight:
             user = cfg.MQTT_USERNAME
             password = cfg.MQTT_PASSWORD
         except AttributeError as e:
-            log(f"config missing MQTT settings ({e}) — auto-brightness disabled")
+            log(f"config missing MQTT settings ({e}) — auto-brightness/theme disabled")
             return
         port = int(getattr(cfg, "MQTT_PORT", 1883))
         topic_root = getattr(cfg, "MQTT_TOPIC_ROOT", f"home/{panel_id}")
-        topic = f"{topic_root}/sensor/light"
+        self.auto_brightness = bool(getattr(cfg, "AUTO_BRIGHTNESS", True))
+        light_topic = f"{topic_root}/sensor/light"
+        theme_topic = f"{topic_root}/theme"
 
         # client_id MUST differ from the sensor daemon's (which uses PANEL_ID)
         # — identical ids make the broker disconnect the other client in a loop.
@@ -158,15 +196,22 @@ class AmbientLight:
 
         def on_connect(c, userdata, flags, rc, *args):
             if rc == 0:
-                c.subscribe(topic)
-                log(f"mqtt connected, subscribed {topic}")
+                c.subscribe([(light_topic, 0), (theme_topic, 0)])
+                log(f"mqtt connected, subscribed {light_topic}, {theme_topic}")
             else:
                 log(f"mqtt connect failed rc={rc}")
 
         def on_message(c, userdata, msg):
             try:
-                value = float(msg.payload.decode())
-            except (ValueError, UnicodeDecodeError):
+                payload = msg.payload.decode()
+            except UnicodeDecodeError:
+                return
+            if msg.topic == theme_topic:
+                apply_theme(payload)
+                return
+            try:
+                value = float(payload)
+            except ValueError:
                 return
             with self._lock:
                 self._lux = value
@@ -180,17 +225,17 @@ class AmbientLight:
             client.connect_async(broker, port, keepalive=60)
             client.loop_start()
         except Exception as e:
-            log(f"mqtt setup failed: {e} — auto-brightness disabled")
+            log(f"mqtt setup failed: {e} — auto-brightness/theme disabled")
             return
         self.enabled = True
-        log(f"auto-brightness: lux from {broker}:{port} {topic}")
+        log(f"mqtt link up: {broker}:{port} (lux + theme)")
 
-    def read(self):
+    def read_lux(self):
         with self._lock:
             return self._lux
 
 
-def make_brightness_fn(cfg, ambient, fallback):
+def make_brightness_fn(cfg, link, fallback):
     """Return a zero-arg function giving the current target brightness."""
     bmin = int(getattr(cfg, "BRIGHTNESS_MIN", 15)) if cfg else fallback
     bmax = int(getattr(cfg, "BRIGHTNESS_MAX", 255)) if cfg else fallback
@@ -203,9 +248,9 @@ def make_brightness_fn(cfg, ambient, fallback):
     log_span = math.log(lbright) - math.log(ldark)
 
     def target():
-        if not ambient.enabled:
+        if not (link.enabled and link.auto_brightness):
             return fallback
-        lux = ambient.read()
+        lux = link.read_lux()
         if lux is None:          # nothing received yet
             return fallback
         if lux <= ldark:
@@ -231,8 +276,8 @@ def main():
     args = ap.parse_args()
 
     cfg = load_config(args.config)
-    ambient = AmbientLight(cfg)
-    target_brightness = make_brightness_fn(cfg, ambient, args.on)
+    link = MqttLink(cfg)
+    target_brightness = make_brightness_fn(cfg, link, args.on)
 
     dev = None
     while dev is None:
@@ -283,7 +328,7 @@ def main():
                 if abs(t - current) >= BRIGHTNESS_DEADBAND:
                     set_backlight(args.backlight, t)
                     current = t
-                    log(f"brightness -> {t} (lux {ambient.read()})")
+                    log(f"brightness -> {t} (lux {link.read_lux()})")
 
                 if (time.monotonic() - last_input) > args.timeout:
                     try:

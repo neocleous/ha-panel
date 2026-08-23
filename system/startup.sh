@@ -136,11 +136,13 @@ XML
 # Rotate display to portrait — touch follows via rc.xml mapToOutput binding
 wlr-randr --output "${PANEL_OUTPUT}" --transform ${rot} || true
 
-# Screen sleep + auto-brightness: backlight off after ${sleep_secs}s of touch
-# inactivity, wake on the next touch (the wake gesture is held under an evdev
-# grab and swallowed, so it never presses anything in the UI). While awake,
-# brightness follows ambient lux from the sensor daemon over MQTT — tunables
-# in ${SENSOR_CONFIG} (see screen-sleep.py header). Replaces swayidle.
+# Screen sleep + auto-brightness + theme switch: backlight off after
+# ${sleep_secs}s of touch inactivity, wake on the next touch (the wake gesture
+# is held under an evdev grab and swallowed, so it never presses anything in
+# the UI). While awake, brightness follows ambient lux from the sensor daemon
+# over MQTT — tunables in ${SENSOR_CONFIG} (see screen-sleep.py header).
+# The daemon also watches the retained MQTT theme topic and toggles the
+# /tmp/panel-dark marker + restarts chromium on day/night changes.
 # Run with the venv python so paho-mqtt is importable (evdev comes through
 # --system-site-packages); falls back to system python = fixed brightness.
 # Requires: python3-evdev + user in 'input' group + video-group write on the
@@ -156,10 +158,13 @@ SS_PY="${VENV_PY}"
 # On-screen keyboard
 squeekboard &
 
-# Chromium kiosk loop — restarts on crash
-# (--start-maximized kept as a hint, but the labwc windowRule above is what
-#  actually guarantees maximized + undecorated under ozone-wayland)
+# Chromium kiosk loop — restarts on crash, and when screen-sleep.py kills it
+# to flip the theme. The /tmp/panel-dark marker (managed via the retained
+# MQTT theme topic) adds --force-dark-mode, which makes chromium report
+# prefers-color-scheme: dark so HA renders its dark theme.
 while true; do
+  DARK_FLAG=""
+  [ -f /tmp/panel-dark ] && DARK_FLAG="--force-dark-mode"
   chromium \\
     --app="${url}" \\
     --start-maximized \\
@@ -170,7 +175,8 @@ while true; do
     --no-first-run \\
     --disable-translate \\
     --disable-features=TranslateUI \\
-    --check-for-update-interval=31536000
+    --check-for-update-interval=31536000 \\
+    \${DARK_FLAG}
   sleep 3
 done &
 SH
@@ -224,7 +230,7 @@ start_kiosk() {
   write_labwc_config "${HA_URL}"
 }
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# ── Main ────────────────────────────────────────────────────────────────────
 
 log "HA Panel startup — PID $$"
 
