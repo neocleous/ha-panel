@@ -94,6 +94,10 @@ write_labwc_config() {
   # If the image is upside down, change ROTATION=90 to ROTATION=270 in the
   # config file — no code changes needed.
   local rot="${ROTATION:-90}"
+  # Backlight path for screen sleep (swayidle) — from config, with known default
+  local bl_path="${BACKLIGHT_PATH:-/sys/class/backlight/11-0045/brightness}"
+  # Screen sleep timeout in seconds — override with SCREEN_SLEEP_SECS in config
+  local sleep_secs="${SCREEN_SLEEP_SECS:-10}"
   mkdir -p "${LABWC_CONFIG_DIR}"
 
   # rc.xml: suppress window decorations + bind touch input to the panel output.
@@ -112,11 +116,19 @@ write_labwc_config() {
 </labwc_config>
 XML
 
-  # autostart: rotation + squeekboard (OSK) + chromium loop
+  # autostart: rotation + screen sleep + squeekboard (OSK) + chromium loop
   # NOTE: binary is 'chromium' on Pi OS Trixie (not 'chromium-browser')
   cat > "${LABWC_CONFIG_DIR}/autostart" <<SH
 # Rotate display to portrait — touch follows via rc.xml mapToOutput binding
 wlr-randr --output "${PANEL_OUTPUT}" --transform ${rot} || true
+
+# Screen sleep: backlight off after ${sleep_secs}s idle, wake on any input.
+# Backlight-off (not DPMS) keeps the touchscreen active so a tap wakes it.
+# Requires: swayidle installed + udev rule granting video group write access
+# to the brightness node (see system/install.sh).
+swayidle -w \\
+  timeout ${sleep_secs} "echo 0 > ${bl_path}" \\
+  resume "echo 200 > ${bl_path}" &
 
 # On-screen keyboard
 squeekboard &
@@ -138,7 +150,7 @@ while true; do
 done &
 SH
 
-  log "labwc config written (URL: ${url}, output: ${PANEL_OUTPUT}, rotation: ${rot})"
+  log "labwc config written (URL: ${url}, output: ${PANEL_OUTPUT}, rotation: ${rot}, sleep: ${sleep_secs}s)"
 }
 
 # ── Provisioning mode ─────────────────────────────────────────────────────────
