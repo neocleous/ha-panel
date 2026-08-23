@@ -40,3 +40,18 @@ BACKLIGHT_OFF = 0
 # Screen wake timeout in seconds — screen turns off after this
 # if no proximity detected
 SCREEN_TIMEOUT = 60
+
+# ── Auto-brightness (system/screen-sleep.py) ─────────────────────────────────
+# While the screen is awake, the backlight follows ambient lux from the
+# VEML6030, delivered via the sensor daemon's retained MQTT topic
+# <MQTT_TOPIC_ROOT>/sensor/light. Mapping is log(lux) → linear brightness
+# between the two anchors. All settings optional — defaults shown below;
+# omit them entirely and screen-sleep.py uses these values.
+AUTO_BRIGHTNESS = True
+BRIGHTNESS_MIN = 15      # backlight at/below LUX_DARK (never invisible)
+BRIGHTNESS_MAX = 255     # backlight at/above LUX_BRIGHT
+LUX_DARK = 2.0           # lux reading when the room feels dark
+LUX_BRIGHT = 150.0       # lux reading in bright daylight — the sensor sits
+                         # at the column base and under-reads vs the screen
+                         # face, so tune against sensor.panel_XX_light in HA,
+                         # not against a phone lux app

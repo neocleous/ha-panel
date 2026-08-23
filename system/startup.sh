@@ -13,6 +13,8 @@ set -euo pipefail
 PANEL_BASE="/opt/ha-panel"
 CONFIG_FILE="${PANEL_BASE}/config"
 REPO_DIR="${PANEL_BASE}/repo"
+VENV_PY="${PANEL_BASE}/venv/bin/python3"
+SENSOR_CONFIG="${PANEL_BASE}/sensor-config.py"
 PROV_SERVER="${REPO_DIR}/provisioning-ui/server.py"
 PROV_URL="http://127.0.0.1:8080"
 
@@ -122,15 +124,22 @@ XML
 # Rotate display to portrait — touch follows via rc.xml mapToOutput binding
 wlr-randr --output "${PANEL_OUTPUT}" --transform ${rot} || true
 
-# Screen sleep: backlight off after ${sleep_secs}s of touch inactivity, wake
-# on the next touch. The wake touch is held under an evdev grab and swallowed,
-# so it never registers as a press in the UI. Replaces swayidle.
+# Screen sleep + auto-brightness: backlight off after ${sleep_secs}s of touch
+# inactivity, wake on the next touch (the wake gesture is held under an evdev
+# grab and swallowed, so it never presses anything in the UI). While awake,
+# brightness follows ambient lux from the sensor daemon over MQTT — tunables
+# in ${SENSOR_CONFIG} (see screen-sleep.py header). Replaces swayidle.
+# Run with the venv python so paho-mqtt is importable (evdev comes through
+# --system-site-packages); falls back to system python = fixed brightness.
 # Requires: python3-evdev + user in 'input' group + video-group write on the
 # brightness node (udev rule, see system/install.sh).
-python3 "${REPO_DIR}/system/screen-sleep.py" \\
+SS_PY="${VENV_PY}"
+[ -x "\${SS_PY}" ] || SS_PY="python3"
+\${SS_PY} "${REPO_DIR}/system/screen-sleep.py" \\
   --timeout ${sleep_secs} \\
   --backlight "${bl_path}" \\
-  --on 200 >> "${LOG_FILE}" 2>&1 &
+  --on 200 \\
+  --config "${SENSOR_CONFIG}" >> "${LOG_FILE}" 2>&1 &
 
 # On-screen keyboard
 squeekboard &
