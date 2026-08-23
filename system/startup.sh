@@ -64,6 +64,10 @@ set_backlight() {
 
 write_labwc_config() {
   local url="$1"
+  # ROTATION comes from /opt/ha-panel/config; 90 = portrait (default).
+  # If the image is upside down, change ROTATION=90 to ROTATION=270 in the
+  # config file — no code changes needed. Touch input follows the transform.
+  local rot="${ROTATION:-90}"
   mkdir -p "${LABWC_CONFIG_DIR}"
 
   # rc.xml: suppress window decorations, configure touchscreen
@@ -84,6 +88,9 @@ XML
 
   # autostart: squeekboard (OSK) + chromium loop
   cat > "${LABWC_CONFIG_DIR}/autostart" <<SH
+# Rotate display to portrait — touch input follows the output transform
+wlr-randr --output DSI-1 --transform ${rot} || true
+
 # On-screen keyboard
 squeekboard &
 
