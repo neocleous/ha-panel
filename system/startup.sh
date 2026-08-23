@@ -92,9 +92,15 @@ XML
 
   # autostart: rotation + squeekboard (OSK) + chromium loop
   # NOTE: binary is 'chromium' on Pi OS Trixie (not 'chromium-browser')
+  # Output name auto-detected — the Waveshare panel can be on DSI-1 or DSI-2
+  # depending on which connector is used.
   cat > "${LABWC_CONFIG_DIR}/autostart" <<SH
-# Rotate display to portrait — touch input follows the output transform
-wlr-randr --output DSI-1 --transform ${rot} || true
+# Rotate display to portrait — touch input follows the output transform.
+# Detect the first connected output (DSI-1 or DSI-2 depending on cable port).
+PANEL_OUTPUT=\$(wlr-randr | awk '/^[A-Za-z]/ {print \$1; exit}')
+if [ -n "\${PANEL_OUTPUT}" ]; then
+  wlr-randr --output "\${PANEL_OUTPUT}" --transform ${rot} || true
+fi
 
 # On-screen keyboard
 squeekboard &
@@ -116,7 +122,7 @@ while true; do
 done &
 SH
 
-  log "labwc config written (URL: ${url})"
+  log "labwc config written (URL: ${url}, rotation: ${rot})"
 }
 
 # ── Provisioning mode ─────────────────────────────────────────────────────────
