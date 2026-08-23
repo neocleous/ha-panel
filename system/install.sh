@@ -25,7 +25,7 @@
 #
 #  V2 changes from V1:
 #    - Removed config prompts (HA URL, MQTT) — handled by provisioning UI
-#    - Added nmcli (network-manager) to apt packages
+#    - Added nmcli (network-manager) and wlr-randr to apt packages
 #    - Venv uses --system-site-packages (required for lgpio)
 #    - Creates sensor-config.py symlink if canonical config already exists
 #    - Firewall subnet auto-detected from default gateway (not hardcoded)
@@ -120,6 +120,7 @@ APT_PACKAGES=(
   # Display / Wayland stack
   labwc
   squeekboard
+  wlr-randr               # display rotation for portrait mounting
   chromium-browser
   xdg-utils
 
