@@ -18,7 +18,13 @@ PROV_URL="http://127.0.0.1:8080"
 
 LABWC_CONFIG_DIR="${HOME}/.config/labwc"
 
+# Log to /var/log if writable, otherwise fall back to /tmp.
+# (Runs as the panel user — /var/log needs the file pre-created and chowned,
+#  which install.sh does; the fallback covers every other case.)
 LOG_FILE="/var/log/ha-panel-startup.log"
+if ! touch "${LOG_FILE}" 2>/dev/null; then
+  LOG_FILE="/tmp/ha-panel-startup.log"
+fi
 
 log() { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "${LOG_FILE}"; }
 
@@ -70,7 +76,8 @@ write_labwc_config() {
   local rot="${ROTATION:-90}"
   mkdir -p "${LABWC_CONFIG_DIR}"
 
-  # rc.xml: suppress window decorations, configure touchscreen
+  # rc.xml: suppress window decorations
+  # (No touch mapping needed — single DSI display, wlroots maps automatically)
   cat > "${LABWC_CONFIG_DIR}/rc.xml" <<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <labwc_config>
@@ -80,13 +87,11 @@ write_labwc_config() {
   <window>
     <maximizedDecoration>none</maximizedDecoration>
   </window>
-  <touch>
-    <map from="DSI-1" to="DSI-1"/>
-  </touch>
 </labwc_config>
 XML
 
-  # autostart: squeekboard (OSK) + chromium loop
+  # autostart: rotation + squeekboard (OSK) + chromium loop
+  # NOTE: binary is 'chromium' on Pi OS Trixie (not 'chromium-browser')
   cat > "${LABWC_CONFIG_DIR}/autostart" <<SH
 # Rotate display to portrait — touch input follows the output transform
 wlr-randr --output DSI-1 --transform ${rot} || true
@@ -96,7 +101,7 @@ squeekboard &
 
 # Chromium kiosk loop — restarts on crash
 while true; do
-  chromium-browser \\
+  chromium \\
     --app="${url}" \\
     --start-maximized \\
     --noerrdialogs \\
