@@ -105,6 +105,13 @@ write_labwc_config() {
   # rc.xml: suppress window decorations + bind touch input to the panel output.
   # The touch binding is what makes touch coordinates follow the display
   # transform — without it, touch stays in unrotated landscape space.
+  #
+  # windowRules: Chromium's --start-maximized is unreliable under
+  # ozone-wayland (window opens un-maximized, so <maximizedDecoration>
+  # never applies and labwc draws a titlebar). Force the issue at the
+  # compositor: strip server-side decorations from every window and
+  # maximize it on map. squeekboard is a layer-shell surface, not a
+  # toplevel, so it is unaffected by these rules.
   cat > "${LABWC_CONFIG_DIR}/rc.xml" <<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <labwc_config>
@@ -114,6 +121,11 @@ write_labwc_config() {
   <window>
     <maximizedDecoration>none</maximizedDecoration>
   </window>
+  <windowRules>
+    <windowRule identifier="*" serverDecoration="no">
+      <action name="Maximize"/>
+    </windowRule>
+  </windowRules>
   <touch mapToOutput="${PANEL_OUTPUT}"/>
 </labwc_config>
 XML
@@ -145,6 +157,8 @@ SS_PY="${VENV_PY}"
 squeekboard &
 
 # Chromium kiosk loop — restarts on crash
+# (--start-maximized kept as a hint, but the labwc windowRule above is what
+#  actually guarantees maximized + undecorated under ozone-wayland)
 while true; do
   chromium \\
     --app="${url}" \\
