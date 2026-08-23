@@ -36,6 +36,26 @@ for i in $(seq 1 30); do
   sleep 1
 done
 
+# ── Detect the panel's DRM output name (DSI-1 or DSI-2 by connector) ──────────
+# Read from sysfs so it works BEFORE the compositor starts — needed because
+# rc.xml (touch mapping) must contain the output name at labwc launch time.
+
+detect_panel_output() {
+  local conn name
+  for conn in /sys/class/drm/card*-DSI-*; do
+    [[ -e "${conn}/status" ]] || continue
+    if grep -qx "connected" "${conn}/status" 2>/dev/null; then
+      name="$(basename "${conn}")"     # e.g. card1-DSI-2
+      echo "${name#card*-}"            # → DSI-2
+      return 0
+    fi
+  done
+  echo "DSI-2"                          # sensible default for Waveshare on Pi 5
+}
+
+PANEL_OUTPUT="$(detect_panel_output)"
+log "Panel output detected: ${PANEL_OUTPUT}"
+
 # ── Wait for network (provisioning only needs loopback; normal needs LAN) ─────
 
 wait_for_network() {
@@ -72,12 +92,13 @@ write_labwc_config() {
   local url="$1"
   # ROTATION comes from /opt/ha-panel/config; 90 = portrait (default).
   # If the image is upside down, change ROTATION=90 to ROTATION=270 in the
-  # config file — no code changes needed. Touch input follows the transform.
+  # config file — no code changes needed.
   local rot="${ROTATION:-90}"
   mkdir -p "${LABWC_CONFIG_DIR}"
 
-  # rc.xml: suppress window decorations
-  # (No touch mapping needed — single DSI display, wlroots maps automatically)
+  # rc.xml: suppress window decorations + bind touch input to the panel output.
+  # The touch binding is what makes touch coordinates follow the display
+  # transform — without it, touch stays in unrotated landscape space.
   cat > "${LABWC_CONFIG_DIR}/rc.xml" <<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <labwc_config>
@@ -87,20 +108,15 @@ write_labwc_config() {
   <window>
     <maximizedDecoration>none</maximizedDecoration>
   </window>
+  <touch mapToOutput="${PANEL_OUTPUT}"/>
 </labwc_config>
 XML
 
   # autostart: rotation + squeekboard (OSK) + chromium loop
   # NOTE: binary is 'chromium' on Pi OS Trixie (not 'chromium-browser')
-  # Output name auto-detected — the Waveshare panel can be on DSI-1 or DSI-2
-  # depending on which connector is used.
   cat > "${LABWC_CONFIG_DIR}/autostart" <<SH
-# Rotate display to portrait — touch input follows the output transform.
-# Detect the first connected output (DSI-1 or DSI-2 depending on cable port).
-PANEL_OUTPUT=\$(wlr-randr | awk '/^[A-Za-z]/ {print \$1; exit}')
-if [ -n "\${PANEL_OUTPUT}" ]; then
-  wlr-randr --output "\${PANEL_OUTPUT}" --transform ${rot} || true
-fi
+# Rotate display to portrait — touch follows via rc.xml mapToOutput binding
+wlr-randr --output "${PANEL_OUTPUT}" --transform ${rot} || true
 
 # On-screen keyboard
 squeekboard &
@@ -122,7 +138,7 @@ while true; do
 done &
 SH
 
-  log "labwc config written (URL: ${url}, rotation: ${rot})"
+  log "labwc config written (URL: ${url}, output: ${PANEL_OUTPUT}, rotation: ${rot})"
 }
 
 # ── Provisioning mode ─────────────────────────────────────────────────────────
