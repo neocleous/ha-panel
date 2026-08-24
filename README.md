@@ -80,3 +80,7 @@ Panels accept SSH from the local /24 only (nftables). `ssh you@panel-01.local`.
 ## Troubleshooting
 
 First stops: `/var/log/ha-panel-startup.log` on the panel, `journalctl -u sensor-daemon`, `/var/log/ha-panel-update.log` for the nightly update, and `firstrun.log` on the SD card's boot partition if first boot fails. More in [system/README.md](system/README.md).
+
+## License
+
+[PolyForm Noncommercial 1.0.0](LICENSE.md) — free for personal, hobby, educational, and other noncommercial use: build panels, modify the code, share it. **Commercial use is not permitted.** If you want to use this commercially, contact the maintainer about a separate license.
