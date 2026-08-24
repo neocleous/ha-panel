@@ -24,7 +24,7 @@ All three sit on I2C bus 1 — addresses 0x77, 0x29, 0x48 (touch controller 0x1B
 
 ## Touch button PCB (custom)
 
-Custom 100×44 mm 2-layer board with four Ø12 mm capacitive electrodes under soldermask, all components on the back face. Fabbed at [JLCPCB](https://jlcpcb.com) (ENIG finish; order the stencil with it — solder paste + hot air needed for the SOIC-14).
+Custom 100×44 mm 2-layer board with four Ø12 mm capacitive electrodes under soldermask, all components on the back face. Design files: [`hardware/rev-c/`](https://github.com/neocleous/ha-panel/tree/docs/hardware/rev-c) on the `docs` branch (KiCad board + component BOM). Fabbed at [JLCPCB](https://jlcpcb.com) (ENIG finish; order the stencil with it — solder paste + hot air needed for the SOIC-14).
 
 | Part | Qty | DigiKey P/N | Notes |
 |---|---|---|---|
