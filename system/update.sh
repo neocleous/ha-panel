@@ -9,7 +9,7 @@
 #    3. rpi-eeprom update
 #    4. pip upgrade (venv)
 #    5. Protect sensor-config.py  ← before git
-#    6. git reset --hard origin/main
+#    6. git reset --hard origin/main  (as the repo owner, not root)
 #    7. Restore ownership + sensor-config.py symlink
 #    8. Reboot if kernel/eeprom changed
 #    9. Return kiosk to the dashboard; screen stays off until touched
@@ -45,6 +45,23 @@ err()  { echo "$(date '+%Y-%m-%d %H:%M:%S') ERROR: $*" | tee -a "${LOG_FILE}" >&
 APT_OPTS=(-y -qq
   -o "Dpkg::Options::=--force-confdef"
   -o "Dpkg::Options::=--force-confold")
+
+# ── Repo git helper ───────────────────────────────────────────────────────────
+# This script runs as root, but the repo belongs to the panel user. Root git
+# against a user-owned repo fails twice over: git's safe.directory protection
+# refuses ("dubious ownership"), and root has no SSH key for the origin.
+# Run all repo git operations as the owner of PANEL_BASE instead (-H sets
+# HOME so the owner's SSH key and known_hosts are used).
+
+repo_git() {
+  local owner
+  owner="$(stat -c '%U' "${PANEL_BASE}" 2>/dev/null || echo root)"
+  if [[ "${owner}" != "root" ]]; then
+    sudo -u "${owner}" -H git -C "${REPO_DIR}" "$@"
+  else
+    git -c safe.directory="${REPO_DIR}" -C "${REPO_DIR}" "$@"
+  fi
+}
 
 # ── Splash helpers ────────────────────────────────────────────────────────────
 
@@ -150,15 +167,13 @@ restore_sensor_config_link() {
 }
 
 restore_repo_ownership() {
-  # This script runs as root (apt/systemctl/reboot need it), so files written
-  # by git reset above are root-owned. The panel user must keep full control
-  # of the repo for manual deploys — restore ownership to whoever owns the
-  # panel base directory.
+  # Belt and braces: git runs as the owner now, but anything else in this
+  # root-context script that touched the repo gets corrected here.
   local owner
   owner="$(stat -c '%U:%G' "${PANEL_BASE}" 2>/dev/null || true)"
   if [[ -n "${owner}" && "${owner}" != "root:root" ]]; then
     chown -R "${owner}" "${REPO_DIR}"
-    log "Repo ownership restored to ${owner}."
+    log "Repo ownership verified (${owner})."
   fi
 }
 
@@ -223,14 +238,14 @@ fi
 # 5. Protect sensor config BEFORE git operations
 protect_sensor_config
 
-# 6. Pull latest repo
+# 6. Pull latest repo — as the repo owner (see repo_git above)
 splash_status 82 "Syncing panel software…"
 log "Pulling latest repo…"
-git -C "${REPO_DIR}" fetch --quiet origin >> "${LOG_FILE}" 2>&1 || { err "git fetch failed"; exit 1; }
-git -C "${REPO_DIR}" reset --hard origin/main >> "${LOG_FILE}" 2>&1 || { err "git reset failed"; exit 1; }
-log "Repo updated to $(git -C "${REPO_DIR}" rev-parse --short HEAD)."
+repo_git fetch --quiet origin >> "${LOG_FILE}" 2>&1 || { err "git fetch failed"; exit 1; }
+repo_git reset --hard origin/main >> "${LOG_FILE}" 2>&1 || { err "git reset failed"; exit 1; }
+log "Repo updated to $(repo_git rev-parse --short HEAD)."
 
-# 7. Restore ownership + sensor config symlink after git reset
+# 7. Verify ownership + sensor config symlink after git reset
 restore_repo_ownership
 restore_sensor_config_link
 
