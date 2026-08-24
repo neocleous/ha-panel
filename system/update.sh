@@ -162,19 +162,22 @@ restore_repo_ownership() {
   fi
 }
 
-# ── Kernel change detection ─────────────────────────────────────────────────────
+# ── Kernel change detection ───────────────────────────────────────────────────
 
 kernel_fingerprint() {
   # Version fingerprint of every installed kernel package. Compared before
   # and after the upgrade — any change means a new kernel was installed and
   # a reboot is required to run it.
-  dpkg-query -W 'linux-image*' 'raspberrypi-kernel*' 'rpi-kernel*' 2>/dev/null \
+  # NOTE: dpkg-query exits non-zero when ANY pattern matches nothing (the
+  # legacy raspberrypi-kernel*/rpi-kernel* names don't exist on Trixie), so
+  # the || true is load-bearing under set -euo pipefail.
+  { dpkg-query -W 'linux-image*' 'raspberrypi-kernel*' 'rpi-kernel*' 2>/dev/null || true; } \
     | sort | md5sum | cut -d' ' -f1
 }
 
-# ── Main ────────────────────────────────────────────────────────────────────
+# ── Main ──────────────────────────────────────────────────────────────────────
 
-log "─── Update started ───────────────────────────────────────────"
+log "─── Update started ───────────────────────────────────────"
 
 NEEDS_REBOOT=0
 
@@ -252,7 +255,7 @@ if [[ -f /run/reboot-required ]]; then
 fi
 
 splash_status 100 "Finishing…"
-log "─── Update complete ──────────────────────────────────────────"
+log "─── Update complete ──────────────────────────────────────"
 
 if [[ "${NEEDS_REBOOT}" -eq 1 ]]; then
   log "Rebooting in 10 seconds…"
