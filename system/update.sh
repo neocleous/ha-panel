@@ -5,7 +5,7 @@
 #
 #  Order of operations:
 #    1. Screen off
-#    2. apt upgrade
+#    2. apt full-upgrade (fully unattended, conffile prompts suppressed)
 #    3. rpi-eeprom update
 #    4. pip upgrade (venv)
 #    5. Protect sensor-config.py  ← before git
@@ -28,6 +28,14 @@ LOG_FILE="/var/log/ha-panel-update.log"
 
 log()  { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "${LOG_FILE}"; }
 err()  { echo "$(date '+%Y-%m-%d %H:%M:%S') ERROR: $*" | tee -a "${LOG_FILE}" >&2; }
+
+# Fully unattended apt: never prompt, keep existing conffiles on conflict
+# (--force-confdef prefers the default action; --force-confold keeps the
+#  local file when there is no default — together they suppress every
+#  interactive dpkg conffile question).
+APT_OPTS=(-y -qq
+  -o "Dpkg::Options::=--force-confdef"
+  -o "Dpkg::Options::=--force-confold")
 
 # ── Backlight helpers ─────────────────────────────────────────────────────────
 
@@ -128,6 +136,16 @@ restore_repo_ownership() {
   fi
 }
 
+# ── Kernel change detection ───────────────────────────────────────────────────
+
+kernel_fingerprint() {
+  # Version fingerprint of every installed kernel package. Compared before
+  # and after the upgrade — any change means a new kernel was installed and
+  # a reboot is required to run it.
+  dpkg-query -W 'linux-image*' 'raspberrypi-kernel*' 'rpi-kernel*' 2>/dev/null \
+    | sort | md5sum | cut -d' ' -f1
+}
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 log "─── Update started ───────────────────────────────────────"
@@ -137,11 +155,15 @@ NEEDS_REBOOT=0
 # 1. Screen off
 screen_off
 
-# 2. apt upgrade
-log "Running apt upgrade…"
+# 2. apt full-upgrade — dist-upgrade so packages needing new/removed
+#    dependencies (kernel-related on Pi OS) are never held back.
+log "Running apt full-upgrade…"
+KERNEL_BEFORE="$(kernel_fingerprint)"
 apt-get update -qq >> "${LOG_FILE}" 2>&1 || err "apt-get update failed"
-DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq >> "${LOG_FILE}" 2>&1 || err "apt-get upgrade failed"
-log "apt upgrade complete."
+DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade "${APT_OPTS[@]}" >> "${LOG_FILE}" 2>&1 || err "apt-get dist-upgrade failed"
+DEBIAN_FRONTEND=noninteractive apt-get autoremove --purge "${APT_OPTS[@]}" >> "${LOG_FILE}" 2>&1 || err "apt-get autoremove failed"
+KERNEL_AFTER="$(kernel_fingerprint)"
+log "apt full-upgrade complete."
 
 # 3. rpi-eeprom
 log "Checking rpi-eeprom…"
@@ -179,12 +201,18 @@ restore_sensor_config_link
 log "Restarting sensor-daemon…"
 systemctl restart sensor-daemon >> "${LOG_FILE}" 2>&1 || err "sensor-daemon restart failed"
 
-# 8. Reboot if kernel or eeprom changed
-CURRENT_KERNEL="$(uname -r)"
-INSTALLED_KERNEL="$(ls /boot/firmware/kernel*.img 2>/dev/null | head -1 || true)"
-# Simple heuristic: if apt upgraded a kernel package, reboot
-if apt-get --simulate upgrade 2>/dev/null | grep -q "linux-image"; then
-  log "Kernel upgrade pending — reboot required."
+# 8. Reboot if a kernel was installed, the running kernel's modules are gone,
+#    the system requests it, or the eeprom changed (flag set above).
+if [[ "${KERNEL_BEFORE}" != "${KERNEL_AFTER}" ]]; then
+  log "Kernel package changed during upgrade — reboot required."
+  NEEDS_REBOOT=1
+fi
+if [[ ! -d "/lib/modules/$(uname -r)" ]]; then
+  log "Running kernel's modules directory removed by upgrade — reboot required."
+  NEEDS_REBOOT=1
+fi
+if [[ -f /run/reboot-required ]]; then
+  log "/run/reboot-required present — reboot required."
   NEEDS_REBOOT=1
 fi
 
