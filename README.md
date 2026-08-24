@@ -1,263 +1,82 @@
-# HA Panel
+# Home Assistant Touch Panel
 
-Wall-mounted Home Assistant touch panel built on Raspberry Pi 5 with a Waveshare 8" DSI display.
+A desk-mounted Home Assistant touch panel, vibe coded from start to finish — the software in this repo was written end-to-end by an AI assistant (Claude) in conversation with the maintainer, hardware debugging included. Read it with that in mind; it runs a real panel every day, but nobody hand-crafted it.
 
-HA runs on a separate server. Each panel is a pure display and sensor client — no HAOS on the panel itself.
+Built on a Raspberry Pi 5 with a Waveshare 8" DSI touchscreen, environmental sensors, capacitive touch buttons, and a 3D-printable desk-stand enclosure ([STEP file](https://github.com/neocleous/ha-panel/blob/docs/enclosure/HA%20Panel%20Final.step) on the `docs` branch). Home Assistant runs on a separate server — each panel is a pure display and sensor client, no HAOS on the panel itself.
 
----
+## What it does
+
+- **Kiosk dashboard** — Chromium in app mode under labwc (Wayland), portrait, no window chrome, with a working on-screen keyboard (squeekboard)
+- **Screen sleep** — backlight off after touch inactivity; the wake tap is swallowed via an evdev grab so it never presses anything in the UI
+- **Auto-brightness** — backlight follows ambient light from the VEML6030, delivered over MQTT
+- **Dark mode** — follows sunset/sunrise via a retained MQTT topic published by an HA automation; Chromium restarts with `--force-dark-mode`
+- **Environmental sensors** — temperature, humidity, pressure, VOC (BME680) and ambient light, auto-registered in HA via MQTT discovery
+- **Physical buttons** — four capacitive touch buttons (AT42QT1070 on a custom PCB) that work even with the screen asleep
+- **Self-updating** — nightly systemd timer runs a full unattended OS + firmware + repo update, showing a progress splash if anyone touches the screen mid-update
+- **Zero-touch provisioning** — the [Panel Setup](tools/panel-setup/) app writes first-boot files to a freshly flashed SD card; the panel installs itself and boots into the dashboard in ~10 minutes
 
 ## Hardware
 
 | Component | Part |
 |-----------|------|
-| Compute | Raspberry Pi 5 (4GB) |
-| Display | Waveshare 8inch DSI LCD (C), 1280×800 IPS |
-| Touch controller | AT42QT1070 (custom PCB, I2C, 4 buttons) |
-| Temp / humidity / pressure / VOC | BME680 breakout (I2C 0x76) |
-| Proximity (screen wake) | VL53L0X breakout (I2C 0x29) |
-| Ambient light | VEML6030 breakout (I2C 0x10) |
-| Power | USB-C (Adafruit USB Type C Vertical Breakout or custom power board) |
+| Compute | Raspberry Pi 5 (4 GB) |
+| Display | Waveshare 8inch DSI LCD (C), 1280×800 IPS, portrait |
+| Touch buttons | AT42QT1070 on a custom PCB (I2C 0x1B, 4 capacitive electrodes) |
+| Temp / humidity / pressure / VOC | BME680 breakout (I2C 0x77) |
+| Ambient light | VEML6030 breakout (I2C 0x48) |
+| Proximity | VL53L0X breakout (I2C 0x29) |
+| Power | USB-C (Adafruit USB Type C vertical breakout) |
+| Enclosure | 3D-printed desk stand — STEP on the `docs` branch |
 
-All sensors connect directly to the Pi's I2C bus 1. No sensors are on the touch PCB.
+All sensors sit on the Pi's I2C bus 1. The sensor cluster lives at the base of the stand, ventilated top-to-bottom, away from display/Pi heat.
 
----
+## Deploying a panel
+
+The easy way — **[Panel Setup](tools/panel-setup/)** (macOS / Windows / Linux, single binary, no dependencies):
+
+1. Flash Raspberry Pi OS Lite (64-bit) with Raspberry Pi Imager — **no** Imager customisation
+2. Run Panel Setup, fill the form (it tests your MQTT credentials against the broker before letting you write)
+3. It writes `userconf.txt` + `firstrun.sh` to the SD card
+4. Insert, power on, wait ~10 minutes — the panel installs everything and boots into your dashboard
+
+Binaries on the [Releases page](../../releases); build details and the unsigned-app first-run notes are in [tools/panel-setup/README.md](tools/panel-setup/README.md).
+
+The manual way — SSH install with `system/install.sh` — is documented in [system/README.md](system/README.md).
 
 ## Repository layout
 
 ```
 ha-panel/
-├── sensor-daemon/
-│   ├── main.py              # MQTT discovery + I2C polling loop
-│   ├── config.py            # Your local config — NOT committed (see .gitignore)
-│   ├── config.example.py    # Template — copy to config.py and fill in values
-│   ├── backlight.py         # sysfs backlight control
-│   ├── requirements.txt
-│   └── sensors/
-│       ├── at42qt1070.py    # Touch buttons (KEY0–KEY3)
-│       ├── bme680.py        # Temp / humidity / pressure / VOC
-│       ├── vl53l0x.py       # Proximity (ToF)
-│       └── veml6030.py      # Ambient light
-├── provisioning-ui/
-│   ├── index.html           # Wi-Fi network list
-│   ├── password.html        # Password entry + on-screen keyboard
-│   └── server.py            # Local HTTP server (port 8080)
-└── system/
-    ├── install.sh           # Full install script for a new panel
-    ├── startup.sh           # Kiosk startup: writes labwc config, launches labwc
-    ├── update.sh            # Nightly update script
-    ├── panel-update.timer   # systemd timer (2am)
-    ├── panel-update.service
-    └── sensor-daemon.service
+├── sensor-daemon/        # MQTT discovery + I2C polling (systemd service)
+│   └── sensors/          # AT42QT1070, BME680, VL53L0X, VEML6030 drivers
+├── system/               # Kiosk stack: startup.sh, screen-sleep.py,
+│                         # nightly update.sh + timer, update splash
+├── provisioning-ui/      # On-device touchscreen setup wizard
+└── tools/panel-setup/    # Cross-platform SD-card preparation app (Go)
 ```
 
----
+Per-panel state lives outside the repo on the device (`/opt/ha-panel/config` and `/opt/ha-panel/sensor-config.py`) and survives the nightly `git reset --hard`. **Never commit credentials to this repo.**
 
-## Configuration
-
-Before running the sensor daemon, copy the example config and fill in your values:
-
-```bash
-cp /opt/ha-panel/repo/sensor-daemon/config.example.py \
-   /opt/ha-panel/repo/sensor-daemon/config.py
-nano /opt/ha-panel/repo/sensor-daemon/config.py
-```
-
-Set at minimum:
-- `PANEL_ID` — must match the hostname (e.g. `panel-01`)
-- `MQTT_BROKER` — your HA server IP
-- `MQTT_USERNAME` / `MQTT_PASSWORD` — MQTT credentials from HA
-
-The HA dashboard URL is set in `/opt/ha-panel/config`:
-
-```bash
-HA_URL=http://YOUR_HA_IP:8123
-```
-
-**Never commit `config.py` to the repo.** It is listed in `.gitignore`.
-
----
-
-## Deploying a new panel
-
-### Step 1 — Flash SD card
-
-Use [Raspberry Pi Imager](https://www.raspberrypi.com/software/) with these settings:
-
-| Setting | Value |
-|---------|-------|
-| OS | Raspberry Pi OS Lite (64-bit) |
-| Hostname | `panel-01` (increment for each panel) |
-| Username | *(your chosen username)* |
-| Password | *(your chosen password)* |
-| SSH | Enable — password authentication |
-| Wi-Fi | Configure your network |
-| Locale | Set your timezone and keyboard layout |
-
-### Step 2 — Boot and SSH in
-
-Insert the SD card, connect the DSI display, and power on. Wait ~60 seconds for first boot, then SSH in:
-
-```bash
-ssh yourusername@panel-01.local
-# or use the IP address if mDNS isn't available
-```
-
-### Step 3 — Run the install script
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/neocleous/ha-panel/main/system/install.sh \
-  -o /tmp/install.sh && sudo bash /tmp/install.sh
-```
-
-The script will:
-
-1. Detect your username automatically
-2. Install all required packages
-3. Configure the display overlay, I2C, Bluetooth disable, and autologin
-4. Clone the repo to `/opt/ha-panel/repo`
-5. Set up the Python venv
-6. Configure the firewall
-7. Offer to reboot
-
-### Step 4 — Configure the panel
-
-After the install, copy and edit the sensor daemon config:
-
-```bash
-cp /opt/ha-panel/repo/sensor-daemon/config.example.py \
-   /opt/ha-panel/repo/sensor-daemon/config.py
-nano /opt/ha-panel/repo/sensor-daemon/config.py
-```
-
-Then create the panel config file:
-
-```bash
-sudo nano /opt/ha-panel/config
-```
-
-Add:
-
-```
-HA_URL=http://YOUR_HA_IP:8123
-```
-
-Then reboot. The panel will start automatically.
-
----
-
-## How it works
-
-### Display stack
+## How the kiosk works
 
 ```
 TTY1 autologin (.bash_profile)
   └── startup.sh
-        ├── Sources /opt/ha-panel/config
-        ├── Writes ~/.config/labwc/rc.xml  (touch mapping, window rules)
-        ├── Writes ~/.config/labwc/autostart  (squeekboard + chromium loop)
-        └── Launches labwc
-              ├── squeekboard  (on-screen keyboard)
-              └── chromium --app=HA_URL (kiosk, maximised, no decorations)
+        ├── sources /opt/ha-panel/config
+        ├── writes labwc rc.xml   (touch→output mapping, undecorated maximised windows)
+        ├── writes labwc autostart (screen-sleep, squeekboard, chromium loop)
+        └── exec labwc
+              ├── screen-sleep.py  (sleep/wake + auto-brightness + theme switch)
+              ├── squeekboard      (on-screen keyboard)
+              └── chromium --app=<HA dashboard>  (restarts on crash/theme/update)
 ```
 
-### Sensor daemon
-
-Runs as a system service (`sensor-daemon.service`). On startup it publishes MQTT discovery messages so all entities appear automatically in HA under the panel's device. It then polls sensors every ~5 seconds and publishes readings.
-
-Entities registered per panel:
-
-| Entity | Type |
-|--------|------|
-| Temperature | Sensor |
-| Humidity | Sensor |
-| Pressure | Sensor |
-| VOC | Sensor |
-| Light | Sensor |
-| Proximity | Sensor |
-| Button 0–3 | Binary sensor |
-| Backlight | Switch |
-
-MQTT topics follow the pattern: `home/{panel-id}/sensor/*`
-
-### Nightly updates
-
-A systemd timer fires at 2:00–2:05am. The update script:
-
-1. Turns the screen off
-2. Runs `apt upgrade`
-3. Updates `rpi-eeprom`
-4. Upgrades Python packages in the venv
-5. Pulls the latest repo via `git reset --hard origin/main`
-6. Reboots if the kernel or eeprom changed
-
-### Wi-Fi provisioning
-
-If the panel boots without a network connection, `startup.sh` starts the provisioning server on port 8080 and loads `http://localhost:8080` in Chromium instead of HA.
-
----
+MQTT topics follow `home/<panel-id>/…`; the fleet-wide dark-mode topic is `home/panels/theme`.
 
 ## SSH access
 
-Each panel accepts SSH from the local network only (firewall rule: `192.168.1.0/24`).
-
-```bash
-ssh yourusername@panel-01.local
-ssh yourusername@panel-02.local
-```
-
----
-
-## Adding a second panel to HA
-
-No manual HA configuration is needed. When the sensor daemon starts on a new panel it publishes MQTT discovery messages automatically. The new panel will appear in:
-
-**HA → Settings → Devices & Services → MQTT → Devices**
-
----
+Panels accept SSH from the local /24 only (nftables). `ssh you@panel-01.local`.
 
 ## Troubleshooting
 
-### Touchscreen not working after reboot
-
-Confirm autologin is active:
-
-```bash
-sudo raspi-config nonint get_autologin
-# Should return: 1
-```
-
-### On-screen keyboard not appearing
-
-Chromium must be launched with `--app=URL --start-maximized` (not `--kiosk`). Confirm:
-
-```bash
-pgrep -a chromium | grep "app="
-```
-
-### Sensor daemon not connecting to MQTT
-
-Check the service logs:
-
-```bash
-sudo journalctl -u sensor-daemon --no-pager | tail -30
-```
-
-Verify the MQTT credentials in `sensor-daemon/config.py` match those in your HA MQTT integration.
-
-### Backlight not controlled
-
-Find the correct sysfs path:
-
-```bash
-ls /sys/class/backlight/
-```
-
-Update `BACKLIGHT_PATH` in `sensor-daemon/config.py` to match.
-
-### Display not turning on
-
-Verify the correct overlay is set in `/boot/firmware/config.txt`:
-
-```
-dtoverlay=vc4-kms-dsi-waveshare-panel,8_0_inch
-```
+First stops: `/var/log/ha-panel-startup.log` on the panel, `journalctl -u sensor-daemon`, `/var/log/ha-panel-update.log` for the nightly update, and `firstrun.log` on the SD card's boot partition if first boot fails. More in [system/README.md](system/README.md).
