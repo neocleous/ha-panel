@@ -141,7 +141,7 @@ wlr-randr --output "${PANEL_OUTPUT}" --transform ${rot} || true
 # is held under an evdev grab and swallowed, so it never presses anything in
 # the UI). While awake, brightness follows ambient lux from the sensor daemon
 # over MQTT — tunables in ${SENSOR_CONFIG} (see screen-sleep.py header).
-# The daemon also watches the retained MQTT theme topic and toggles the
+# The daemon also watches the retained MQTT theme topics and toggles the
 # /tmp/panel-dark marker + restarts chromium on day/night changes.
 # Run with the venv python so paho-mqtt is importable (evdev comes through
 # --system-site-packages); falls back to system python = fixed brightness.
@@ -158,15 +158,18 @@ SS_PY="${VENV_PY}"
 # On-screen keyboard
 squeekboard &
 
-# Chromium kiosk loop — restarts on crash, and when screen-sleep.py kills it
-# to flip the theme. The /tmp/panel-dark marker (managed via the retained
-# MQTT theme topic) adds --force-dark-mode, which makes chromium report
-# prefers-color-scheme: dark so HA renders its dark theme.
+# Chromium kiosk loop — restarts on crash, when screen-sleep.py kills it to
+# flip the theme, and when update.sh kills it to enter/leave the update
+# splash. Markers, both re-evaluated on every relaunch:
+#   /tmp/panel-dark        → add --force-dark-mode (dark theme via MQTT)
+#   /run/ha-panel-updating → show the local update splash instead of HA
 while true; do
   DARK_FLAG=""
   [ -f /tmp/panel-dark ] && DARK_FLAG="--force-dark-mode"
+  KIOSK_URL="${url}"
+  [ -f /run/ha-panel-updating ] && KIOSK_URL="file://${REPO_DIR}/system/update-splash.html"
   chromium \\
-    --app="${url}" \\
+    --app="\${KIOSK_URL}" \\
     --start-maximized \\
     --noerrdialogs \\
     --disable-infobars \\

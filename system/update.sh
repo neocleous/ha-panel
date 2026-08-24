@@ -4,7 +4,7 @@
 #  Triggered by panel-update.timer at 2:00–2:05am.
 #
 #  Order of operations:
-#    1. Screen off
+#    1. Screen off + switch kiosk to the update splash
 #    2. apt full-upgrade (fully unattended, conffile prompts suppressed)
 #    3. rpi-eeprom update
 #    4. pip upgrade (venv)
@@ -12,7 +12,14 @@
 #    6. git reset --hard origin/main
 #    7. Restore ownership + sensor-config.py symlink
 #    8. Reboot if kernel/eeprom changed
-#    9. Screen on
+#    9. Return kiosk to the dashboard; screen stays off until touched
+#
+#  Splash: /run/ha-panel-updating marks an update in progress — the chromium
+#  loop in labwc autostart shows system/update-splash.html while it exists.
+#  Progress is written to /run/ha-panel-update-status.js, which the splash
+#  polls once a second. The screen stays dark throughout (screen-sleep owns
+#  the backlight); anyone touching the panel mid-update wakes it onto the
+#  splash instead of what would look like a dead dashboard.
 # ──────────────────────────────────────────────────────────────────────────────
 
 set -euo pipefail
@@ -25,6 +32,8 @@ SENSOR_CONFIG_LINK="${REPO_DIR}/sensor-daemon/config.py"
 VENV="${PANEL_BASE}/venv"
 
 LOG_FILE="/var/log/ha-panel-update.log"
+UPDATE_MARKER="/run/ha-panel-updating"
+STATUS_JS="/run/ha-panel-update-status.js"
 
 log()  { echo "$(date '+%Y-%m-%d %H:%M:%S') $*" | tee -a "${LOG_FILE}"; }
 err()  { echo "$(date '+%Y-%m-%d %H:%M:%S') ERROR: $*" | tee -a "${LOG_FILE}" >&2; }
@@ -37,6 +46,32 @@ APT_OPTS=(-y -qq
   -o "Dpkg::Options::=--force-confdef"
   -o "Dpkg::Options::=--force-confold")
 
+# ── Splash helpers ────────────────────────────────────────────────────────────
+
+splash_status() {  # $1 = percent (0–100), $2 = one-line message
+  printf 'window.updateStatus={pct:%s,message:"%s",ts:%s};\n' \
+    "$1" "$2" "$(date +%s)" > "${STATUS_JS}" 2>/dev/null || true
+  chmod 644 "${STATUS_JS}" 2>/dev/null || true
+}
+
+splash_begin() {
+  touch "${UPDATE_MARKER}"
+  chmod 644 "${UPDATE_MARKER}" 2>/dev/null || true
+  splash_status 3 "Preparing…"
+  # Bounce chromium — the kiosk loop relaunches it onto the splash page
+  pkill -x chromium 2>/dev/null || true
+}
+
+splash_end() {
+  rm -f "${UPDATE_MARKER}" "${STATUS_JS}"
+  # Bounce chromium back to the dashboard
+  pkill -x chromium 2>/dev/null || true
+}
+
+# Always clear the splash on any exit (success, error, or reboot path —
+# /run is tmpfs so a reboot clears the files regardless).
+trap splash_end EXIT
+
 # ── Backlight helpers ─────────────────────────────────────────────────────────
 
 screen_off() {
@@ -45,15 +80,6 @@ screen_off() {
   if [[ -f "${bl_path}" ]]; then
     echo 0 > "${bl_path}" 2>/dev/null || true
     log "Screen off (${bl_path})"
-  fi
-}
-
-screen_on() {
-  local bl_path
-  bl_path="$(backlight_path)"
-  if [[ -f "${bl_path}" ]]; then
-    echo 200 > "${bl_path}" 2>/dev/null || true
-    log "Screen on (${bl_path})"
   fi
 }
 
@@ -136,7 +162,7 @@ restore_repo_ownership() {
   fi
 }
 
-# ── Kernel change detection ───────────────────────────────────────────────────
+# ── Kernel change detection ─────────────────────────────────────────────────────
 
 kernel_fingerprint() {
   # Version fingerprint of every installed kernel package. Compared before
@@ -146,26 +172,32 @@ kernel_fingerprint() {
     | sort | md5sum | cut -d' ' -f1
 }
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# ── Main ────────────────────────────────────────────────────────────────────
 
-log "─── Update started ───────────────────────────────────────"
+log "─── Update started ───────────────────────────────────────────"
 
 NEEDS_REBOOT=0
 
-# 1. Screen off
+# 1. Screen off + splash. The screen stays dark; a touch wakes it onto the
+#    update splash instead of a stale dashboard.
 screen_off
+splash_begin
 
 # 2. apt full-upgrade — dist-upgrade so packages needing new/removed
 #    dependencies (kernel-related on Pi OS) are never held back.
+splash_status 8 "Refreshing package lists…"
 log "Running apt full-upgrade…"
 KERNEL_BEFORE="$(kernel_fingerprint)"
 apt-get update -qq >> "${LOG_FILE}" 2>&1 || err "apt-get update failed"
+splash_status 15 "Upgrading system packages — this is the long part…"
 DEBIAN_FRONTEND=noninteractive apt-get dist-upgrade "${APT_OPTS[@]}" >> "${LOG_FILE}" 2>&1 || err "apt-get dist-upgrade failed"
+splash_status 55 "Removing obsolete packages…"
 DEBIAN_FRONTEND=noninteractive apt-get autoremove --purge "${APT_OPTS[@]}" >> "${LOG_FILE}" 2>&1 || err "apt-get autoremove failed"
 KERNEL_AFTER="$(kernel_fingerprint)"
 log "apt full-upgrade complete."
 
 # 3. rpi-eeprom
+splash_status 62 "Checking firmware…"
 log "Checking rpi-eeprom…"
 EEPROM_BEFORE="$(rpi-eeprom-update 2>/dev/null | grep 'CURRENT:' || true)"
 rpi-eeprom-update -a >> "${LOG_FILE}" 2>&1 || true
@@ -177,6 +209,7 @@ fi
 
 # 4. Python venv packages
 if [[ -d "${VENV}" && -f "${REPO_DIR}/sensor-daemon/requirements.txt" ]]; then
+  splash_status 72 "Updating Python components…"
   log "Upgrading Python packages…"
   "${VENV}/bin/pip" install --upgrade --quiet \
     -r "${REPO_DIR}/sensor-daemon/requirements.txt" >> "${LOG_FILE}" 2>&1 \
@@ -188,9 +221,10 @@ fi
 protect_sensor_config
 
 # 6. Pull latest repo
+splash_status 82 "Syncing panel software…"
 log "Pulling latest repo…"
-git -C "${REPO_DIR}" fetch --quiet origin >> "${LOG_FILE}" 2>&1 || { err "git fetch failed"; screen_on; exit 1; }
-git -C "${REPO_DIR}" reset --hard origin/main >> "${LOG_FILE}" 2>&1 || { err "git reset failed"; screen_on; exit 1; }
+git -C "${REPO_DIR}" fetch --quiet origin >> "${LOG_FILE}" 2>&1 || { err "git fetch failed"; exit 1; }
+git -C "${REPO_DIR}" reset --hard origin/main >> "${LOG_FILE}" 2>&1 || { err "git reset failed"; exit 1; }
 log "Repo updated to $(git -C "${REPO_DIR}" rev-parse --short HEAD)."
 
 # 7. Restore ownership + sensor config symlink after git reset
@@ -198,6 +232,7 @@ restore_repo_ownership
 restore_sensor_config_link
 
 # Restart sensor daemon to pick up any code changes
+splash_status 92 "Restarting services…"
 log "Restarting sensor-daemon…"
 systemctl restart sensor-daemon >> "${LOG_FILE}" 2>&1 || err "sensor-daemon restart failed"
 
@@ -216,13 +251,16 @@ if [[ -f /run/reboot-required ]]; then
   NEEDS_REBOOT=1
 fi
 
-log "─── Update complete ──────────────────────────────────────"
+splash_status 100 "Finishing…"
+log "─── Update complete ──────────────────────────────────────────"
 
 if [[ "${NEEDS_REBOOT}" -eq 1 ]]; then
   log "Rebooting in 10 seconds…"
   sleep 10
   reboot
 else
-  screen_on
-  log "Screen on — update complete, no reboot needed."
+  # Backlight deliberately left off — screen-sleep owns it and wakes the
+  # screen on the next touch. (Writing it on here would leave the panel lit
+  # all night while screen-sleep still holds its input grab.)
+  log "Update finished — kiosk returned to dashboard, screen off until touched."
 fi
