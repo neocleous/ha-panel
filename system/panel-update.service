@@ -5,6 +5,9 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/opt/ha-panel/repo/system/update.sh
+# Invoke via bash: commits made through the GitHub API are mode 100644 and
+# git reset strips any manually-set exec bit, so a direct ExecStart on the
+# script fails with status 203/EXEC. Same rule as the .bash_profile hook.
+ExecStart=/usr/bin/bash /opt/ha-panel/repo/system/update.sh
 StandardOutput=journal
 StandardError=journal
