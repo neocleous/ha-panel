@@ -10,7 +10,7 @@
 #    4. pip upgrade (venv)
 #    5. Protect sensor-config.py  ← before git
 #    6. git reset --hard origin/main
-#    7. Restore sensor-config.py symlink
+#    7. Restore ownership + sensor-config.py symlink
 #    8. Reboot if kernel/eeprom changed
 #    9. Screen on
 # ──────────────────────────────────────────────────────────────────────────────
@@ -115,6 +115,19 @@ restore_sensor_config_link() {
   log "Restored symlink: ${SENSOR_CONFIG_LINK} → ${SENSOR_CONFIG_CANON}"
 }
 
+restore_repo_ownership() {
+  # This script runs as root (apt/systemctl/reboot need it), so files written
+  # by git reset above are root-owned. The panel user must keep full control
+  # of the repo for manual deploys — restore ownership to whoever owns the
+  # panel base directory.
+  local owner
+  owner="$(stat -c '%U:%G' "${PANEL_BASE}" 2>/dev/null || true)"
+  if [[ -n "${owner}" && "${owner}" != "root:root" ]]; then
+    chown -R "${owner}" "${REPO_DIR}"
+    log "Repo ownership restored to ${owner}."
+  fi
+}
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 log "─── Update started ───────────────────────────────────────"
@@ -158,7 +171,8 @@ git -C "${REPO_DIR}" fetch --quiet origin >> "${LOG_FILE}" 2>&1 || { err "git fe
 git -C "${REPO_DIR}" reset --hard origin/main >> "${LOG_FILE}" 2>&1 || { err "git reset failed"; screen_on; exit 1; }
 log "Repo updated to $(git -C "${REPO_DIR}" rev-parse --short HEAD)."
 
-# 7. Restore sensor config symlink after git reset
+# 7. Restore ownership + sensor config symlink after git reset
+restore_repo_ownership
 restore_sensor_config_link
 
 # Restart sensor daemon to pick up any code changes
