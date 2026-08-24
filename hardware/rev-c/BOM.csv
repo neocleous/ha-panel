@@ -1,7 +1,0 @@
-Designator,Qty,Value,Package,Manufacturer,MPN,DigiKey PN,Notes
-U1,1,AT42QT1070-SSUR,SOIC-14,Microchip,AT42QT1070-SSUR,AT42QT1070-SSURCT-ND,Touch controller; I2C 0x1B; MODE tied to GND on PCB
-R1-R4,4,4.7k 1%,0402,Yageo,RC0402FR-074K7L,311-4.7KLRCT-ND,Series resistors in KEY0-KEY3 sense lines (datasheet 3.1)
-C1,1,100nF 16V X7R,0402,Samsung,CL05B104KO5NNNC,1276-1001-1-ND,VDD decoupling at U1
-C2,1,10uF 10V X5R,0603,Samsung,CL10A106KP8NNNC,1276-1192-1-ND,Bulk cap near HOST cluster
-J1-J4 (HOST/BME680/VL53L0X/VEML6030),16 pads,wire pads,2x3mm SMD,-,-,-,Not fitted parts; hand-solder harness wires (24 AWG power / 28 AWG signal)
-Consumable,1,Solder paste Sn63/Pb37 no-clean T4,15g syringe,Chip Quik,SMD291AXT4,SMD291AXT4-ND,Reflow paste; refrigerate 3-8C
