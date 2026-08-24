@@ -23,16 +23,20 @@ all are optional, defaults in brackets:
     AUTO_BRIGHTNESS = True     # [True]  False = fixed --on brightness
     BRIGHTNESS_MIN  = 15       # [15]    level at/below LUX_DARK
     BRIGHTNESS_MAX  = 255      # [255]   level at/above LUX_BRIGHT
-    LUX_DARK        = 2.0      # [2.0]   lux reading when the room feels dark
-    LUX_BRIGHT      = 150.0    # [150.0] lux reading in bright daylight —
-                               # the sensor sits at the column base and
-                               # under-reads vs the screen face; tune against
-                               # sensor.panel_XX_light, not a lux app
+    LUX_DARK        = 0.1      # [0.1]   lux reading when the room feels dark
+    LUX_BRIGHT      = 80.0     # [80.0]  lux reading in bright daylight
 
-Theme switch: subscribes to the retained topic <MQTT_TOPIC_ROOT>/theme
-(payload "dark" or "light", published by an HA automation on sunset/sunrise).
-On a change it writes/removes the /tmp/panel-dark marker and kills chromium;
-the kiosk loop in labwc autostart restarts chromium within seconds, adding
+    Defaults were measured on the real enclosure: the VEML6030 sits shaded
+    at the column base and reads only ~0.1–5 lx in normally lit rooms — far
+    below "typical" indoor lux tables. Tune against sensor.panel_XX_light
+    in HA, never against a phone lux app.
+
+Theme switch: subscribes to the retained shared topic home/panels/theme
+(payload "dark" or "light", published by a single HA automation on
+sunset/sunrise for the whole panel fleet) plus the per-panel topic
+<MQTT_TOPIC_ROOT>/theme for individual overrides. On a change it
+writes/removes the /tmp/panel-dark marker and kills chromium; the kiosk
+loop in labwc autostart restarts chromium within seconds, adding
 --force-dark-mode when the marker exists, which makes the browser report
 prefers-color-scheme: dark so HA renders its real dark theme. Duplicate
 retained messages are ignored (no restart unless the state actually flips).
@@ -68,6 +72,14 @@ from evdev import InputDevice, ecodes, list_devices
 # Minimum change (0–255 scale) before a new brightness level is written —
 # stops the backlight visibly hunting on small lux fluctuations.
 BRIGHTNESS_DEADBAND = 6
+
+# Auto-brightness anchor defaults — measured on the real enclosure (shaded
+# VEML6030 at the column base). Override per panel in sensor-config.py.
+DEFAULT_LUX_DARK = 0.1
+DEFAULT_LUX_BRIGHT = 80.0
+
+# Shared fleet-wide theme topic — one HA automation serves every panel.
+SHARED_THEME_TOPIC = "home/panels/theme"
 
 # Marker file checked by the chromium loop in labwc autostart on every
 # (re)launch: present = add --force-dark-mode. Lives in /tmp so a reboot
@@ -180,7 +192,7 @@ class MqttLink:
         topic_root = getattr(cfg, "MQTT_TOPIC_ROOT", f"home/{panel_id}")
         self.auto_brightness = bool(getattr(cfg, "AUTO_BRIGHTNESS", True))
         light_topic = f"{topic_root}/sensor/light"
-        theme_topic = f"{topic_root}/theme"
+        theme_topics = (f"{topic_root}/theme", SHARED_THEME_TOPIC)
 
         # client_id MUST differ from the sensor daemon's (which uses PANEL_ID)
         # — identical ids make the broker disconnect the other client in a loop.
@@ -196,8 +208,10 @@ class MqttLink:
 
         def on_connect(c, userdata, flags, rc, *args):
             if rc == 0:
-                c.subscribe([(light_topic, 0), (theme_topic, 0)])
-                log(f"mqtt connected, subscribed {light_topic}, {theme_topic}")
+                subs = [(light_topic, 0)] + [(t, 0) for t in theme_topics]
+                c.subscribe(subs)
+                log(f"mqtt connected, subscribed {light_topic}, "
+                    f"{', '.join(theme_topics)}")
             else:
                 log(f"mqtt connect failed rc={rc}")
 
@@ -206,7 +220,7 @@ class MqttLink:
                 payload = msg.payload.decode()
             except UnicodeDecodeError:
                 return
-            if msg.topic == theme_topic:
+            if msg.topic in theme_topics:
                 apply_theme(payload)
                 return
             try:
@@ -239,8 +253,8 @@ def make_brightness_fn(cfg, link, fallback):
     """Return a zero-arg function giving the current target brightness."""
     bmin = int(getattr(cfg, "BRIGHTNESS_MIN", 15)) if cfg else fallback
     bmax = int(getattr(cfg, "BRIGHTNESS_MAX", 255)) if cfg else fallback
-    ldark = float(getattr(cfg, "LUX_DARK", 2.0)) if cfg else 2.0
-    lbright = float(getattr(cfg, "LUX_BRIGHT", 150.0)) if cfg else 150.0
+    ldark = float(getattr(cfg, "LUX_DARK", DEFAULT_LUX_DARK)) if cfg else DEFAULT_LUX_DARK
+    lbright = float(getattr(cfg, "LUX_BRIGHT", DEFAULT_LUX_BRIGHT)) if cfg else DEFAULT_LUX_BRIGHT
     if ldark <= 0:
         ldark = 0.1
     if lbright <= ldark:
