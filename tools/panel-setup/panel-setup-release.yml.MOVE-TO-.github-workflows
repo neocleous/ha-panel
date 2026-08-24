@@ -1,0 +1,75 @@
+# ⚠ MOVE THIS FILE — it must live at .github/workflows/panel-setup-release.yml
+#
+# The GitHub API token used to push this commit lacks the 'workflow' scope,
+# so it cannot create files under .github/workflows/ directly. To activate:
+#   1. Open this file on github.com and click the pencil (Edit)
+#   2. In the filename box, change the path to:
+#        .github/workflows/panel-setup-release.yml
+#      (type ../../.github/workflows/panel-setup-release.yml to move up)
+#   3. Commit. Then delete nothing else — the rename IS the move.
+# After that, push a tag like setup-v1.0.0 (or run it from the Actions tab).
+
+name: Build Panel Setup
+on:
+  push:
+    tags: ["setup-v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: tools/panel-setup
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.22"
+
+      - name: Test
+        run: go vet ./... && go test ./...
+
+      - name: Build macOS app (universal)
+        run: |
+          GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o /tmp/ps-arm64 .
+          GOOS=darwin GOARCH=amd64 go build -ldflags="-s -w" -o /tmp/ps-amd64 .
+          go install github.com/randall77/makefat@latest
+          "$(go env GOPATH)/bin/makefat" /tmp/ps-universal /tmp/ps-arm64 /tmp/ps-amd64
+          mkdir -p "/tmp/app/Panel Setup.app/Contents/MacOS"
+          cp Info.plist "/tmp/app/Panel Setup.app/Contents/"
+          cp /tmp/ps-universal "/tmp/app/Panel Setup.app/Contents/MacOS/PanelSetup"
+          chmod +x "/tmp/app/Panel Setup.app/Contents/MacOS/PanelSetup"
+          (cd /tmp/app && zip -r -X "$GITHUB_WORKSPACE/PanelSetup-mac.zip" "Panel Setup.app")
+
+      - name: Build Windows and Linux
+        run: |
+          GOOS=windows GOARCH=amd64 go build -ldflags="-s -w -H=windowsgui" -o "$GITHUB_WORKSPACE/PanelSetup-windows.exe" .
+          GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o /tmp/PanelSetup-linux .
+          GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o /tmp/PanelSetup-linux-arm64 .
+          chmod +x /tmp/PanelSetup-linux /tmp/PanelSetup-linux-arm64
+          tar -czf "$GITHUB_WORKSPACE/PanelSetup-linux-x64.tar.gz" -C /tmp PanelSetup-linux
+          tar -czf "$GITHUB_WORKSPACE/PanelSetup-linux-arm64.tar.gz" -C /tmp PanelSetup-linux-arm64
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: panel-setup-all-platforms
+          path: |
+            PanelSetup-mac.zip
+            PanelSetup-windows.exe
+            PanelSetup-linux-x64.tar.gz
+            PanelSetup-linux-arm64.tar.gz
+
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            PanelSetup-mac.zip
+            PanelSetup-windows.exe
+            PanelSetup-linux-x64.tar.gz
+            PanelSetup-linux-arm64.tar.gz
