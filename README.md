@@ -17,6 +17,8 @@ Built on a Raspberry Pi 5 with a Waveshare 8" DSI touchscreen, environmental sen
 
 ## Hardware
 
+Full parts list with sourcing links: **[BOM.md](BOM.md)**
+
 | Component | Part |
 |-----------|------|
 | Compute | Raspberry Pi 5 (4 GB) |
