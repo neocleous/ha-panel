@@ -10,7 +10,7 @@ Everything needed to build one panel. Prices are what the maintainer paid (CHF, 
 | Waveshare 8inch DSI LCD (C) 1280×800 | 1 | Waveshare / reseller | Includes DSI cable |
 | microSD card, 16 GB+ (A1/A2) | 1 | — | The OS + software use well under 8 GB |
 | USB-C power supply, 5 V / 5 A | 1 | — | Official Pi 5 PSU recommended |
-| Adafruit USB Type C vertical breakout | 1 | Adafruit / [Kiwi Electronics](https://www.kiwi-electronics.com) | Panel-mount power inlet in the stand |
+| Adafruit USB Type C Vertical Breakout — Downstream ([#5993](https://www.adafruit.com/product/5993)) | 1 | Adafruit / [Kiwi Electronics](https://www.kiwi-electronics.com/en/adafruit-usb-type-c-vertical-breakout-downstream-connection-20411) | Panel-mount power inlet in the stand; CC resistors onboard |
 
 ## Sensor breakouts (AliExpress)
 
@@ -28,7 +28,7 @@ Custom 100×44 mm 2-layer board with four Ø12 mm capacitive electrodes under so
 
 | Part | Qty | DigiKey P/N | Notes |
 |---|---|---|---|
-| AT42QT1070-SSUR touch controller | 1 | AT42QT1070-SSUR-ND | SOIC-14. **MODE pin (2) must be tied to GND** for I2C — floating = dead chip |
+| AT42QT1070-SSUR touch controller | 1 | AT42QT1070-SSURCT-ND | SOIC-14. **MODE pin (2) must be tied to GND** for I2C — floating = dead chip |
 | 4.7 kΩ 0402 (KEY line ESD series R) | 4 | RC0402FR-074K7L | Per datasheet §3.1 |
 | 100 nF 0402 | 1 | CL05B104KO5NNNC | Decoupling |
 | 10 µF 0603 | 1 | CL10A106KP8NNNC | Bulk |
