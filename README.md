@@ -13,7 +13,7 @@ Built on a Raspberry Pi 5 with a Waveshare 8" DSI touchscreen, environmental sen
 - **Environmental sensors** — temperature, humidity, pressure, VOC (BME680) and ambient light, auto-registered in HA via MQTT discovery
 - **Physical buttons** — four capacitive touch buttons (AT42QT1070 on a custom PCB) that work even with the screen asleep
 - **Self-updating** — nightly systemd timer runs a full unattended OS + firmware + repo update, showing a progress splash if anyone touches the screen mid-update
-- **Zero-touch provisioning** — the [Panel Setup](tools/panel-setup/) app writes first-boot files to a freshly flashed SD card; the panel installs itself and boots into the dashboard in ~10 minutes
+- **Zero-touch provisioning** — the [Panel Setup](tools/panel-setup/) app writes first-boot files to a freshly flashed SD card; the panel installs itself and boots into the dashboard in 10–15 minutes (two reboots)
 
 ## Hardware
 
@@ -38,8 +38,8 @@ The easy way — **[Panel Setup](tools/panel-setup/)** (macOS / Windows / Linux,
 
 1. Flash Raspberry Pi OS Lite (64-bit) with Raspberry Pi Imager — **no** Imager customisation
 2. Run Panel Setup, fill the form (it tests your MQTT credentials against the broker before letting you write)
-3. It writes `userconf.txt` + `firstrun.sh` to the SD card
-4. Insert, power on, wait ~10 minutes — the panel installs everything and boots into your dashboard
+3. It writes `userconf.txt`, `firstrun.sh` and the first-boot hook in `cmdline.txt` to the SD card
+4. Insert, power on, wait 10–15 minutes. The first boot configures the panel and reboots; the second installs everything (progress on screen) and reboots into your dashboard. Logs: `firstrun.log` and `firstboot.log` on the SD card — details in [tools/panel-setup/README.md](tools/panel-setup/README.md#what-the-first-boot-does)
 
 Binaries on the [Releases page](../../releases); build details and the unsigned-app first-run notes are in [tools/panel-setup/README.md](tools/panel-setup/README.md).
 
@@ -81,7 +81,7 @@ Panels accept SSH from the local /24 only (nftables). `ssh you@panel-01.local`.
 
 ## Troubleshooting
 
-First stops: `/var/log/ha-panel-startup.log` on the panel, `journalctl -u sensor-daemon`, `/var/log/ha-panel-update.log` for the nightly update, and `firstrun.log` on the SD card's boot partition if first boot fails. More in [system/README.md](system/README.md).
+First stops: `/var/log/ha-panel-startup.log` on the panel, `journalctl -u sensor-daemon`, `/var/log/ha-panel-update.log` for the nightly update, and `firstrun.log` / `firstboot.log` on the SD card's boot partition if first boot fails. More in [system/README.md](system/README.md).
 
 ## License
 

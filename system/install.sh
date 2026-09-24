@@ -9,6 +9,10 @@
 #
 #  (Must be saved to a file first — piping to sudo bash breaks read prompts.)
 #
+#  Unattended (used by Panel Setup's first boot, part 2 — no prompts, no reboot):
+#
+#    sudo bash install.sh --unattended --user <panel-user>
+#
 #  What this script does:
 #    1. Verify platform and root
 #    2. Confirm or change hostname / panel ID
@@ -39,6 +43,24 @@
 # ──────────────────────────────────────────────────────────────────────────────
 
 set -euo pipefail
+
+# ── Arguments ─────────────────────────────────────────────────────────────────
+
+UNATTENDED=0
+ARG_USER=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --unattended) UNATTENDED=1 ;;
+    --user)       ARG_USER="${2:-}"; shift ;;
+    -h|--help)    echo "Usage: sudo bash install.sh [--unattended --user USER]"; exit 0 ;;
+    *)            echo "Unknown option: $1" >&2; exit 2 ;;
+  esac
+  shift
+done
+if [[ ${UNATTENDED} -eq 1 && -z "${ARG_USER}" ]]; then
+  echo "--unattended needs --user USER (there is no login session to take it from)" >&2
+  exit 2
+fi
 
 REPO_URL="https://github.com/neocleous/ha-panel.git"
 PANEL_BASE="/opt/ha-panel"
@@ -80,18 +102,28 @@ if [[ "$(uname -m)" != "aarch64" ]]; then
   exit 1
 fi
 
-# Detect calling user (works correctly inside sudo)
-PANEL_USER="$(logname 2>/dev/null || echo "${SUDO_USER:-pi}")"
-PANEL_HOME="$(getent passwd "${PANEL_USER}" | cut -d: -f6)"
+# Panel user: --user, else the calling user (works correctly inside sudo)
+if [[ -n "${ARG_USER}" ]]; then
+  PANEL_USER="${ARG_USER}"
+else
+  PANEL_USER="$(logname 2>/dev/null || echo "${SUDO_USER:-pi}")"
+fi
 
-if [[ -z "${PANEL_USER}" ]]; then
-  err "Could not detect calling user. Run with sudo from your user account."
+if [[ -z "${PANEL_USER}" ]] || ! getent passwd "${PANEL_USER}" > /dev/null; then
+  err "Could not detect the panel user (got '${PANEL_USER}'). Run with sudo from your user account, or pass --user."
   exit 1
 fi
+PANEL_HOME="$(getent passwd "${PANEL_USER}" | cut -d: -f6)"
+
+# raspi-config takes the user it configures (autologin) from SUDO_USER; under
+# systemd (unattended) there is no sudo to set it.
+export SUDO_USER="${PANEL_USER}"
 
 # ── Banner ────────────────────────────────────────────────────────────────────
 
-clear
+if [[ ${UNATTENDED} -eq 0 ]]; then
+  clear
+fi
 echo
 echo -e "${BOLD}  HA Panel — Install (V2)${RESET}"
 echo -e "  ${DIM}Installing as user: ${PANEL_USER}  |  Home: ${PANEL_HOME}${RESET}"
@@ -103,8 +135,12 @@ step "Panel hostname"
 CURRENT_HOSTNAME="$(hostname)"
 echo
 echo -e "  Current hostname: ${BOLD}${CURRENT_HOSTNAME}${RESET}"
-read -r -p "  Change it? Enter new hostname or press Enter to keep [${CURRENT_HOSTNAME}]: " NEW_HOSTNAME
-NEW_HOSTNAME="${NEW_HOSTNAME:-${CURRENT_HOSTNAME}}"
+if [[ ${UNATTENDED} -eq 1 ]]; then
+  NEW_HOSTNAME="${CURRENT_HOSTNAME}"   # set by the first boot, part 1
+else
+  read -r -p "  Change it? Enter new hostname or press Enter to keep [${CURRENT_HOSTNAME}]: " NEW_HOSTNAME
+  NEW_HOSTNAME="${NEW_HOSTNAME:-${CURRENT_HOSTNAME}}"
+fi
 
 if [[ "${NEW_HOSTNAME}" != "${CURRENT_HOSTNAME}" ]]; then
   if ! [[ "${NEW_HOSTNAME}" =~ ^[a-z0-9-]+$ ]]; then
@@ -221,8 +257,10 @@ mkdir -p "${PANEL_BASE}"
 
 if [[ -d "${REPO_DIR}/.git" ]]; then
   info "Repo already cloned — pulling latest…"
-  git -C "${REPO_DIR}" fetch --quiet origin
-  git -C "${REPO_DIR}" reset --hard origin/main
+  # safe.directory: after a first run the repo belongs to ${PANEL_USER}, and
+  # root's git refuses a repo it does not own (the same trap update.sh hit)
+  git -c safe.directory="${REPO_DIR}" -C "${REPO_DIR}" fetch --quiet origin
+  git -c safe.directory="${REPO_DIR}" -C "${REPO_DIR}" reset --hard origin/main
   success "Repo updated"
 else
   info "Cloning repo…"
@@ -412,6 +450,11 @@ APT
 success "Unattended upgrades configured"
 
 # ── Done ──────────────────────────────────────────────────────────────────────
+
+if [[ ${UNATTENDED} -eq 1 ]]; then
+  success "Install complete (unattended) — the caller reboots"
+  exit 0
+fi
 
 echo
 echo -e "  ${DIM}$(printf '─%.0s' $(seq 1 50))${RESET}"

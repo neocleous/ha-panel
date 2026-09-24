@@ -1,14 +1,28 @@
 // HA Panel Setup — self-contained SD-card preparation tool.
 // Single static binary, no runtime dependencies. Serves a browser UI on
-// http://127.0.0.1:8377 and writes userconf.txt + firstrun.sh straight to a
-// mounted Pi OS boot partition.
+// http://127.0.0.1:8377 and writes three things to a freshly flashed Pi OS
+// Lite boot partition: userconf.txt, firstrun.sh, and the systemd.run= hook in
+// cmdline.txt that makes the first boot run firstrun.sh.
+//
+// The first boot has two parts (templates.go):
+//   - part 1, firstrun.sh, runs once under systemd.run= — early, with NO
+//     network. It writes the panel's own files and arms part 2, removes the
+//     hook and itself, and reboots.
+//   - part 2, panel-firstboot.service, runs on the next boot after
+//     network-online.target: clone, system/install.sh --unattended, reboot
+//     into the kiosk. On a failure it stays armed and retries next boot.
 package main
 
 import (
 	"context"
+	"crypto/hmac"
 	"crypto/rand"
+	"crypto/sha1"
 	"crypto/sha512"
+	"encoding/binary"
+	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net"
 	"net/http"
@@ -16,8 +30,10 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"sort"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -89,6 +105,12 @@ func isBootfs(p string) bool {
 }
 
 func findBootfs() string {
+	if p := os.Getenv("PANEL_SETUP_BOOTFS"); p != "" { // an unusual mount point, and the tests
+		if isBootfs(p) {
+			return p
+		}
+		return ""
+	}
 	var candidates []string
 	switch runtime.GOOS {
 	case "darwin":
@@ -324,6 +346,99 @@ func sha512Crypt(password, salt string) string {
 	return "$6$" + salt + "$" + out.String()
 }
 
+// wpaPSK is the 256-bit WPA2 pre-shared key, PBKDF2-HMAC-SHA1(passphrase,
+// ssid, 4096, 32), as 64 hex digits — what wpa_passphrase prints and what a
+// NetworkManager keyfile accepts as psk=. The passphrase itself never has to be
+// escaped into a file on the card. (Standard library only: go.mod is 1.22,
+// which has no crypto/pbkdf2.)
+func wpaPSK(passphrase, ssid string) string {
+	prf := hmac.New(sha1.New, []byte(passphrase))
+	out := make([]byte, 0, 40)
+	for block := uint32(1); len(out) < 32; block++ {
+		prf.Reset()
+		prf.Write([]byte(ssid))
+		var ctr [4]byte
+		binary.BigEndian.PutUint32(ctr[:], block)
+		prf.Write(ctr[:])
+		u := prf.Sum(nil)
+		t := append([]byte(nil), u...)
+		for i := 1; i < 4096; i++ {
+			prf.Reset()
+			prf.Write(u)
+			u = prf.Sum(nil)
+			for k := range t {
+				t[k] ^= u[k]
+			}
+		}
+		out = append(out, t...)
+	}
+	return hex.EncodeToString(out[:32])
+}
+
+// ── Validation ───────────────────────────────────────────────────────────────────
+// Every value ends up in a shell script, a Python file or a kernel command line
+// on the card. Anything that could break one of those is refused here, before a
+// single byte is written.
+
+var (
+	reUsername = regexp.MustCompile(`^[a-z][a-z0-9-]{0,31}$`) // userconf-pi's own rule
+	reHostname = regexp.MustCompile(`^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$`)
+	reCountry  = regexp.MustCompile(`^[A-Z]{2}$`)
+	reTimezone = regexp.MustCompile(`^[A-Za-z_]+(/[A-Za-z0-9_+\-]+){1,2}$`)
+	reLocale   = regexp.MustCompile(`^[a-z]{2,3}_[A-Z]{2}\.UTF-8$`)
+	reURL      = regexp.MustCompile(`^https?://[^\s'"\\` + "`" + `]+$`)
+	reSSIDKey  = regexp.MustCompile(`^[A-Za-z0-9_.@+-]([A-Za-z0-9 _.@+-]*[A-Za-z0-9_.@+-])?$`)
+)
+
+type formData map[string]string
+
+// printable: no control characters, so no value can end a line or a heredoc.
+func printable(s string) bool {
+	for _, r := range s {
+		if r < 0x20 || r == 0x7f {
+			return false
+		}
+	}
+	return true
+}
+
+func validate(f formData) error {
+	port, perr := strconv.Atoi(f["mqtt_port"])
+	switch {
+	case !reUsername.MatchString(f["username"]) || f["username"] == "root":
+		return errors.New("Pi username: lower-case letters, digits and hyphens, starting with a letter, at most 32")
+	case f["pi_pass"] == "" || !printable(f["pi_pass"]):
+		return errors.New("Pi user password: required")
+	case !reHostname.MatchString(f["hostname"]):
+		return errors.New("hostname: lower-case letters, digits and hyphens")
+	case !reURL.MatchString(f["ha_url"]):
+		return errors.New("dashboard URL: http(s)://… with no spaces or quotes")
+	case f["mqtt_host"] == "" || !printable(f["mqtt_host"]) || strings.ContainsAny(f["mqtt_host"], " /"):
+		return errors.New("MQTT host: a hostname or IP address")
+	case perr != nil || port < 1 || port > 65535:
+		return errors.New("MQTT port: 1 to 65535")
+	case !printable(f["mqtt_user"]) || !printable(f["mqtt_pass"]) || f["mqtt_pass"] == "":
+		return errors.New("MQTT username/password: required, single line")
+	case !reTimezone.MatchString(f["timezone"]):
+		return errors.New("timezone: Area/City, e.g. Europe/Zurich")
+	case !reLocale.MatchString(f["locale"]):
+		return errors.New("locale: e.g. en_GB.UTF-8")
+	case !reURL.MatchString(f["repo_url"]):
+		return errors.New("repository URL: http(s)://… with no spaces or quotes")
+	}
+	if f["wifi_ssid"] != "" {
+		switch {
+		case len(f["wifi_ssid"]) > 32 || !printable(f["wifi_ssid"]):
+			return errors.New("Wi-Fi SSID: at most 32 characters")
+		case len(f["wifi_pass"]) < 8 || len(f["wifi_pass"]) > 63 || !printable(f["wifi_pass"]):
+			return errors.New("Wi-Fi password: 8 to 63 characters (WPA2)")
+		case !reCountry.MatchString(f["wifi_country"]):
+			return errors.New("Wi-Fi country: pick one — the radio stays blocked without it")
+		}
+	}
+	return nil
+}
+
 // ── File generation ────────────────────────────────────────────────────────────
 
 func shq(v string) string { return "'" + strings.ReplaceAll(v, "'", `'\''`) + "'" }
@@ -331,72 +446,117 @@ func pyq(v string) string {
 	return strings.ReplaceAll(strings.ReplaceAll(v, `\`, `\\`), `"`, `\"`)
 }
 
-type formData map[string]string
+// nmSSID is the SSID as a NetworkManager keyfile reads it: plain when that is
+// unambiguous, otherwise as its bytes — ssid= takes either (nm-settings-keyfile(5)).
+func nmSSID(s string) string {
+	if reSSIDKey.MatchString(s) {
+		return s
+	}
+	var b strings.Builder
+	for _, c := range []byte(s) {
+		b.WriteString(strconv.Itoa(int(c)) + ";")
+	}
+	return b.String()
+}
 
-func buildFiles(f formData) (map[string]string, error) {
+// uuid4 is a random RFC 4122 UUID, for the NetworkManager connection.
+func uuid4() string {
+	b := make([]byte, 16)
+	_, _ = rand.Read(b)
+	b[6] = b[6]&0x0f | 0x40
+	b[8] = b[8]&0x3f | 0x80
+	return fmt.Sprintf("%x-%x-%x-%x-%x", b[0:4], b[4:6], b[6:8], b[8:10], b[10:16])
+}
+
+// hookArgs is what cmdline.txt carries for the one boot that runs firstrun.sh —
+// Raspberry Pi Imager's own three words, with the path where Pi OS Bookworm and
+// later mount the boot partition. (Imager writes /boot/firstrun.sh and relies
+// on the initramfs's imager_fixup to rewrite it, at the cost of an extra
+// reboot; the direct path skips that.) Part 1 removes exactly these words.
+const hookArgs = "systemd.run=/boot/firmware/firstrun.sh systemd.run_success_action=reboot systemd.unit=kernel-command-line.target"
+
+// withHook appends the hook to cmdline.txt's single line, once.
+func withHook(cmdline string) string {
+	line := strings.TrimRight(cmdline, "\r\n")
+	if strings.Contains(line, "systemd.run=") {
+		return line + "\n"
+	}
+	return line + " " + hookArgs + "\n"
+}
+
+func buildFiles(f formData, now time.Time) (map[string]string, error) {
+	if err := validate(f); err != nil {
+		return nil, err
+	}
 	hostname := f["hostname"]
 	username := f["username"]
 	pwHash := sha512Crypt(f["pi_pass"], randSalt())
 	mqttHost := f["mqtt_host"]
 
-	subnet := "192.168.0.0/16"
-	parts := strings.Split(mqttHost, ".")
-	if len(parts) == 4 {
-		numeric := true
-		for _, p := range parts {
-			for _, c := range p {
-				if c < '0' || c > '9' {
-					numeric = false
-				}
-			}
-			if p == "" {
-				numeric = false
-			}
-		}
-		if numeric {
-			subnet = parts[0] + "." + parts[1] + "." + parts[2] + ".0/24"
-		}
-	}
-
-	generated := time.Now().Format("2006-01-02 15:04")
-
-	wifiBlock := "\n# Wi-Fi skipped — using ethernet.\n"
+	wifiBlock := "log \"Wi-Fi: none — Ethernet\"\n"
 	if f["wifi_ssid"] != "" {
 		wifiBlock = strings.NewReplacer(
-			"@SSID@", f["wifi_ssid"],
-			"@WPASS@", f["wifi_pass"],
-			"@WCOUNTRY@", f["wifi_country"],
+			"@UUID@", uuid4(),
+			"@SSID_NM@", nmSSID(f["wifi_ssid"]),
+			"@PSK@", wpaPSK(f["wifi_pass"], f["wifi_ssid"]),
+			"@COUNTRY@", f["wifi_country"],
 		).Replace(wifiTemplate)
 	}
 
+	firstboot := strings.NewReplacer(
+		"@USERNAME_SH@", shq(username),
+		"@REPOURL_SH@", shq(f["repo_url"]),
+	).Replace(firstbootScript)
+
 	firstrun := strings.NewReplacer(
-		"@GENERATED@", generated,
+		"@GENERATED@", now.Format("2006-01-02 15:04"),
 		"@HOSTNAME@", hostname,
-		"@USERNAME@", username,
-		"@PWHASH@", pwHash,
-		"@HAURL@", f["ha_url"],
-		"@MQTTHOST@", mqttHost,
-		"@MQTTPORT@", f["mqtt_port"],
+		"@USERNAME_SH@", shq(username),
+		"@HOSTNAME_SH@", shq(hostname),
+		"@PWHASH_SH@", shq(pwHash),
+		"@WIFIBLOCK@", wifiBlock,
 		"@TIMEZONE@", f["timezone"],
 		"@LOCALE@", f["locale"],
-		"@REPOURL@", f["repo_url"],
-		"@SUBNET@", subnet,
-		"@WIFIBLOCK@", wifiBlock,
-		"@HOSTNAME_SH@", shq(hostname),
 		"@HAURL_SH@", shq(f["ha_url"]),
 		"@MQTTHOST_SH@", shq(mqttHost),
 		"@MQTTPORT_SH@", shq(f["mqtt_port"]),
 		"@MQTTUSER_SH@", shq(f["mqtt_user"]),
 		"@MQTTPASS_SH@", shq(f["mqtt_pass"]),
+		"@MQTTPORT@", f["mqtt_port"],
 		"@MQTTHOST_PY@", pyq(mqttHost),
 		"@MQTTUSER_PY@", pyq(f["mqtt_user"]),
 		"@MQTTPASS_PY@", pyq(f["mqtt_pass"]),
+		"@FIRSTBOOT@", firstboot,
+		"@FIRSTBOOT_UNIT@", firstbootUnit,
 	).Replace(firstrunTemplate)
+	// (main_test.go checks that no @MARKER@ survives rendering — not done here,
+	// because a password may legitimately look like one.)
 
 	return map[string]string{
 		"userconf.txt": username + ":" + pwHash + "\n",
 		"firstrun.sh":  firstrun,
 	}, nil
+}
+
+// writeCard writes userconf.txt, firstrun.sh and the hook in cmdline.txt —
+// UTF-8 and LF always, because bash and the kernel read them. cmdline.txt is
+// read before anything is written, so a card that has none is refused untouched.
+func writeCard(sd string, f formData, now time.Time) error {
+	files, err := buildFiles(f, now)
+	if err != nil {
+		return err
+	}
+	cmdPath := filepath.Join(sd, "cmdline.txt")
+	cmd, err := os.ReadFile(cmdPath)
+	if err != nil {
+		return err
+	}
+	for name, content := range files {
+		if err := os.WriteFile(filepath.Join(sd, name), []byte(content), 0o755); err != nil {
+			return err
+		}
+	}
+	return os.WriteFile(cmdPath, []byte(withHook(string(cmd))), 0o755)
 }
 
 // ── HTTP handlers ────────────────────────────────────────────────────────────────
@@ -407,7 +567,7 @@ func jsonResp(w http.ResponseWriter, code int, obj any) {
 	_ = json.NewEncoder(w).Encode(obj)
 }
 
-func main() {
+func routes() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
@@ -483,17 +643,7 @@ func main() {
 			jsonResp(w, 200, map[string]any{"ok": false, "error": "SD card no longer mounted"})
 			return
 		}
-		files, err := buildFiles(f)
-		if err == nil {
-			for name, content := range files {
-				// UTF-8 + LF always — firstrun.sh is parsed by bash on the Pi.
-				err = os.WriteFile(filepath.Join(sd, name), []byte(content), 0o755)
-				if err != nil {
-					break
-				}
-			}
-		}
-		if err != nil {
+		if err := writeCard(sd, f, time.Now()); err != nil {
 			jsonResp(w, 200, map[string]any{"ok": false, "error": err.Error()})
 			return
 		}
@@ -505,7 +655,11 @@ func main() {
 		jsonResp(w, 200, map[string]any{"ok": true})
 		go func() { time.Sleep(200 * time.Millisecond); os.Exit(0) }()
 	})
+	return mux
+}
 
+func main() {
+	mux := routes()
 	addr := "127.0.0.1:" + port
 	urlStr := "http://" + addr + "/"
 	fmt.Println("HA Panel Setup —", urlStr, " (Ctrl-C or the Quit button to exit)")

@@ -1,187 +1,139 @@
 package main
 
-const wifiTemplate = `
-# ── Wi-Fi ─────────────────────────────────────────────────────────────────────────
-log "Configuring Wi-Fi (@SSID@)..."
+// wifiTemplate is part 1's Wi-Fi step: a NetworkManager keyfile (Pi OS Bookworm
+// and later), read by NetworkManager when it starts on the next boot. The key is
+// the WPA2 PSK Panel Setup derived from the passphrase (wpaPSK), so no passphrase
+// is ever escaped into the file. The regulatory country goes onto cmdline.txt —
+// until it is set, Pi OS keeps the radio blocked.
+const wifiTemplate = `install -d -m 700 /etc/NetworkManager/system-connections
+cat > /etc/NetworkManager/system-connections/panel-wifi.nmconnection <<'NMCONN'
+[connection]
+id=panel-wifi
+uuid=@UUID@
+type=wifi
+autoconnect=true
+interface-name=wlan0
 
-# Try NetworkManager first (Pi OS Trixie), fall back to wpa_supplicant
-if command -v nmcli &>/dev/null && systemctl is-active NetworkManager &>/dev/null; then
-    nmcli radio wifi on
-    nmcli dev wifi connect "@SSID@" password "@WPASS@" ifname wlan0 2>/dev/null && \
-        log "Connected via NetworkManager." || \
-        log "NetworkManager connection failed — trying wpa_supplicant."
+[wifi]
+mode=infrastructure
+ssid=@SSID_NM@
+
+[wifi-security]
+key-mgmt=wpa-psk
+psk=@PSK@
+
+[ipv4]
+method=auto
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+NMCONN
+chmod 600 /etc/NetworkManager/system-connections/panel-wifi.nmconnection
+if command -v raspi-config >/dev/null 2>&1; then
+  raspi-config nonint do_wifi_country @COUNTRY@ || true
 fi
-
-# wpa_supplicant fallback (Pi OS Lite Bookworm default)
-if ! nmcli -t -f STATE general 2>/dev/null | grep -q "connected"; then
-    cat > /etc/wpa_supplicant/wpa_supplicant.conf << 'WPAEOF'
-country=@WCOUNTRY@
-ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
-update_config=1
-
-network={
-    ssid="@SSID@"
-    psk="@WPASS@"
-    key_mgmt=WPA-PSK
-}
-WPAEOF
-    chmod 600 /etc/wpa_supplicant/wpa_supplicant.conf
-    rfkill unblock wifi 2>/dev/null || true
-    wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf 2>/dev/null || true
-    sleep 3
-    dhclient wlan0 2>/dev/null || true
-    log "wpa_supplicant configured."
-fi
+grep -q "cfg80211.ieee80211_regdom=" "$FW/cmdline.txt" || sed -i 's/$/ cfg80211.ieee80211_regdom=@COUNTRY@/' "$FW/cmdline.txt"
+rfkill unblock wifi 2>/dev/null || true
+for f in /var/lib/systemd/rfkill/*:wlan; do if [ -e "$f" ]; then echo 0 > "$f"; fi; done
+log "Wi-Fi: panel-wifi.nmconnection, country @COUNTRY@"
 `
 
-const firstrunTemplate = `#!/usr/bin/env bash
+// firstrunTemplate is part 1 of the first boot. cmdline.txt's systemd.run=
+// runs it once, under kernel-command-line.target: early, before NetworkManager,
+// with no network. So it does nothing that needs one — it writes this panel's
+// own files and arms part 2 for the next boot. It must never exit non-zero: a
+// failed systemd.run= command ends that boot (on Pi OS 2026-09-15 the Pi powers
+// off) with the hook still in cmdline.txt — so it repeats on every power-up.
+const firstrunTemplate = `#!/bin/bash
 # ─────────────────────────────────────────────────────────────────────────────
-#  HA Panel — First-boot setup
-#  Generated @GENERATED@ by Panel Setup
-#  ⚠  Contains credentials — self-deletes after running.
-#  Log: /boot/firmware/firstrun.log (readable from a computer after boot)
+#  HA Panel — first boot, part 1 of 2 — generated @GENERATED@ by Panel Setup
+#  Run ONCE by cmdline.txt's systemd.run=, early and with NO network. Writes this
+#  panel's own files and arms part 2 (panel-firstboot.service), which runs on the
+#  next boot with the network up: clone, install.sh --unattended, reboot.
+#  ⚠  Contains credentials: removes itself, userconf.txt and its words in
+#     cmdline.txt before it ends.
+#  Log: firstrun.log on the boot partition — never contains a secret.
 # ─────────────────────────────────────────────────────────────────────────────
+set -uo pipefail   # no -e: this must always reach its end (see the last step)
+FW=/boot/firmware
+[ -d "$FW" ] || FW=/boot
+exec >>"$FW/firstrun.log" 2>&1
+log()  { echo "$(date '+%H:%M:%S')  $*"; }
+FAILED=0
+fail() { log "ERROR: $*"; FAILED=1; }
+IC=/usr/lib/raspberrypi-sys-mods/imager_custom
+PANEL_USER=@USERNAME_SH@
+PANEL_HOSTNAME=@HOSTNAME_SH@
+# shellcheck disable=SC2016  # a $6$ hash, single-quoted on purpose
+PWHASH=@PWHASH_SH@
+log "═══ HA Panel first boot, part 1 — @HOSTNAME@ (generated @GENERATED@)"
 
-set -euo pipefail
-
-# Log to boot partition so it's readable by inserting SD elsewhere afterwards
-LOG=/boot/firmware/firstrun.log
-exec > >(tee -a "$LOG") 2>&1
-
-log() { echo "$(date '+%H:%M:%S')  $*"; }
-
-log "═══ HA Panel first-boot setup — @HOSTNAME@ ═════════════════════════════"
-log "Generated: @GENERATED@"
-
-PANEL_BASE=/opt/ha-panel
-REPO_DIR=$PANEL_BASE/repo
-VENV_DIR=$PANEL_BASE/venv
-
-# ── User account ──────────────────────────────────────────────────────────────────
-# userconf.txt handles creation via Pi OS mechanism; this is belt-and-suspenders
-log "Ensuring user @USERNAME@ exists..."
-if ! id "@USERNAME@" &>/dev/null; then
-    useradd -m -u 1000 -s /bin/bash "@USERNAME@"
-    echo "@USERNAME@:@PWHASH@" | chpasswd -e
-    log "User @USERNAME@ created."
+# ── 1. User ──────────────────────────────────────────────────────────────────────
+# Pi OS ships a disabled first user at uid 1000 ('pi'); userconf-pi renames it,
+# sets the password and shell, and retires its own first-boot service — exactly
+# what Raspberry Pi Imager's firstrun does.
+if [ -x /usr/lib/userconf-pi/userconf ]; then
+  if /usr/lib/userconf-pi/userconf "$PANEL_USER" "$PWHASH"; then
+    rm -f "$FW/userconf.txt"   # consumed; on failure it stays for userconfig.service
+  else
+    fail "userconf — userconf.txt left for Pi OS to apply on the next boot"
+  fi
 else
-    log "User @USERNAME@ already exists."
+  id "$PANEL_USER" >/dev/null 2>&1 || useradd -m -s /bin/bash "$PANEL_USER" || fail "useradd"
+  echo "$PANEL_USER:$PWHASH" | chpasswd -e || fail "chpasswd"
+  rm -f "$FW/userconf.txt"
 fi
-
-# Add to all required groups
 for g in adm dialout cdrom sudo audio video plugdev games users input netdev \
-          spi i2c gpio render; do
-    getent group "$g" &>/dev/null && usermod -aG "$g" "@USERNAME@" || true
+         spi i2c gpio render; do
+  if getent group "$g" >/dev/null; then usermod -aG "$g" "$PANEL_USER"; fi
 done
-log "Group membership configured."
+log "User: $PANEL_USER"
 
-# ── Hostname ─────────────────────────────────────────────────────────────────────
-log "Setting hostname to @HOSTNAME@..."
-echo "@HOSTNAME@" > /etc/hostname
-hostnamectl set-hostname "@HOSTNAME@" 2>/dev/null || true
-grep -q "127.0.1.1.*@HOSTNAME@" /etc/hosts || \
-    sed -i "s/127\.0\.1\.1.*/127.0.1.1\t@HOSTNAME@/" /etc/hosts 2>/dev/null || \
-    echo "127.0.1.1\t@HOSTNAME@" >> /etc/hosts
+# ── 2. Hostname ──────────────────────────────────────────────────────────────────
+if [ -x "$IC" ]; then
+  "$IC" set_hostname "$PANEL_HOSTNAME" || fail "hostname"
+else
+  CUR="$(tr -d ' \t\n\r' < /etc/hostname)"
+  echo "$PANEL_HOSTNAME" > /etc/hostname
+  sed -i "s/127\.0\.1\.1.*$CUR/127.0.1.1\t$PANEL_HOSTNAME/g" /etc/hosts
+fi
+log "Hostname: $PANEL_HOSTNAME"
+
+# ── 3. SSH ───────────────────────────────────────────────────────────────────────
+if [ -x "$IC" ]; then "$IC" enable_ssh || fail "ssh"; else systemctl enable ssh >/dev/null 2>&1 || fail "ssh"; fi
+log "SSH: enabled"
+
+# ── 4. Wi-Fi ─────────────────────────────────────────────────────────────────────
 @WIFIBLOCK@
-# ── SSH ───────────────────────────────────────────────────────────────────────────
-log "Enabling SSH..."
-touch /boot/firmware/ssh 2>/dev/null || true
-systemctl enable ssh 2>/dev/null || systemctl enable ssh.service 2>/dev/null || true
+# ── 5. Timezone and locale ───────────────────────────────────────────────────────
+if [ -x "$IC" ]; then
+  "$IC" set_timezone @TIMEZONE@ || fail "timezone"
+else
+  { ln -sf /usr/share/zoneinfo/@TIMEZONE@ /etc/localtime && echo @TIMEZONE@ > /etc/timezone; } || fail "timezone"
+fi
+if ! grep -qx 'LANG=@LOCALE@' /etc/default/locale 2>/dev/null; then
+  sed -i '/^# *@LOCALE@ UTF-8/s/^# *//' /etc/locale.gen
+  { locale-gen >/dev/null && update-locale LANG=@LOCALE@; } || fail "locale"
+fi
+log "Timezone: @TIMEZONE@, locale: @LOCALE@"
 
-# ── Wait for network ──────────────────────────────────────────────────────────────
-log "Waiting for network access..."
-for i in $(seq 1 90); do
-    if curl -sf --max-time 3 https://raw.githubusercontent.com >/dev/null 2>&1; then
-        log "Network ready after $((i * 2))s."
-        break
-    fi
-    if [[ $i -eq 90 ]]; then
-        log "ERROR: No network after 180s."
-        log "  Ethernet: check cable is connected."
-        log "  Wi-Fi: check SSID and password in firstrun.sh."
-        log "  The log file is at /boot/firmware/firstrun.log"
-        exit 1
-    fi
-    sleep 2
-done
+# ── 6. Display ───────────────────────────────────────────────────────────────────
+# The Waveshare 8" DSI panel stays dark until its overlay is in config.txt, and
+# the firmware reads config.txt at power-on: added now, the screen works from the
+# next boot and shows part 2's progress. Console in portrait, as the panel is
+# mounted. install.sh (part 2) finds both and leaves them alone.
+if ! grep -q "vc4-kms-dsi-waveshare-panel" "$FW/config.txt"; then
+  printf '\n[all]\ndtoverlay=vc4-kms-dsi-waveshare-panel,8_0_inch\n' >> "$FW/config.txt" || fail "display overlay"
+fi
+grep -q "fbcon=rotate:" "$FW/cmdline.txt" || sed -i 's/$/ fbcon=rotate:3/' "$FW/cmdline.txt" || fail "console rotation"
+log "Display: Waveshare DSI overlay, portrait console"
 
-# ── Timezone and locale ───────────────────────────────────────────────────────────
-log "Setting timezone (@TIMEZONE@) and locale (@LOCALE@)..."
-timedatectl set-timezone "@TIMEZONE@" 2>/dev/null || true
-locale-gen "@LOCALE@" 2>/dev/null || true
-update-locale LANG="@LOCALE@" 2>/dev/null || true
-
-# ── Boot config ───────────────────────────────────────────────────────────────────
-log "Configuring boot (display overlay, I2C, Bluetooth off)..."
-CONFIG=/boot/firmware/config.txt
-grep -q "vc4-kms-dsi-waveshare-panel" "$CONFIG" 2>/dev/null || \
-    echo "dtoverlay=vc4-kms-dsi-waveshare-panel,8_0_inch" >> "$CONFIG"
-grep -q "dtparam=i2c_arm=on" "$CONFIG" 2>/dev/null || \
-    echo "dtparam=i2c_arm=on" >> "$CONFIG"
-grep -q "disable-bt" "$CONFIG" 2>/dev/null || \
-    echo "dtoverlay=disable-bt" >> "$CONFIG"
-
-# Console rotation to portrait (compositor rotation handled by startup.sh)
-CMDLINE=/boot/firmware/cmdline.txt
-grep -q "fbcon=rotate:" "$CMDLINE" 2>/dev/null || \
-    sed -i 's/$/ fbcon=rotate:3/' "$CMDLINE"
-
-# ── Backlight permissions + log files ─────────────────────────────────────────────────
-# screen-sleep.py (runs as @USERNAME@) writes the brightness node directly.
-cat > /etc/udev/rules.d/90-backlight.rules << 'UDEVRULE'
-SUBSYSTEM=="backlight", ACTION=="add", RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness", RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
-UDEVRULE
-log "Backlight udev rule installed."
-
-# Pre-create log files owned by the panel user (startup/update run unprivileged)
-touch /var/log/ha-panel-startup.log /var/log/ha-panel-update.log
-chown @USERNAME@:@USERNAME@ /var/log/ha-panel-startup.log /var/log/ha-panel-update.log
-log "Log files pre-created."
-
-# ── TTY1 autologin ───────────────────────────────────────────────────────────────
-# Direct systemd override — more reliable than raspi-config in firstrun context
-log "Configuring TTY1 autologin for @USERNAME@..."
-mkdir -p /etc/systemd/system/getty@tty1.service.d/
-cat > /etc/systemd/system/getty@tty1.service.d/autologin.conf << 'AUTOLOGIN'
-[Service]
-ExecStart=
-ExecStart=-/sbin/agetty --autologin @USERNAME@ --noclear %I $TERM
-AUTOLOGIN
-
-# ── Packages ─────────────────────────────────────────────────────────────────────
-log "Installing packages (5–10 minutes on first boot)..."
-apt-get update -qq
-DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
-    labwc squeekboard wlr-randr chromium xdg-utils \
-    network-manager curl wget \
-    python3-smbus2 i2c-tools python3-lgpio python3-evdev \
-    python3 python3-pip python3-venv python3-full \
-    git unattended-upgrades apt-listchanges nftables \
-    raspi-config rpi-eeprom
-log "Packages installed."
-
-# ── Clone repo ────────────────────────────────────────────────────────────────────
-log "Cloning repo (@REPOURL@)..."
-mkdir -p "$PANEL_BASE"
-git clone --quiet "@REPOURL@" "$REPO_DIR"
-chown -R "@USERNAME@:@USERNAME@" "$PANEL_BASE"
-log "Repo ready."
-
-# ── Python venv ───────────────────────────────────────────────────────────────────
-# --system-site-packages is required: lgpio is only available as a system package
-log "Creating Python venv..."
-python3 -m venv --system-site-packages "$VENV_DIR"
-"$VENV_DIR/bin/pip" install --upgrade --quiet pip
-"$VENV_DIR/bin/pip" install --quiet -r "$REPO_DIR/sensor-daemon/requirements.txt"
-log "Venv ready."
-
-# ── Config files ──────────────────────────────────────────────────────────────────
-# Canonical sensor-config.py lives OUTSIDE the repo so git reset never wipes it.
-# The in-repo path is a symlink.
-log "Writing config files..."
-
-# /opt/ha-panel/config — sourced by startup.sh and update.sh
-cat > "$PANEL_BASE/config" << 'SHELLCONFIG'
+# ── 7. This panel's own files ────────────────────────────────────────────────────
+# Outside the repo, so the nightly git reset --hard never touches them; mode 600.
+# install.sh (part 2) symlinks sensor-config.py into the repo.
+install -d -m 755 /opt/ha-panel
+cat > /opt/ha-panel/config << 'SHELLCONFIG'
 # HA Panel runtime configuration — generated by Panel Setup
 PANEL_ID=@HOSTNAME_SH@
 HA_URL=@HAURL_SH@
@@ -192,10 +144,8 @@ MQTT_PASS=@MQTTPASS_SH@
 BACKLIGHT_PATH='/sys/class/backlight/11-0045/brightness'
 ROTATION=90
 SHELLCONFIG
-chmod 600 "$PANEL_BASE/config"
 
-# /opt/ha-panel/sensor-config.py — canonical location, outside repo
-cat > "$PANEL_BASE/sensor-config.py" << 'PYCONFIG'
+cat > /opt/ha-panel/sensor-config.py << 'PYCONFIG'
 # Sensor daemon configuration - generated by Panel Setup
 # Canonical location: /opt/ha-panel/sensor-config.py
 # Symlinked at:       sensor-daemon/config.py
@@ -233,75 +183,120 @@ BACKLIGHT_OFF = 0
 TEMPERATURE_OFFSET = 0.0   # degrees C
 HUMIDITY_OFFSET    = 0.0   # percent RH
 PYCONFIG
-chmod 600 "$PANEL_BASE/sensor-config.py"
+chown "$PANEL_USER:$PANEL_USER" /opt/ha-panel /opt/ha-panel/config /opt/ha-panel/sensor-config.py || fail "chown /opt/ha-panel"
+chmod 600 /opt/ha-panel/config /opt/ha-panel/sensor-config.py
+log "Config: /opt/ha-panel/config and sensor-config.py (mode 600)"
 
-# Symlink into repo (protected from git reset --hard)
-rm -f "$REPO_DIR/sensor-daemon/config.py"
-ln -s "$PANEL_BASE/sensor-config.py" "$REPO_DIR/sensor-daemon/config.py"
-log "Config files written and symlinked."
+# ── 8. Arm part 2 for the next boot ──────────────────────────────────────────────
+cat > /opt/ha-panel/firstboot.sh << 'FIRSTBOOT'
+@FIRSTBOOT@FIRSTBOOT
+chmod 700 /opt/ha-panel/firstboot.sh
+cat > /etc/systemd/system/panel-firstboot.service << 'UNIT'
+@FIRSTBOOT_UNIT@UNIT
+ln -sf /etc/systemd/system/panel-firstboot.service \
+       /etc/systemd/system/multi-user.target.wants/panel-firstboot.service
+log "Part 2 armed: panel-firstboot.service"
 
-# ── Systemd services ──────────────────────────────────────────────────────────────
-log "Installing systemd services..."
-cp "$REPO_DIR/system/sensor-daemon.service"  /etc/systemd/system/
-cp "$REPO_DIR/system/panel-update.service"   /etc/systemd/system/
-cp "$REPO_DIR/system/panel-update.timer"     /etc/systemd/system/
-systemctl daemon-reload
-systemctl enable sensor-daemon
-systemctl enable panel-update.timer
-log "Services installed."
-
-# ── Kiosk autostart ───────────────────────────────────────────────────────────────
-log "Writing kiosk autostart (~/.bash_profile)..."
-BASH_PROFILE="/home/@USERNAME@/.bash_profile"
-cat >> "$BASH_PROFILE" << 'BPEOF'
-# ── HA Panel kiosk startup ───────────────────────────────────────────────────────
-if [[ -z "${WAYLAND_DISPLAY:-}" && "$(tty)" == '/dev/tty1' ]]; then
-  exec bash /opt/ha-panel/repo/system/startup.sh
+# ── 9. Disarm part 1 ─────────────────────────────────────────────────────────────
+# Exactly the three hook words go — anything appended after them (the Wi-Fi
+# regulatory domain) stays. Then this file, which holds credentials.
+sed -i -E 's# systemd\.run=[^ ]+##; s# systemd\.run_success_action=[^ ]+##; s# systemd\.unit=kernel-command-line\.target##' "$FW/cmdline.txt"
+rm -f "$FW/firstrun.sh"
+if [ "$FAILED" = 0 ]; then
+  log "═══ Part 1 done — rebooting. Part 2 installs everything and logs to firstboot.log"
+else
+  log "═══ Part 1 finished WITH ERRORS (above) — rebooting anyway. Part 2 logs to firstboot.log"
 fi
-BPEOF
-chown "@USERNAME@:@USERNAME@" "$BASH_PROFILE"
+sync
+exit 0   # systemd.run_success_action=reboot takes it from here
+`
 
-# ── Firewall ─────────────────────────────────────────────────────────────────────
-log "Configuring firewall (SSH from @SUBNET@ only)..."
-cat > /etc/nftables.conf << 'NFTEOF'
-#!/usr/sbin/nft -f
-flush ruleset
-table inet filter {
-  chain input {
-    type filter hook input priority 0; policy drop;
-    iif lo accept
-    ct state established,related accept
-    ip  protocol icmp   accept
-    ip6 nexthdr  icmpv6 accept
-    ip saddr @SUBNET@ tcp dport 22 accept
-    drop
-  }
-  chain forward { type filter hook forward priority 0; policy drop; }
-  chain output  { type filter hook output  priority 0; policy accept; }
-}
-NFTEOF
-systemctl enable nftables
+// firstbootScript is part 2, written to /opt/ha-panel/firstboot.sh by part 1
+// and run by panel-firstboot.service on the next boot, after
+// network-online.target. The install logic lives in system/install.sh on main —
+// one installer for both routes; this only fetches it and runs it. A failure
+// leaves it armed, and the next boot tries again.
+const firstbootScript = `#!/bin/bash
+# HA Panel — first boot, part 2 of 2 (written by part 1). With the network up:
+# clone the repo, run system/install.sh --unattended, reboot into the kiosk.
+# On a failure it stays armed and runs again at the next boot.
+# Logs: firstboot.log on the boot partition, and /var/log/ha-panel-firstboot.log.
+set -uo pipefail
+FW=/boot/firmware
+[ -d "$FW" ] || FW=/boot
+exec > >(tee -a "$FW/firstboot.log" /var/log/ha-panel-firstboot.log) 2>&1
+log() { echo "$(date '+%H:%M:%S')  $*"; }
+PANEL_USER=@USERNAME_SH@
+REPO_URL=@REPOURL_SH@
+REPO_DIR=/opt/ha-panel/repo
+# scheme://host[:port] of the repo — any HTTP answer from it means the network is up
+ORIGIN="$(printf '%s' "$REPO_URL" | sed -E 's#^([a-z]+://)([^/@]*@)?([^/]+).*#\1\3#')"
+log "═══ HA Panel first boot, part 2 — $REPO_URL"
 
-# ── Unattended upgrades ───────────────────────────────────────────────────────────
-cat > /etc/apt/apt.conf.d/20ha-panel-upgrades << 'APTEOF'
-APT::Periodic::Update-Package-Lists "1";
-APT::Periodic::Unattended-Upgrade "0";
-APTEOF
+up=""
+deadline=$((SECONDS + 300))
+while [ "$SECONDS" -lt "$deadline" ]; do
+  code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "$ORIGIN/" || true)"
+  if [ -n "$code" ] && [ "$code" != 000 ]; then up=1; break; fi
+  sleep 2
+done
+if [ -z "$up" ]; then
+  log "ERROR: no network after 300 s — check the Ethernet cable, or the Wi-Fi name, password and country"
+  log "Part 2 stays armed and runs again at the next boot"
+  exit 1
+fi
+log "Network: up after ${SECONDS} s"
 
-# ── Done ────────────────────────────────────────────────────────────────────────
-log "═══ First-boot setup complete ══════════════════════════════════════"
-log "  Panel ID : @HOSTNAME@"
-log "  HA URL   : @HAURL@"
-log "  MQTT     : @MQTTHOST@:@MQTTPORT@"
-log ""
-log "  Rebooting in 5 seconds — panel will load HA dashboard automatically."
-log "  If anything went wrong, this log is at /boot/firmware/firstrun.log"
+# Pi OS Lite ships without git
+if ! command -v git >/dev/null 2>&1; then
+  log "Installing git"
+  if ! { DEBIAN_FRONTEND=noninteractive apt-get update -q >/dev/null &&
+         DEBIAN_FRONTEND=noninteractive apt-get install -y -q git >/dev/null; }; then
+    log "ERROR: git could not be installed — part 2 stays armed"
+    exit 1
+  fi
+fi
+if [ ! -d "$REPO_DIR/.git" ]; then
+  rm -rf "$REPO_DIR"
+  if ! git clone --quiet "$REPO_URL" "$REPO_DIR"; then
+    log "ERROR: clone of $REPO_URL failed — part 2 stays armed"
+    exit 1
+  fi
+fi
+log "Repo: $REPO_DIR at $(git -c safe.directory="$REPO_DIR" -C "$REPO_DIR" rev-parse --short HEAD)"
 
-# Self-delete — file contained credentials and is no longer needed
-rm -f /boot/firmware/firstrun.sh
+log "Running install.sh --unattended (packages, services, kiosk) — 5 to 15 minutes"
+if ! bash "$REPO_DIR/system/install.sh" --unattended --user "$PANEL_USER"; then
+  log "ERROR: install.sh failed — /var/log/ha-panel-install.log; part 2 stays armed"
+  exit 1
+fi
 
-sleep 5
-reboot
+systemctl disable panel-firstboot.service >/dev/null 2>&1 ||
+  rm -f /etc/systemd/system/multi-user.target.wants/panel-firstboot.service
+rm -f /opt/ha-panel/firstboot.sh
+log "═══ Installed — rebooting into the kiosk"
+sync
+systemctl --no-block reboot
+`
+
+// firstbootUnit runs part 2. Before getty@tty1 so the panel's screen shows the
+// install's progress rather than a login prompt; journal+console puts it there.
+const firstbootUnit = `[Unit]
+Description=HA Panel first boot, part 2: clone, install.sh --unattended, reboot into the kiosk
+Wants=network-online.target
+After=network-online.target
+Before=getty@tty1.service
+ConditionPathExists=/opt/ha-panel/firstboot.sh
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/bash /opt/ha-panel/firstboot.sh
+StandardOutput=journal+console
+StandardError=journal+console
+TimeoutStartSec=3600
+
+[Install]
+WantedBy=multi-user.target
 `
 
 const page = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>HA Panel Setup</title>
@@ -383,8 +378,8 @@ const page = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>HA Panel S
   <div class="banner ok" style="font-weight:600">Files written to the SD card</div>
   <ol>
     <li>Eject the SD card and insert it into the panel</li>
-    <li>Power on — setup runs unattended for about 10 minutes, then the panel reboots into the dashboard</li>
-    <li>If anything goes wrong: reinsert the SD in this computer and read <code>firstrun.log</code> on it</li>
+    <li>Power on. Part 1 takes about a minute and reboots; part 2 installs everything (about 10 minutes on a Pi 5, progress on the screen) and reboots into the dashboard</li>
+    <li>If anything goes wrong: reinsert the SD in this computer and read <code>firstrun.log</code> and <code>firstboot.log</code> on it</li>
     <li>In Home Assistant: clone the touch-button automation for the new panel's buttons</li>
   </ol>
   <div class="hint">No credential files were left on this computer.</div>
