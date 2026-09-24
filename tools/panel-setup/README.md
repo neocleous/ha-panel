@@ -42,7 +42,7 @@ Imager uses) runs it early, before the network is up.
 
 | Boot | What runs | Takes | Log on the boot partition |
 |---|---|---|---|
-| 1 | **Part 1** — `firstrun.sh`, no network: renames Pi OS's first user to yours, hostname, SSH, Wi-Fi connection + country, timezone/locale, writes `/opt/ha-panel/config` and `sensor-config.py` (mode 600), arms part 2, removes its `cmdline.txt` hook and deletes itself and `userconf.txt` | ~1 min, then reboots | `firstrun.log` |
+| 1 | **Part 1** — `firstrun.sh`, no network: renames Pi OS's first user to yours, hostname, SSH, Wi-Fi connection + country, timezone/locale, turns on the DSI display (overlay + portrait console) for the next boot, writes `/opt/ha-panel/config` and `sensor-config.py` (mode 600), arms part 2, removes its `cmdline.txt` hook and deletes itself and `userconf.txt` | ~1 min, then reboots — the screen stays dark this boot | `firstrun.log` |
 | 2 | **Part 2** — `panel-firstboot.service`, after the network is up: installs git, clones the repo, runs `system/install.sh --unattended`, disables itself | 5–15 min (progress on the panel's screen), then reboots | `firstboot.log` |
 | 3 | The kiosk: TTY1 autologin → labwc → Chromium on your dashboard | — | — |
 

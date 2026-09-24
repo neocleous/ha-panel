@@ -118,7 +118,18 @@ if ! grep -qx 'LANG=@LOCALE@' /etc/default/locale 2>/dev/null; then
 fi
 log "Timezone: @TIMEZONE@, locale: @LOCALE@"
 
-# ── 6. This panel's own files ────────────────────────────────────────────────────
+# ── 6. Display ───────────────────────────────────────────────────────────────────
+# The Waveshare 8" DSI panel stays dark until its overlay is in config.txt, and
+# the firmware reads config.txt at power-on: added now, the screen works from the
+# next boot and shows part 2's progress. Console in portrait, as the panel is
+# mounted. install.sh (part 2) finds both and leaves them alone.
+if ! grep -q "vc4-kms-dsi-waveshare-panel" "$FW/config.txt"; then
+  printf '\n[all]\ndtoverlay=vc4-kms-dsi-waveshare-panel,8_0_inch\n' >> "$FW/config.txt" || fail "display overlay"
+fi
+grep -q "fbcon=rotate:" "$FW/cmdline.txt" || sed -i 's/$/ fbcon=rotate:3/' "$FW/cmdline.txt" || fail "console rotation"
+log "Display: Waveshare DSI overlay, portrait console"
+
+# ── 7. This panel's own files ────────────────────────────────────────────────────
 # Outside the repo, so the nightly git reset --hard never touches them; mode 600.
 # install.sh (part 2) symlinks sensor-config.py into the repo.
 install -d -m 755 /opt/ha-panel
@@ -176,7 +187,7 @@ chown "$PANEL_USER:$PANEL_USER" /opt/ha-panel /opt/ha-panel/config /opt/ha-panel
 chmod 600 /opt/ha-panel/config /opt/ha-panel/sensor-config.py
 log "Config: /opt/ha-panel/config and sensor-config.py (mode 600)"
 
-# ── 7. Arm part 2 for the next boot ──────────────────────────────────────────────
+# ── 8. Arm part 2 for the next boot ──────────────────────────────────────────────
 cat > /opt/ha-panel/firstboot.sh << 'FIRSTBOOT'
 @FIRSTBOOT@FIRSTBOOT
 chmod 700 /opt/ha-panel/firstboot.sh
@@ -186,7 +197,7 @@ ln -sf /etc/systemd/system/panel-firstboot.service \
        /etc/systemd/system/multi-user.target.wants/panel-firstboot.service
 log "Part 2 armed: panel-firstboot.service"
 
-# ── 8. Disarm part 1 ─────────────────────────────────────────────────────────────
+# ── 9. Disarm part 1 ─────────────────────────────────────────────────────────────
 # Exactly the three hook words go — anything appended after them (the Wi-Fi
 # regulatory domain) stays. Then this file, which holds credentials.
 sed -i -E 's# systemd\.run=[^ ]+##; s# systemd\.run_success_action=[^ ]+##; s# systemd\.unit=kernel-command-line\.target##' "$FW/cmdline.txt"

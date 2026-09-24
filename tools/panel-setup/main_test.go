@@ -188,6 +188,44 @@ func TestPart1NeedsNoNetworkAndCannotStopTheBoot(t *testing.T) {
 	}
 }
 
+// Part 1's display step, run for real against a stock boot partition — twice,
+// as a re-run would — and then install.sh's own checks, which must skip both.
+func TestPart1TurnsOnTheDisplayOnce(t *testing.T) {
+	fr := render(t, goodForm())["firstrun.sh"]
+	m := regexp.MustCompile(`(?s)# ── 6\. Display.*?\n(if ! grep.*?)\n# ── 7\.`).FindStringSubmatch(fr)
+	if m == nil {
+		t.Fatal("part 1 has no display step")
+	}
+	fw := t.TempDir()
+	stockConfig := "dtparam=audio=on\n\n[pi5]\ndtoverlay=nospi10\n\n[cm5]\ndtoverlay=dwc2,dr_mode=host"
+	stockCmdline := "console=serial0,115200 console=tty1 root=PARTUUID=4d8fd085-02 rootwait " + hookArgs + "\n"
+	if err := os.WriteFile(filepath.Join(fw, "config.txt"), []byte(stockConfig), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(fw, "cmdline.txt"), []byte(stockCmdline), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	script := "FW=" + fw + "\nlog() { :; }\nfail() { echo \"FAIL $*\"; }\n" + m[1] + "\n"
+	for i := 0; i < 2; i++ {
+		if out, err := exec.Command("bash", "-c", script).CombinedOutput(); err != nil || len(out) > 0 {
+			t.Fatalf("run %d: %v %s", i+1, err, out)
+		}
+	}
+	cfg, _ := os.ReadFile(filepath.Join(fw, "config.txt"))
+	cmd, _ := os.ReadFile(filepath.Join(fw, "cmdline.txt"))
+	// the overlay lands under [all], never inside a model-specific section
+	if !strings.HasSuffix(string(cfg), "dtoverlay=dwc2,dr_mode=host\n[all]\ndtoverlay=vc4-kms-dsi-waveshare-panel,8_0_inch\n") {
+		t.Errorf("config.txt: %q", cfg)
+	}
+	if strings.Count(string(cmd), "fbcon=rotate:3") != 1 || strings.Count(string(cmd), "\n") != 1 {
+		t.Errorf("cmdline.txt: %q", cmd)
+	}
+	// install.sh's checks (grep for the overlay name and for fbcon=rotate:) find them
+	if !strings.Contains(string(cfg), "vc4-kms-dsi-waveshare-panel") || !strings.Contains(string(cmd), "fbcon=rotate:") {
+		t.Error("install.sh would add them a second time")
+	}
+}
+
 func TestNoSecretIsLogged(t *testing.T) {
 	f := goodForm()
 	f["mqtt_pass"] = "S3cretMqtt"
