@@ -48,6 +48,8 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_b2q_probe_pi_ports.py` | 2 | read-only: PI5_F connector outlines from its vertices (+x end clustered by y, back edge by x) and the inner back wall behind the USB-C | USB stacks y −36.3…−21.6 / −18.3…−3.7, z 10.3–25.9, faces x_rel 45.1–45.2; USB-C x_rel −36.3…−27.6, z 9.4–12.6, face y −59.3; back wall y −79.3…−80.9 → 20.0–21.6 plug room |
 | `v5f_b2r_probe_speaker_screws.py` | 2 | read-only: DIN912 M3 speaker-screw heads (Ø5.5 × 3 behind the flange) and straight Ø3 key paths back to the back partition vs HOUSING_E / DOOR_F; free run behind the outer heads | **lower-outer heads 37.97 mm³ inside the FL/FR door bosses** (free run 0); upper-outer heads clear, 27.5 free to the side wall; inboard heads and paths 0 (45.6 free) |
 | `v5f_b2j_renders.py` | 2 | renders `~/Documents/HA_v5f_b2_{front34,cut,under_open,k5_section}.png`: closed front 3/4; housing cut at z 55 seen from behind/above; door assembly dropped 70; side section at world x 47.5 with the +x lanes in red (one MODE per run) | 4 PNG 1600 × 1200 |
+| `v5f_b2s_split_concept_renders.py` | 2 | removable-back proposal renders (TemporaryBRep only, nothing saved): HOUSING_E split by the plane y −55 → `~/Documents/HA_panel_renders/HA_v5f_split_{rear34_exploded,rear_open}.png` (cover red, moved 80 back; cover off with speakers, touch PCB, Pi, LCD and lanes) | front 226.78 / cover 58.32 cm³ |
+| `v5f_b2t_probe_split.py` | 2 | read-only removable-back study: opening section at y −55 / −60, cover volume, LCD-screw key entries at the plane | y −55: opening half-width 79.4 (z 3) → 21.7 (z 155), closed at z 160; cover 58.3 cm³ (61 g ASA); key entries z 91.6 / 118.2, 46.6–52.7 from the heads, all inside. y −60 fails the upper +x lane |
 | `v5f_b2z_save.py` | 2 | inventory, f3d export, named version | 70 bodies (15 visible); `revF-wip-b2.f3d` 13.3 MB; version "rev F WIP 2026-11-03 b2: chambers, speakers + baffles, lattices, touch PCB retention, K5 lanes; USB pocket open (Claude)" |
 
 ## Lessons (new in rev F)
@@ -88,6 +90,10 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     check one render at most per block.
 
 ## Checkpoint 2 open items (2026-11-03)
+Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
+speaker enclosures separately and screw them in. Assembly check: the LCD screws and the speaker screws cannot be driven
+with the floor door as the only access, and the top-mounted electronics of blocks 3–4 would have to be fitted 100–175 mm
+up through the floor opening. Proposal: back cover split at y −55 (b2s/b2t), solid floor, separate speaker boxes.
 1. ReSpeaker USB-A plug vs the +x speaker: the basket envelope (Ø40, y −3.0…−29.1) leaves 8.27 mm from the stack face
    (x_rel 45.15) at the lower port's top (z 17.6) and covers the front stack (y −18.3…−3.7) and the front half of the rear
    stack (y −29.1…−21.6). Pocket not built; options in the checkpoint report.
