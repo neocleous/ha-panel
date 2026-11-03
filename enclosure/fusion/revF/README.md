@@ -34,6 +34,20 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_b1r7c_ring_scan.py` | 1r | read-only scan of 14 sites round the +x half: ring edge, door edge, gap, wall, bend thickness, measured from the actual outer surface (REF_E_outer at z 8) | 12 side/back sites: ring 6.19–6.48, door inset 6.49–6.78, gap 0.300, wall 2.497–2.514, bend 2.497–2.509, flat ring top 0.19–0.48. Front-corner site oblique (ring 7.95, gap 0.58 along the probe); y −8.27 wall reads 4.0 because the probe runs through the FL rib |
 | `v5f_b1r8_renders.py` | 1r | renders `~/Documents/HA_v5f_b1r_{front34,rear34,under,under_open}.png` (as b1g; run twice, MODE 'outside' and 'open') | 4 PNG 1600 × 1200 |
 | `v5f_b1r9_save.py` | 1r | inventory, f3d export, named version | 61 bodies (12 visible); `revF-wip-b1r.f3d` 12.6 MB; version "rev F WIP 2026-11-03 b1r: …" saved |
+| `v5f_b2p_probe_interior.py` | 2 | read-only: INNER_E half-widths (±x from XC) at y 4/−10/−30/−45 for z 8/28/51/77, inner front y at x_rel 47.5/70.5/93.5, inner back at XC | half-width at y −10: 96.74 (z 8) … 93.96 (z 77); inner front y 5.0 to z 48, 4.49 at z 51, −1.04 at z 77; inner back y −82.47 (z 8) |
+| `v5f_b2a_slab_boss_holes.py` | 2 | slab-boss LCD holes (option 4a): Ø3.4 through the boss (d 9.0 → 14.8) + Ø6.5 head pockets 1.0 deep (d 14.8 → 13.8) at design (±47.5, ZS ± 34), ZS −27.43; DIN912 M3 × 6 from the seat ends at d 7.8, inside the 1.5 standoff | HOUSING_E 254.224 → 254.050 cm³; 20/20 probes; interference 0 (19 bodies); intermediate version "…b2a: slab-boss holes…" |
+| `v5f_b2b_ring_chambers.py` | 2 | floor ring narrowed from u 6.5 to u 5.6 along both chambers (x_rel ≥ 45.3 and ≤ −45.3, y ≥ −51.5; tool = outline offset 5.6 − TOOL_ring_opening_6p5, cut to z 2.6 so no cove sliver stays) → 1.2 door gap for the 2 mm CR foam on the door edge and a passage for the speaker frames; TOOL_ring_opening_5p6 kept hidden | tool 0.662 cm³; HOUSING_E 254.050 → 253.586; door untouched (gap 0.3 elsewhere) |
+| `v5f_b2c_pi_shift.py` | 2 | Pi assembly moved 0.7 toward −x (stacks reached x_rel 45.85, the +x frame starts at 47.5): PI5_F, cooler, KO_K7_fan, GPIO plug envelopes; door Pi bosses, insert holes and the 10 × 10 intake field re-made 0.7 toward −x | stacks x_rel 45.15, microSD −44.85; DOOR_F 30.919 cm³; 100/100 intake holes open; moved bodies vs all others 0 |
+| `v5f_b2d_partitions_ceilings.py` | 2 | chamber walls ∩ INNER_E: side partitions 1.5 (+x x_rel 45.4…46.9, −x −45.3…−46.8), back partitions y −51.6…−53.1 (behind the ML/MR boss pads), ceilings z 74.0…76.0, bottoms z 3.7 (door top 2.5 + 2 mm foam at 1.2); ring narrowing extended to y −53.1; Ø5 speaker-wire holes at x_rel ±75, z 18 | walls 27.622 cm³; HOUSING_E 253.576 → 281.098; interference 0 (25 bodies); line scans at 0.05 steps: partitions 1.40–1.50, back partitions 1.40–1.50, ceilings 1.90–2.00, partition bottoms at z 3.70–3.75 |
+| `v5f_b2e_speakers_baffles.py` | 2 | SPK_L/R = DMA45-4 envelopes (frame 46 × 46 × 3 at y −3.0…0.0, basket Ø40 to y −29.1, axis XC ± 70.5, z 28); baffle blocks x_rel 47.5…93.5, z 5…51, y 0.7…chin ∩ INNER_E with a Ø40 bore, Ø2.5 pilots at ±17.75 (y 0.7 → 4.0) for M3 × 6 DIN912 self-tapping (2.3 engagement); 1 mm CR gasket y 0.0…0.7 | baffles 6.773 cm³; HOUSING_E 281.098 → 287.857; speakers 39.146 cm³ each; SPK vs HOUSING_E 0.40 mm³ (fixed in b2e2) |
+| `v5f_b2e2_basket_clearance.py` | 2 | Ø40.6 cut over the basket length (y −3.0…−29.1): trims the FL/FR door-boss cap corners that sat in the basket envelope | 3.05 mm³ removed; SPK vs HOUSING_E 0; insert-hole walls intact |
+| `v5f_b2f_lattice.py` | 2 | grille lattices through the chin: 199 × Ø1.9 on a 2.5 hex pitch inside Ø38 per speaker, y 4.5 → 8.0 | 564 mm² open per side (49.8 %); HOUSING_E 287.854 → 285.030; 199/199 open, bars solid, wall solid outside the field |
+| `v5f_b2g_chamber_volume.py` | 2 | read-only: chamber air = box ∩ INNER_E − housing − door − front bore, minus the whole speaker envelope (lower bound) or the frame plate only (upper bound) | +x 125.89–158.69 cm³, −x 126.29–159.09 → Qtc 0.725–0.694, Fc 196–188 Hz, F3 191 Hz (Fs 151.4, Qts 0.56, Vas 0.085 L) |
+| `v5f_b2h_touch_pcb.py` | 2 | TOUCH_PCB 90 × 44 × 1.6 (x_rel ±45, y 2.7…4.3, z 6…50) + KO_touch_back 2.9 zone; retention on the partition cavity faces: ledge z 5.0…6.0, lip z 6.0…6.8, top tab z 43.5…47.5 — fitted from behind (lift 0.9 behind the tabs, swing the bottom over the lips, drop onto the ledges), because the floor ring blocks insertion from below | retention 0.041 cm³; HOUSING_E 285.030 → 285.062; PCB and keep-out vs all bodies 0; 8/8 probes; slot-wall clearance 0.21 at the 0.9 lift |
+| `v5f_b2i_k5_lanes.py` | 2 | KO_K5_LL/LR/UL/UR: Ø7 lanes from the key entry (head top, d 16.8): lower pair back and 13° up × 100, upper pair back and 37° down × 60 (brief K5) | **all four cross the back wall**: lower axes at t 62.5 / 64.75 (world y −64.6 / −66.8, z 93.8 / 94.3), upper at t 52.25 / 55.5 (y −59.5 / −62.1, z 114.8 / 112.8); 100.8–164.4 mm³ in HOUSING_E each, 0 with everything else |
+| `v5f_b2q_probe_pi_ports.py` | 2 | read-only: PI5_F connector outlines from its vertices (+x end clustered by y, back edge by x) and the inner back wall behind the USB-C | USB stacks y −36.3…−21.6 / −18.3…−3.7, z 10.3–25.9, faces x_rel 45.1–45.2; USB-C x_rel −36.3…−27.6, z 9.4–12.6, face y −59.3; back wall y −79.3…−80.9 → 20.0–21.6 plug room |
+| `v5f_b2j_renders.py` | 2 | renders `~/Documents/HA_v5f_b2_{front34,cut,under_open,k5_section}.png`: closed front 3/4; housing cut at z 55 seen from behind/above; door assembly dropped 70; side section at world x 47.5 with the +x lanes in red (one MODE per run) | 4 PNG 1600 × 1200 |
+| `v5f_b2z_save.py` | 2 | inventory, f3d export, named version | 70 bodies (15 visible); `revF-wip-b2.f3d` 13.3 MB; version "rev F WIP 2026-11-03 b2: chambers, speakers + baffles, lattices, touch PCB retention, K5 lanes; USB pocket open (Claude)" |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -63,3 +77,20 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     `filletFeatures` call (R3.5, tangent chain, 0.1 s); select the edges by the neighbour face's `pointOnFace` height.
 11. Probe placement: a fixed-offset probe near a screw can land in a neighbouring feature (r6 "no recess at r 4.5" hit the
     foot recess 10.77 away). Check probe points against every nearby cut before reading a `false` as a defect.
+12. Probes that cross several features: scan intervals (`segs()`: step along a line, return the solid runs) instead of
+    bisecting between assumed endpoints — b2b's first bisection probes read the wrong transition.
+13. Exact connector outlines from a STEP-derived body: collect `body.vertices` beyond a plane and cluster them (PI5_F:
+    USB stacks y −36.3…−21.6 / −18.3…−3.7, z 10.3–25.9, faces x_rel 45.1–45.2; RJ45 y −55.8…−39.8; USB-C x_rel −36.3…−27.6,
+    z 9.4–12.6, face y −59.3). A point-probe grid misses 0.3 mm receptacle shells.
+14. `readOnly: true` on `fusion_mcp_execute` for probe scripts (enforced; also runs with a dialog open).
+15. The Filesystem MCP `read_media_file` returns the image **and** its base64 as text (≈ 6 k tokens for a 320 × 240 JPEG);
+    check one render at most per block.
+
+## Checkpoint 2 open items (2026-11-03)
+1. ReSpeaker USB-A plug vs the +x speaker: the basket envelope (Ø40, y −3.0…−29.1) leaves 8.27 mm from the stack face
+   (x_rel 45.15) at the lower port's top (z 17.6) and covers the front stack (y −18.3…−3.7) and the front half of the rear
+   stack (y −29.1…−21.6). Pocket not built; options in the checkpoint report.
+2. K5 lanes exit through the back wall (b2i) — the brief's zero-interference lanes are impossible without back-wall holes.
+3. LCD screws are M3 DIN912 (2.5 hex): the A7 2.0 mm key does not fit; a 2.5 mm ball-end key ≥ 150 is needed.
+4. Block 5: the D1 inner layer must not close the speaker bores or lattices.
+5. Speakers go in flange-first at y −3…−6, lifted over the ring and slid 3 mm forward onto the gasket.
