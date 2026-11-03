@@ -1,0 +1,43 @@
+# rev F block 1r-5 (2026-11-03): DOOR_F additions, as v5f_b1c at the inset-6.8 screw axes: six screw pads D11 z 2.0 -> 5.0
+# under the shell bosses; four Pi 5 bosses (Ruthex RX-M2.5x5.7) D7.6 z 2.0 -> 7.5 + D6.0 land z 7.4 -> 8.0 at the
+# unchanged Pi holes. NEW body -> interference -> combine JOIN into DOOR_F.
+import os
+exec(open(os.path.expanduser('~/Documents/v5f_common.py')).read())
+import traceback
+SCREWS = [(XC + 86.74, -7.66), (XC - 86.74, -7.66), (XC + 73.96, -45.63), (XC - 73.96, -45.63), (XC + 44.0, -66.74), (XC - 44.0, -66.74)]
+PI_HOLES = [(-41.5, -54.5), (16.5, -54.5), (-41.5, -5.5), (16.5, -5.5)]
+
+
+def run(_context):
+    X = Ctx()
+    out = {}
+    try:
+        door = X.body('DOOR_F')
+        tb = None
+        for (x, y) in SCREWS:
+            c = X.wcyl_z(x, y, 5.5, 2.0, 5.0)
+            tb = c if tb is None else X.union(tb, c)
+        for (x, y) in PI_HOLES:
+            X.union(tb, X.wcyl_z(x, y, 3.8, 2.0, 7.5))
+            X.union(tb, X.wcyl_z(x, y, 3.0, 7.4, 8.0))
+        add = X.add(tb, 'DOOR_add_tmp')
+        out['interf'] = X.interference(add, [X.body(n) for n in ('HOUSING_E', 'SLAB_frame', 'LCD_glass', 'PI5_F', 'PI5_F_cooler')])
+        if any(v > 0 for v in out['interf'].values()):
+            add.isLightBulbOn = False
+            raise RuntimeError('interference %s' % out['interf'])
+        v0 = door.volume
+        X.combine(door, [add])
+        door = X.body('DOOR_F')
+        out['door_cm3'] = (round(v0, 3), round(door.volume, 3))
+        out['left_over'] = [b.name for b in X.comp.bRepBodies if b.name == 'DOOR_add_tmp']
+        out['probes'] = {
+            'pads_z4.8': [X.inside(door, x + 5.0, y, 4.8) for (x, y) in SCREWS],
+            'pi_boss_z7': [X.inside(door, x + 3.5, y, 7.0) for (x, y) in PI_HOLES],
+            'pi_land_z7.9_r2.9': [X.inside(door, x + 2.9, y, 7.9) for (x, y) in PI_HOLES],
+            'pi_land_z7.9_r3.2_open': [not X.inside(door, x + 3.2, y, 7.9) for (x, y) in PI_HOLES]}
+        out['all_ok'] = all(all(v) for v in out['probes'].values())
+        out['interf_after'] = X.interference(door, [X.body('HOUSING_E')])
+    except Exception:
+        out['FAIL'] = traceback.format_exc().splitlines()[-3:]
+    log('v5f_b1r5_pads_pi_bosses', 'door additions', out)
+    print(json.dumps(out))

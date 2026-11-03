@@ -1,4 +1,5 @@
-# rev F common header (2026-11-03). Pasted at the top of every v5f_b* script (the Fusion MCP runs single files).
+# rev F common header (2026-11-03). Pasted at the top of the v5f_b0/b1 scripts; the v5f_b1r scripts exec() a copy saved as
+# ~/Documents/v5f_common.py instead (the Fusion MCP runs single files).
 # Frames per enclosure/fusion/revE/README.md: design = Fusion native (Z up the 12 deg ramp, +Y toward the viewer, d = -Y);
 # world: y_w = Y*C - Z*S, z_w = H + Y*S + Z*C. XC = -2.55. +x = viewer's LEFT. Units: mm in this code, cm in the API.
 import adsk.core, adsk.fusion, json, math, os, time
@@ -90,3 +91,78 @@ class Ctx:
             coll.add(t)
         ci = self.feats.combineFeatures.createInput(target, coll); ci.operation = op; ci.isKeepToolBodies = keep
         return self.feats.combineFeatures.add(ci)
+
+
+# --- door / ring outlines (added 2026-11-03 for the b1r scripts; same code as v5f_b1a_door.py, rev E p18 section_pts) ---
+def section_pts(hw, dep, n, rc, N=241):
+    ai = hw - rc; bi = dep - 2 * rc
+    th = [math.pi * i / (N - 1) for i in range(N)]
+    def sp(t):
+        c = math.cos(t); s = math.sin(t)
+        return (ai * (1 if c >= 0 else -1) * abs(c) ** (2.0 / n), -rc - bi * abs(s) ** (2.0 / n))
+    P = [sp(t) for t in th]; Q = []
+    for i in range(N):
+        a = P[max(i - 1, 0)]; b = P[min(i + 1, N - 1)]; tu = b[0] - a[0]; tv = b[1] - a[1]; L = math.hypot(tu, tv) or 1e-9
+        Q.append((P[i][0] + rc * (-tv / L), P[i][1] + rc * (tu / L)))
+    Q[0] = (hw, -rc); Q[-1] = (-hw, -rc)
+    tot = sum(math.hypot(Q[i + 1][0] - Q[i][0], Q[i + 1][1] - Q[i][1]) for i in range(N - 1)); dmin = max(3.0, tot / 64.0)
+    inner = []; last = Q[0]; acc = 0.0
+    for i in range(1, N - 1):
+        acc += math.hypot(Q[i][0] - last[0], Q[i][1] - last[1]); last = Q[i]
+        if acc >= dmin and math.hypot(Q[i][0] - Q[-1][0], Q[i][1] - Q[-1][1]) >= dmin:
+            inner.append(Q[i]); acc = 0.0
+    return ai, inner
+
+
+def outline_body(X, OFF, z0, z1, name):
+    """NEW body: the rev E outer generator's floor section (hw 100, back y -85, n 2.6, corner R12) offset OFF inward,
+    cut at the chin line y = YC - OFF, front vertical corners R(12 - OFF), world z z0..z1. Returns (body, YC, rc)."""
+    comp = X.comp; feats = X.feats
+    fl = X.plane('FLOOR_plane')
+    sb = X.body('SLAB_frame').boundingBox
+    YBK = wy(P3(0, sb.minPoint.y, sb.minPoint.z)); YC = YBK - 0.5; YF = -sb.minPoint.z * 10 * S
+    ZT = 180.0; PW = 2.2; PWW = 1.7; DTOP = 28.0; YTOP = yfront(13.0, ZT) - DTOP; HWT = 90.0
+    hwE = lambda z: 100 - (100 - HWT) * (z / ZT) ** PWW
+    ybE = lambda z: -85 + (YTOP + 85) * (z / ZT) ** PW
+    nE = lambda z: 2.6 - 0.6 * (z / ZT)
+
+    def sign_toward(sk, vec):
+        n = sk.xDirection.crossProduct(sk.yDirection); return 1.0 if n.dotProduct(vec) > 0 else -1.0
+
+    sk = comp.sketches.add(fl); sk.name = 'sk_' + name; sk.isLightBulbOn = False
+    hw = hwE(0) - OFF; dep = (YF - ybE(0)) - 2 * OFF; n = nE(0); rc = 12.0 - OFF; yf = YF - OFF
+    cu, mid = section_pts(hw, dep, n, rc)
+    Q = lambda x, y: sk.modelToSketchSpace(Dw(x, y, 0.0))
+    L = sk.sketchCurves.sketchLines; A = sk.sketchCurves.sketchArcs; k = math.sqrt(0.5)
+    ln = L.addByTwoPoints(Q(XC - cu, yf), Q(XC + cu, yf)); ln.isFixed = True
+    aR = A.addByThreePoints(ln.endSketchPoint, Q(XC + cu + rc * k, yf - rc + rc * k), Q(XC + hw, yf - rc)); aR.isFixed = True
+    aL = A.addByThreePoints(Q(XC - hw, yf - rc), Q(XC - cu - rc * k, yf - rc + rc * k), ln.startSketchPoint); aL.isFixed = True
+    cps = [aR.endSketchPoint, Q(XC + hw, yf - rc - 2.0)] + [Q(XC + u, yf + v) for (u, v) in mid] + [Q(XC - hw, yf - rc - 2.0), aL.startSketchPoint]
+    sk.sketchCurves.sketchControlPointSplines.add(cps, adsk.fusion.SplineDegrees.SplineDegreeThree)
+    pr = max((sk.profiles.item(i) for i in range(sk.profiles.count)), key=lambda p: p.areaProperties().area)
+    inp = feats.extrudeFeatures.createInput(pr, NEW); s = sign_toward(sk, UP)
+    inp.startExtent = adsk.fusion.OffsetStartDefinition.create(VI(s * z0 / 10)); inp.setDistanceExtent(False, VI(s * (z1 - z0) / 10))
+    f = feats.extrudeFeatures.add(inp); body = f.bodies.item(0); body.name = name
+    sk2 = comp.sketches.add(fl); sk2.name = 'sk_' + name + '_chin'; sk2.isLightBulbOn = False
+    Q2 = lambda x, y: sk2.modelToSketchSpace(Dw(x, y, 0.0))
+    sk2.sketchCurves.sketchLines.addTwoPointRectangle(Q2(-130.0, YC - OFF), Q2(130.0, 60.0))
+    coll = adsk.core.ObjectCollection.create()
+    for i in range(sk2.profiles.count):
+        coll.add(sk2.profiles.item(i))
+    ci = feats.extrudeFeatures.createInput(coll, CUT); s2 = sign_toward(sk2, UP)
+    ci.startExtent = adsk.fusion.OffsetStartDefinition.create(VI(s2 * (z0 - 5.0) / 10)); ci.setDistanceExtent(False, VI(s2 * (z1 - z0 + 10.0) / 10))
+    ci.participantBodies = [body]; feats.extrudeFeatures.add(ci)
+    body = X.body(name)
+    front = None
+    for fc in body.faces:
+        if fc.geometry.objectType.endswith('Plane') and abs(wy(fc.centroid) - (YC - OFF)) < 0.5:
+            front = fc
+    if front is None:
+        raise RuntimeError('%s: chin face not found' % name)
+    ec = adsk.core.ObjectCollection.create()
+    for e in front.edges:
+        if abs(wz(e.startVertex.geometry) - wz(e.endVertex.geometry)) > 0.5:
+            ec.add(e)
+    fi = feats.filletFeatures.createInput(); fi.edgeSetInputs.addConstantRadiusEdgeSet(ec, VI(rc / 10), True)
+    feats.filletFeatures.add(fi)
+    return X.body(name), YC, rc
