@@ -46,6 +46,7 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_b2h_touch_pcb.py` | 2 | TOUCH_PCB 90 × 44 × 1.6 (x_rel ±45, y 2.7…4.3, z 6…50) + KO_touch_back 2.9 zone; retention on the partition cavity faces: ledge z 5.0…6.0, lip z 6.0…6.8, top tab z 43.5…47.5 — fitted from behind (lift 0.9 behind the tabs, swing the bottom over the lips, drop onto the ledges), because the floor ring blocks insertion from below | retention 0.041 cm³; HOUSING_E 285.030 → 285.062; PCB and keep-out vs all bodies 0; 8/8 probes; slot-wall clearance 0.21 at the 0.9 lift |
 | `v5f_b2i_k5_lanes.py` | 2 | KO_K5_LL/LR/UL/UR: Ø7 lanes from the key entry (head top, d 16.8): lower pair back and 13° up × 100, upper pair back and 37° down × 60 (brief K5) | **all four cross the back wall**: lower axes at t 62.5 / 64.75 (world y −64.6 / −66.8, z 93.8 / 94.3), upper at t 52.25 / 55.5 (y −59.5 / −62.1, z 114.8 / 112.8); 100.8–164.4 mm³ in HOUSING_E each, 0 with everything else |
 | `v5f_b2q_probe_pi_ports.py` | 2 | read-only: PI5_F connector outlines from its vertices (+x end clustered by y, back edge by x) and the inner back wall behind the USB-C | USB stacks y −36.3…−21.6 / −18.3…−3.7, z 10.3–25.9, faces x_rel 45.1–45.2; USB-C x_rel −36.3…−27.6, z 9.4–12.6, face y −59.3; back wall y −79.3…−80.9 → 20.0–21.6 plug room |
+| `v5f_b2r_probe_speaker_screws.py` | 2 | read-only: DIN912 M3 speaker-screw heads (Ø5.5 × 3 behind the flange) and straight Ø3 key paths back to the back partition vs HOUSING_E / DOOR_F; free run behind the outer heads | **lower-outer heads 37.97 mm³ inside the FL/FR door bosses** (free run 0); upper-outer heads clear, 27.5 free to the side wall; inboard heads and paths 0 (45.6 free) |
 | `v5f_b2j_renders.py` | 2 | renders `~/Documents/HA_v5f_b2_{front34,cut,under_open,k5_section}.png`: closed front 3/4; housing cut at z 55 seen from behind/above; door assembly dropped 70; side section at world x 47.5 with the +x lanes in red (one MODE per run) | 4 PNG 1600 × 1200 |
 | `v5f_b2z_save.py` | 2 | inventory, f3d export, named version | 70 bodies (15 visible); `revF-wip-b2.f3d` 13.3 MB; version "rev F WIP 2026-11-03 b2: chambers, speakers + baffles, lattices, touch PCB retention, K5 lanes; USB pocket open (Claude)" |
 
@@ -93,4 +94,7 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 2. K5 lanes exit through the back wall (b2i) — the brief's zero-interference lanes are impossible without back-wall holes.
 3. LCD screws are M3 DIN912 (2.5 hex): the A7 2.0 mm key does not fit; a 2.5 mm ball-end key ≥ 150 is needed.
 4. Block 5: the D1 inner layer must not close the speaker bores or lattices.
-5. Speakers go in flange-first at y −3…−6, lifted over the ring and slid 3 mm forward onto the gasket.
+5. Speaker screws (b2r): the lower-outer M3 heads sit inside the FL/FR door bosses, the upper-outer ones have 27.5 mm of
+   straight room, and from the open chamber bottom no key reaches a horizontal screw (ball end ≤ ≈ 25° off-axis; an
+   L-key's long leg meets the basket envelope or the walls). Fixing options in the checkpoint report; the FL/FR bosses
+   also block a speaker insertion path at y −6…−3.66 (boss front face y −3.66).
