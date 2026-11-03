@@ -1,12 +1,14 @@
-# rev F block 0 (2026-11-03): V8 - LCD M2.5 standoff depth -> LCD screw length.
+# rev F block 0 (2026-11-03): V8 - LCD standoff depth -> LCD screw length (standoffs are M3, see the correction below).
 # Imports Daniel's Waveshare STEP (~/Documents/Maker/HA Panel/Datasheets/8inch-dsi-lcd_c_New.stp) into a separate,
 # unsaved document, probes the four mounting points along the screw axis, closes the document without saving.
 # STEP frame: origin = glass centre, long axis Y (= design x), +Z toward the viewer, glass front Z 4.8 -> d = 4.8 - Z.
 # Mounting points: STEP (X +-34, Y +-47.5) = design (x +-47.5, Z ZS +-34).
 # Result 2026-11-03: import 10.7 s; standoff D5.5 x 1.5 (Z -2.6..-4.1 = d 7.4..8.9) with a plain D2.6 bore through standoff
 # and PCB (+ D4.3 x 0.3 at the PCB front), no thread modelled; LCD panel back on the axis at Z 0.05-0.10 (4.15-4.2 below
-# the standoff face). Head seat d 12.8, boss 3.8 -> M2.5 x 6 tip 2.2 below the boss face (~2.0 clear of the panel);
-# M2.5 x 8 tip 4.2 -> touches the panel back -> rejected.
+# the standoff face). Head seat d 12.8, boss 3.8 -> 6 mm screw tip 2.2 below the boss face (~2.0 clear of the panel);
+# 8 mm tip 4.2 -> touches the panel back -> rejected.
+# Correction 2026-11-03 11:20: Waveshare's 2D drawing gives the four standoffs as M3 ("4xM3.00 H1.5"; the Pi standoffs are
+# "4xM2.50 H8"); the D2.6 bore matches an M3 tap size -> LCD screws are DIN912 M3 x 6 (the "M2.5" in the logs is wrong).
 import adsk.core, adsk.fusion, json, math, os, time
 
 LOG = os.path.expanduser('~/Documents/v5f_log.json')
