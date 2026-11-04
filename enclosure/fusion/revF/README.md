@@ -189,7 +189,8 @@ kept, lip magnets with a drop of CA – Daniel 2026-11-04 20:31). Built in R2c, 
   the baffle pads) → baffle. Foam: 1 mm closed-cell, compressed to 0.7.
 - Fixing: speaker on the box on the bench (2 pegs locate the outboard holes); in the housing 2 × M3 × 10 DIN912 per box
   through the tubes and the inboard frame holes into the baffle pilots (head seat y −5.7, socket top y −8.7: 43.3 mm in
-  from the box's rear face); the 2.5 mm ball-end key ≥ 75 mm of the LCD screws fits.
+  from the box's rear face); the 2.5 mm ball-end key ≥ 75 mm of the LCD screws fits. Self-tapping instead of Ruthex
+  accepted by Daniel (2026-11-04 21:58): an insert hole would leave ≈ 0.1 mm of chin skin (0.8 after D1).
 - Air (net of tubes and pocket): +x 88.04–117.30, −x 89.09–118.47 cm³ (lower value = the whole Ø40 basket envelope
   subtracted). DMA45-4 closed box (Fs 151.4 Hz, Qts 0.56, Vas 85 cm³): Qtc 0.785 / F3 193 Hz at 88 cm³, 0.735 / 191 Hz at
   117 cm³.
@@ -210,9 +211,9 @@ Open from R2:
 1. Bench: DMA45-4 basket ≤ Ø32 over its rear 10 mm (plug pocket and outboard walls); otherwise relieve the outboard wall
    locally and rework the pocket.
 2. Block 4: the ReSpeaker's USB-A plug cannot be pushed into the Pi with the +x box fitted (the pocket gives 10 mm in front
-   of the port, the inserted plug's length, with no room for its insertion travel). Proposed: plug it into the Pi before the
-   Pi goes in, use a side-exit right-angle plug, and open the pocket into a sealed channel to the box's rear face
-   (≈ 3 cm³ less air).
+   of the port, the inserted plug's length, with no room for its insertion travel). Decided (Daniel 2026-11-04 21:58):
+   side-exit right-angle USB-A plug, plugged into the Pi before the Pi goes in; the +x box pocket becomes a sealed channel
+   to the box's rear face (≈ 3 cm³ less air). Model and check in block 4.
 3. Block 4: re-check the Pi path (2.0 lift) against the main board, ReSpeaker, sensors and 5807 fitted before it.
 4. Bench: M3 × 10 self-tapping into the ASA Ø2.5 pilots, 5 drive cycles.
 5. Block 5: D1 = 0.7 re-run (lip, magnets); the boxes' 1.2 wall clearance already includes D1 0.7 + 0.5.
