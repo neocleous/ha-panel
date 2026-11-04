@@ -88,6 +88,22 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_b3j_probe_ld_view.py` | 3 | read-only: plan rays at z 127.5 from three cavity points near the corner, 0…150° | 0–15°: wall then LCD_panel_body / LCD_glass; 30–60°: wall + SLAB_frame (printed); ≥ 60–75°: side wall only (≈ 3 mm along the ray) |
 | `v5f_b3k_renders_save.py` | 3 | renders (MODE 'renders'): top 3/4 from the front-right, the top from below (cut body, strip envelopes red, VEML blue), the LD2410C corner from inside (cut body, board red) → `~/Documents/HA_panel_renders/HA_v5f_b3_*.png` + check JPEGs | 3 renders + 3 checks, no leftovers |
 | `v5f_b3l_save.py` | 3 | the save run (B3k with MODE 'save', as sent) | version "rev F WIP 2026-11-04 b3: top edge R3 + top wall >= 2.5, mic strip pockets/pins/ports, VEML pocket (provisional), LD2410C cradle (Claude)" saved; `HA Panel v5 - tapered revF-wip-b3.f3d` 25.6 MB; 100 bodies, 17 visible, no leftovers |
+| `v5f_b4a_probe_interior.py` | 4 | read-only: interior state for block 4 – component boxes, the rear opening's inner half-width at y −55.3 (z 10…150), the door's inner back wall y (x_rel −40…40, z 10…140), floor tops | opening half-width 76.9 (z 10) … 59.5 (z 100) … 17.3 (z 150); back wall inner y at x 0: −81.5 (z 35) … −72.6 (z 100), at x ±40: −77.1 (z 35), −70.5 (z 84); floor top z 2.5 |
+| `v5f_b4b_main_board.py` | 4 | main board at candidate A (D21) on a separate bracket: MAIN_pcb (x_rel ±45, y −65.0…−63.4, z 34…84), MAIN_front_env (to y −33.4, z 35.8…84), MAIN_back_env (to y −68.5); MAIN_BRACKET (posts x_rel ±(46.5…52.5), y −62.5…−58.5, z 8…84; Ø8 bosses with Ruthex M2.5 Ø4.0 holes at (±41.5, z 37.5 / 80.5); foot tabs z 8–11 with Ø3.4); floor bosses Ø8 z 2–8 at (±49.5, −58.0), Ruthex M3 | bracket 4.9 cm³ (2 lumps = left/right prints); front 242.831 → 243.241 cm³; MAIN_front_env vs KO_K5_LR 3.08 mm³ (the env's top-left corner: B1 keeps x_rel < −41.45, y > −37 below z 83) and vs the bracket bosses (designed); door removal and Pi path (lift 2.0) 0 |
+| `v5f_b4c_5807_cradle.py` | 4 | 5807 posts + rib on the front shell floor (superseded by B4d/B4g) | front 243.241 → 244.197; the posts sat in both speaker boxes' entry paths (36.8 / 41.0 mm³) |
+| `v5f_b4d_5807_cradle_part.py` | 4 | B4c posts cut; separate CRADLE_5807 on floor bosses (±13.5, −64.5) (superseded by B4g: wrong hole end, see there) | front 244.197 → 243.241 → 243.65; box paths (s 40) and Pi path 0; cradle vs door 66.2 mm³ (plate end in the back wall) |
+| `v5f_b4e_probe_world_boxes.py` | 4 | read-only: tight world boxes of every interior body (copy rotated +12° about x and lifted H, then `boundingBox`) | e.g. LCD_DSI_conn x_rel 41.85…46.75, z 103.3…126.0; LCD_Pi_standoff ×4 x_rel −19.2…−13.7 / 38.8…44.3; PD_5807_env y −84.6…−60.2, z 13.0…18.86 |
+| `v5f_b4f_probe_disp_conn.py` | 4 | read-only: PI5_F lumps above the PCB near the CAM/DISP connectors, planar faces; PI5_F vs the cooler envelope | two connectors 2.95 × 15.5 × 4.05 at x_rel 4.1…7.05 / 10.3…13.25, y −57.3…−41.8, z 9.45…13.5, latch step on the +x side, solid top (vertical FPC entry, slot not modelled); 2 × 2 pin header x_rel 15.85…20.85 to z 17.9 inside the cooler box (12.75 mm³: the S-scaled cooler box, not the real cooler) |
+| `v5f_b4g_5807_cradle_bezel.py` | 4 | 5807 holes corrected to the receptacle end (Eagle: 2.54 from the USB-C edge → x_rel +7.747 / −7.493, y −81.16, 1.2 in front of the door wall): door cutout x ±11.3, z 7.7–20.5 (was the R1 slot ±10.5 × 12.7–19.2); new CRADLE_5807 (B4d body → CRADLE_5807_b4d, hidden): plate z 8–11, posts Ø6 z 10.5–14 with Ruthex M2 Ø3.2 × 4.5, bezel x ±11.0, z 8–20.2, y −84.6…−81.6 filling the cutout with 0.3, PCB/screw-head pocket, receptacle window x ±4.67 × z 15.4–19.1, front pads; fixing 2 × M3 × 6 at (±5.5, −72.5) behind the main board; B4d floor bosses removed, new ones at (±5.5, −72.5) | door 55.484 → 55.102, front 243.65 (net), cradle 1.827 cm³, 1 lump each; 15/15 probes; cradle vs exact 5807 (PCB, receptacle, M2 heads, shanks) 0, vs PD_5807_env 70.7 (designed: underside keep-out + env box); door, front, Pi, main board, boxes 0; door removal 0.5…80 mm 0; slide-in from behind (lift 0.5) 0 |
+| `v5f_b4h_respeaker_carrier.py` | 4 | ReSpeaker on RESP_CARRIER screwed to the LCD's four Pi standoffs (tips d 15.2 at x_rel −16.45 / 41.55, Z −2.93 / −51.93): plate x_rel −40.0…45.4, d 15.2–17.2, Z −56.9…2.2 (inside the boss opening, so LCD + carrier + ReSpeaker go in from the front); Ø2.9 for 4 × M2.5 × 5; notch over the LCD 2 × 2 header + pins; Ø6 × 5 bosses with Ruthex M2 holes at the ReSpeaker holes; zip-tie slot pairs 7.5 above each vacated mic pad (K14); envelopes RESP_pcb / _top_env / _mic_env / _usbc_plug_env (straight plug 12.4 × 6.6 × 32) | carrier 10.07 cm³; USB-C axis (45.28, −21.48, 122.13): the plug runs between the lower (top ≤ 87) and upper (bottom ≥ 139) +x lanes; U4 / U5 at (−32.11 / 38.89, −16.1, 112.27); all 0 vs LCD_*, slab, housing, door, lanes, boxes, main board, sensors; carrier vs RESP_mic_env 111.9 (bosses, designed); front-insertion sweep 2…30 mm vs housing + slab 0 |
+| `v5f_b4i_spkbox_usb_slot.py` | 4 | SPKBOX_L: sealed USB-A pocket → slot along the plug's travel, open toward the Pi and through the rear face (V1 x_rel 44.0…55.65, y −36.95…−20.95; V2 44.0…57.15, y −53.0…−36.0; z 9.7…20.7; walls 1.5); SPKBOX_L_r2 kept hidden; envelopes USBA_plug_env, USBA_cable_env | box 25.321 → 25.623 cm³, 1 lump; chamber air −2.69 cm³ (+x 85.35–114.61); 9/9 probes; Pi + plug path (lift 2.0, 71 steps) and lowering 0; plug env vs SPK_L 20.8 and box vs SPK_L 266.3 mm³ (Ø40 basket envelope; clears if the real basket is ≤ Ø32 over its rear 10 mm, R2 open item 1) |
+| `v5f_b4j_v11_options.py` | 4 | V11 envelopes at the Pi USB-C (hidden V11c_straight, V11a_up/_px/_mx, V11b_up/_px/_mx) and their overlaps | free length behind the receptacle 20.86 (door wall); c: door 74.8 mm³; a_up: main board 31.4 + back env 264.1; a_px: cradle 338.3, 5807 141.0, door (RR boss) 10.2, Pi 2.2; a_mx: door 260.9, bracket 143.1; b_up: back env 2.8 only; b_px: cradle 47.1; b_mx: door 46.3 |
+| `v5f_b4k_probe_walls.py` | 4 | read-only rays: −x inner wall above the −x box (y −25…−62, z 80…110) and the back wall above the door joint (x_rel −40…40, z 160…178) | −x wall inner x −90.0 (y −25, z 80) … −72.7 (y −45, z 110), normal ≈ (0.75, 0.64, −0.15) at (y −45, z 92); back wall at x 0 inner y −52.2 (z 166) … −48.1 (z 176), 2.5 normal, front shell from z ≈ 165 up |
+| `v5f_b4l_exhaust_bme_anchors.py` | 4 | exhaust: 2 slots 90 × 3 at x_rel ±45, z 167.0–170.0 / 171.5–174.5 through the back wall above the joint (540 mm², rev D start), TOOL_exhaust_slots kept for the block 5 re-cut; BME680_env (provisional 20 × 15 × 6) 1.5 off the back-right inner wall at (−76.82, −45, 92) + 2 slots 14 × 3 (TOOL_bme680_slots kept); zip-tie bridges on the floor at (±58.5, −56.5), top z 8.0 | front 243.65 → 242.162 → 241.952 → 242.147 cm³, 1 lump; 8/8 probes |
+| `v5f_b4m_probe_lcd_dsi_conn.py` | 4 | read-only on the panel: imports Daniel's Waveshare STEP into a new document, intersects the merged PCBA body (2451 faces) with the DSI connector's region, lists the planar faces, closes the document | connector STEP Y 39.28…44.07 (x_rel 41.83…46.62), bottom face d 9.71; FPC slot 0.5 tall (d 8.4…8.9) with the side faces split at the slot on both long sides (±x) – entry side not decided by the model; +x assumed (short wrap to a back-mounted Pi in the stock kit) |
+| `v5f_b4n_leads.py` | 4 | every lead as a hidden tube body LEAD_* along a polyline (Ø = bundle allowance), bbox-prefiltered booleans against 36 bodies + all LCD_*, PI5_F cropped to the lead's box | 13 leads in one run; lengths in the block 4 checkpoint; four routes touched something (MIC_R carrier boss 4.5, RADAR cradle ring 10.2, USB_RESP box edge 5.3, DSI MAIN_front_env 3.3 mm³) → B4o |
+| `v5f_b4o_leads_fix.py` | 4 | the four routes re-done (old bodies → LEAD_*_b4n, hidden) | MIC_R 68.9, RADAR 70.8, USB_RESP 128.6, DSI 148.5 mm; all 0 |
+| `v5f_b4p_renders_save.py` | 4 | renders (MODE 'renders'): rear open (leads red, envelopes blue), ReSpeaker carrier, inlet bezel, V11 envelopes → `~/Documents/HA_panel_renders/HA_v5f_b4_*.png` + check JPEGs; MODE 'save': inventory, f3d, named version | 4 renders + 4 checks, no leftovers; version "rev F WIP 2026-11-05 b4: …" saved; `HA Panel v5 - tapered revF-wip-b4.f3d` 26.0 MB; 142 bodies, 20 visible |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -156,7 +172,21 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 27. `comp.findBRepUsingRay(origin, dir, BRepFaceEntityType, -1, visibleOnly, hitPoints)` returns every face crossed with its
     hit point: wall thickness along a line, surface normals (face.evaluator), and line-of-sight checks through hidden
     bodies (visibleOnly False) – B3h, B3j.
-
+28. Tight world bounding boxes: copy the body, transform the copy with the design → world matrix (rotation +12° about x,
+    translation H in z: cells (1,1)=C, (1,2)=−S, (2,1)=S, (2,2)=C, (2,3)=H/10) and read `boundingBox` (B4e). Design boxes
+    converted corner by corner are inflated by the tilt (a 22 mm tall LCD part gains 4.8 mm in y).
+29. Parts parallel to the LCD are easiest in design coordinates: boxes with axes (1,0,0)/(0,1,0) and cylinders along design Y,
+    positions as (x_rel, d = −Y, Z) (B4h carrier, the LCD's own standoffs give d and Z directly).
+30. Long ray probes over the whole component are slow (126 `findBRepUsingRay` calls with ~140 bodies > 60 s, B4k). Read a
+    large log entry with a small read-only script that loads `v5f_log.json` and prints compact text, instead of tailing
+    thousands of JSON lines.
+31. Re-derive hole positions from the source frame before modelling: B4c/B4d placed the 5807 posts at the wrong edge; the
+    Eagle frame (Y toward the USB-C edge, top view) mapped onto the pose (Y → −y, top up) gives X → −x (B4g).
+32. Leads as tube bodies: TemporaryBRep cylinders per segment + spheres at the joints, bbox pre-filter on the obstacles, PI5_F
+    cropped to the lead's box before the boolean (13 leads in one call, B4n). Cylinder ends are flat, so a lead ending at a
+    connector face does not register as an overlap.
+33. A STEP whose parts are merged into one body (Waveshare PCBA, 2451 faces): intersect it with a region box and list the
+    region's planar faces (normal, area, point) to find a connector's FPC slot (B4m).
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
 speaker enclosures separately and screw them in. Assembly check: the LCD screws and the speaker screws cannot be driven
@@ -271,3 +301,64 @@ Open from block 3:
 3. Mic cable path to the ReSpeaker (block 4, with the ReSpeaker placement); strip PCB layout (B1) around the pins.
 4. Top groove + rail (block 5) at ≥ 0.5 below the R3 tangent (sides z ≤ 176.8, back ≤ 177.7).
 
+## Block 4 checkpoint (2026-11-05)
+Electronics mounts and cables. Daniel 2026-11-04 21:58: side-exit right-angle USB-A plug pre-plugged into the Pi, +x box
+pocket → channel to the box's rear face; M3 × 10 self-tapping speaker clamps. Built in B4b–B4o, saved as "rev F WIP
+2026-11-05 b4 …" (`revF-wip-b4.f3d`, 26.0 MB, 142 bodies).
+- Main board (D21, candidate A): MAIN_pcb x_rel ±45, y −65.0…−63.4, z 34–84 on MAIN_BRACKET (two printed L/R halves, posts
+  x_rel ±(46.5…52.5), Ruthex M2.5 bosses at (±41.5, z 37.5 / 80.5), tabs on floor bosses (±49.5, −58.0), M3 × 6).
+- 5807 inlet (K17): the R1 premise was wrong – the Pi 5's CAM/DISP connectors are vertical-entry at y −57.3…−41.8 in front
+  of the rear edge (B4f), so the DSI FPC leaves upward and the 5807 behind the edge is clear of it. Holes corrected to the
+  receptacle end (B4g): door inlet cutout x ±11.3, z 7.7–20.5; CRADLE_5807 with a bezel filling the cutout (0.3 gap,
+  receptacle window x ±4.67, face flush at y −84.6, so any overmould stays outside); 2 × M2 × 6 into Ruthex M2 posts;
+  cradle fixed by 2 × M3 × 6 at (±5.5, −72.5) behind the main board. Pigtail 25 mm up to an XH near the main board's bottom
+  edge.
+- ReSpeaker (K14): RESP_CARRIER on the LCD's four Pi standoffs (4 × M2.5 × 5), board behind the LCD between the K5 lane pairs,
+  mic side toward the carrier, USB-C at the +x end: straight plug (12.4 × 6.6 × 32 allowance) between the lower and upper
+  +x lanes with ≥ 10 mm to both. Zip-tie slots 7.5 above each vacated mic pad. LCD + carrier + ReSpeaker go in from the front
+  as one module (sweep 2…30 mm through the boss opening and the slab window: 0).
+- +x box: slot along the USB-A plug's travel (Pi in from behind at lift 2.0), open toward the Pi and through the rear face;
+  air −2.69 cm³ (+x 85.35–114.61 cm³). Pi + plug path 0.
+- BME680 (K15, provisional 20 × 15 × 6): back-right corner above the −x box at (−76.82, −45, 92), two 14 × 3 slots behind the
+  cloth. Exhaust (K18): 2 × 90 × 3 slots above the door joint (z 167–170 / 171.5–174.5), 540 mm² (rev D start); slot tools
+  kept for the re-cut after the D1 layer (block 5). Floor tie anchors at (±58.5, −56.5) (2 of 3; the third on the V11 run).
+- V11 (B4j, overlaps in mm³): straight plug – 20.86 mm to the door wall, 74.8 into it; adapter up – main board PCB 31.4 + back
+  envelope 264.1; adapter +x – cradle 338.3, 5807 141.0, RR door boss 10.2; adapter −x – door 260.9, bracket 143.1; elbow up –
+  back envelope 2.8 (0.2 mm); elbow ±x – cradle 47.1 / door 46.3. Decision needed (open item 1).
+
+Routed lengths (centreline, B4n/B4o; K11 slack ≥ 50 on top):
+| Lead | routed mm | cable | to buy / cut |
+|---|---|---|---|
+| GPIO plug A (9) / B (4) | 49 / 50 to a nominal landing at x_rel −20…0, z 45–50 inside MAIN_front_env | pre-crimped F-F | 15 cm leads (20 cm leave 150) |
+| LCD 5 V + GND (LCD's own lead, 2 terminals in plug A) | 141 + 14 housing = 155 | owned 4-pin lead, unmeasured | needs ≥ 205 (Measure 2) |
+| Mic L / R | 71 / 69 | JST SR 305 | cut to ≈ 120 |
+| Speaker L / R | 28 outside + ≈ 25 in the box | XH 2P 300 | cut to ≈ 105 |
+| Radar | 71 | XH 4P 300 | cut to ≈ 120 |
+| Touch | 54 | XH 4P 300 | cut to ≈ 105 |
+| VEML6030 / BME680 | 138 / 96 | Dupont 300 | cut to ≈ 190 / 150 |
+| 20 V pigtail | 25 | XH 2P 300 | cut to ≈ 75 |
+| ReSpeaker USB (A side-exit → C straight) | 129 outside + 18.5 slot + plugs ≈ 47 = 194 receptacle to receptacle | angled A-to-C | 0.25 m (56 slack) |
+| DSI FPC (22 → 15) | 149 + folds | 300 | 300 (Daniel's 200: ≈ 40 slack, too short) |
+| Pi power (V11) | a ≈ 90 / b ≈ 140 | 0.2 m + adapter / 0.5 m elbow | a ≈ 110 / b ≈ 360 slack |
+
+Assembly order: LCD + carrier + ReSpeaker (mic cables soldered and tied, DSI FPC and LCD lead on the LCD) from the front,
+4 × M3 × 6 via the K5 lanes → mic strips (SR plugs) → speaker boxes → touch PCB (+ BME680 / VEML6030 leads) → main board +
+bracket → Pi from behind (GPIO plugs A/B on the header, USB-A plug in the box slot) → Pi power (V11) → 5807 cradle + 5807 →
+cables → door.
+Open from block 4:
+1. V11 (Daniel): (a) adapter (female toward +x) + 0.2 m straight cable along the floor behind the Pi to a USB4105 on the main
+   board's bottom edge facing down at x_rel ≈ +25; needs the 5807 raised 6.5 (receptacle centre z 23.7, cradle on legs behind
+   the cable), the RR door boss moved 2.5 back (y −77.0) – ≈ 110 slack, one extra contact pair (bench 2.7); (b) 0.5 m elbow
+   (up-bending), fits as built, ≈ 360 mm stowed above the main board.
+2. LD2410C direction (from block 3, Daniel).
+3. LCD DSI connector entry side (STEP slot open on both sides; +x assumed) and the real Active Cooler around CAM/DISP 1 (the
+   S-scaled cooler box covers y ≥ −50.1 above the connector) – bench.
+4. LCD 4-pin lead length (≥ 205 needed); the LCD lead's terminals ride in plug A, which goes in with the Pi (≈ 70 mm travel) –
+   or fit plug A after the Pi – bench.
+5. BME680 / VEML6030 outlines (caliper) → retention; DMA45-4 basket ≤ Ø32 over its rear 10 mm (slot walls now 266 mm³ inside
+   the Ø40 envelope).
+6. B1 keep-outs: MAIN_front_env top-left corner (x_rel < −41.45, y > −37) below z 83 (−x lower lane); the four bracket bosses
+   (Ø8, y −63.4…−57.7); connector positions used for the routes (GPIO landing x −20…0, z 45–50; XH speaker x ±40, z 40;
+   radar x −37, z 80; touch x 4, z 60; pigtail x 0, z 37.5); Pi-power USB4105 per V11.
+7. LCD Pi standoffs: M2.5 thread depth unknown (M2.5 × 5 assumed); USB plug overmoulds unmeasured (allowances above).
+8. Block 5: re-cut the exhaust and BME680 slots after the D1 inner layer (TOOL_exhaust_slots, TOOL_bme680_slots).
