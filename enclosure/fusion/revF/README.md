@@ -51,6 +51,17 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_b2s_split_concept_renders.py` | 2 | removable-back proposal renders (TemporaryBRep only, nothing saved): HOUSING_E split by the plane y −55 → `~/Documents/HA_panel_renders/HA_v5f_split_{rear34_exploded,rear_open}.png` (cover red, moved 80 back; cover off with speakers, touch PCB, Pi, LCD and lanes) | front 226.78 / cover 58.32 cm³ |
 | `v5f_b2t_probe_split.py` | 2 | read-only removable-back study: opening section at y −55 / −60, cover volume, LCD-screw key entries at the plane | y −55: opening half-width 79.4 (z 3) → 21.7 (z 155), closed at z 160; cover 58.3 cm³ (61 g ASA); key entries z 91.6 / 118.2, 46.6–52.7 from the heads, all inside. y −60 fails the upper +x lane |
 | `v5f_b2z_save.py` | 2 | inventory, f3d export, named version | 70 bodies (15 visible); `revF-wip-b2.f3d` 13.3 MB; version "rev F WIP 2026-11-03 b2: chambers, speakers + baffles, lattices, touch PCB retention, K5 lanes; USB pocket open (Claude)" |
+| `v5f_r1a_floor.py` | R1 | rework start (Daniel 2026-11-03 23:41 – 11-04 08:40: removable back, solid floor, magnets, USB-C at the bottom): HOUSING_F_wip = HOUSING_E − the six b1r4 door bosses (tool ∩ INNER_E, z 4.95–13.1 so the floor cove stays) + solid floor (REF_E_outer ∩ z ≤ 2.5) − Pi insert holes, 10 × 10 intake, 4 SJ5012 recesses (FL/FR x_rel ±84, y −6.5; RL/RR ±30, −69.0), 4 door-screw holes Ø3.4 + Ø6.5 × 1.0 at (±19, −74.5), (±50, −67.0); DOOR_F/FOOT_* → *_b2 hidden | 285.062 → 282.678 → 314.214 → 312.891 cm³; all probes true (floor solid, bosses gone, 100/100 intake, holes, recesses, cove kept) |
+| `v5f_r1b1_inner_skins.py` | R1 | TOOL_inner_skin_1p2 / _1p4: INNER_E copies hollowed with `shellFeatures` (insideThickness) – the layers lie in the cavity along the inner surface | 112.71 / 131.09 cm³, 0.5 s each |
+| `v5f_r1b2_split.py` | R1 | HOUSING_F_front = wip − (y < −55, z > 2.5) + lip + the 4 Pi bosses (from DOOR_F_b2); HOUSING_F_door = wip ∩ (y ≤ −55.3, z ≥ 2.8) [0.3 joint gap]; HOUSING_E, wip hidden | front 260.12, door 55.234 cm³; the "rebate" removed nothing (see lesson 16) |
+| `v5f_r1b3a_lip_notch.py` | R1 | notch r 4.0 along the upper +x lane where it crossed the lip (32.86 mm³) + joint scans | front 260.051; scans showed the lip on the door's inner surface with no clearance |
+| `v5f_r1b3b_lip_fix.py` | R1 | lip moved to the cavity layer 0.2…1.4 (0.2 clear of the door) | the cut separated the lip: "HOUSING_F_front" 2.452 + "HOUSING_F_front (1)" 257.629 |
+| `v5f_r1b3c_lip_rejoin.py` | R1 | root band (skin 1.4 ∩ y −53.5…−55.0) + rejoin + both upper-lane notches | front 261.53 cm³, 1 lump; front ∩ door 0; lanes 0; lap clearance 0.32 in x at z 60 (0.2 normal) |
+| `v5f_r1c1_lip_magnets.py` | R1 | lip extended to y −63; 10 magnet pairs Ø8 × 1.5 across the lap (z 25, 60, 95, 132, 150 per side): door pockets from the outside (under the cloth, 0.9 skin), lip pads Ø12 with pockets open to the cavity | front 265.558, door 54.414 cm³; magnet axes on the INNER_E normal (e.g. +x z 25: x_rel 74.16, n (0.692, −0.719, 0.067)) |
+| `v5f_r1c2_bosses_usb.py` | R1 | lower-lane notches; door bosses Ø8 z 2.8–10.5 with Ruthex M3 holes + ribs (7.37–7.67); USB-C slot x ±10.5, z 12.7–19.2; PD_5807_env (flat 5807, socket centre z 17.2 on the centre line) + KO_5807_pigtail | front 265.519, door 55.484 cm³; boss/slot probes true; 5807 + pigtail vs front, door, Pi, cooler 0; front vs lanes 0 |
+| `v5f_r1d_checks.py` | R1 | read-only: interference of front / door / PD_5807_env with every component (bbox-prefiltered, front also vs the 4 lanes); door copy moved straight back 1, 3, 10, 30, 80 mm vs front and 5807; joint scans at z 25 / 95 / 140, y −55.15 and −57.0; 5 probes per magnet pair | 45 pairs all 0; sweep 0 mm³ at every step; gap open at y −55.15 on all 6 lines; lip-to-door 0.4–0.9 in x at y −57 (0.2 normal); 10/10 pairs: door pocket open, 0.9 skin solid, lip pocket open, 0.3 pad skin solid, lap gap open |
+| `v5f_r1e_renders_save.py` | R1 | renders (run with MODE 'renders'): rear 3/4 exploded (door copy 80 mm back, red), rear closed, underside (ortho), rear open (lanes red) → `~/Documents/HA_panel_renders/HA_v5f_r1_*.png` (+ 480 × 360 check JPEGs); guarded on the front/door volumes | 4 renders + 4 checks written, temporary bodies removed, visibility and visual style restored |
+| `v5f_r1f_save.py` | R1 | the save run (R1e's save branch as sent): volume guard, inventory, f3d, named version | version "rev F WIP 2026-11-04 R1 …" saved; `HA Panel v5 - tapered revF-wip-r1.f3d` 17.8 MB; 82 bodies, 15 visible, no leftovers |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -88,6 +99,15 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 14. `readOnly: true` on `fusion_mcp_execute` for probe scripts (enforced; also runs with a dialog open).
 15. The Filesystem MCP `read_media_file` returns the image **and** its base64 as text (≈ 6 k tokens for a 320 × 240 JPEG);
     check one render at most per block.
+16. `shellFeatures` with `insideThickness` on a copy of INNER_E makes the layer **inside the cavity** along the inner
+    surface. A lip cut from it touches the other part's inner surface (zero clearance) and joins its own wall only along an
+    edge; use an offset layer (0.2…1.4) and give it a root band on its own wall, or a later cut splits it off.
+17. A combine that disconnects a body leaves several bodies, and the original name can land on the small piece (here the
+    lip kept "HOUSING_F_front" and the shell became "HOUSING_F_front (1)"). Check names and `lumps` after every combine.
+18. Surface normals for oriented pockets: `comp.findBRepUsingPoint(p, BRepFaceEntityType, 0.005, False)` → the INNER_E face
+    → `face.evaluator.getNormalAtPoint(p)` (outward = into the wall).
+19. While a long script keeps Fusion busy, MCP calls to Fusion time out, but the Filesystem MCP still answers: read the
+    result with `read_text_file(~/Documents/v5f_log.json, tail=N)` instead of a Fusion read script.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -99,8 +119,28 @@ up through the floor opening. Proposal: back cover split at y −55 (b2s/b2t), s
    stack (y −29.1…−21.6). Pocket not built; options in the checkpoint report.
 2. K5 lanes exit through the back wall (b2i) — the brief's zero-interference lanes are impossible without back-wall holes.
 3. LCD screws are M3 DIN912 (2.5 hex): the A7 2.0 mm key does not fit; a 2.5 mm ball-end key ≥ 150 is needed.
+   (Superseded by R1: with the back off the key goes straight in along the lanes; ≥ 75 mm of shaft, deepest head 53 mm in.)
 4. Block 5: the D1 inner layer must not close the speaker bores or lattices.
 5. Speaker screws (b2r): the lower-outer M3 heads sit inside the FL/FR door bosses, the upper-outer ones have 27.5 mm of
    straight room, and from the open chamber bottom no key reaches a horizontal screw (ball end ≤ ≈ 25° off-axis; an
    L-key's long leg meets the basket envelope or the walls). Fixing options in the checkpoint report; the FL/FR bosses
    also block a speaker insertion path at y −6…−3.66 (boss front face y −3.66).
+
+## R1 checkpoint (2026-11-04)
+Rear door split at y −55 with a solid floor (Daniel 2026-11-03 23:41 – 11-04 08:40). Built and checked in R1a–R1e.
+- Door: HOUSING_F_door 55.484 cm³, removal straight back (−y), clear of the front shell and the 5807 from 1 to 80 mm.
+- Joint: 0.3 gap at the plane and above the floor; the front shell's lip (cavity layer 0.2…1.4, y −53.5…−63) under the door
+  wall, 0.2 normal clearance; r 4.0 notches along all four LCD-screw lanes.
+- Magnets: 10 pairs Ø8 × 1.5 N52 across the lap, axis on the INNER_E normal, at (z, y) (25, −59) (60, −59) (95, −59)
+  (132, −58) (150, −56.5) per side. Faces 1.4 apart (0.9 door skin + 0.2 lap + 0.3 lip skin). Pull per pair, surface-charge
+  model, uniform magnetisation: 3.8 N (Br 1.42 T) – 4.1 N (Br 1.48 T) at 1.4 mm; 2.8–3.0 N at 2.0; ideal values, real
+  magnets lower. The pull seats each magnet on its pocket floor; with the door off the lip magnets rest in pockets open to
+  the cavity (retention open item).
+- Screws: 4 × DIN912 M3 × 6 from below at x_rel ±19 (y −74.5) and ±50 (y −67.0), Ø3.4 + Ø6.5 × 1.0 counterbore in the
+  floor, Ruthex M3 in Ø8 door bosses (z 2.8–10.5, hole Ø4.0 to z 9.5), 4.2 mm thread engagement.
+- USB-C: Adafruit 5807 flat on the door centre line, PCB z 14.0–15.6, socket centre z 17.2, receptacle face y −84.6; door
+  slot x ±10.5, z 12.7–19.2 (bezel in block 4). The board fills the 7.5 mm reservation behind the Pi edge: the display
+  ribbon has to leave the Pi upward/forward.
+- Feet SJ5012: FL/FR x_rel ±84, y −6.5; RL/RR ±30, −69.0.
+Open from R1: magnet retention with the door off; D1 = 0.7 re-run of the lip and magnets in block 5; 5807 cradle + bezel,
+main-board floor bracket (block 4); R2 speaker boxes and the USB-plug pocket.
