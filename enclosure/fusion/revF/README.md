@@ -62,6 +62,20 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_r1d_checks.py` | R1 | read-only: interference of front / door / PD_5807_env with every component (bbox-prefiltered, front also vs the 4 lanes); door copy moved straight back 1, 3, 10, 30, 80 mm vs front and 5807; joint scans at z 25 / 95 / 140, y −55.15 and −57.0; 5 probes per magnet pair | 45 pairs all 0; sweep 0 mm³ at every step; gap open at y −55.15 on all 6 lines; lip-to-door 0.4–0.9 in x at y −57 (0.2 normal); 10/10 pairs: door pocket open, 0.9 skin solid, lip pocket open, 0.3 pad skin solid, lap gap open |
 | `v5f_r1e_renders_save.py` | R1 | renders (run with MODE 'renders'): rear 3/4 exploded (door copy 80 mm back, red), rear closed, underside (ortho), rear open (lanes red) → `~/Documents/HA_panel_renders/HA_v5f_r1_*.png` (+ 480 × 360 check JPEGs); guarded on the front/door volumes | 4 renders + 4 checks written, temporary bodies removed, visibility and visual style restored |
 | `v5f_r1f_save.py` | R1 | the save run (R1e's save branch as sent): volume guard, inventory, f3d, named version | version "rev F WIP 2026-11-04 R1 …" saved; `HA Panel v5 - tapered revF-wip-r1.f3d` 17.8 MB; 82 bodies, 15 visible, no leftovers |
+| `v5f_r2a_probe_box_space.py` | R2 | read-only pointContainment grid of the chamber space for the separate boxes | not run to the end: the first call timed out and the Fusion connector dropped (restarted by Daniel 21:08); replaced by boolean trials (lesson 20) |
+| `v5f_r2b1_box_tools.py` | R2 | hidden tools: TOOL_inner_skin_2p7 (INNER_E copy, `shellFeatures` insideThickness 2.7); TOOL_cav_1p2_slide / _2p7_slide = (INNER_E − skin) ∩ (the same moved +1.0 in world y), restricted to the chamber zones x_rel ±40…±130, y −60…2, z 0…82: a box cut to it stays 1.2 (2.7) inside the wall at its final position and 1.0 behind it | 247.857 / 464.412 / 434.121 cm³, hidden |
+| `v5f_r2b1b_step_tools.py` | R2 | the same for skins 4.7 and 6.2 (the 3.5 × 3.5 step along the floor cove) | skins 418.121 / 538.681, TOOL_cav_4p7_slide / _6p2_slide 386.506 / 351.406 cm³, hidden |
+| `v5f_r2b2_trial_boxes.py` | R2 | read-only trial boxes (TemporaryBRep) vs the front shell after the planned wall cut, LCD + slab, lanes, speakers; air volume | floor-cove sliver 1.45 mm³ (more at 1.0 back) and contact with the z 25 / 60 magnet pads (reach y −53.2) at 1.0 back |
+| `v5f_r2b3_locate.py` | R2 | read-only: lumps + world bounding boxes of the trial overlaps | located the cove sliver and the pads → 3.5 × 3.5 step, rear face y −52.5 → −52.0 |
+| `v5f_r2b4_trial_path.py` | R2 | read-only: trial boxes with the fixes + insertion path (lift 6, in along −y at an inboard offset s, sideways out at 1.0 back, lower, forward), module = box ∪ speaker envelope ∪ stop pads | final 0; s 28 / 31 / 34 not clear, s 37 clear at u 10…70 (10 mm steps); earlier trials: s 22 without the lift hit the lip and back walls (138–254 mm³), the −x box slide hit the Pi floor bosses (tops z 8.0, R2h) → lift 6 (box bottom z 9.0) |
+| `v5f_r2c_build_boxes.py` | R2 | shell: b2d side partitions removed for y ≤ 1.2 (cheeks y ≥ 1.2 keep the touch-PCB retention), back partitions and ceilings (∩ INNER_E); baffle stop pads Ø7.5 y 0.0…0.9 at the 4 frame corners; Ø2.5 pilots y −0.5…5.0 at the inboard corners (x_rel ±52.75, z 10.25 / 45.75) for M3 × 10 DIN912 self-tapping; outboard b2e pilots filled. Boxes SPKBOX_L / _R (see R2 checkpoint) | front 265.519 → 238.880 cm³, 1 lump; SPKBOX_L 25.321, SPKBOX_R 25.071 cm³; air 88.04–117.30 / 89.09–118.47 cm³; all probes true, no _tmp bodies |
+| `v5f_r2d_checks.py` | R2 | read-only: interference of both boxes with every component, the front shell, the other box and the closed door; box path on the built bodies (5 mm steps); Pi path (PI5_F + cooler + GPIO plugs in from behind 1.0 above the seat); clamp-key paths Ø6.2 to y −90 | box ∩ speaker envelope SPKBOX_L 179.25, SPKBOX_R 66.98 mm³ (located in R2f), everything else 0 incl. the closed door and the other box; box path 0 except 0.5 mm³ at u 55 (both boxes); Pi path vs both boxes 0, vs the front shell 3.7 / 3.0 mm³ at 20 / 30 back (lift 1.0) – 14 min with the full PI5_F (lesson 24); key paths vs the front shell 0, bores open, tube walls and head seats solid |
+| `v5f_r2f_locate_spk.py` | R2 | read-only: box ∩ speaker-envelope lumps; the u 55 path contact; the path again at 1 mm steps (lower, side, in) vs the front shell (cropped to the module's half); the Pi 25 back at lift 1.0 (lumps) | box ∩ envelope = pegs 2 × 22.52 + the basket envelope's rear end vs the outboard wall 22.06 / 21.94 (x_rel ±88.7…90.8, y −32.6…−21.6, z 20.7…37.2) + (+x) pocket vs basket 112.17 (x_rel 52.4…56.6, y −30.3…−18.3, z 11.6…21.4); u 55 contact = the box's top-outboard front corner (x_rel ±54.9…56.5, z 77.7…82.2) vs the lip's rear end (y −61.5…−64.4); 1 mm sweep: contact only at u 50…58 (max 0.93 mm³ at 57), lower and side 0; Pi 25 back: 5.6 mm³ on the rear −x Pi boss. Lump boxes are design boxes transformed to world, so y and z are inflated |
+| `v5f_r2e_renders_save.py` | R2 | MODE 'renders': rear open (boxes blue), box path (+x box + speaker red at its entry pose), +x box front / rear 3/4 → `~/Documents/HA_panel_renders/HA_v5f_r2_*.png` (+ check JPEGs); MODE 'save': inventory, f3d, named version; guarded on the front / door / box volumes | 4 renders + 4 check JPEGs (entry pose 40 inboard), no leftovers |
+| `v5f_r2g_path_offsets.py` | R2 | read-only: entry offset s 40 – sideways t 38…40 and in u 1…76 (1 mm) vs the front shell ∪ LCD + slab | all 0 (79 steps) for both boxes → entry offset 40 |
+| `v5f_r2h_pi_lift.py` | R2 | read-only: lowest PI5_F vertex over each Pi boss's x band vs the boss tops → insertion lift; Pi below z 12 at that lift, u 0…70 (1 mm) vs the front shell (bosses, floor) | Pi underside z 6.56 over the −x bosses (microSD socket), boss tops 8.0 → need 1.44, lift 2.0; path 0; 6 s |
+| `v5f_r2h2_pi_top.py` | R2 | read-only: the rest of the Pi (z ≥ 11) at lift 2.0, u 0…70 (1 mm) vs the front shell (x_rel ±60, z 9…60) ∪ both boxes | 0; 1.7 s |
+| `v5f_r2i_save.py` | R2 | the save run (R2e with MODE 'save', as sent): volume guard, inventory, f3d, named version | version "rev F WIP 2026-11-04 R2: separate speaker boxes …" saved; `HA Panel v5 - tapered revF-wip-r2.f3d` 22.1 MB; 91 bodies, 17 visible, no leftovers |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -108,6 +122,18 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     → `face.evaluator.getNormalAtPoint(p)` (outward = into the wall).
 19. While a long script keeps Fusion busy, MCP calls to Fusion time out, but the Filesystem MCP still answers: read the
     result with `read_text_file(~/Documents/v5f_log.json, tail=N)` instead of a Fusion read script.
+20. `pointContainment` on INNER_E is slow (seconds per point): a probe grid over a chamber cannot finish inside the MCP
+    timeout. Test fits with TemporaryBRep booleans against tool bodies made once and stored hidden (offset cavities from
+    `shellFeatures`, ∩ a copy moved along the assembly path) and read volumes: 0.3–1 s per boolean on these bodies.
+21. After a timed-out call the Fusion connector can stay "failed" ("Version negotiation failed …"); it does not recover by
+    itself. Check with `get_device_info`; the connection has to be restarted on the Mac.
+22. To find an unexpected overlap, intersect the two bodies and list the result's `lumps` with world bounding boxes
+    (R2b-3, R2f): one call instead of a probe search.
+23. Path checks need steps shorter than the thinnest feature passed: R2d's 5 mm steps found a 0.5 mm³ contact at u 55 that
+    R2b-4's 10 mm steps had stepped over; at 1 mm it spans u 50…58.
+24. Booleans with the 47-solid PI5_F union take ≈ 30 s each against the full front shell (R2d's Pi path: 14 min for 30, Fusion
+    blocked meanwhile). Crop both bodies to the region and z band that matter first (R2h: 71 steps in 6 s), and get
+    clearances from vertices (lowest PI5_F vertex over each boss) before sweeping.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -144,3 +170,49 @@ Rear door split at y −55 with a solid floor (Daniel 2026-11-03 23:41 – 11-04
 - Feet SJ5012: FL/FR x_rel ±84, y −6.5; RL/RR ±30, −69.0.
 Open from R1: magnet retention with the door off; D1 = 0.7 re-run of the lip and magnets in block 5; 5807 cradle + bezel,
 main-board floor bracket (block 4); R2 speaker boxes and the USB-plug pocket.
+
+## R2 checkpoint (2026-11-04)
+Separate speaker boxes, fitted from the back before the Pi (plan accepted 2026-11-03 22:54; magnets Ø8 × 1.5 N52 × 10 pairs
+kept, lip magnets with a drop of CA – Daniel 2026-11-04 20:31). Built in R2c, checked in R2d / R2f.
+- Shell (HOUSING_F_front 265.519 → 238.880 cm³, 1 lump): b2d chamber partitions removed for y ≤ 1.2, back partitions and
+  ceilings removed (all ∩ INNER_E); the cheeks y ≥ 1.2 keep the touch-PCB retention. Baffle stop pads Ø7.5, y 0.0…0.9, at
+  the 4 frame corners (x_rel ±52.75 / ±88.25, z 10.25 / 45.75). Ø2.5 pilots y −0.5…5.0 at the inboard corners for
+  M3 × 10 DIN912 self-tapping (tip y 4.3, 4.3 mm engagement, 1.8 skin in front after the D1 recess); outboard b2e pilots filled.
+- Boxes SPKBOX_L (+x) 25.321 cm³, SPKBOX_R (−x) 25.071 cm³ (≈ 26 g ASA solid each): outer x_rel ±46.0…wall,
+  y −52.0…−3.7, z 3.0…76.0, ∩ (INNER_E − 1.2) at the final pose and 1.0 behind it (sideways slide); walls 1.5, front wall
+  2.0 (y −5.7…−3.7); 3.5 × 3.5 step along the bottom-outboard edge (floor cove R3.5 + D1); basket hole Ø40.6; box stop pads
+  Ø7.5 y −3.9…−3.0 at the 4 frame corners (rings Ø7.5 / Ø3.4 inboard, discs outboard); pegs Ø3.2 y −3.7…−0.2 in the
+  outboard frame holes; clamp holes Ø3.4 at the inboard frame holes; tubes Ø8 / bore Ø6.2 from the front wall back through
+  the rear wall; wire hole Ø3 at (x_rel ±62, z 30). +x box only: sealed USB-A plug pocket, void x_rel 44…55.15,
+  y −36.95…−20.95, z 9.95…17.95 (walls 1.5) – fits only if the real basket is ≤ Ø32 over its rear 10 mm (bench check).
+- Stack at the frame corners: box front wall → 0.7 (rear foam, set by the box pads) → frame 3.0 → 0.7 (front gasket, set by
+  the baffle pads) → baffle. Foam: 1 mm closed-cell, compressed to 0.7.
+- Fixing: speaker on the box on the bench (2 pegs locate the outboard holes); in the housing 2 × M3 × 10 DIN912 per box
+  through the tubes and the inboard frame holes into the baffle pilots (head seat y −5.7, socket top y −8.7: 43.3 mm in
+  from the box's rear face); the 2.5 mm ball-end key ≥ 75 mm of the LCD screws fits.
+- Air (net of tubes and pocket): +x 88.04–117.30, −x 89.09–118.47 cm³ (lower value = the whole Ø40 basket envelope
+  subtracted). DMA45-4 closed box (Fs 151.4 Hz, Qts 0.56, Vas 85 cm³): Qtc 0.785 / F3 193 Hz at 88 cm³, 0.735 / 191 Hz at
+  117 cm³.
+- Insertion (each box with its speaker): lift 6 (box bottom z 9.0 > Pi boss tops 8.0), in along +y at 40 mm inboard,
+  sideways out to the final x 1.0 behind the final pose, lower 6, push 1.0 forward onto the gasket, 2 screws from behind.
+  At 37 inboard the box's top-outboard front corner touches the lip's rear end (≤ 0.93 mm³, R2f).
+- Pi (after the boxes): in from behind 2.0 above its seat, then lowered (at 1.0 the microSD socket, underside z 6.56,
+  hits the rear −x Pi boss, top 8.0).
+- Assembly order: LCD (screws via the lanes) → speaker boxes → touch PCB → main board / ReSpeaker / sensors / USB-C → Pi →
+  cables → door.
+- Checks (R2d, R2f–R2h): boxes vs every other part, the front shell, the other box and the closed door 0. Box ∩ speaker
+  envelope = the pegs (2 × 22.5 mm³, by design: the envelope has no holes) + the basket envelope's rear end vs the outboard
+  wall (≈ 22 mm³ per side, y −21.6…−29.1) + on +x the pocket vs the basket envelope (112 mm³, y −19.45…−29.1); both lie in
+  the rear 10 mm of the basket and clear if the real basket is ≤ Ø32 there. Box paths at 1 mm steps 0 with the 40 entry
+  offset; Pi path at 1 mm steps 0 with the 2.0 lift (vs bosses, floor, front shell, both boxes); clamp-key paths Ø6.2 from
+  the box rear face to y −90 vs the front shell 0, bores open.
+Open from R2:
+1. Bench: DMA45-4 basket ≤ Ø32 over its rear 10 mm (plug pocket and outboard walls); otherwise relieve the outboard wall
+   locally and rework the pocket.
+2. Block 4: the ReSpeaker's USB-A plug cannot be pushed into the Pi with the +x box fitted (the pocket gives 10 mm in front
+   of the port, the inserted plug's length, with no room for its insertion travel). Proposed: plug it into the Pi before the
+   Pi goes in, use a side-exit right-angle plug, and open the pocket into a sealed channel to the box's rear face
+   (≈ 3 cm³ less air).
+3. Block 4: re-check the Pi path (2.0 lift) against the main board, ReSpeaker, sensors and 5807 fitted before it.
+4. Bench: M3 × 10 self-tapping into the ASA Ø2.5 pilots, 5 drive cycles.
+5. Block 5: D1 = 0.7 re-run (lip, magnets); the boxes' 1.2 wall clearance already includes D1 0.7 + 0.5.
