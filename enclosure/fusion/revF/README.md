@@ -77,6 +77,17 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_r2h2_pi_top.py` | R2 | read-only: the rest of the Pi (z ≥ 11) at lift 2.0, u 0…70 (1 mm) vs the front shell (x_rel ±60, z 9…60) ∪ both boxes | 0; 1.7 s |
 | `v5f_r2i_save.py` | R2 | the save run (R2e with MODE 'save', as sent): volume guard, inventory, f3d, named version | version "rev F WIP 2026-11-04 R2: separate speaker boxes …" saved; `HA Panel v5 - tapered revF-wip-r2.f3d` 22.1 MB; 91 bodies, 17 visible, no leftovers |
 | `v5f_b3a_probe_top_edge.py` | 3 | read-only, before D2: INNER_E − REF_E_outer; minimum distance from INNER_E's top-face edges (z 177.5, sharp: the p17 inner loft has no top fillet) to the outer faces above z 160; planar faces above z 175 | no hole at the top (the 14 962 mm³ lump is the inner loft's bottom below z 0, closed by the R1 floor); **minimum wall 0.08 mm** at the inner top corners next to the slot (x_rel ±74.0, y −22.4, z 177.5) against the R10 / R3 transition faces; outer top plane z 180.0, x_rel ±64.9, y −42.5…−22.8 |
+| `v5f_b3b_ref_outer_r3.py` | 3 | D2: REF_F_outer (hidden) = the rev E p17 generator re-run as a new body (same sections, slab cut, chin cut, chin corners R12, floor R6; slab not moved, nothing deleted, sketches skF_*) with the top edge R3 all round (rear was R10); compared with REF_E_outer | REF_F_outer 1974.145 cm³, 20 faces, 5.1 s; F − E 1355.67 mm³ in one lump at the top edge (z > 165), E − F 0: the generator reproduces rev E exactly elsewhere |
+| `v5f_b3c_apply_top_r3.py` | 3 | INNER_F (hidden) = INNER_E with its sharp top edges rounded R1.0; JOIN (F − E) ∪ (INNER_E − INNER_F) ∪ (front ∩ top band, for overlap) into HOUSING_F_front; minimum wall INNER_F ↔ REF_F_outer above z 160 | front 238.880 → 240.258 cm³, 1 lump; INNER_E − INNER_F 33.0 mm³ (B3d); minimum wall 1.77 at the inner top-front corners (x_rel ±74.5, y −22.2, z 176.7) → B3d; interference 0 (26 bodies) |
+| `v5f_b3d_top_wall_fill.py` | 3 | TOOL_outer_skin_2p5_F (hidden) = REF_F_outer hollowed by `shellFeatures` insideThickness 2.5; deficit = (skin ∩ y ≥ −55.3, z 165…190) − front, joined | deficit 336.37 mm³ (the corners plus the upper back, where the horizontal 2.5 inset of the generator leaves ≈ 2.3 normal on the 23.7° lean) → 0; front 240.591 cm³; also filled the 0.3 joint gap at the back centre (1.4 mm³, z ≈ 165) → B3e |
+| `v5f_b3e_joint_gap.py` | 3 | restores the front/door joint gap: CUT x_rel ±120, y −55.3…−55.0, z 163…190 | gap 1.399 → 0 mm³; top deficit (y ≥ −55.0) 0; front vs door 0; front 240.593 cm³ |
+| `v5f_b3f_top_sensors.py` | 3 | hard top: port line y −26.5 (6.4 behind the slab's top-back edge y −20.1); strip pockets 30.4 × 6.4 × 0.8 at x_rel ±(7.3…37.7) (strips 30 × 6 × 0.8 at ±(7.5…37.5), mic 2.0 from the outboard end); mic ports Ø1.5 at ±35.5; heat-stake pins Ø1.8 × 3.5 below the pocket floor at ±11.5 / ±30.0; VEML6030 pocket 15.4 × 15.4 × 0.8 at x_rel 38.3…53.7, y −23.3…−38.7, lux port Ø2 at (46, −31.0) (provisional); envelopes MIC_strip_L/R_env, KO_mic_L/R_back, VEML_env | front 240.593 → 240.075 → 240.111 cm³, 1 lump; all probes true; designed contacts: pins in the strip envelopes 9.16 mm³ each and in the back keep-outs 8.65 each; VEML_env vs front 5.19 mm³ (B3g); envelopes vs LCD / slab / upper lanes 0 |
+| `v5f_b3g_locate_veml.py` | 3 | read-only: VEML_env ∩ front; top deficit outside the B3f cuts (grown 0.3) | 5.186 mm³ at x_rel 49.5…54.0, y −40.8…−35.9, z 171.9…176.9: a 15 × 15 board's back-outboard corner (6 mm envelope incl. leads) against the upper back wall; deficit outside the cuts 0 |
+| `v5f_b3h_probe_ld_corner.py` | 3 | read-only: plan rays at z 115 / 127.5 / 140 from (x_rel −60, y −25) to the viewer's-right front corner: inner hits, wall normals, wall along the ray; slab and LCD extents | the slot face (normal 0°) meets the side wall (normal 106–118°, 2.5–3.1 thick) in a sharp corner, apex ≈ (−89.6, −11.8) at z 127.5; no ≈ 40° surface; LCD_panel_body x ±92, slab ±105 |
+| `v5f_b3i_ld2410c_cradle.py` | 3 | LD2410C cradle: board 16 × 22 × 3.0 (LD2410C_env_F, hidden) with its antenna normal on the corner bisector, 59° from +y toward −x, centre z 127.5; placed by bisection so the 2.0 air box in front clears both walls; frame ring 2.0 (0.15 clearance) 4.0 deep, stop lips 1.0 × 0.85, skirt to the walls (∩ cavity + the wall's own material for overlap); pushed in from inside. Run 1 at the brief's 40° stopped before any change: the air box still hit the side wall 20 mm back | antenna face centre (x_rel −72.53, y −22.05, z 127.5), 19.9 from the apex; front 240.111 → 242.831 cm³, 1 lump; board, core air (14.3 × 20.3 × 2.0) and insertion path vs front 0; cradle vs slab / LCD / lanes / boxes 0; rays from the antenna: −1° / 14° / 29° hit LCD_panel_body + LCD_glass after the wall, 44° / 59° pass housing + SLAB_frame only (≈ 16 mm of print at 59°), 74–119° the side wall only |
+| `v5f_b3j_probe_ld_view.py` | 3 | read-only: plan rays at z 127.5 from three cavity points near the corner, 0…150° | 0–15°: wall then LCD_panel_body / LCD_glass; 30–60°: wall + SLAB_frame (printed); ≥ 60–75°: side wall only (≈ 3 mm along the ray) |
+| `v5f_b3k_renders_save.py` | 3 | renders (MODE 'renders'): top 3/4 from the front-right, the top from below (cut body, strip envelopes red, VEML blue), the LD2410C corner from inside (cut body, board red) → `~/Documents/HA_panel_renders/HA_v5f_b3_*.png` + check JPEGs | 3 renders + 3 checks, no leftovers |
+| `v5f_b3l_save.py` | 3 | the save run (B3k with MODE 'save', as sent) | version "rev F WIP 2026-11-04 b3: top edge R3 + top wall >= 2.5, mic strip pockets/pins/ports, VEML pocket (provisional), LD2410C cradle (Claude)" saved; `HA Panel v5 - tapered revF-wip-b3.f3d` 25.6 MB; 100 bodies, 17 visible, no leftovers |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -135,6 +146,16 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 24. Booleans with the 47-solid PI5_F union take ≈ 30 s each against the full front shell (R2d's Pi path: 14 min for 30, Fusion
     blocked meanwhile). Crop both bodies to the region and z band that matter first (R2h: 71 steps in 6 s), and get
     clearances from vertices (lowest PI5_F vertex over each boss) before sweeping.
+25. A rev E generator step can be re-run as a NEW body with one parameter changed and diffed against REF_E_outer
+    (B3b: F − E only at the edited edge, E − F = 0); applying only the difference keeps every later block's work. The p17
+    `build()` deletes BODY_E / INNER_E / HOUSING_E and `moveslab()` moves the slab – copy the loft / cut / fillet code
+    only.
+26. Wall check: `shellFeatures` insideThickness t on a copy of the OUTER reference gives the t-layer inside the outer
+    surface; (layer ∩ region) − body = every place thinner than t (normal), and it can be joined as the fix (B3d).
+    `measureManager.measureMinimumDistance(face, face)` gives the point pair for a single spot (B3a, B3c).
+27. `comp.findBRepUsingRay(origin, dir, BRepFaceEntityType, -1, visibleOnly, hitPoints)` returns every face crossed with its
+    hit point: wall thickness along a line, surface normals (face.evaluator), and line-of-sight checks through hidden
+    bodies (visibleOnly False) – B3h, B3j.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -218,3 +239,35 @@ Open from R2:
 3. Block 4: re-check the Pi path (2.0 lift) against the main board, ReSpeaker, sensors and 5807 fitted before it.
 4. Bench: M3 × 10 self-tapping into the ASA Ø2.5 pilots, 5 drive cycles.
 5. Block 5: D1 = 0.7 re-run (lip, magnets); the boxes' 1.2 wall clearance already includes D1 0.7 + 0.5.
+
+## Block 3 checkpoint (2026-11-04)
+Daniel 2026-11-04 22:07: continue without the time stop; R3 and the local top-edge rebuild taken as recommended.
+- D2: top edge R3 all round (rear was R10, front already R3) via REF_F_outer and the difference only (B3b/B3c); the rev E
+  sharp inner top edge rounded R1.0 (INNER_F); wall ≥ 2.5 (normal) everywhere above z 165 (B3d, checked with the 2.5 skin of
+  REF_F_outer). Fixes the 0.08 mm wall found at the inner top-front corners (B3a). Hard band to the groove's upper edge
+  (block 5, groove ≥ 0.5 below the R3 tangent): 3.2 on the sides, 2.3 at the back. Front shell 238.880 → 240.593 cm³.
+- Top sensors (B3f): port line y −26.5 (brief ≈ 5 behind the slab's top edge; the inner top's front round ends at y −23.4,
+  6.4 is the closest a 6-wide strip fits). Mic strips 30 × 6 × 0.8 at x_rel ±(7.5…37.5), mic 2.0 from the outboard end under
+  Ø1.5 ports at ±35.5; pockets 30.4 × 6.4 × 0.8 (1.7 wall above); stack gasket 1.0 + strip 0.8 → strip back at z 176.5,
+  back parts ≤ 4.9, cable bend ≥ 10 (keep-outs modelled). Heat-stake pins Ø1.8 × 3.5 at ±11.5 / ±30.0 (B1 lays the
+  strip around them; the gasket needs Ø2.2 holes there). Deviation from rev D: rev D's strips ±(22…52) with pins ±27 / ±49.5
+  carried the lux sensor on the strip; the separate VEML6030 breakout under the Ø2 port at +46 sits where rev D's +x strip was.
+- VEML6030 (provisional, E0 issue 8 – outline, holes and chip position unmeasured): pocket 15.4 × 15.4 × 0.8, lux port Ø2 at
+  (x_rel 46, y −31.0) on the assumption the chip is at the board centre; a 15 × 15 board with its leads (6 mm envelope)
+  touches the upper back wall at its back-outboard corner (5.2 mm³) – a 13 × 13 board clears. Retention after the caliper
+  measurement.
+- LD2410C (B3h–B3j): at z 115–140 there is no ≈ 40° corner surface – the slot face meets the side wall in a sharp ≈ 63° inner
+  corner, and the brief's 40° board does not fit there with 2.0 air. Built on the corner bisector, 59° from +y toward −x
+  (antenna face centre x_rel −72.5, y −22.1, z 127.5; 2.0 air; cradle with lips and a skirt to the walls). Line of sight
+  from the antenna: < ≈ 30° from +y the LCD panel (metal) and glass, 30–65° the housing corner + the slab's printed border
+  (≈ 16 mm of print at 59°), > 65° the side wall only. Decision needed (open item 1).
+- Checks: front vs slab, glass, all LCD_*, door, both boxes, the four lanes: 0; designed contacts only (pins in the strip
+  envelopes and keep-outs); front vs door 0 with the joint gap restored.
+- Version "rev F WIP 2026-11-04 b3 …" saved; `HA Panel v5 - tapered revF-wip-b3.f3d` 25.6 MB; renders HA_v5f_b3_*.
+Open from block 3:
+1. LD2410C direction (Daniel): keep the corner at 59° (LCD shadows the front sector below ≈ 30°), face it along the side wall
+   (≈ 110°, 2.5 wall + 2.0 air, sees 50–170°), or move it to a place with a clear forward view.
+2. VEML6030 board measurement (outline, holes, chip position) → pocket, port position and retention.
+3. Mic cable path to the ReSpeaker (block 4, with the ReSpeaker placement); strip PCB layout (B1) around the pins.
+4. Top groove + rail (block 5) at ≥ 0.5 below the R3 tangent (sides z ≤ 176.8, back ≤ 177.7).
+
