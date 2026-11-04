@@ -76,6 +76,7 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_r2h_pi_lift.py` | R2 | read-only: lowest PI5_F vertex over each Pi boss's x band vs the boss tops → insertion lift; Pi below z 12 at that lift, u 0…70 (1 mm) vs the front shell (bosses, floor) | Pi underside z 6.56 over the −x bosses (microSD socket), boss tops 8.0 → need 1.44, lift 2.0; path 0; 6 s |
 | `v5f_r2h2_pi_top.py` | R2 | read-only: the rest of the Pi (z ≥ 11) at lift 2.0, u 0…70 (1 mm) vs the front shell (x_rel ±60, z 9…60) ∪ both boxes | 0; 1.7 s |
 | `v5f_r2i_save.py` | R2 | the save run (R2e with MODE 'save', as sent): volume guard, inventory, f3d, named version | version "rev F WIP 2026-11-04 R2: separate speaker boxes …" saved; `HA Panel v5 - tapered revF-wip-r2.f3d` 22.1 MB; 91 bodies, 17 visible, no leftovers |
+| `v5f_b3a_probe_top_edge.py` | 3 | read-only, before D2: INNER_E − REF_E_outer; minimum distance from INNER_E's top-face edges (z 177.5, sharp: the p17 inner loft has no top fillet) to the outer faces above z 160; planar faces above z 175 | no hole at the top (the 14 962 mm³ lump is the inner loft's bottom below z 0, closed by the R1 floor); **minimum wall 0.08 mm** at the inner top corners next to the slot (x_rel ±74.0, y −22.4, z 177.5) against the R10 / R3 transition faces; outer top plane z 180.0, x_rel ±64.9, y −42.5…−22.8 |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
