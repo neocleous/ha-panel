@@ -16,9 +16,10 @@ def edge_mid(e):
 
 def run(_context):
     X = Ctx(); guard(X); out = {}; t0 = time.time()
-    parts = globals().get('SEL') or PRINTED
+    parts = globals().get('SEL') or PRINTED; cur = None
     try:
         for name in parts:
+            cur = name
             if time.time() - t0 > 45:
                 out['stopped_before'] = name; break
             b = X.body(name); r = {'faces': b.faces.count, 'edges': b.edges.count, 'lumps': b.lumps.count}
@@ -27,7 +28,11 @@ def run(_context):
                 L = b.lumps.item(li)
                 for si in range(L.shells.count):
                     s = L.shells.item(si)
-                    sh.append([li, si, s.isClosed, s.isVoid, round(s.volume * 1000, 3), round(s.area * 100, 2),
+                    try:
+                        sv = round(s.volume * 1000, 3)
+                    except Exception as ex:              # ASM getEntityVolume fails on some shells: record, go on
+                        sv = 'ERR ' + str(ex)[:60]
+                    sh.append([li, si, s.isClosed, s.isVoid, sv, round(s.area * 100, 2), s.faces.count,
                                [round(v, 1) for v in wpt(s.boundingBox.minPoint)], [round(v, 1) for v in wpt(s.boundingBox.maxPoint)]])
             r['shells'] = sh
             r['small_faces'] = [[round(f.area * 100, 5), [round(v, 2) for v in wpt(f.pointOnFace)]] for f in b.faces if f.area < 1e-4]
@@ -60,7 +65,7 @@ def run(_context):
             log('v5f_a1a_validity', name, r)
         out['t_s'] = round(time.time() - t0, 1)
     except Exception:
-        out['FAIL'] = traceback.format_exc().splitlines()[-3:]
+        out['FAIL'] = [cur] + traceback.format_exc().splitlines()[-3:]
         log('v5f_a1a_validity', 'FAIL', out['FAIL'])
     print(json.dumps({k: ({kk: (vv if kk not in ('concave_edges',) else len(vv)) for kk, vv in v.items()} if isinstance(v, dict) else v)
                       for k, v in out.items()}))
