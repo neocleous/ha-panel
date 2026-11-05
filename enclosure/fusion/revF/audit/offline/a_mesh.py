@@ -86,6 +86,15 @@ def sample(m, da):
     return np.concatenate(pts), np.concatenate(nrm), np.concatenate(wts)
 
 
+def rays_first(m, org, d, chunk=15000):
+    """Distance to the first hit for each ray (inf on a miss), in chunks to bound memory."""
+    t = np.full(len(org), np.inf)
+    for i in range(0, len(org), chunk):
+        loc, iray, itri = m.ray.intersects_location(org[i:i + chunk], d[i:i + chunk], multiple_hits=False)
+        t[i + iray] = np.linalg.norm(loc - org[i + iray], axis=1)
+    return t
+
+
 def aclusters(P, val, W, cell, min_area, top=40):
     """clusters() with the summed sample area; only clusters of at least min_area mm²."""
     out = []
@@ -102,9 +111,7 @@ def cmd_thick(part, da, tmax, eps=1e-3, shell=2.45, sub='mesh'):
     t0 = time.time(); m = load(part, sub)
     P, N, W = sample(m, da)
     org = P - eps * N; d = -N
-    loc, iray, itri = m.ray.intersects_location(org, d, multiple_hits=False)
-    t = np.full(len(P), np.inf)
-    t[iray] = np.linalg.norm(loc - org[iray], axis=1) + eps
+    t = rays_first(m, org, d) + eps
     np.savez_compressed(os.path.join(DATA, 'thick_%s.npz' % part), P=P.astype(np.float32), N=N.astype(np.float32),
                         t=t.astype(np.float32), W=W.astype(np.float32))
     res = {'part': part, 'samples': int(len(P)), 'area': round(float(W.sum()), 1), 'miss': int(np.isinf(t).sum()),
@@ -139,8 +146,7 @@ def cmd_overhang(part, U, deg):
     A = m.area_faces
     C = m.triangles_center[s]
     # where a vertical drop (−U) from each overhang face centre lands: on the part (distance) or on the bed
-    loc, iray, itri = m.ray.intersects_location(C - 1e-3 * U, np.tile(-U, (len(C), 1)), multiple_hits=False)
-    drop = np.full(len(C), np.inf); drop[iray] = np.linalg.norm(loc - C[iray], axis=1)
+    drop = rays_first(m, C - 1e-3 * U, np.tile(-U, (len(C), 1)))
     on_part = np.isfinite(drop)
     cl = clusters(C, (C @ U) - h0, cell=1.0, top=80)
     # per cluster: area and how much of it drops onto the part
