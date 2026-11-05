@@ -142,6 +142,20 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_b6r_renders.py` | 6 | final renders with a temporary cloth body that wraps the new joint faces (0.3 cloth gap) → `~/Documents/HA_v5f_final_{front34,side,rear34,under,under_open,interior}.png` (+ check / tiny JPEGs); under_open = door + grommet pulled back 70 (its removal direction) | 6 PNG 1600 × 1200; cloth 42.14 cm³; no leftovers |
 | `v5f_b6m_matrix_final.py` | 6 | read-only: B6a's matrix on the final state (filters extended by `_b5`, `_b6v1`, `_b6s3`, `_r3`, `_fail*`) | 78 parts, 354 pairs, 72 non-zero, 0 failures, 82 s – all designed or known (block 6 section) |
 | `v5f_b6x_final_save_export.py` | 6 | guards, inventory, named version, f3d, STEP per printed part (TemporaryBRep copy → world frame → new direct-modelling document → STEP → closed) | version "rev F 2026-11-03 final (Claude)" saved; `HA Panel v5 - tapered revF-final.f3d` 41.1 MB; 170 bodies, 21 visible; 9 STEP files `~/Documents/HA_v5f_{front,door,slab,spkbox_L,spkbox_R,main_bracket,resp_carrier,cradle_5807,grommet_usbc}.step` (5.10 MB … 0.06 MB; main_bracket 2 lumps = the L/R prints); 66 s |
+| `v5f_b6w1_skin3p2.py` | 6 | decision 1 (a), first tool: REF_F_outer ∩ z ≤ 176 shelled 3.2 with the z-176 cap removed (hidden) | TOOL_outer_skin_3p2_F 293.076 cm³, 1 lump, 26 faces, probes (door back, chin) ok; 13 s |
+| `v5f_b6w2a_fill_probe.py` | 6 | read-only: fill = 3.2 skin ∩ (INNER_E − TOOL_inner_skin_0p7) ∩ z 6.5–175.3 − slot zone − VEML / LD windows − lap band (TOOL_inner_skin_2p1 ∩ y −67…−52.5) − speaker bores (r 20.5) − pilots (r 1.6); split, crossings, fill ∩ parts | raw 1869.9 mm³ (1 lump, 16 faces); lap band takes 690.9; fill 1161.6 mm³ = front 877.6 + door 283.7; crosses exhaust 107.9, BME680 0.48, inlet 1.91, pins 0.07, grommet 0.05; ∩ parts: BME680_env 0.03, KO_K5_LR 0.10, MAIN_back_env 0.19 + the 5807 / cradle / grommet inside the inlet |
+| `v5f_b6w2_wall_fill.py` | 6 | first apply: openings taken out of the fill, gates (fill ∩ parts except the three pairs already non-zero in B6m, cross volumes, TemporaryBRep union = 1 lump), JOIN | gates passed (5807 / cradle / grommet gone with the inlet cut); front's temp union **ASM_INCONS_FACE → nothing joined** |
+| `v5f_b6w2_fill.py` | 6 | shared fill definition (3.2 skin) for B6w-2b, copy in `~/Documents/` | – |
+| `v5f_b6w2b_union_diag.py` | 6 | read-only: union per part and per region (body and fill cropped to region boxes) | door whole ok (50.889 cm³); front fails at the chin (y > −3: 3.36 mm³ over ≈ 14 000 mm², a sheet ≈ 0.0002 thick) and z 60–160 (464.4 mm³); z < 60 and z > 160 join |
+| `v5f_b6w2c_union_diag2.py` | 6 | read-only: V2 = fill boundaries moved off the planes of earlier cuts (slot zone, VEML, exhaust / BME680 slots grown 0.05; top z 175.2) + chin masked | z 60–160 now joins; whole front **ASM_BODY_VERTEX_CRUMBLE** (thin sheet's cut edges); 206 s |
+| `v5f_b6w1c_skin3p22.py` | 6 | second tool: the same shell at 3.22 (wall 2.52 normal) so the fill is ≥ 0.02 thick wherever it exists | TOOL_outer_skin_3p22_F 294.822 cm³, 1 lump, 26 faces; 17 s |
+| `v5f_b6w2d_fill.py` | 6 | fill V3 (copy in `~/Documents/`): 3.22 skin, V2 offsets, chin masked, front = y ≥ −52.5, door = y ≤ −67 (nothing of the fill lies between), openings out of the fill (inlet x ±12.25, z 13.25–27.95, pins r 1.10) | – |
+| `v5f_b6w2d_wall_fill.py` | 6 | apply V3 with the B6w-2 gates, JOIN (fallback replace), checks with a temporary PROBE_tmp_OUT | fill 1765.1 mm³ (front 1119.2, door 509.9, between 0); ∩ parts only BME680_env 0.09, KO_K5_LR 0.13, MAIN_back_env 0.30; **JOIN both**: front 239.797 → 240.888, door 50.601 → 51.101 cm³, 1 lump each; front ∩ door 0, minimum 0.20; walls 2.52 (sides z 60–150, door back z 60 / 110, door sides, back band z 165 x 0 / ±45), chin / top 2.50; lap band (door) 2.35–2.49; exhaust / BME680 / inlet / pins clear (web 2.52), inserts open, lanes 0.497, door sweep 0; 77 s |
+| `v5f_b6w3_checks.py` | 6 | read-only: B6m matrix on the new state (filters + `_b6w`, `_fail`, `PROBE_`, `B6W2`) compared with B6m; speaker-box insertion path (B5j3 method) | 78 parts, 354 pairs, 72 non-zero (same pairs), 0 failures; changed: door ∩ MAIN_back_env 0.74 → 1.04, BME680_env ∩ front 0.08 → 0.16, door ∩ K5 LL / LR −0.06 / −0.03 (noise); box paths a–e all 0, final pose 0, boxes 0.20 from the front (at a baffle stop pad, B6w-6) |
+| `v5f_b6w4_wall_scan.py` | 6 | normal-wall scan with a temporary PROBE_tmp_OUT: plan rays every 15° from (x_rel 0, y −38) at 15 heights z 10–174 to the first front / door face, classed lap / chin / slot / cove / fill | 317 hits; fill zone 140: 122 at 2.50–2.60; below 2.50 only at opening edges (exhaust slot top edge z 170: 2.31–2.32, inside the 0.05 band; inlet cutout sides 0.24 / 0.25: ray grazing the cut) and in the VEML window (1.80: provisional envelope, no D1 there since block 5); above 2.60: door bosses 9.33, LD2410C cradle 8.07, rail 3.74; 436 s |
+| `v5f_b6w6_probes.py` | 6 | follow-up with PROBE_tmp_OUT: where the boxes are 0.20 from the front; back band off the slot edges; lap band with door-only rays (the scan's rays hit the lip first there) | boxes 0.20 from a baffle stop pad (x_rel 89.85 / −86.65, y 0.0, z 10.25; chin, not touched by B6w); back band 2.52 at z 166 and on the slot web z 170.75 (x 0, ±20, ±40), 3.70–3.73 at z 175 (rail); lap band 2.345 (door top, x 0, z 155) … 2.487; 115 s |
+| `v5f_b6n_mass_tip.py` (re-run after B6w) | 6 | as above on the r2 state | printed ASA 444.4 / PETG 537.5 g, total 1080.9 / 1174.0 g; CoG (0.18, −18.73, 76.61) / (0.13, −19.12, 77.02); tipping 3.00 / 3.23 N, unchanged |
+| `v5f_b6w5_save_export.py` | 6 | guards (front 240.888, door 51.101; no leftovers), inventory, named version, f3d, STEP for the two changed parts | version "rev F 2026-11-03 final r2 (Claude)" saved; `HA Panel v5 - tapered revF-final-r2.f3d` 43.7 MB (revF-final.f3d kept); 172 bodies (+ TOOL_outer_skin_3p2_F / _3p22_F, hidden), 21 visible; `HA_v5f_front.step` 5.95 MB and `HA_v5f_door.step` 1.97 MB re-exported (1 lump each), the other seven unchanged; 93 s |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -265,6 +279,15 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     against each candidate build direction; nine parts × 8 directions in 1.4 s (B6o).
 47. Extend the matrix filters with each step's hidden copies (`_b5`, `_b6v1`, `_fail1`, …): a copy left in reads as a large
     "interference" with its successor (CRADLE_5807 vs CRADLE_5807_b6v1 1190.67 mm³ in B6V-3's check).
+48. A fill bounded by an offset of the outer surface that coincides with an existing inner face is a near-zero sheet where
+    the two meet: the 3.2 skin and the D1 surface coincide on the vertical chin (sheet ≈ 0.0002 thick) and the front's union
+    failed (ASM_INCONS_FACE; after the fixes of lesson 49, ASM_BODY_VERTEX_CRUMBLE at the sheet's cut edges). Over-target
+    by 0.02 (3.22: 2 000 × the modelling tolerance, far below print resolution) so the fill is ≥ 0.02 thick wherever it
+    exists, and mask regions that need nothing (B6w-2b…2d).
+49. Do not bound a fill with the planes / tools that already cut the same part (slot zone, sensor windows, slots): a fill
+    face lying in a part face plus the shared edge fails like lesson 41. Grow those exclusions 0.05 (B6w-2c fixed z 60–160).
+50. Take the openings out of the fill before the join (one JOIN per part, nothing re-cut), gate the JOIN on fill ∩ every
+    part and a TemporaryBRep union = 1 lump, and bisect a failing union by cropping body and fill to region boxes (B6w-2b).
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -548,15 +571,39 @@ STEP per printed part `~/Documents/HA_v5f_<part>.step` (world frame), renders `~
   from one calibration print per material), X-Y hole compensation 0.1 to start – the model stays at nominal size
   (E0-consumables §6a).
 
-Open from block 6:
-1. Normal wall < 2.5 where the shell leans: 2.32–2.35 on the back band above the door (z ≈ 160–175, cloth zone), 2.44–2.48
-   on the door, 2.46 on the −x side at z 120 (rev E's 2.5 plan offset; B3d's fix undone by D1). Option: join the plastic's
-   2.5 normal skin (TOOL_outer_skin_3p2 − TOOL_outer_skin_0p7) where thinner, outside the lap (y −64…−52) – the inner
-   surface moves ≤ 0.18 inward; re-run the matrix and the lap gap.
-2. Seam: option I moved the visible seam 2.6–3.1 mm back. Option O (seam at y −55.15) puts the lip root 1.6–1.8 into both
-   speaker boxes' rear-outboard edges (z 3–76) at their final pose and 2.6–2.8 at the insertion pose → ≈ 2.8 × 0.9 chamfers
-   on the boxes and a re-checked insertion path.
-3. Bench: DMA45-4 basket ≤ Ø32 over its rear 10 mm; Active Cooler around CAM/DISP; LCD DSI entry side; LCD 4-pin lead
+Decisions (Daniel 2026-11-05 11:18, "1. a 2. a 3. a"):
+1. (a) Wall to 2.5 normal where the shell leans, outside the lap – applied in B6w (below).
+2. (a) Seam option I kept as built (visible seam 2.6–3.1 mm back, y −57.7…−58.3; speaker boxes unchanged).
+3. (a) Fabric dark grey (F1 knit, as rendered).
+
+B6w (decision 1 a), saved as "rev F 2026-11-03 final r2 (Claude)" (`HA Panel v5 - tapered revF-final-r2.f3d`, 43.7 MB;
+`HA_v5f_front.step` / `HA_v5f_door.step` re-exported):
+- Fill = plastic down to 3.22 below the cloth face (TOOL_outer_skin_3p22_F) inside the D1 surface, z 6.5–175.2, minus the
+  slot zone (d < 15.65 above Z −94.35), the VEML / LD2410C windows, the lap band (TOOL_inner_skin_2p1 ∩ y −67…−52.5: the
+  door keeps its 0.2 gap over the lip and pads), the speaker bores / lattices (r 20.5), the clamp pilots (r 1.6) and the chin
+  (y > −3: vertical, already 2.50, the touch PCB lies on it). The exhaust / BME680 slots, the inlet cutout and the pin holes
+  are taken out of the fill (tools grown 0.05), so each part got one JOIN and no opening changed.
+- 3.22, not 3.2: with the exact 3.2 skin the fill is a sheet ≈ 0.0002 thick wherever the wall already is 2.50, and the
+  front's union failed (B6w-2, -2b, -2c; lessons 48–50). At 3.22 the sheet is ≥ 0.02 thick → the filled walls are 2.52.
+- Front 239.797 → 240.888 cm³ (+1.090), door 50.601 → 51.101 (+0.500), 1 lump each (JOIN, no fallback). Fill ∩ parts:
+  only the three pairs already non-zero in B6m. Matrix (B6w-3): 72 non-zero pairs, the same as B6m; door ∩ MAIN_back_env
+  0.74 → 1.04, BME680_env ∩ front 0.08 → 0.16. Front ∩ door 0, front–door minimum 0.20, door sweep 0, speaker-box
+  insertion path 0 at every step, K5 lanes 0.497 to the front.
+- Walls (B6w-2d probes, B6w-4 scan of 317 plan rays, B6w-6): 2.52 wherever filled – sides z 60–150, door back and sides,
+  back band z 165–166 and on the slot web z 170.75 (x 0, ±20, ±40); chin and top 2.50; rail 3.70–3.74. Below 2.50 only at
+  opening edges (within the 0.05 band the fill keeps from the exhaust / BME680 slots and the inlet: 2.31–2.34 on the slot
+  edges), in the VEML window (1.80, provisional envelope, unchanged since block 5) and in the lap band (door over the lip
+  2.345–2.487). Masses (B6n re-run): printed ASA 444.4 / PETG 537.5 g (+1.7 / +2.0), total 1080.9 / 1174.0 g; tipping
+  3.00 / 3.23 N, unchanged.
+
+Open from block 6 (after B6w):
+1. Lap band, left by decision 1 (a): the door's wall over the lip stays 2.35–2.49 normal (2.354 at the door top z 150,
+   2.375–2.385 at z 135–140, 2.441–2.446 on the sides at z 100, 2.487 at the rear corner z 40); the 1.2 lip lies 0.2 inside
+   it, so the closed joint has 3.55–3.69 of plastic. To reach 2.52 there: thicken the door inward and thin the lip by the
+   same amount (≤ 0.17) so the gap stays 0.2. Within 0.05 of the exhaust / BME680 slot edges and the inlet the wall keeps
+   its old value (2.34 at the slot corner x 45, z 170).
+2. Bench: DMA45-4 basket ≤ Ø32 over its rear 10 mm; Active Cooler around CAM/DISP; LCD DSI entry side; LCD 4-pin lead
    length; BME680 / VEML6030 outlines; M3 × 10 self-tapping into the ASA pilots; magnet pull across 1.4 mm; cloth thickness
    (0.7 assumed – it sets the 1.7 face gap); weigh the estimated components (tipping moves with them).
-4. Cloth: contact adhesive on the wrapped end faces; at the floor the front cloth ends on the hard rim behind the joint.
+3. Cloth: dark grey F1 knit; contact adhesive on the wrapped end faces; at the floor the front cloth ends on the hard rim
+   behind the joint.
