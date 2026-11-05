@@ -71,34 +71,50 @@ def cmd_validity(parts):
 
 
 def sample(m, da):
-    """Triangle centroids plus extra uniform points in triangles larger than da (mm²): (points, normals)."""
+    """Triangle centroids plus extra uniform points in triangles larger than da (mm²): (points, normals, area weights)."""
     A = m.area_faces; N = m.face_normals; T = m.triangles
-    pts = [T.mean(1)]; nrm = [N]
     k = np.floor(A / da).astype(int)
+    w0 = A / (k + 1)                                  # each triangle's area shared by its centroid and its k extra points
+    pts = [T.mean(1)]; nrm = [N]; wts = [w0]
     big = np.nonzero(k > 0)[0]
     if len(big):
         rep = np.repeat(big, k[big])
         r1 = np.random.default_rng(1).random(len(rep)); r2 = np.random.default_rng(2).random(len(rep))
         s = np.sqrt(r1)
         w = np.stack([1 - s, s * (1 - r2), s * r2], 1)
-        pts.append((T[rep] * w[:, :, None]).sum(1)); nrm.append(N[rep])
-    return np.concatenate(pts), np.concatenate(nrm)
+        pts.append((T[rep] * w[:, :, None]).sum(1)); nrm.append(N[rep]); wts.append(w0[rep])
+    return np.concatenate(pts), np.concatenate(nrm), np.concatenate(wts)
 
 
-def cmd_thick(part, da, tmax, eps=1e-3):
-    t0 = time.time(); m = load(part)
-    P, N = sample(m, da)
+def aclusters(P, val, W, cell, min_area, top=40):
+    """clusters() with the summed sample area; only clusters of at least min_area mm²."""
+    out = []
+    for c in clusters(P, val, cell=cell, top=100000):
+        lo = np.array(c['bb'][:3]) - 1e-6; hi = np.array(c['bb'][3:]) + 1e-6
+        inb = ((P >= lo - cell) & (P <= hi + cell)).all(1)
+        a = float(W[inb].sum())
+        if a >= min_area:
+            c['area'] = round(a, 2); c['p10'] = round(float(np.percentile(val[inb], 10)), 3); out.append(c)
+    return sorted(out, key=lambda c: -c['area'])[:top]
+
+
+def cmd_thick(part, da, tmax, eps=1e-3, shell=2.45, sub='mesh'):
+    t0 = time.time(); m = load(part, sub)
+    P, N, W = sample(m, da)
     org = P - eps * N; d = -N
     loc, iray, itri = m.ray.intersects_location(org, d, multiple_hits=False)
     t = np.full(len(P), np.inf)
     t[iray] = np.linalg.norm(loc - org[iray], axis=1) + eps
-    np.savez_compressed(os.path.join(DATA, 'thick_%s.npz' % part), P=P.astype(np.float32), N=N.astype(np.float32), t=t.astype(np.float32))
-    sel = t < tmax
-    res = {'part': part, 'samples': int(len(P)), 'miss': int(np.isinf(t).sum()), 'min': round(float(t.min()), 3),
-           't_s': round(time.time() - t0, 1)}
-    for thr in (0.4, 0.8, 1.2, 1.5, 2.5):
-        res['n_below_%s' % thr] = int((t < thr).sum())
-    res['clusters_below_2p5'] = clusters(P[t < 2.5], t[t < 2.5], cell=1.0, top=60)
+    np.savez_compressed(os.path.join(DATA, 'thick_%s.npz' % part), P=P.astype(np.float32), N=N.astype(np.float32),
+                        t=t.astype(np.float32), W=W.astype(np.float32))
+    res = {'part': part, 'samples': int(len(P)), 'area': round(float(W.sum()), 1), 'miss': int(np.isinf(t).sum()),
+           'min': round(float(t.min()), 3), 't_s': round(time.time() - t0, 1)}
+    edges = [0, 0.2, 0.4, 0.8, 1.2, 1.5, 2.0, 2.45, 2.55, 3.5, 6, 1e9]
+    res['area_hist'] = {'%s-%s' % (edges[i], edges[i + 1]): round(float(W[(t >= edges[i]) & (t < edges[i + 1])].sum()), 1)
+                        for i in range(len(edges) - 1)}
+    for thr, cell, amin in ((0.4, 0.5, 0.05), (0.8, 0.5, 0.2), (1.2, 0.5, 0.5), (shell, 1.0, 10.0)):
+        s = t < thr
+        res['cl_%s' % thr] = aclusters(P[s], t[s], W[s], cell, amin, top=40)
     print(json.dumps(res))
 
 
