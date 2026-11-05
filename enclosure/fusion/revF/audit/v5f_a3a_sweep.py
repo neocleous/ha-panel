@@ -1,7 +1,8 @@
 # HA panel model audit (2026-11-05) block 3a: insertion sweeps (A.1), read-only (TemporaryBRep copies only).
 #   Set by the loader: LABEL, MOVE (body names moving together), FIXED (body names already installed), PATH (world-mm
 #   offsets of the moving group from its installed pose, as waypoints; consecutive waypoints are joined by straight steps of
-#   at most STEP mm, default 0.5), optional CROP margin (mm, default 2) and K0 (resume step index).
+#   at most STEP mm, default 0.5), optional CROP margin (mm, default 2), K0 (resume step index) and MOVE_CROP
+#   ({name: world box}) to move one lump of a multi-lump body (e.g. one bracket half).
 #   Fixed bodies are cropped once to the moving group's swept box (+ CROP) – lesson 24. Each step: moving copies moved by
 #   the step delta, design-box prefilter, then intersection volume with each cropped fixed body (> 0.005 mm³ is a hit).
 #   Time-boxed at 45 s (stopped_at = next step). Result -> ~/Documents/audit/data/sweep_<LABEL>_<K0>.json.
@@ -32,6 +33,10 @@ def run(_context):
     try:
         pts = steps_of(globals()['PATH'], st); out['n_steps'] = len(pts)
         mv = [(n, tb_copy(X, n)) for n in globals()['MOVE']]
+        for n, t in mv:                               # MOVE_CROP {name: [x_rel0, x_rel1, y0, y1, z0, z1]}: one lump of a body
+            cb = globals().get('MOVE_CROP', {}).get(n)
+            if cb:
+                inter(X, t, wbox_rel(X, cb))
         # swept world box of the moving group (corners of each body's tight world box over all path waypoints)
         lo = [1e9] * 3; hi = [-1e9] * 3
         for n, t in mv:
