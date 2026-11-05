@@ -12,12 +12,14 @@ exec(open(os.path.expanduser('~/Documents/v5f_b5_common.py')).read())
 exec(open(os.path.expanduser('~/Documents/audit/scripts/v5f_audit_common.py')).read())
 
 
-def steps_of(path, st):
-    pts = [tuple(path[0])]
+def steps_of(path, st, deg_step=0.5):
+    pts = [tuple(path[0])]; m = len(path[0])
     for a, b in zip(path[:-1], path[1:]):
         L = math.sqrt(sum((b[i] - a[i]) ** 2 for i in range(3))); n = max(1, int(math.ceil(L / st - 1e-9)))
+        if m > 3:
+            n = max(n, int(math.ceil(abs(b[3] - a[3]) / deg_step - 1e-9)))
         for k in range(1, n + 1):
-            pts.append(tuple(a[i] + (b[i] - a[i]) * k / n for i in range(3)))
+            pts.append(tuple(a[i] + (b[i] - a[i]) * k / n for i in range(m)))
     return pts
 
 
@@ -41,7 +43,8 @@ def run(_context):
         lo = [1e9] * 3; hi = [-1e9] * 3
         for n, t in mv:
             bb = wbb(X, t)
-            for (dx, dy, dz) in globals()['PATH']:
+            for pw in globals()['PATH']:
+                dx, dy, dz = pw[0], pw[1], pw[2]
                 for i, (a, b) in enumerate(((bb[0], bb[1]), (bb[2], bb[3]), (bb[4], bb[5]))):
                     d = (dx, dy, dz)[i]; lo[i] = min(lo[i], a + d); hi[i] = max(hi[i], b + d)
         region = wbox_rel(X, [lo[0], hi[0], lo[1], hi[1], lo[2], hi[2]], crop)
@@ -54,15 +57,23 @@ def run(_context):
             if q.volume > 0:
                 fx.append((n, q))
         out['fixed_in_region'] = [n for n, q in fx]
-        # move the copies to the first step to be evaluated
+        rot = globals().get('ROT_PIVOT'); orig = [(n, X.tbm.copy(t)) for n, t in mv]   # ROT_PIVOT: (x_rel, y, z); PATH points (dx, dy, dz, deg)
         cur = (0.0, 0.0, 0.0)
         hits = []; worst = {}; stop = len(pts)
         for k in range(k0, len(pts)):
             if time.time() - t0 > 45:
                 stop = k; break
-            p = pts[k]; d = (p[0] - cur[0], p[1] - cur[1], p[2] - cur[2]); cur = p
-            for n, t in mv:
-                mvw(X, t, *d)
+            p = pts[k]
+            if rot is None:
+                d = (p[0] - cur[0], p[1] - cur[1], p[2] - cur[2]); cur = p
+                for n, t in mv:
+                    mvw(X, t, *d)
+            else:                                      # rebuild each copy: rotation about world x through ROT_PIVOT, then shift
+                M = adsk.core.Matrix3D.create(); M.setToRotation(math.radians(p[3]), V3(1, 0, 0), Dw(XC + rot[0], rot[1], rot[2]))
+                tr = M.translation; w = wv((p[0], p[1], p[2])); tr.add(V3(w.x / 10, w.y / 10, w.z / 10)); M.translation = tr
+                mv = []
+                for n, t0_ in orig:
+                    t = X.tbm.copy(t0_); X.tbm.transform(t, M); mv.append((n, t))
             for n, t in mv:
                 tb = t.boundingBox
                 for fn, q in fx:
