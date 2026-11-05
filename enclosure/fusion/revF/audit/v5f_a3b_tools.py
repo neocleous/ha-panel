@@ -32,6 +32,14 @@ def run(_context):
     X = Ctx(); guard(X); out = {}; t0 = time.time()
     try:
         fx = [(n, X.tbm.copy(X.body(n))) for n in globals()['FIXED'] if X.body(n) is not None]
+        reg = globals().get('REGION')                 # optional world box [x_rel0, x_rel1, y0, y1, z0, z1]: crop fixed bodies once
+        if reg:
+            keep = []
+            for n, q in fx:
+                inter(X, q, wbox_rel(X, reg))
+                if q.volume > 0:
+                    keep.append((n, q))
+            fx = keep
         res = []
         for (lab, p, dirs, Lmax, dia) in globals()['TOOLS']:
             for d in dirs:
