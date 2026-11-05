@@ -171,6 +171,16 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_c1g_renders.py`, `v5f_c1g2_renders_close.py` | c1 | checkpoint renders (exploded, assembled, top; orthographic close-ups with explicit viewExtents, lesson 54) | `~/Documents/HA_panel_renders/HA_v5f_c1_*.png` |
 | `v5f_c1h_save.py` | c1 | guards, named WIP version | "rev F WIP 2026-11-05 c1 step 1: …" saved, 200 bodies |
 | `v5f_c1z_logread.py` | – | read-only helper: print parts of a log entry (lesson 30) | – |
+| `v5f_c2a_key_lanes.py` | c2 | read-only: key lanes (Ø5 for a 2.5 ball-end key) for cap screws driven from inside, from candidate axes on the lip ring to targets behind the unit (door off), against every part (pre-cap front shell), leads separately | with the cap on only the back is reachable (x ≤ ±31, y −42…−38: 23–25°); (46, −33) only through leads – c2a2 (inline): LEAD_VEML alone (51–67 mm³); 70.6 s |
+| `v5f_c2b0_probe.py` | c2 | read-only: bodies near the top; boss axes tangent to the lip (Ø8, d ≥ 6.1 at z 172.5–175.8, bisection along the plan normal); lanes for BL/BR/SL/SR without VEML_env / LEAD_VEML; cap pocket map (containment at z 177.9 / 179.5); bar back face | BL/BR (±25.91, −37.80), SL/SR (±43.36, −32.85); best clear lanes 24.6° (back) / 27.6° (rear corners), no lead in the way; mic pockets x ±(7.3…37.7), old VEML pocket x 38.3–53.7, pins to z 174.9; bar back face −22.34 at z 177, joint plane from z ≈ 177.3; 70.6 s |
+| `v5f_c2c_cap_hidden_screws.py` | c2 | rebuild from HOUSING_F_front_c0: cap without posts / notches / countersinks + four Ø8 bosses (Ruthex hole Ø4.0 × 6.0 from below); front shell pads z 169.5–172.5 (Ø3.4) + two 2.0 ribs per pad along the key lane; shelf under the cap's front edge; VEML to the centre (old pocket + port filled), mic strips 29 long; LEAD_VEML re-routed; KO_capkey_* lanes; gates; old bodies → `*_c1` (hidden) | run 1 front ∩ cap 1.04 mm³ (c0's corner fillet under the cap's front edge on the shelf → squared off); runs 1–3 VEML 0.33 / 0.95 / 0.997 from the cap ring → 0.8 forward of the proposal; run 4 committed: front 237.2926, cap 9.931 cm³; lanes clear; 75 s |
+| `v5f_c2d_fillets_checks.py` | c2 | c1e4's classified fillets (A 3 edges R0.8, B 3 R0.3, C 1 R0.3, one feature) + checks; exhaust open length at mid-wall (containment) | run 1 on c2c's front (237.2748; exhaust by rays from inside, superseded); run 2 on c2i's front: 236.6852 cm³, 1 lump each; front ∩ cap / door, cap ∩ door 0; pad 169.5 / 172.5 = boss bottom at all four; axis open to the insert hole end 178.5, top 180.0 above; KO_capkey_* ∩ every part and lead 0; exhaust 81.75 / 82.25 of 90 mm open → 492 mm²; 142 s |
+| `v5f_c2d2_exhaust_wall.py` | c2 | read-only: exhaust open length at mid-wall (REF hit along −y, point 2.4 inside along its normal, containment), 0.25 steps | on c2c's front 468.7 mm² (incl. the SL/SR lane ribs near x ±43); 722 rays 370 s (lesson 59) – c2d run 2 does it by containment |
+| `v5f_c2e_sections.py` | c2 | read-only: section loops S1 x 0, S2 x 25.91 (BL), S3 x 43.36 (SL), S4 plan z 165, S5 plan z 177.9 → `HA_panel_renders/c2_sections.json`, plotted off-line | run 1 had S4 at z 168 (above the lanes' start); its z 165 plan showed SL/SR's inner rib not reaching the back wall → c2i; final run after c2d run 2 |
+| `v5f_c2f_renders.py`, `v5f_c2f2_renders_ortho.py` | c2 | checkpoint renders (assembled, exploded, cap underside, pads from above, inside views with and without the key lanes, top) | c2f's first orthographic shot after a perspective one came out at the wrong scale (lesson 54 amended); c2f2 applies the camera twice; `~/Documents/HA_panel_renders/HA_v5f_c2_*.png` |
+| `v5f_c2g_save.py` | c2 | guards, named WIP version | "rev F WIP 2026-11-05 c2: …" saved, 214 bodies |
+| `v5f_c2h_lip_vertical.py` | c2 | the cap's lip (c1's d-band, leaning with the walls) made vertical: top slice z 175.3–175.85 copied down in 0.5 steps to z 173.3; insertion sweep gate | before: cap lifted 0.75–1.75 ∩ front 13–29 mm³ (the cap could not go on – also true in c1); after 0 at every h 0.1–4.0; cap 9.931 → 9.9147 cm³ (old → `HOUSING_F_cap_c2a`) |
+| `v5f_c2i_front_ribs.py` | c2 | front shell rebuilt from c0 as c2c but SL/SR with one rib along the wall normal on the outer side (the inner lane-aligned rib hung free below z ≈ 167); rib rooting gate; insertion sweep | front 236.7029 (old → `HOUSING_F_front_c2a`); every rib rooted in the wall (16.6–17.8 mm³ below z 166); 107 s |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -312,11 +322,26 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 53. 85 TemporaryBRep booleans against big bodies (LCD STEP, door) + 180 rays took 212 s (c1c); bbox-prefilter (lesson 32).
 54. After an orthographic shot, a perspective close-up with isFitView False kept the old extents and came out empty
     (c1g); for close-ups use an orthographic camera and set `camera.viewExtents` explicitly (c1g2: 11 ≈ 100 mm wide).
+    Amended (c2f2): set the type / eye / target first, assign `viewport.camera`, re-read it, then set `viewExtents` and
+    assign again – set in one go, the first orthographic shot after a perspective one comes out at the wrong scale.
 55. Order matters when a cut and an addition overlap: c1d cut the spline groove before adding the posts, so the post webs
     partly filled it. Cut functional voids last, and look at sections through every added feature before the fillets –
     a 2-D check of four planes (c1f) found what the volume gates could not.
 56. Edge selection by "neighbour face leans outward" also matched the groove's inner wall (it leans with the outer wall):
     classify fillet edges by position as well (point containment in an offset band, c1e4).
+57. Check the assembly motion, not only the closed fit. A hook that swings into a slot behind a flush butt joint can't go
+    in: every point of the cap face above the pivot moves into the bar when the far end is lifted (Δy = height above the
+    pivot × tilt). And a skirt built as an offset band of a leaning wall leans with it: lowered straight down, its bottom
+    edge meets the mating flange's top edge (c1/c2 lip, 0.55 interference; fixed in c2h with a vertical skirt). Gate every
+    part that is put on with an insertion sweep (part moved back along its path in steps ∩ mating part = 0).
+58. A clearance gate made of an offset box ∩ part reports mm³ rounded to 0.01: 0.997 mm of clearance read 0.01 and failed
+    a "< 0.01" gate (c2c run 3). Give such gates a stated tolerance and the clearance it stands for.
+59. `findBRepUsingRay` is component-wide: ≈ 0.35–0.5 s per ray with ≈ 210 bodies (c2d 362 rays 126 s, c2d2 722 rays 370 s).
+    For dense sample grids use `pointContainment` on the one body instead.
+60. A part rebuilt from an earlier body brings that body's small features along (c0's inner corner fillet under the cap's
+    front edge, to z ≈ 177.3, hit the new shelf in c2c run 1): probe a containment grid next to new mating faces first.
+61. Oblique ribs in front of a slot look worse from inside than at the wall: measure an opening where it is (mid-wall
+    point 2.4 inside REF – REF surface found by containment bisection, c2d run 2), not by rays from the interior (c2d run 1).
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -671,3 +696,48 @@ screws; step 2 = sensors into the cap, checks, renders, version, STEP. Saved as 
   front flange (43.7 mm³) in the +x rear corner – move it; mic pockets start 0.7 behind the cap face (y −23.3); sensor
   pockets / ports / pins on the cap, leads with the cap off; cloth bodies for the new top edge; full matrix, renders,
   version, STEP. MIC strips / KO_mic ∩ cap 9.16 / 8.65 mm³ are the pocket overlaps the front shell had before.
+
+## Cap block c2 – hidden screws checkpoint (2026-11-05)
+Daniel 15:26: "That's not quite right because the fastners will be visable from the outside. The lid should have the screw
+bosses with the threaded inserts and the screws should come up from the shell into the lid"; answers: front "Hooks into
+the bar (Recommended)", VEML6030 "Centre, as proposed (Recommended)". The hook turned out not to be assemblable (below);
+15:57 message: option A (two more hidden screws + a shelf) unless Daniel says otherwise. Saved as "rev F WIP 2026-11-05
+c2: …".
+- Why not the hook: the cap's front face (z 177.5–180) sits 0.1 behind the bar's joint face, above any hook pivot inside
+  (z ≈ 174.5). Lifting the cap's back by α moves that face forward by (height above the pivot) · α = 3…5.5 · α: contact
+  after 1–2°; pushing a lip 1 mm into a slot with the cap level is blocked by the same face.
+- Key lanes (c2a/c2b0, door off, Ø5 for a 2.5 ball-end key): from the cap's lip ring only the back (x ≤ ±31) and, once
+  the VEML lead is gone, the rear corners (±43.4, −32.9) are reachable; further forward everything hits the side walls,
+  the bar or leads.
+- Screws: 4 × DIN912 M3 × 8 from below; Ruthex M3 in Ø8 cap bosses (hole Ø4.0 × 6.0, z 172.5–178.5, 1.5 under the top
+  z 180), bosses tangent to the lip's outer face (d 6.1 at z 175.8): BL/BR (±25.91, −37.80), SL/SR (±43.36, −32.85).
+  Front-shell pads z 169.5–172.5 (Ø3.4; disk r 5.5 + a strip along the lane, d ≥ 4.1 so they join the flange steps and
+  stay off the exhaust slots). Ribs 2.0 with a 55° lower edge, rooted in the wall at d ≥ 1.9: BL/BR two each at ±4.5
+  either side of the lane (along the lane); SL/SR one each along the wall normal, 4.5 outboard (c2i: an inboard rib along
+  the lane would hang free below z ≈ 167 or cross the exhaust rows). Head z 166.5–169.5, tip z 177.5 (5.0 in the insert).
+  Boss bottom on the pad top = the 0.5 clamp gap.
+- Lanes (hidden KO_capkey_*): BL → (20, −100, 30) 24.6°, BR mirrored; SL → (20, −100, 30) 27.6°, SR mirrored; ≈ 97 / 102
+  inside the unit; clear of every part and lead (c2d). Key reach ≥ 120.
+- Front edge: SL/SR are 10.4 behind the joint; a 45° shelf on the bar's back face, top z 177.4 (0.1 under the cap), to
+  y −23.3 (0.2 in front of the mic strips), x ±60, keeps the cap's front edge from being pushed down. c0's corner fillet
+  under the cap's front edge (to z ≈ 177.3) was squared off for it.
+- Lip made vertical (c2h): c1's lip was a d-band and leaned with the walls (0.38 mm/mm at the back), so its bottom edge
+  was 0.55 outside the flange's top edge when lowered: the cap could not go on (also in c1). Now the band's top slice
+  (z 175.3–175.85) stepped straight down to z 173.3: 0.2 off the flange at z 175.3, ≈ 1.0 at z 173.3; the cap moved up
+  0.1–4.0 ∩ front shell = 0 at every step. The skirt's faces are stepped 0.19 per 0.5 (construction; inside, not seen).
+- VEML6030 at x −7.5…7.5, y −41.2…−26.2 (0.8 forward of the proposed y −42…−27: the cap ring's inner face leans forward to
+  y −42.33 at z 177.2), pocket 15.4 × 15.4 × 0.8, lux port Ø2 at (0, −33.7); old pocket / port filled. Mic strips 29 long
+  (x ±8.5…37.5; ports, pins, 71.0 spacing unchanged) so the 15 × 15 VEML envelope keeps 1.0 to them; pockets 0.6 apart.
+  LEAD_VEML down the centre, joining the old route at (40, −35, 130): 159.8 routed (was 138); it crosses LEAD_DSI at
+  z 86–95 on that old route (22.3 mm³, unchanged; flexible leads).
+- Exhaust: 492 mm² open at mid-wall (81.75 / 82.25 of 90 mm; the four BL/BR ribs cross both rows) – c1 by arithmetic 516,
+  start 540; intake 314 (100 × Ø2).
+- Volumes: front 235.655 → 236.685 cm³, cap 8.942 → 9.915 cm³. ASA 1.05 / PETG 1.27: front 248.5 / 300.6 g, cap
+  10.4 / 12.6 g.
+- Checks: 1 lump each; front ∩ cap / door, cap ∩ door 0; pad top 172.5 = boss bottom at all four; axis open to 178.5 with
+  1.5 above; insertion sweep 0; KO_capkey_* ∩ every part and lead 0; VEML / mic / leads ∩ cap and front 0 apart from the
+  pins in the strip envelopes (9.16 / 8.65 mm³ by design).
+- Bodies: c1 versions hidden as `*_c1` (front, cap, VEML_env, LEAD_VEML, MIC_strip_*_env, KO_mic_*_back), c2c's as
+  `HOUSING_F_front_c2a` / `HOUSING_F_cap_c2a`.
+- Open (step 2): cloth bodies for the new top edge, full interference matrix, STEP export; VEML board size (caliper) – if
+  ≤ 13 mm the mic strips can stay 30 long.
