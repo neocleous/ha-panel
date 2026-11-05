@@ -2,7 +2,8 @@
 #   Read-only. Per part: lumps, shells (closed / void, volume), faces < 0.01 mm², edges < 0.05 mm (world points), and every
 #   sharp concave edge: face normals at the edge midpoint more than 20° apart, concave when the point
 #   p + 0.02 mm · (n1 − n2)/|n1 − n2| lies inside the body (valid for any dihedral and either normal sense). World mm.
-#   SEL (set by the loader) picks the parts; default all ten. Time-boxed: stops before a part when 45 s have passed.
+#   SEL (set by the loader) picks the parts; default all ten; E0 / E1 limit the edge range (large parts in chunks).
+#   Time-boxed: stops before a part after 45 s and inside the edge loop after 50 s (edge_stop = the next edge index).
 import os
 exec(open(os.path.expanduser('~/Documents/v5f_common.py')).read())
 exec(open(os.path.expanduser('~/Documents/v5f_b5_common.py')).read())
@@ -38,7 +39,11 @@ def run(_context):
             r['small_faces'] = [[round(f.area * 100, 5), [round(v, 2) for v in wpt(f.pointOnFace)]] for f in b.faces if f.area < 1e-4]
             r['small_edges'] = [[round(e.length * 10, 4), [round(v, 2) for v in wpt(edge_mid(e))]] for e in b.edges if e.length < 5e-3]
             conc = []; on = 0; sharp = 0
-            for e in b.edges:
+            e0 = globals().get('E0') or 0; e1 = min(globals().get('E1') or b.edges.count, b.edges.count); r['edge_range'] = [e0, e1]
+            for ei in range(e0, e1):
+                if time.time() - t0 > 50:
+                    r['edge_stop'] = ei; break
+                e = b.edges.item(ei)
                 if e.faces.count != 2:
                     continue
                 p = edge_mid(e)
