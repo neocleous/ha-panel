@@ -104,6 +104,25 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_b4n_leads.py` | 4 | every lead as a hidden tube body LEAD_* along a polyline (Ø = bundle allowance), bbox-prefiltered booleans against 36 bodies + all LCD_*, PI5_F cropped to the lead's box | 13 leads in one run; lengths in the block 4 checkpoint; four routes touched something (MIC_R carrier boss 4.5, RADAR cradle ring 10.2, USB_RESP box edge 5.3, DSI MAIN_front_env 3.3 mm³) → B4o |
 | `v5f_b4o_leads_fix.py` | 4 | the four routes re-done (old bodies → LEAD_*_b4n, hidden) | MIC_R 68.9, RADAR 70.8, USB_RESP 128.6, DSI 148.5 mm; all 0 |
 | `v5f_b4p_renders_save.py` | 4 | renders (MODE 'renders'): rear open (leads red, envelopes blue), ReSpeaker carrier, inlet bezel, V11 envelopes → `~/Documents/HA_panel_renders/HA_v5f_b4_*.png` + check JPEGs; MODE 'save': inventory, f3d, named version | 4 renders + 4 checks, no leftovers; version "rev F WIP 2026-11-05 b4: …" saved; `HA Panel v5 - tapered revF-wip-b4.f3d` 26.0 MB; 142 bodies, 20 visible |
+| `v5f_b5_common.py` | 5 | block-5 helpers (exec after `v5f_common.py`; on the Mac as `~/Documents/v5f_b5_common.py`): constants (fabric top z 175.3, top groove z 175.3–176.8, joint planes y −55.0 / −55.3, magnet tables MAG_D1 / MAG_R1, LCD-screw lane axes), TemporaryBRep helpers (tb_copy, inter, vol_x, lbox, dbox, mvw, wbb), ray helpers (ray_hits, solid_runs, magnet_point), slot masks (slot_in d < 15.6 / slot_out d < 13.0), build_layer() | – |
+| `v5f_b5a_probe_fabric_zone.py` | 5 | read-only: REF_F_outer's 20 faces in world (type, area, box, normal); the joint faces of both parts | top plane z 180 (x ±73, y −47.1…−22.8); slot plane d 12.3, z 49.2–177.6; chin plane y 7.5, z 6.0–48.5; floor plane x ±93.7, y −79.0…1.5; door end face y −55.3 (z 2.8–165.1), front end face −55.0 (z 2.5–165.8), root band face −53.5 |
+| `v5f_b5b_probe_sections.py` | 5 | read-only occupancy sections: chin top at x_rel 0 / 70, back top at x 0, bottom joint at x 0 | touch PCB y 2.75–4.25 (top z 50.0, 0.40 below the slot's inner surface at z 50); lattice holes through y 5.0–7.5; slab 0.3 off the slot face; exhaust slots open at x 0; door wall y −84.5…−82.3 near the floor, joint gap z 2.5–2.8 |
+| `v5f_b5c1_inner_skins.py` | 5 | INNER_E copies shelled (insideThickness): TOOL_inner_skin_0p7 / _0p9 / _2p1 / _2p5, TOOL_inner_cup_2p1 (2.1 with the top cap z 177.5, 2649 mm², removed) | 66.220 / 84.908 / 194.500 / 230.089 / 190.136 cm³, 1 lump each, 0.4–2.4 s each |
+| `v5f_b5c2_outer_skins_outlines.py` | 5 | REF_F_outer shells: TOOL_outer_skin_0p7 (whole), _2p7 (∩ z ≥ 160, cap removed), _3p2 (∩ z ≤ 20, cap removed); floor outlines from the rev E generator's z-0 section: TOOL_floor_off6 (z 2.0–3.3), TOOL_floor_off12 (z −1.0…0.75, sharp front corners) | 68.699 / 25.057 / 73.188 cm³; off6 x_rel ±93.72, chin y 1.5; off12 ±87.72, chin y −4.5 |
+| `v5f_b5d_layer_conflicts.py` | 5 | read-only: the D1 layer (TemporaryBRep) against every part | front 25.24 cm³ (still with an LD2410C window), door 16.56; front ∩ TOUCH_PCB 3.16 mm³ (face contact); door ∩ K5 lanes 29–48 (the lanes run out through the door opening; door off), MAIN_back_env 0.74 (top corners), cradle bezel 96.6 / PD env 57.4 (inside the inlet cutout, re-cut in B5f), stale rev D BME680_env 73.1 (name clash, B5e-1); without exclusions VEML_env 5.1; no layer within 4.0 of the LD2410C face over 16 × 22 → window exclusion dropped |
+| `v5f_b5e1_front_layer.py` | 5 | front: stale rev D BME680_env → `BME680_env_revD` (B4l's envelope had been auto-named `BME680_env (1)` → renamed `BME680_env`); R1 lip, root band and pads removed (TOOL_inner_skin_2p5 ∩ y −64.5…−53.4, z ≥ 6.0: 7.889 cm³); D1 layer joined (25.455 cm³) | front 242.147 → 234.257 → 254.941, 1 lump; chin layer y 4.65 solid / 4.15 air; +x side inner face at x_rel 89.0 with the layer behind it; touch PCB 3.16 mm³ (contact) |
+| `v5f_b5e1b_pad_tips` (inline) | 5 | the eight R1 pad tips in front of the removal box (y −53.4…−52.2) had become bodies `HOUSING_F_front (1…8)` (25.8 mm³) at the JOIN → deleted | front 254.941 unchanged, no stray bodies |
+| `v5f_b5e2_lip_d1.py` | 5 | lap joint for D1 = 0.7: lip s −0.9…−2.1 (y −63.5…−53.5, z ≥ 6.5), root s 0…−2.1 (y −55.0…−53.5), 10 pads Ø12 s −0.9…−3.0 with Ø8.3 lip pockets s −1.2…−3.1, lane notches r 4.0; magnet points by ray on INNER_E at MAG_D1 (z 25 / 60 / 95 / 132 / 150 at y −59.7 / −59.5 / −59.0 / −58.0 / −57.5; x_rel ±73.42 / 68.58 / 59.8 / 41.1 / 16.7) | tool 9.018 cm³, 0 against door, boxes, main board, cradle, lanes, BME680, LD2410C; front 254.941 → 263.238, 1 lump; boxes at the sideways insertion pose (−1.0) 0 |
+| `v5f_b5e3_front_recut.py` | 5 | re-cut what the layer closed: lattices 2 × 199 Ø1.9 (y 3.5 → 8.0), 4 pilots Ø2.5 (y −0.5 → 5.0), exhaust and BME680 slots (kept B4l tools) | front 263.238 → 261.960; 199/199 holes open and bars solid at y 4.6 per side; pilots open |
+| `v5f_b5f_door_layer.py` | 5 | door: D1 layer (16.562 cm³); R1 pockets filled (r 4.25, s 0.85…2.5); new pockets Ø8.3 from s +0.2 at MAG_D1; inlet cutout x ±12.2, z 6.8–21.4 for the grommet sleeve; 2 × Ø2.1 pin holes at (x_rel ±13.6, z 14.1); door-boss insert holes Ø4.0 z 2.3–9.5 re-cut | door 55.102 → 69.941 → 70.767 → 69.136, 1 lump; 10/10 pockets open, 0.9 skin, lap gap open; back wall at x 0, z 60: y −81.78…−78.58 (3.2 before the recess); door vs front, cradle, PD env, bracket, boxes 0; MAIN_back_env 0.74 |
+| `v5f_b5g_recess_feet.py` | 5 | front feet SJ5012 → (x_rel ±80.0, y −11.5) (old Ø13 × 0.5 recesses filled, FOOT_FL / FOOT_FR moved); front Pi insert holes' bottoms z 0.8 → 1.5; 0.7 recess = TOOL_outer_skin_0p7 ∩ z ≤ 175.3 − slot_out − TOOL_floor_off12 − floor rim behind the joint (y < −55.0, z < 2.65) | recess tool 41.174 cm³ (front 23.53, door 15.57); front 261.960 → 238.398, door 69.136 → 53.572, 1 lump each; along rays (recess / solid): chin 0.7 / 2.5, sides 0.74–0.77 / 2.64–2.76 (along x), door back 0.7 / 2.5, back above the door 0.81 / 2.73 (along y), underside strip 0.7 / 1.8, floor inside 0 / 2.5, rim behind the joint 0 / 2.41 |
+| `v5f_b5h_grooves.py` | 5 | rail TOOL_inner_cup_2p1 ∩ z 173.8–177.6 − slot zone (d < 17.5) − VEML_env + 0.5 (1.192 cm³); top groove TOOL_outer_skin_2p7 ∩ z 175.3–176.8 ∩ y < −22.5 (0.714 cm³); under-slab groove design Z −93.43…−91.93, x_rel ±93.5: d 12.3 → 15.0 at \|x_rel\| ≥ 48 (baffle blocks behind), → 14.3 across the touch PCB; exhaust slots re-cut after the rail | front 238.398 → 239.407 → 237.918, 1 lump; back groove 3.0 deep along y with a 1.9 floor; hard band at z 177.3 unrecessed; under-slab: deep sections end in the baffle, shallow 0.5 floor, slot face hard above; rail vs parts 0; designed contacts unchanged (strip pins 9.16 / 8.65 mm³), VEML_env 2.04 (was 5.19) |
+| `v5f_b5i_grommet.py` + `v5f_b5i2` (inline) | 5 | GROMMET_usbc_F: flange 1.0 on the cloth face (REF_F_outer moved −1.0 in y minus REF_F_outer, x ±15.1, z 4.7–23.5, R2), sleeve 0.8 (bore x ±11.3, z 7.7–20.5 = bezel + 0.3) through cloth + wall to the door's inner surface, 2 × Ø1.8 heat-stake pins 1.5 proud inside; B5i-2 opened the flange over the bore (B5i had cut the bore from the sleeve only) | 0.778 → 0.488 cm³, 1 lump; vs door, front, cradle, PD env, pigtail, feet 0; door + grommet pulled straight back 1 / 3 / 10 / 30 / 80: 0 |
+| `v5f_b5j1_checks.py` | 5 | read-only: front / door / grommet against all 73 current parts (bbox pre-filter, PI5_F cropped) and each other; walls along rays (REF entry = cloth face, both parts' runs); slot-face probes; joint gap; magnets; LD2410C air; touch PCB lifted 0.9 | front ∩ door 0, grommet ∩ front / door 0; front: TOUCH_PCB 3.16 (face contact with the D1 layer), strip pins 9.16 ×2 / 8.65 ×2 (designed, unchanged), VEML_env 2.04 and BME680_env 0.08 (provisional boards); door: K5 lanes 101–167 (lanes run out through the door opening, used with the door off), MAIN_back_env 0.74 (top corners); grommet all 0; walls 2.5–2.9 under 0.7–0.8 recess (chin, sides, rear corner, bends); slot face hard at Z 36 and −91; 10/10 magnets (pocket open, 0.9 skin, lap gap, 0.3 pad skin, lip pocket open); LD2410C 19.6 to the wall along the antenna axis (no layer within 4.0 of the face, B5d); touch PCB lifted 0.9: 3.09 (the same face contact) |
+| `v5f_b5j2_box_paths.py` | 5 | read-only: R2 box insertion path against the rebuilt lip and the D1 layer (front shell cropped per box): +y travel at 40 inboard (lift 6), sideways at dy −1.0 (lift 6), lowering at the final x | both boxes: +y travel brushes the lip's rear end at dy −59…−54 (≤ 0.23 mm³); at the final x lifted ≥ 4 the box's top-outboard edge meets the D1 layer on the leaning side wall (lift 4 / 5 / 6: 2.6–3.0 / 36 / 112 mm³), 1 mm inboard 0 → path re-ordered in B5j-3 |
+| `v5f_b5j3_box_paths2.py` | 5 | read-only: re-ordered box insertion path per box (front shell cropped): lift 6 → +y travel at 42 inboard (dy −70…−40, 1 mm steps) → sideways to 1 mm inboard of the final x (dy −1.0, lift 6) → lower 6 → 0 (0.5 steps) → last 1 mm outboard on the floor (0.25 steps) → push dy −1.0 → 0 (0.25 steps) | both boxes: every step 0 mm³ → assembly order changes (R2 note): the box goes in high and far inboard, then sideways, then down |
+| `v5f_b5k_renders_save.py` | 5 | MODE 'renders': temporary RENDER_tmp_CLOTH (TOOL_outer_skin_0p7 ∩ z ≤ 175.3 − slot_out − TOOL_floor_off12 − rim behind the joint − sleeve opening − joint gap) in grey → `HA_v5f_b5_{rear34,front34,under,lap,topgroove}.png` + check JPEGs; MODE 'save': inventory, f3d, named version | cloth 40.780 cm³, deleted after the shots, no leftovers; version "rev F WIP 2026-11-05 b5: …" saved; `HA Panel v5 - tapered revF-wip-b5.f3d` 35.6 MB; 153 bodies, 21 visible |
+| `v5f_b5k2_closeups.py` | 5 | close-ups at a fixed camera distance (isFitView False): top groove + hard band at the +x rear corner (150 mm, replaces B5k's fitted shot), grommet flange on the door (140 mm); + 240 × 180 previews | 2 renders, no leftovers |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -187,6 +206,22 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     connector face does not register as an overlap.
 33. A STEP whose parts are merged into one body (Waveshare PCBA, 2451 faces): intersect it with a region box and list the
     region's planar faces (normal, area, point) to find a connector's FPC slot (B4m).
+34. A shell input of faces instead of the body removes those faces: an INNER_E copy shelled 2.1 with its top cap removed gives
+    the wall band without the cap's layer (TOOL_inner_cup_2p1, B5c-1, 0.5 s).
+35. An inward shell thicker than a convex fillet radius would degenerate (REF_F_outer's R3 top edges vs 3.2): crop the
+    reference first (∩ z ≤ 20 or ∩ z ≥ 160) and pass the crop's cap face to the shell so the cut is not lined (B5c-2).
+36. A skin ∩ box removal leaves the feature's parts outside the box as loose lumps; the next combine JOIN makes each of them
+    a body `name (n)`. Size removal boxes to the feature's full extent and list `name (n)` bodies after every combine
+    (B5e-1: eight R1 pad tips, deleted in B5e-1b).
+37. A body added under an existing name becomes `name (1)`; name lookups then return the older body. The stale rev D
+    `BME680_env` shadowed B4l's envelope, so the B4l–B4o checks by name used the wrong body; B5e-1 renamed both.
+38. `findBRepUsingRay` from inside a hidden reference body returns the surface point and its face in one call: magnet points
+    on INNER_E by ray (B5e-2) reproduce R1's 26-step containment bisection (x_rel 59.82 / 41.07 at z 95 / 132) instantly.
+39. `camera.isFitView = True` refits to all visible bodies and ignores the eye distance, so a "close-up" comes out as the
+    whole housing. For a close-up set `isFitView = False` and place the eye at a fixed distance from the target (B5k-2). A
+    480 × 360 check JPEG read through `read_media_file` costs ≥ 25 k tokens (output truncated); a 240 × 180 preview is enough
+    to check the framing.
+
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
 speaker enclosures separately and screw them in. Assembly check: the LCD screws and the speaker screws cannot be driven
@@ -362,3 +397,60 @@ Open from block 4:
    radar x −37, z 80; touch x 4, z 60; pigtail x 0, z 37.5); Pi-power USB4105 per V11.
 7. LCD Pi standoffs: M2.5 thread depth unknown (M2.5 × 5 assumed); USB plug overmoulds unmeasured (allowances above).
 8. Block 5: re-cut the exhaust and BME680 slots after the D1 inner layer (TOOL_exhaust_slots, TOOL_bme680_slots).
+
+## Block 5 checkpoint (2026-11-05)
+Fabric (D1, D2). Built in B5c–B5i on the block 4 state, checked in B5j, saved as "rev F WIP 2026-11-05 b5 …"
+(`revF-wip-b5.f3d`, 35.6 MB, 153 bodies: + 10 hidden tool bodies, + GROMMET_usbc_F). Renders `HA_v5f_b5_{rear34,front34,
+under,lap,topgroove,grommet}.png`.
+- Wall under the cloth (D1): 0.7 inner layer (TOOL_inner_skin_0p7 ∩ z 2.5–175.3, thickened floor cove R2.8 concentric with
+  the R6 edge fillet) on both parts, then the 0.7 recess (TOOL_outer_skin_0p7 ∩ z ≤ 175.3): the wall moves 0.7 inward and stays
+  2.5, the cloth face is the rev F outer surface. Measured along rays: 0.7–0.8 recess over 2.5–2.9 plastic (chin, sides, rear
+  corners, door back, back above the door, bottom bend). Exceptions: none behind the slot face / boss; none on the flat floor
+  (the 6 mm underside strip sits on 1.8 plastic – the speaker boxes stand 0.5 above the floor, so a flat-floor layer would hit
+  them); at the VEML6030 envelope (provisional 15 × 15 board) a local 1.8 wall and a notch in the rail (a 13 × 13 board clears
+  both).
+- Fabric zone: chin band (to the under-slab groove), both sides, rear corners, door, the back band above the door, bottom
+  fillet + 6 mm underside strip forward of the joint. Hard: top band (3.2 above the top groove), slot face / boss, underside
+  inside the strip, floor rim behind the joint (z 0–2.5; the door's 2.8 bottom edge sits above it).
+- Top groove (D2): constant z 175.3–176.8 (upper edge 0.5 below the R3 tangent on the sides, 0.9 at the back; hard band 3.2),
+  2.0 deep below the recessed surface (2.7 below the cloth face), round the sides, rear corners and back (y < −22.5); rail
+  2.1 behind it (z 173.8–177.6) → groove floor 1.9–2.0. Exhaust slots re-cut through the rail's lower 0.7.
+- Under-slab groove: rev D position relative to the slab (design Z −93.43…−91.93, 1.5–3.0 above the slab's bottom edge,
+  hidden), x_rel ±93.5, depths below the recessed surface: 2.0 where the speaker baffles back it (|x_rel| ≥ 48); 1.3 over a
+  0.5 floor across the touch PCB (|x_rel| < 48: its top edge is right behind the groove, no room for a rail).
+- Lap joint at D1 (R1/R2 open item): lip s −0.9…−2.1 (0.2 under the door's new inner surface), root band to y −53.5, pads
+  s −0.9…−3.0, door pockets from s +0.2 (0.9 skin), magnet faces 1.4 apart as in R1. Magnets z 25 / 60 moved back to
+  y −59.7 / −59.5 (thicker pads vs the boxes' insertion pose), z 150 to y −57.5 (the door pocket was 0.94 inside the door's
+  end face). Lip extended to y −63.5.
+- USB-C grommet: GROMMET_usbc_F (0.49 cm³) – flange 1.0 on the cloth face (x ±15.1, z 4.7–23.5, R2) covering the cloth's cut
+  edge by ≥ 2.2, sleeve 0.8 through cloth + wall round the cradle bezel (0.3), 2 × Ø1.8 heat-stake pins through the door;
+  door cutout x ±12.2, z 6.8–21.4. Door + grommet come off together over the bezel (0 at 1…80 mm).
+- Feet: front SJ5012 moved from (x_rel ±84, y −6.5) to (±80, −11.5), clear of the strip; front Pi insert holes' bottoms
+  z 0.8 → 1.5.
+- Housekeeping: the stale rev D `BME680_env` had shadowed B4l's envelope (`BME680_env (1)`); renamed (B5e-1). R1 pad tips
+  deleted (B5e-1b).
+- Volumes: front 242.147 → 237.918 cm³, door 55.102 → 53.572, grommet 0.488.
+- Checks (B5j-1): front ∩ door 0; grommet ∩ front / door 0. Front: TOUCH_PCB 3.16 mm³ (face contact with the D1 layer), strip
+  pins 9.16 × 2 / 8.65 × 2 (designed, unchanged), VEML_env 2.04 and BME680_env 0.08 (provisional boards). Door: K5 lanes
+  101–167 (the lanes run out through the door opening and are used with the door off), MAIN_back_env 0.74 (top corners,
+  B1 keep-out). Slot face hard at Z 36 and −91; 10/10 magnets (pocket open, 0.9 skin, lap gap, 0.3 pad skin); LD2410C: no
+  layer within 4.0 of the antenna face.
+- Speaker boxes: R2's insertion path now brushes the rebuilt lip's rear end (≤ 0.23 mm³) and, lifted ≥ 4 at the final x, the
+  D1 layer on the leaning side wall (2.6–112 mm³) (B5j-2). New path, 0 at every step (B5j-3): lift 6 → slide in at 42
+  inboard → sideways to 1 inboard, 1.0 behind the final y → lower → last 1 mm outboard on the floor → push 1.0 forward.
+- Cloth pieces: front belt (chin band, sides, rear corners, back band above the door; its ends meet in one ≈ 10 mm butt seam
+  at the back centre above the arch) and door panel. No seam termination was chosen at checkpoint 1, so both cloth ends are
+  flush-cut at the joint as built; along the arch the door's end face meets its cloth face at 22–44°.
+
+Open from block 5:
+1. Seam termination at the joint (Daniel): (a) flush-cut as built – the cut ends sit at the 0.3 joint line, the door's edge
+   along the arch is acute (22–44°); (b) re-cut both joint faces normal to the wall and wrap the cloth round them (lip, pads
+   and magnet pockets rebuilt); (c) a spline groove along both joint edges (a hard band on each side, like the top).
+   Recommended (a); (c) if the bench cloth sample lifts at the arch.
+2. V11 (from block 4) and the LD2410C direction (from block 3) – Daniel.
+3. Under-slab groove: the middle 96 mm (|x_rel| < 48) is 1.3 deep over a 0.5 floor with no rail (the brief asked for a rail):
+   cloth tucked + contact adhesive there.
+4. Underside strip: 1.8 plastic under the cloth (2.5 everywhere else).
+5. Assembly order: speaker boxes by the B5j-3 path; grommet pins heat-staked to the door at assembly; the grommet moves
+   + 6.5 with the 5807 if V11 (a).
+6. VEML6030 / BME680 outlines (caliper) → retention and the VEML pocket wall; MAIN_back_env top corners (B1 keep-out).
