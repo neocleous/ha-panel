@@ -157,6 +157,20 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_b6n_mass_tip.py` (re-run after B6w) | 6 | as above on the r2 state | printed ASA 444.4 / PETG 537.5 g, total 1080.9 / 1174.0 g; CoG (0.18, −18.73, 76.61) / (0.13, −19.12, 77.02); tipping 3.00 / 3.23 N, unchanged |
 | `v5f_b6w5_save_export.py` | 6 | guards (front 240.888, door 51.101; no leftovers), inventory, named version, f3d, STEP for the two changed parts | version "rev F 2026-11-03 final r2 (Claude)" saved; `HA Panel v5 - tapered revF-final-r2.f3d` 43.7 MB (revF-final.f3d kept); 172 bodies (+ TOOL_outer_skin_3p2_F / _3p22_F, hidden), 21 visible; `HA_v5f_front.step` 5.95 MB and `HA_v5f_door.step` 1.97 MB re-exported (1 lump each), the other seven unchanged; 93 s |
 | `v5f_b6f_fabric_view.py` | 6 | Daniel 12:51 "I want to see the model with the fabric on": B6r's cloth (0.7 recess, seam (b) wrap, 0.3 cloth gap) as two visible non-printed bodies RENDER_FABRIC_front / RENDER_FABRIC_door ('Fabric (Grey)'); pictures of the r2 state; door and glass shown in the viewport; **not saved as a version** | front cloth 26.781 cm³ (1 lump), door cloth 15.358 cm³ (3 lumps); 0 overlap with front / door / each other, door cloth ∩ grommet 3.57 mm³ (the two Ø1.8 heat-stake pins through the cloth); `~/Documents/HA_panel_renders/HA_v5f_r2_fabric_{front34,side,rear34,seam,under}.png`; 53 s |
+| `v5f_c1a_probe_top.py` | c1 | read-only: the top region before the cap split (REF top profile, front strip, back / side wall rays z 150–180, bodies above z 160) | top flat z 180 (x 0 y −23…−46, at y −45 only x ±24.4); inner top 177.5; rail z 173.8–177.6; exhaust rows x ±45, z 167–170 / 171.5–174.5; front bar behind the slab (back face 12°, y −19.3 at z 163 … −22.3 at 177); mic strips, VEML, leads; 94 s |
+| `v5f_c1b_cap_tools.py` | c1 | offset bands TOOL_cap_off<t> = REF_F_outer ∩ z 160–177.2 shelled t (crop faces removed); hang check below the split | made, but REF's front face (slot-face plane) lies behind the y −15 crop, so every band also ran behind the slot face (lesson 51) → renamed `TOOL_cap_off*_v1`, hidden; below the split only the four mic heat-stake pins (z 174.8) |
+| `v5f_c1b2_cap_tools.py` | c1 | bands rebuilt from REF ∩ z 160–177.2 ∩ design Y ≤ −13.9 (crop face removed): t 0.72 / 4.1 / 4.7 / 5.0 / 5.9 / 6.1 / 7.3 | attempt 1 (front plane passed as a removed face) SHELL_GENERIC_FAILURE – the plane is tangent to the corner blends; 1.9 and 1.95 failed with the −13.9 crop (lesson 52); failed copies hidden as `*_fail` |
+| `v5f_c1b3_ref_faces.py`, `v5f_c1b4_corner_faces.py` | c1 | read-only: REF crop face list; extent of the two front-corner blend faces | front plane + 2 NURBS blends (y −18.7…−24.6, x ±73…±84) + one side/back NURBS |
+| `v5f_c1b5_off1p9.py` | c1 | the 1.9 band with crop design Y −14.6 | TOOL_cap_off1p9 6.193 cm³ |
+| `v5f_c1c_probe_posts.py` | c1 | read-only: post candidates – plate underside, top flatness under the head (r 3.6), body conflicts, cap notch vs the groove cover, front bar back face, back wall, exhaust zone, joint sliver | plate underside 177.5 and flat z 180 under all heads; (±62, −27) notch cut the groove cover (21.9 mm³), (±28, −38.6) 0.78 mm³; 212 s (lesson 53) |
+| `v5f_c1d_cap_build.py` | c1 | split + ledge + flange steps + groove + exhaust row + posts; cap rim / lip / notches / countersinks; TemporaryBRep gates; commit (old front → HOUSING_F_front_c0, hidden) | committed (front 235.659, cap 8.910 cm³) but the groove was cut before the posts – superseded by c1d2 (bodies kept hidden as `_c1v1`) |
+| `v5f_c1e_fillet_checks.py`, `v5f_c1e2_groove_edge.py`, `v5f_c1e3_groove_recut.py` | c1 | R0.8 on the ledge edge (its filter also took the groove's inner edge), R0.3 on the groove's outer edge, groove re-cut after the posts | on the c1v1 bodies; sections (c1f run 3) then showed the FL/FR posts overhanging the groove → rebuild |
+| `v5f_c1d2_cap_rebuild.py` | c1 | rebuild from HOUSING_F_front_c0: FL/FR moved to (±58.4, −27.0) (post 0.25 inside the groove's inner edge), groove cut after posts and webs; same gates | front 235.6726, cap 8.9419 cm³, 1 lump each; front ∩ cap / door, cap ∩ door 0; groove ∩ posts 13.5 mm³ removed (BL/BR webs); 69 s |
+| `v5f_c1e4_fillets_checks.py` | c1 | fillets with explicit edge classes: ledge outer edge R0.8, both groove top edges R0.3 (one feature); checks | front 235.6548 cm³; post tops 177.5 = cap plate underside at all four; intersections 0 |
+| `v5f_c1f_sections.py` | c1 | read-only: section loops S1 x 0, S2 x 28 (BL), S3 x 58.4 (FL), S4 y −30.05 → `HA_panel_renders/c1_sections.json`, plotted off-line | run 4 = final state |
+| `v5f_c1g_renders.py`, `v5f_c1g2_renders_close.py` | c1 | checkpoint renders (exploded, assembled, top; orthographic close-ups with explicit viewExtents, lesson 54) | `~/Documents/HA_panel_renders/HA_v5f_c1_*.png` |
+| `v5f_c1h_save.py` | c1 | guards, named WIP version | "rev F WIP 2026-11-05 c1 step 1: …" saved, 200 bodies |
+| `v5f_c1z_logread.py` | – | read-only helper: print parts of a log entry (lesson 30) | – |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -289,6 +303,20 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     face lying in a part face plus the shared edge fails like lesson 41. Grow those exclusions 0.05 (B6w-2c fixed z 60–160).
 50. Take the openings out of the fill before the join (one JOIN per part, nothing re-cut), gate the JOIN on fill ∩ every
     part and a TemporaryBRep union = 1 lump, and bisect a failing union by cropping body and fill to region boxes (B6w-2b).
+51. REF_F_outer's front face in the top band is the slot-face plane (design Y −12.4; world y −16.1 at z 160 … −19.8 at
+    z 177.2): a world-y crop at −15 missed it and the shell also made a band behind the slot face (c1b). The plane is
+    tangent to the two front-corner blends, so passing it to the shell as a removed face fails (SHELL_GENERIC_FAILURE).
+    Crop 1.5 behind it with a design-Y box (the crop face cuts the blends at ≈ 45°) and remove the crop face (c1b2).
+52. The same shell can fail at one thickness and work at others: crop −13.9 failed at 1.9 and 1.95 and worked at 0.72 and
+    4.1…7.3; crop −14.6 worked at 1.9 (c1b5). Move the crop or the thickness before changing the design.
+53. 85 TemporaryBRep booleans against big bodies (LCD STEP, door) + 180 rays took 212 s (c1c); bbox-prefilter (lesson 32).
+54. After an orthographic shot, a perspective close-up with isFitView False kept the old extents and came out empty
+    (c1g); for close-ups use an orthographic camera and set `camera.viewExtents` explicitly (c1g2: 11 ≈ 100 mm wide).
+55. Order matters when a cut and an addition overlap: c1d cut the spline groove before adding the posts, so the post webs
+    partly filled it. Cut functional voids last, and look at sections through every added feature before the fillets –
+    a 2-D check of four planes (c1f) found what the volume gates could not.
+56. Edge selection by "neighbour face leans outward" also matched the groove's inner wall (it leans with the outer wall):
+    classify fillet edges by position as well (point containment in an offset band, c1e4).
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -608,3 +636,38 @@ Open from block 6 (after B6w):
    (0.7 assumed – it sets the 1.7 face gap); weigh the estimated components (tipping moves with them).
 3. Cloth: dark grey F1 knit; contact adhesive on the wrapped end faces; at the floor the front cloth ends on the hard rim
    behind the joint.
+
+## Cap block c1 – step 1 checkpoint (2026-11-05)
+Daniel 13:31: "Make the top piece a cap that gets screwed onto the top so it acts as a clamp for the fabric so it can be
+pulled tight. There should be a way to hold the fabric in place while the cap is being tightened down"; 13:51 "1. A 2. A
+3. a": spline groove in the ledge (1 A), countersunk M3 from the top (2 A), joint ≈ 3 mm behind the display's top-back
+edge, slot face and display ring on the front shell (3 a). Step 1 (this) = split, ledge, holding feature, lip, posts,
+screws; step 2 = sensors into the cap, checks, renders, version, STEP. Saved as "rev F WIP 2026-11-05 c1 step 1: …".
+- Joint: the front shell keeps y ≥ −22.5 above z 175.3 (3.0 behind the slab's back face y −19.5, where the old top
+  groove ended); cap face y −22.6 (0.1 gap). Split at z 175.3 within 7.3 of the outer surface, at z 174.0 further in (the
+  four mic heat-stake pins, down to z 174.8, stay on the cap).
+- Ledge (front shell): top z 175.3 from the cloth surface (0.7 inside the outer surface) to 5.2 inward; flange 0.72…5.9
+  inside the outer surface, z 171.8–175.3, two 0.9 steps under it (5.0 at z 170.95–171.8, 4.1 at z 170.1–170.95, ≈ 45°).
+  Outer edge R0.8 (the cloth turns over it), clamp strip 1.2 wide with 0.32 flat at the back.
+- Spline groove: 1.2…4.0 inside the cloth surface (2.8 wide), floor z 172.8 (2.5 deep), walls parallel to the outer wall
+  (≈ 22° lean at the back), both top edges R0.3, y < −22.5 (ends closed by the front shell). Ø1.8 TPU 95A spline: 0.7 cloth
+  each side leaves 1.4 → 0.4 interference.
+- Cap (HOUSING_F_cap, 8.94 cm³): the old top above the split; within 7.3 of the outer surface below z 177.2 rebuilt from
+  REF (bottom face z 175.8 = 0.5 over the ledge: 0.7 cloth squeezed to 0.5; old groove filled); lip 6.1…7.3 inside the
+  outer surface (1.2 thick, 0.2 off the flange), z 173.3–175.8; notch r 4.2 round each post.
+- Screws: 4 × ISO 10642 M3 × 8 from the top, Ø3.4 + 90° countersink Ø6.9 (head dk ≤ 6.72 → ≥ 0.09 below flush on the flat
+  top z 180), Ruthex M3 in Ø4.0 × 6.0 holes, 5.5 mm of thread in the insert (tip z 172.0, hole floor 171.5). Posts Ø8
+  z 170.5–177.5 (top = cap plate underside, so the posts set the 0.5 clamp gap), 45° cone to Ø2 at z 167.5, rib 2.0 with
+  a 55° lower edge: FL/FR (±58.4, −27.0) into the front bar (ends z 162.8) with a web z 170.5–173.1; BL/BR (±28.0, −38.1)
+  to the back wall (ends z 158.9) with a web to the flange z 171.8–173.1, under the lip.
+- Exhaust: the upper row (z 171.5–174.5) sat where the ledge goes – filled by the flange (0.02 left at its outer face);
+  new row z 162.5–165.5 (x ±45; 1.16 above the root band at x 0). Lower row z 167.0–170.0 unchanged. 540 mm² less the two
+  BL/BR ribs crossing both rows (4 × 2.0 × 3 = 24 mm²) → 516 mm².
+- Volumes: front 240.888 → 235.655 cm³, cap 8.942, together +3.709 (flange, posts, rim, lip − groove). Printed parts ASA
+  1.05 / PETG 1.27: front 247.4 / 299.3 g, cap 9.4 / 11.4 g.
+- Checks: 1 lump each, no duplicate names; front ∩ cap, front ∩ door, cap ∩ door 0; post tops 177.5 = cap plate underside
+  at all four; sections S1–S4 (c1f) as drawn in the checkpoint pictures.
+- Open for step 2: VEML_env (x 38.5–53.5, y −23.5…−38.5, z 172.3–178.3) intersects the cap's rim / lip (164.8 mm³) and the
+  front flange (43.7 mm³) in the +x rear corner – move it; mic pockets start 0.7 behind the cap face (y −23.3); sensor
+  pockets / ports / pins on the cap, leads with the cap off; cloth bodies for the new top edge; full matrix, renders,
+  version, STEP. MIC strips / KO_mic ∩ cap 9.16 / 8.65 mm³ are the pocket overlaps the front shell had before.
