@@ -86,12 +86,33 @@ def sample(m, da):
     return np.concatenate(pts), np.concatenate(nrm), np.concatenate(wts)
 
 
-def rays_first(m, org, d, chunk=15000):
-    """Distance to the first hit for each ray (inf on a miss), in chunks to bound memory."""
+def rays_first(m, org, d, chunk=4000, tmax=None):
+    """Distance to the first hit for each ray (inf on a miss). With tmax the rays are segments: candidate triangles come
+    from the r-tree of triangle bounds against each segment's box, then a vectorised Moller-Trumbore test."""
     t = np.full(len(org), np.inf)
+    if tmax is None:
+        for i in range(0, len(org), chunk):
+            loc, iray, itri = m.ray.intersects_location(org[i:i + chunk], d[i:i + chunk], multiple_hits=False)
+            t[i + iray] = np.linalg.norm(loc - org[i + iray], axis=1)
+        return t
+    tree = m.triangles_tree; T = m.triangles
+    end = org + d * tmax; lo = np.minimum(org, end); hi = np.maximum(org, end)
     for i in range(0, len(org), chunk):
-        loc, iray, itri = m.ray.intersects_location(org[i:i + chunk], d[i:i + chunk], multiple_hits=False)
-        t[i + iray] = np.linalg.norm(loc - org[i + iray], axis=1)
+        ri = []; ti = []
+        for k in range(i, min(i + chunk, len(org))):
+            c = list(tree.intersection((lo[k, 0], lo[k, 1], lo[k, 2], hi[k, 0], hi[k, 1], hi[k, 2])))
+            ri.extend([k] * len(c)); ti.extend(c)
+        if not ri:
+            continue
+        ri = np.array(ri); ti = np.array(ti)
+        v0 = T[ti, 0]; e1 = T[ti, 1] - v0; e2 = T[ti, 2] - v0; D = d[ri]; O = org[ri]
+        pv = np.cross(D, e2); det = (e1 * pv).sum(1)
+        ok = np.abs(det) > 1e-12
+        inv = np.where(ok, 1.0 / np.where(ok, det, 1.0), 0.0)
+        tv = O - v0; u = (tv * pv).sum(1) * inv
+        qv = np.cross(tv, e1); v = (D * qv).sum(1) * inv; tt = (e2 * qv).sum(1) * inv
+        hit = ok & (u >= -1e-9) & (v >= -1e-9) & (u + v <= 1 + 1e-9) & (tt > 1e-9) & (tt <= tmax)
+        np.minimum.at(t, ri[hit], tt[hit])
     return t
 
 
@@ -111,7 +132,7 @@ def cmd_thick(part, da, tmax, eps=1e-3, shell=2.45, sub='mesh'):
     t0 = time.time(); m = load(part, sub)
     P, N, W = sample(m, da)
     org = P - eps * N; d = -N
-    t = rays_first(m, org, d) + eps
+    t = rays_first(m, org, d, tmax=tmax) + eps
     np.savez_compressed(os.path.join(DATA, 'thick_%s.npz' % part), P=P.astype(np.float32), N=N.astype(np.float32),
                         t=t.astype(np.float32), W=W.astype(np.float32))
     res = {'part': part, 'samples': int(len(P)), 'area': round(float(W.sum()), 1), 'miss': int(np.isinf(t).sum()),
@@ -146,7 +167,7 @@ def cmd_overhang(part, U, deg):
     A = m.area_faces
     C = m.triangles_center[s]
     # where a vertical drop (−U) from each overhang face centre lands: on the part (distance) or on the bed
-    drop = rays_first(m, C - 1e-3 * U, np.tile(-U, (len(C), 1)))
+    drop = rays_first(m, C - 1e-3 * U, np.tile(-U, (len(C), 1)), tmax=float(h.max() - h0) + 1.0)
     on_part = np.isfinite(drop)
     cl = clusters(C, (C @ U) - h0, cell=1.0, top=80)
     # per cluster: area and how much of it drops onto the part
