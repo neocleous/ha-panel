@@ -5,7 +5,7 @@ Independent read-only audit of **"HA Panel v5 - tapered"**, version 23 ("rev F W
 
 - **Read-only.** Every Fusion script runs with `readOnly: true` and works on TemporaryBRep copies; it starts with the
   guard in `v5f_audit_common.py` (printed-part volumes, 214 bodies, document unmodified, no `AUDIT_tmp_` bodies). Nothing
-  was created, edited, saved or versioned. End state (a6b, 2026-11-06 00:38): guards unchanged, 214 bodies, version 23 =
+  was created, edited, saved or versioned. End state (a6b, 2026-11-06 00:34:58): guards unchanged, 214 bodies, version 23 =
   latest, unmodified, visible list = start, no `AUDIT_tmp_` bodies, the exploded-view document unmodified and active again
   as found.
 - **Log:** `~/Documents/v5f_audit_log.json` (the design log `~/Documents/v5f_log.json` is not written).
