@@ -213,6 +213,13 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_d14b_hatch_checks.py` | d | read-only: box air, SPKBOX_R's added material vs its old chamber air, the bore's head path, the card's way out and back, the tweezers' zones, the sled's path | chambers R 117.424 / 85.527 (was 118.131 / 86.235), L 117.690 / 86.099, both sealed; added 333.37 mm³, 0.0 outside the old chamber air (outer shape and insertion path unchanged); Ø5.5 head path 0; card out sideways and down: only the cover (404.8 mm³, it closes the slot); tweezers zones free; sled + card (up 8, push 14.75) 0 except the sled's 0.35 over-travel into the seated card (2.49 mm³ at 14.75) |
 | `v5f_d14c_matrix.py` | d | read-only: d7a's matrix on the pairs with SPKBOX_R, the front or HATCH_COVER (d12's list + the cover) | 102 pairs, 4 non-zero, all as in d7 / d12 (SPK_R ∩ box 66.99, touch PCB ∩ front 3.16, box ∩ LEAD_SPK_R 0.97, front ∩ top foam 1.16); the cover 0 with every part |
 | `v5f_d14d_save_export.py` | d | version, f3d, STEP of the changed parts (front, SPKBOX_R) and the new cover and sled | "rev F WIP 2026-11-06 d14 …" saved; `revF-d14.f3d`; STEP front / spkbox_R / hatch_cover / sd_sled |
+| `v5f_d15a_ext_probe.py` | d | read-only: Daniel 19:44 (the hatch is not usable): extender route to a fingertip push-push socket – plug pocket widened for an 8 × 18 stiffener, flex under / behind the right box, socket zones at the back | plug pocket +0.87 cm³ chamber air, Ø40 basket envelope 45 mm³; flex under the box free; the back-right corner is too tight for a socket (door wall 8–14 behind the box) and the back face at floor level is full (bracket feet, Pi power plug, cradle, door bosses). Not taken |
+| `v5f_d16a_finger_notch.py`, `v5f_d16d_box_reraise.py` | d | Daniel 19:52 / 19:58: finger notch, no extender, the box made taller. SPKBOX_R rebuilt from `SPKBOX_R_d14`: finger channel x_rel −64.0…−45.9 from the rear face to y −31.0, up to z 16.0, open at the bottom and toward the Pi, + card slot x_rel −61.3…−45.9, y −36.2…−23.6, to z 8.5 (walls 1.5 = W ∩ the old chamber air; the lower bore a sealed tube from y −31 forward); top +6 mm (copies of the top 6 mm, outer and air, clipped to TOOL_cav_1p2 / _2p7_slide) except over x_rel ≤ −56.9 at y −60…−24, the LCD lane strip and y > −10 – d16a's wider raise hit RESP_CARRIER (42 inboard, lift 6) and the BME680 tray (sideways move) in the B5j-3 sweep; d16d with the channel ending at y −30 touched the Ø40 basket envelope by 42 mm³, so it ends at y −31. Front back to `HOUSING_F_front_d14` without the right floor tie bridge (in the finger's way); HATCH_COVER, SD_SLED → `*_d16` | SPKBOX_R 25.6435 → 26.3874 cm³ (old states `SPKBOX_R_d16`, `_d16a`, `_d16d`), front 235.3238 → 235.2295 (bridge −94.3 mm³); chamber R 118.066 / 86.171 (was 118.131 / 86.235), sealed; Ø5.5 head path 0; 10 / 10 probes |
+| `v5f_d16b_notch_checks.py`, `v5f_d16c_matrix.py` | d | read-only: the finger's way in (between the bracket post and the lip, along the channel to its front wall `CY1`, at the card's end), its clear width (rays along ±x from x_rel −61 at 7 stations behind the box × 8 heights, every part but the door), the card's way out, the cooler exhaust window; changed-pairs matrix; B5j-3 sweep with `v5f_d_sweep.py` | way in 15.0–16.1 wide at y −62.3 between the shell's back corner and the bracket column (z 8.5–25), 17.7–19.6 at y −59, ≥ 21 from y −56.5 in; the column and foot stand behind the channel's inboard half (d16 checkpoint, Blocked); channel and grip-end zones free; card out free; exhaust window ∩ box 0; B5j-3 237 steps 0; matrix 99 pairs, 4 non-zero: 3 as in d7 / d12, SPK_R ∩ box 66.99 → 68.66 (the card slot's wall corner vs the Ø40 envelope) |
+| `v5f_d16e_save_export.py` | d | version, f3d, STEP front / spkbox_R | see the d16 checkpoint |
+| `v5f_d16f_bridge_fin.py` | d | d16b's entry zone found a 0.1 × 4.0 × 5.4 fin on the floor: d16a cut the tie bridge to x_rel −61.7, it ran to −61.8 (d14: x −61.8…−55.2). Front minus x −62.0…−61.5 over the bridge's y / z; old state → `HOUSING_F_front_d16f` | front 235.2295 → 235.2273 (−2.18 mm³), 1 lump; no lump above the floor round the bridge; 4 / 4 probes |
+| `v5f_d16g_save_export.py` | d | version d16f, f3d (replaces revF-d16.f3d), STEP front | see the d16 checkpoint |
+| `v5f_d0_sections.py` (d16h: planes set by the loader) | d | read-only: plans z 7 / 12 / 16, sections x_rel −55, y −33 / −58 / −62.3; floor plans z 0.3 / 1.2 / 4 and z 30 / 38 round the right-back corner | the bracket's right column and foot stand behind the channel's inboard half (d16 checkpoint, Blocked); floor solid, no holes, at (−66, −57.5); the speaker lead runs at z 28–41 |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -401,6 +408,13 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     d10b / d10c copies were still the first drafts at close-out): compare the Mac file's size with the local one before running.
 73. A part added to a wall must clear the other parts' insertion paths, not only their installed state: the BME680 tray
     passed the matrix but sat in the right box's B5j-3 path (lift 6).
+74. Cut a feature away with a box taken from the feature's own bounding box in the old body, grown 0.2, then list the
+    region's lumps: d16a's hand-placed box stopped 0.1 short of the floor tie bridge's end and left a 0.1 mm fin.
+75. A script's module-level names share the helpers' namespace: d16b's station list `WY` replaced v5f_common's world +y
+    vector and every box failed. Keep WX / WY / WZ, C, S, H, XC and the helper names free.
+76. Empty zones are not a path. d16b's finger zones (way in, channel, grip end) were each clear, but no straight finger
+    joins them: the bracket column stands behind the channel's inboard half. Check access with the finger's (or tool's)
+    own solid along its line, and look at a plan section before calling a way in usable.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -884,3 +898,29 @@ tunnel and extender channel not taken, the Pi on its edge does not fit – d13b)
 - Bench: card out with tweezers in one pull 5 / 5; sled refit seats and boots 5 / 5; the cover's catches hold it and it
   comes off by the notch 5 / 5 (beams 0.7 × 10, catch 0.25 over the floor's edge – trim on the print if needed).
 - Hidden copies: `SPKBOX_R_d14`, `HOUSING_F_front_d14`; tools `TOOL_sd_walls`, `TOOL_sd_pocket`, `TOOL_sd_slot`.
+
+## microSD finger notch – d16 (2026-11-06)
+Daniel 19:44: the floor hatch (d14) is not usable in practice – removed. 19:52: make the speaker box taller to win back the
+air; 19:58: finger notch, no extender. Versions "rev F WIP 2026-11-06 d16 …" and "… d16f …" (the bridge's fin).
+- Intended service (does not work as built, see Blocked): door off (4 × M3 from below); a finger in behind the right box,
+  along the channel to the card's end (17 mm in from the box's rear face); hook the card's 1.0 grip end with a fingernail
+  and pull it 15.4 toward −x into the card slot; draw it back through the channel. Refit: lay the card in the slot and
+  push it home with a fingertip. Full card speed, no extender.
+- SPKBOX_R: channel + card slot in its inboard-bottom-rear corner; top +6 mm outside the BME680 tray's path, the LCD lane
+  strip and the front 10 mm; chamber R lower bound 86.171 cm³ (was 86.235; floor 81.6). The lower screw is driven through
+  the channel into the bore's mouth at y −31. The cooler exhaust window (z 13.6–23.1) now partly faces the channel
+  (open to the back) below z 16.
+- **Blocked (d16b re-run, d16h sections):** the main-board bracket's right column (x_rel −53.5…−47.5, y −62.5…−58.5,
+  z 8–84.5) and foot (Ø8 at −49.5 / −58.0, z 2.5–11) stand behind the channel's inboard half. A straight finger must pass
+  outboard of them (15.0–16.1 to the shell's back corner at y −62.3, z 8.5–25) and then reach x −45.5 at y −33 inside the
+  18.1-wide channel: no finger 12 wide or more can do both. Open: Daniel to choose – crank the column (foot screw to
+  about (−66, −57.5), lower column outboard, back to the column above z 17), re-image in place over USB-C (RPIBOOT), or both.
+- Front: solid floor again; the right floor tie bridge is gone (it stood in the finger's way; d16f took its last 0.1 mm)
+  – re-place it only if a lead needs it.
+- Checks: d16b / d16c rows; B5j-3 path 0; matrix as before except SPK_R ∩ box +1.67 mm³.
+- Volumes (cm³): front 235.2273, SPKBOX_R 26.3874; the rest as in d12. HATCH_COVER / SD_SLED hidden (`*_d16`); their
+  d14 STEP files are obsolete.
+- Exports: `~/Documents/HA_v5f_spkbox_R.step` (d16), `HA_v5f_front.step` (d16f), world frame; `~/Documents/HA Panel v5 -
+  tapered revF-d16.f3d` (d16f).
+- Hidden copies: `SPKBOX_R_d16`, `_d16a`, `_d16d`; `HOUSING_F_front_d16`, `_d16f`; `HATCH_COVER_d16`, `SD_SLED_d16`.
+- Bench (once the way in is fixed): card out and back by finger, 5 / 5; the lower screw driven through the channel.
