@@ -227,6 +227,12 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_d17e_leg.py` | d | the leg 5.5 × 4.5 → 5.5 × 6.5 (y −60.5…−54.0) over z 10.5–21: twice the old column's bending section about x | bracket 6.1301 → 6.2403 cm³; 2.0 behind the box's rear face; ∩ parts unchanged; d17c, the sweeps and the matrix re-run on it |
 | `v5f_d17g_save_export.py` | d | version d17, f3d, STEP front / main_bracket | see the d17 checkpoint |
 | `v5f_d18a_exploded_prints.py` | d | read-only (a temporary document, closed unsaved): Daniel 21:33 "exploded view of the individual prints" – the 14 printed parts as of d17 (the bracket halves separate) exploded along y in assembly order, offsets picked with a bounding-box occlusion check so none hides another from 15° behind the right side, 35° up; rendered at twice the viewport with each print's centroid and projected box for the labels, then each print alone (fit view). Labels and the parts sheet composed off-line | `~/Documents/HA_panel_renders/HA_v5f_d17_prints_{exploded,sheet}.png`; 14 prints, 450 g of ASA as solid volume |
+| `v5f_d19a_print_assess.py` | d | read-only: Daniel 21:49 "assess these parts for printability". B6o's method for the 14 prints (the bracket halves split by x) over 8 build directions: faces more than 45° down need support, the bed's own faces excluded; flat ceilings (within 11° of down); for the best and the +z direction the support faces joined into regions (shared mesh nodes) with area, world box and mean angle. Re-run after d19d | in each print's B6o orientation (mm²): front 11 506, cap 295 (top face down; 3 060 as fitted), slab 2 392 (on its side), carrier 0, door 285, grommet 241, 5807 cradle 170, bracket L 152 → 122 and R 278 → 245 after d19d, BME680 hood 34, boxes L 1 975 / R 2 592, clips 8 |
+| `v5f_d19b_fix_probe.py` | d | read-only: room under the LD2410C cradle's floor and under the bracket's lower arms – candidate boxes vs every part (the door included), the right box's B5j-3 path inside the cradle's box; the front sliced round the cradle | under the cradle only the BME680 items (y ≤ −25.37); under the arms only the bracket; the right box's path stays out of the cradle's box. The slices failed (ASM_BODY_VERTEX_CRUMBLE on 0.1 slices of the cropped front) |
+| `v5f_d19c_fix_probe2.py` | d | read-only: two rib slabs under the cradle's floor (y −24.5…−22.5, −11…−9) vs every part and keep-out, the side wall's inner face in them per height; the bracket's gusset boxes vs every part; the cap top face down by region | rib slabs free; inner face x −88.83 at z 86 to −85.41 at z 114.1 (y −23.5); gusset boxes meet only the bracket's own arm (64.47 mm³); cap: one 163 mm² region (the top face's edge round, its first 0.9 mm) and pocket steps of ≤ 10 mm² |
+| `v5f_d19d_print_fixes.py` | d | (A, checked, not applied) a 2.0 rib with a 46° underside under the cradle's floor, from the side wall (1.0 into it, plane fitted to the measured inner face) to the floor's free edge, at y0 −24.5…−17.0, vs every part and keep-out, the BME680 board's and hood's paths (along −w, here from 14 out), the LD2410C's (run 26) and the right box's top on B5j-3. (B, applied) a 46° gusset under each lower board-boss arm (z 33.5) over the column's y range −62.5…−58.5, from 0.5 inside the column to x ±38.0, up to z 35.7 (MAIN_front_env starts at 35.8), minus the Ø4.0 insert hole; the added material (new minus old) checked at rest, on the half's own path (runs 17 / 18), the main board's (19), the Pi adapter's (27) and the door's (31) | A: the floor is a pad turned 31° with the module, joined to the side wall only at y −26.5…−21 and to the front wall at its front corner; ribs at y0 −24.5 / −23.0 / −21.5 meet BME_HOOD on its way in from 1.0 / 3.5 / 6.0 mm out (≤ 2.89 mm³); −20.0 and −18.5 clear everything but leave the floor's back half (≈ 160 mm²) and its tall support: not applied. B: +158.0 mm³ a side, 1 lump each, 0 with every part and on every path (the door never reaches them); MAIN_BRACKET 6.2403 → 6.5563 cm³, 2 lumps; old → `MAIN_BRACKET_d19`; 16 / 16 probes |
+| `v5f_d19e_front_regions.py`, `v5f_d0_sections.py` (d19f planes) | d | read-only: every support region (≥ 2 mm²) of the front floor down and of the cap, door, 5807 cradle, boxes, carrier and hood in their orientations; sections and plans round the cap seat (z 150–182), the LD2410C cradle and the front's bottom edge | front: 550 regions, 11 497 mm²; 49 of ≥ 30 mm² hold 9 610: cloth recess 1 757, bottom edge 725 + 2 × 231 + 2 × 55, under-slab groove 659 + 426, slab ledges 499 + 468 + 107 + 49, rear rim 647, cradle floor 329, BME680 tray 305 + 32 (45° faces and the 1.2 flat at the wall's foot), cap seat, its four screw lobes and the vent bars (z 160–172) ≈ 1 400 – ledges on the back wall's top and bridges of 9–17 mm between the vent ribs –, four Ø13 recesses at z 0.5 (4 × 129); 501 regions under 30 mm² hold 1 887 |
+| `v5f_d19g_save_export.py` | d | version d19, f3d, STEP main_bracket | see the d19 checkpoint |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -425,6 +431,11 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     own solid along its line, and look at a plan section before calling a way in usable.
 77. Loaders read scripts with `open(path, encoding='utf-8')`: a plain `open()` failed on the en dash in v5f_d_sweep.py's
     header (ascii codec) in the MCP's Python although other scripts with non-ASCII comments had passed.
+78. A face drawn at exactly 45° sits on the support test's threshold (n·U = −0.7071): mesh normals fall on both sides of
+    it and the count depends on noise. Draw faces meant to print without support at 46°.
+79. A sweep's MOVE_CROP must still hold the whole moving piece after its shape changes: run 18's crop (x_rel −60…−30) cut
+    off d17's leg (to −69) and the right box and the Pi dropped out of the swept region. Crop the right half at −72…−30
+    and compare `fixed_in_region` with the last run's.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -958,3 +969,32 @@ Daniel 21:00: crank the main-board bracket's right column (d16's finger channel 
 - Hidden copies: `MAIN_BRACKET_d17`, `MAIN_BRACKET_d17e`, `HOUSING_F_front_d17`.
 - Bench: card out and back by finger, 5 / 5, door off; the right box's lower screw driven through the channel; the foot
   screw from below; support under the knee.
+
+## Printability – d19 (2026-11-06)
+Daniel 21:49: assess the prints for printability and change what helps without touching function or looks. Version "rev F
+WIP 2026-11-06 d19 …".
+- Support area per print in its B6o orientation (faces more than 45° down, the bed excluded), mm²: front floor down 11 506;
+  cap top face down 295 (3 060 as fitted); slab on its side 2 392 (glass side down 4 761); carrier 0; door 285; grommet
+  flange down 241; 5807 cradle 170; bracket L 152 → 122, R 278 → 245; BME680 hood 34; boxes L 1 975, R 2 592 (1 735 of each
+  is the chamber's ceiling inside); clips 8.
+- Done: MAIN_BRACKET, both halves – a 46° gusset under each lower board-boss arm, the column's width, from the column to
+  x ±38.0 and up to z 35.7 under the boss; the Ø4.0 insert hole as it was. The arms print upright without support (they
+  stood 31 mm over the bed); the 0.8–0.9 strips of arm beside the gusset print as short overhangs.
+- Not changed:
+  - LD2410C cradle floor (329 mm², support from z 2.5 floor down): the BME680 hood slides in under its back half; ribs
+    behind y −20 block it (d19d A), ribs in front of it leave the back half and the tall support.
+  - Upper board-boss arms (z 76.5): MAIN_front_env fills the space under them; their support can stand on the lower arm.
+  - The right half's knee (z 21, 106 mm², d17): the finger's way to the microSD runs under it.
+  - The right box's raised top (steps at y −24 outside, −11.5 inside): a chamfer behind y −24 would rise into the 1.0 the
+    BME680 tray keeps over the box's top on the B5j-3 path (d12a); inside, the box needs supports for its chamber ceiling
+    anyway.
+  - Cloth recess, bottom edge, under-slab groove, slab ledges, rear rim: outer or interface faces set by earlier decisions.
+- Print notes: tree supports from the second nozzle; "don't support bridges" on, so the vent bars and the cap seat's spans
+  between the vent ribs (9–17 mm) print as bridges and do not stand on 160 mm towers. Supports that remain inside: the
+  front's cradle floor; on the bracket the right half's knee and the upper arms (those can stand on the lower arms).
+- Checks: d19d's added material ∩ every part 0, on the half's own path (65 steps each), the main board's (81) and the Pi
+  adapter's (31) 0, the door never reaches it; full-body sweeps runs 17 / 18 0 (65 steps each); d17c finger solid and both
+  drivers 0; matrix for the bracket 27 pairs, 1 as before (MAIN_front_env 724.91).
+- Volumes (cm³): MAIN_BRACKET 6.5563 (2 lumps); the rest as in d17.
+- Exports: `~/Documents/HA_v5f_main_bracket.step` (world frame), `~/Documents/HA Panel v5 - tapered revF-d19.f3d` (93.3 MB).
+- Hidden copies: `MAIN_BRACKET_d19`.
