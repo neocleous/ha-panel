@@ -208,6 +208,11 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_d12b_matrix.py` | d | read-only: d7a's matrix on the pairs with a changed body (d7's list + BME_HOOD and the two foam envelopes) | 140 pairs, 13 non-zero: as in d7 except 3 designed (foam ∩ top foam 19.95, front ∩ top foam 1.16, VEML_env ∩ LEAD_VEML 15.55 → 18.73) and 2 gone (BME680_env ∩ LEAD_BME680 2.22, BME680_env ∩ front 0.16) |
 | `v5f_d12c_save_export.py` | d | version, f3d, STEP of the changed parts (front, cap) and the new BME_HOOD (d7d's method) | "rev F WIP 2026-11-06 d12 …" saved; `revF-d12.f3d` 82.8 MB; STEP front / cap / bme_hood, 1 lump each |
 | `v5f_d13a_sd_options.py` | d | read-only: microSD access (Daniel 18:00: required) – card geometry, both chambers, trial regions vs the part list and the chamber air: floor hatch, rear tunnel, extender channel, socket / reader zones, a second USB-A plug | card x_rel −44.85…−29.45, z 6.71–7.41 (grip end 6.41–7.41 over the outer 1.72, nothing below it); chamber air lost (R lower bound 86.24): hatch pocket 0.71, rear tunnel 1.29, extender channel 3.65 (+ basket envelope 97 mm³); rear exit blocked by the bracket foot (37.7 mm³) and the tie bridge (22.7); second USB-A plug ∩ +x box 461, ∩ basket envelope 191 |
+| `v5f_d13b_pi_upright.py` | d | read-only: Daniel 19:08 – the Pi stood on its short edge against either box (envelope 90 × 58 × 20 from PI5_F) | needs z 3–93, the ReSpeaker carrier starts at z 84; overlaps MAIN_front_env by 24.5 cm³ on either side, plus a touch clip, the LCD lane keep-out (right) and the DSI / GPIO / sensor leads; the cooler blows out of the SD end – into the ReSpeaker (card up) or the floor 3 mm away (card down). Not taken |
+| `v5f_d14a_sd_hatch.py` | d | microSD floor hatch (option 1, Daniel 19:22): SPKBOX_R + walls (1.5, inside the old chamber air, r 3.15 kept clear round the lower bore) − pocket x_rel −61.0…−45.9, y −36.2…−23.6, z 3.0…8.0 (open toward the Pi and downward; opens the bore's bottom: a 4.3 slot at z 8.0, the Ø5.5 head can't drop in); front − 17.7 × 13.0 slot through the floor − 0.8 underside rebate; HATCH_COVER (flange flush with the underside, plug, two 10 mm side beams with 45° / 45° catches seating on the floor's top in the 1.2 gap under the box, fingernail notch); SD_SLED (hidden service tool: shoulder on the underside, stem, platform at z 6.41, back-stop) | SPKBOX_R 25.6435 → 25.5694, front 235.3238 → 234.7010 (−622.8 mm³ = slot + rebate, floor solid there), cover 0.5860, sled 1.1956 cm³; 1 lump each; 14 / 14 probes; old → `*_d14`, tools `TOOL_sd_*` hidden |
+| `v5f_d14b_hatch_checks.py` | d | read-only: box air, SPKBOX_R's added material vs its old chamber air, the bore's head path, the card's way out and back, the tweezers' zones, the sled's path | chambers R 117.424 / 85.527 (was 118.131 / 86.235), L 117.690 / 86.099, both sealed; added 333.37 mm³, 0.0 outside the old chamber air (outer shape and insertion path unchanged); Ø5.5 head path 0; card out sideways and down: only the cover (404.8 mm³, it closes the slot); tweezers zones free; sled + card (up 8, push 14.75) 0 except the sled's 0.35 over-travel into the seated card (2.49 mm³ at 14.75) |
+| `v5f_d14c_matrix.py` | d | read-only: d7a's matrix on the pairs with SPKBOX_R, the front or HATCH_COVER (d12's list + the cover) | 102 pairs, 4 non-zero, all as in d7 / d12 (SPK_R ∩ box 66.99, touch PCB ∩ front 3.16, box ∩ LEAD_SPK_R 0.97, front ∩ top foam 1.16); the cover 0 with every part |
+| `v5f_d14d_save_export.py` | d | version, f3d, STEP of the changed parts (front, SPKBOX_R) and the new cover and sled | "rev F WIP 2026-11-06 d14 …" saved; `revF-d14.f3d`; STEP front / spkbox_R / hatch_cover / sd_sled |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -371,6 +376,8 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     point 2.4 inside REF – REF surface found by containment bisection, c2d run 2), not by rays from the interior (c2d run 1).
 62. Fusion's Python globals persist between MCP runs, `run` included: a snippet that defines no `run()` re-runs the
     previous script's (d4e ran twice; only its guard stopped the second run). Every snippet defines its own `run()`.
+    A loader that execs a script into its own dict and calls it there still defines no global `run()`, so the MCP ran
+    the last global one after it (d12b re-ran after d13a and d13b): the loader's own `run()` execs and calls the script.
 63. Never bind v5f_common's constants (`C`, `S`, `T`, `H`, `XC`) to anything else: d5h's `C = 'CRADLE_5807'` made
     `wy()` / `Dw()` raise, so every edge filter silently found nothing.
 64. The MCP call waits 60 s; a longer script keeps running and finishes. Read its result from the log with a read-only
@@ -860,3 +867,20 @@ watch winder). 18:00: card access is a requirement (V1 needs a full strip-down t
   unless the bench shows more. Dropped: USB card reader (a second side-exit USB-A plug meets the +x box and its basket
   envelope). Bench: VEML pin staking; BME680 real board vs the placeholder; hood fit.
 - Hidden copies: `*_d8`, `*_d9`, `*_d9c`, `*_d9f`, `*_d10`, `*_d12`, `HOUSING_F_front_d12a`; TOOL_lip_end kept hidden.
+
+## microSD floor hatch – d14 (2026-11-06)
+Daniel 18:00: card access is a requirement (V1 needs a full strip-down). 19:22: option 1 as proposed (floor hatch; rear
+tunnel and extender channel not taken, the Pi on its edge does not fit – d13b). Version "rev F WIP 2026-11-06 d14 …".
+- Service: lift the panel or lay it on its side, unclip HATCH_COVER (fingernail notch), grip the card's 1.0 grip end
+  (x_rel −44.85…−43.13; free above and below) with angled tweezers, pull it 15.4 toward −x into the pocket; it drops out
+  through the slot. Refit: card on SD_SLED (platform at the socket's height), up through the slot until the shoulder sits
+  on the underside, push 14.4 toward +x (the stem stops at the slot's edge 0.35 later), cover back on.
+- Changed: SPKBOX_R (pocket + walls), front (slot + rebate); new HATCH_COVER (printed, flange down), SD_SLED (printed tool).
+  Door, Pi, boxes' paths, software and the card's speed unchanged.
+- Checks: d14b / d14c rows; chamber R lower bound 85.527 cm³ (floor 81.6).
+- Volumes (cm³): front 234.7010, SPKBOX_R 25.5694, HATCH_COVER 0.5860, SD_SLED 1.1956; the rest as in d12.
+- Exports: `~/Documents/HA_v5f_{front,spkbox_R,hatch_cover,sd_sled}.step` (world frame),
+  `~/Documents/HA Panel v5 - tapered revF-d14.f3d`.
+- Bench: card out with tweezers in one pull 5 / 5; sled refit seats and boots 5 / 5; the cover's catches hold it and it
+  comes off by the notch 5 / 5 (beams 0.7 × 10, catch 0.25 over the floor's edge – trim on the print if needed).
+- Hidden copies: `SPKBOX_R_d14`, `HOUSING_F_front_d14`; tools `TOOL_sd_walls`, `TOOL_sd_pocket`, `TOOL_sd_slot`.
