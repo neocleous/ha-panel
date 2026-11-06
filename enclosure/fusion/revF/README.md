@@ -182,6 +182,23 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_c2h_lip_vertical.py` | c2 | the cap's lip (c1's d-band, leaning with the walls) made vertical: top slice z 175.3–175.85 copied down in 0.5 steps to z 173.3; insertion sweep gate | before: cap lifted 0.75–1.75 ∩ front 13–29 mm³ (the cap could not go on – also true in c1); after 0 at every h 0.1–4.0; cap 9.931 → 9.9147 cm³ (old → `HOUSING_F_cap_c2a`) |
 | `v5f_c2i_front_ribs.py` | c2 | front shell rebuilt from c0 as c2c but SL/SR with one rib along the wall normal on the outer side (the inner lane-aligned rib hung free below z ≈ 167); rib rooting gate; insertion sweep | front 236.7029 (old → `HOUSING_F_front_c2a`); every rib rooted in the wall (16.6–17.8 mm³ below z 166); 107 s |
 | `v5f_x1_exploded_doc.py` | x | separate document **"HA Panel v5 - exploded view (rev F c2)"** (same project folder): 19 components (one per part group), bodies copied at their true positions, explode offsets in the occurrence transforms (cap up 85, display stack along the slab normal 60 / 95 / 135, boxes ±95, speakers ±95 / +60, door −150, grommet −185, 5807 −105, main board and BME680 −60, Pi −85 / −35, feet −25, radar 50 along its normal); colours printed blue-grey, cap orange, boards green, LCD / speakers / feet dark; renders `HA_v5f_c2_exploded_{rear34,front34}.png` | saved; the design model is only read (cloth, leads, keep-outs, tools not copied) |
+| `v5f_d0_sections.py` | d | read-only: section loops for the d-round pictures (PLANES / OUT set per step; variants `v5f_d3c_boxR_sections.py`, `v5f_d4a_inlet_sections.py`) | JSON → plotted off-line |
+| `v5f_d1_bracket_feet.py`, `v5f_d1b_bracket_merge.py` | d | audit 22: bracket screwed from below – front floor bosses at (±49.5, −58.0) removed, Ø3.4 + Ø6.5 × 1.0 c-bore through the floor; MAIN_BRACKET foot bosses Ø8 z 2.5–8.6 with Ruthex M3 holes Ø4.0 z 2.4–9.5, old tab holes plugged; d1b rebuilt the bracket from the pieces the combine had split | front 236.6852 → 236.1819, bracket 4.9002 → 5.3418 cm³ (2 lumps = the L/R prints); bracket halves sweep 0; old → `*_d0`, split pieces → `MAIN_BRACKET_d1split_*` (hidden) |
+| `v5f_d2_boxL_bore.py` | d | audit 27: SPKBOX_L lower screw bore Ø6.2 re-cut y −53…−19 through the B4i USB slot's walls | box 25.6228 → 25.3206; tool line clear 130 mm |
+| `v5f_d3_touch_clips_deflector.py` (+ `d3b`, `d3e`, `d3f`, read-only `d3d` / `d3d2`) | d | audit 24 / Daniel 2a: TOUCH_CLIP_L / R (0.4896 cm³ each) screwed to blocks on the boxes (M3 × 8 self-tapping into Ø2.5 pilots), front tabs / lips cut; audit 36 / 1a: cooler-exhaust deflector pocket on SPKBOX_R's inboard wall (stepped 0.5 ledges, z 13–26.5), its wall closed at the edges (d3e), lower bore re-cut twice (d3b / d3f) | touch PCB tilt-in only the designed seat face; clip paths 0; box chambers L 117.69 / 86.10, R 118.13 / 86.24 cm³ sealed (R lost 2.9: 121.05 / 89.16 before); box paths 0 |
+| `v5f_d4b1_probe.py`, `v5f_d4b2_probe.py` | d | read-only: door / grommet / cradle geometry and trial booleans (stub 7.4 mm³, flange add 61.9 mm³, pin fill = hole 8.62 mm³, web after 0.80) | inputs for d4c |
+| `v5f_d4c_door_grommet_cradle.py` | d | audit 7 (flange 0.4 → 0.85 by lifted slice copies), 8 (RR stub cut, cradle leftover hole filled), 9 (pin holes Ø1.7 at ±13.85, old Ø2.1 filled with the wall profile; grommet pins Ø1.5), 33 (grommet rebuilt: opening to z 30.1 outside the door's outer face, 0.8 collar in the cloth layer, flange to z 33.1), 2 (webs 4 wide between the tangent cradle legs / floor bosses); the door bosses to z 2.5 (undone in d4e) | door 51.101 → 51.2068, grommet 0.4889 → 0.5062, cradle 2.1564 → 2.1709, front → 236.1755; 22 probes ok |
+| `v5f_d4e_boss_pads.py` | d | audit 32 done printably: the door prints on its bottom edge, so the bosses back to z 2.8 and Ø8 × 0.3 pads (z 2.5–2.8) on the floor under them | door 51.1616, front 236.2249; door ∩ front 0 |
+| `v5f_d4f_checks.py`, `v5f_d4g_pin_dimple.py`, `v5f_d4h_save.py` | d | checks (overlaps of every changed region 0; cradle ∩ PD_5807_env 64.71 unchanged); two orphan Ø2.2 × 0.03 recesses removed with DeleteFace (wall + floor) on a copy that then became HOUSING_F_door; version | door 51.1617; grommet / door-band sweeps 30 mm in 0.5: 0 hits; "rev F WIP 2026-11-06 d4" |
+| `v5f_d5a_probe.py`, `v5f_d5c_probe.py`, `v5f_d5d_probe.py` | d | read-only: voids, magnet pockets, Pi bosses, sections (shelf, exhaust rows, floor, door, lip end, BME680 / LD2410C corners), shelf tip extent, lip lower edge per x | inputs for d5b / d5e / d5g |
+| `v5f_d5b_front_small.py` | d | audit 1 (two speaker-bore voids filled exactly), 3 (10 magnet pocket floors +0.2: skin 0.49 on the axis, pocket 1.6), 14 (Pi seats Ø6.8, rear hole skins 1.5) | front 236.2249 → 236.3673; seats ∩ Pi 0 |
+| `v5f_d5e_vents_posts_shelf.py`, `v5f_d5f_save.py` | d | audit 35 / Daniel 1a: intake 100 → 475 × Ø2 on the same grid (1 492 mm²); door: 12 vertical slots 3.0 wide, x_rel −24…42, z 66 to min(110, lip − 6) (1 504 mm²); audit 10: two 1.2 posts per exhaust row (wall profile); audit 6: shelf 0.4 land | front 233.5171, door 47.2694 cm³; hole cut volume exact (375 × 7.854); "rev F WIP 2026-11-06 d5" |
+| `v5f_d5g_ld_ribs.py` | d | audit 40: two heat-stake ribs 1.2 × 6.0 behind the LD2410C's short edges (0.1 clear), staked over its back edges | front 233.5399; module path 4 mm inward 0; ribs ∩ parts 0 |
+| `v5f_d5h_root_fillets.py` | d | audit 13, load-bearing roots: cradle floor bosses R0.8, Pi bosses R0.5, cradle legs R0.8, 5807 posts R0.5, bracket feet R0.8; door boss junctions failed (ASM_ABL_CAP_COMPLEX where they run into the cove) – door unchanged | front 233.5514, cradle 2.1775, bracket 5.3431 |
+| `v5f_d6a_cap_probe.py`, `v5f_d6b_cap_fixes.py`, `v5f_d6c_save.py` | d | audit 1 (cap void filled), 38 (4 seat pads per strip pocket, 0.7 under the plate: gasket 1.0 → 0.7); MIC strip envelopes split strip / gasket | cap 9.9147 → 9.9227; envelopes ∩ cap 7.63 = the pins; "rev F WIP 2026-11-06 d6" |
+| `v5f_d7a_matrix.py` | d | read-only: full matrix on the audit's 83-part list + the two clips (433 pairs) | 76 non-zero: 70 as in the audit, 6 changed by design (pins in the thinner strip envelopes; door ∩ KO_capkey_* smaller where the vent slots cut the door), 0 new, 0 gone |
+| `v5f_d_sweep.py`, `v5f_d_tools.py`, `v5f_d_box_air.py` | d | the audit's a3a / a3b / a5a with a volume guard in place of the audited state | d-round sweeps all 0 (boxes, bracket halves, clips, touch tilt-in, grommet, door band, cradle, cap, LD2410C); strips into the cap: the pins through the strip holes only (as in the audit) |
+| `v5f_d7c_export.py` | d | RENDER_FABRIC_front hidden; version; f3d; STEP per printed part incl. the cap and the clips | see the d-round checkpoint |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -343,6 +360,20 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     front edge, to z ≈ 177.3, hit the new shelf in c2c run 1): probe a containment grid next to new mating faces first.
 61. Oblique ribs in front of a slot look worse from inside than at the wall: measure an opening where it is (mid-wall
     point 2.4 inside REF – REF surface found by containment bisection, c2d run 2), not by rays from the interior (c2d run 1).
+62. Fusion's Python globals persist between MCP runs, `run` included: a snippet that defines no `run()` re-runs the
+    previous script's (d4e ran twice; only its guard stopped the second run). Every snippet defines its own `run()`.
+63. Never bind v5f_common's constants (`C`, `S`, `T`, `H`, `XC`) to anything else: d5h's `C = 'CRADLE_5807'` made
+    `wy()` / `Dw()` raise, so every edge filter silently found nothing.
+64. The MCP call waits 60 s; a longer script keeps running and finishes. Read its result from the log with a read-only
+    snippet (with its own `run()`, lesson 62); never re-send the script.
+65. Concave-edge test: both points p ± 0.03 along (n1 − n2) inside the body. The outward bisector points into air for
+    concave and convex edges alike.
+66. `deleteFaceFeatures` heals a shallow recess only when its floor goes with its wall (wall only →
+    DELETE_FACES_FAILED_TO_FILL_GAP). Try it on a copy, then swap names.
+67. Lengthening a feature below a part's bed face breaks its print orientation (d4c's door bosses): put the extra on the
+    mating part instead (d4e's floor pads). Check B6o's orientation before any change at a bed face.
+68. Fillets whose edges run into a cove or a tangent-blended region fail with ASM_ABL_CAP_COMPLEX (the door boss / rib /
+    wall junctions); boss roots on flat floors and plate undersides work (d5h groups A–E).
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -742,3 +773,42 @@ c2: …".
   `HOUSING_F_front_c2a` / `HOUSING_F_cap_c2a`.
 - Open (step 2): cloth bodies for the new top edge, full interference matrix, STEP export; VEML board size (caliper) – if
   ≤ 13 mm the mic strips can stay 30 long.
+
+## Audit response – d-round (2026-11-06)
+Input: `claude/report-model-audit-2026-11-05.md` (43 findings). Daniel 10:27: decision 1 a (vents ≈ 5× at the floor intake and
+behind the cloth, cooler-exhaust deflector, BME680 in a pocket sealed from the interior air, ASA until a soak test on the
+finished unit passes), 2 a (the speaker boxes hold the touch PCB → two clips screwed to the boxes), 3 (cap SL / SR lanes stay
+at 27.6°, no test: ball-end sockets owned). Versions "rev F WIP 2026-11-06 d3f / d4 / d5 / d6 / d7".
+- Done (finding → change): 1 voids filled (front ×2, cap); 2 webs 4 wide between the tangent cradle legs and floor bosses;
+  3 magnet pocket floors +0.2 (skin 0.49 on the axis, pocket 1.6, faces 1.4 → 1.6); 6 shelf 0.4 land; 7 door flange 0.85;
+  8 RR stub cut, cradle leftover hole filled; 9 grommet pins Ø1.5 in Ø1.7 holes at ±13.85 (web 0.80); 10 two posts per
+  exhaust row (spans 13.0 / 12.4 / 13.0); 13 root fillets at the load-bearing roots (cradle bosses / legs R0.8, Pi bosses
+  R0.5, 5807 posts R0.5, bracket feet R0.8 – door boss junctions not possible, lesson 68); 14 Pi seats Ø6.8, rear hole
+  skins 1.5; 22 bracket screwed from below (ISO 7380 M3 × 8 into Ruthex M3 in new foot bosses); 24 touch-PCB clips;
+  27 +x box lower bore re-cut through the USB slot; 32 0.3 floor pads under the door bosses (not longer bosses, lesson 67);
+  33 grommet opening to z 30.1 (overmold ≤ 12.8 centred, was 6.6) with a cloth collar, flange to z 33.1; 35 intake
+  314 → 1 492 mm², door slots +1 504 mm² (exhaust 492 → ≈ 1 980 mm²: rows 478 after the posts + slots); 36 deflector on SPKBOX_R (chambers 118.13 / 86.24 cm³,
+  sealed); 38 strip seat pads (gasket 1.0 → 0.7); 40 LD2410C heat-stake ribs; 42 RENDER_FABRIC_front hidden, STEP / f3d
+  re-exported (12 parts incl. cap and clips).
+- Thermal re-estimate (audit model, two outlets at z 166 / 88): interior rise 21–26 K with the cloth passing the slot area,
+  24–30 K at half (was 31–43 K); the walls carry about half the 14 W. ASA until the soak test (decision 1 a).
+- Checks: matrix 433 pairs (audit's 83 parts + clips) – 76 non-zero, 70 identical to the audit, 6 changed by design, 0 new,
+  0 gone; sweeps 0: boxes L / R (B5j-3, with the touch PCB and KO), bracket halves, clips, touch tilt-in (seat face only),
+  grommet and door bottom band 30 mm back, cradle, cap 4 mm down, LD2410C 4 mm in; strips into the cap: pins through the
+  strip holes only; tool lines: clip screws 60 free, all four box bores 130 free; box-air seals L 117.69 / 86.10,
+  R 118.13 / 86.24 cm³.
+- Volumes (cm³): front 233.5514, door 47.2694, cap 9.9227, SPKBOX_L 25.6082, SPKBOX_R 25.6435, MAIN_BRACKET 5.3431,
+  CRADLE_5807 2.1775, GROMMET_usbc_F 0.5062, TOUCH_CLIP_L / R 0.4896, SLAB_frame 62.9324, RESP_CARRIER 10.0716.
+- Exports: `~/Documents/HA_v5f_{front,door,cap,slab,spkbox_L,spkbox_R,main_bracket,resp_carrier,cradle_5807,grommet_usbc,
+  touch_clip_L,touch_clip_R}.step` (world frame), `~/Documents/HA Panel v5 - tapered revF-d7.f3d` (75.6 MB).
+- Fasteners changed: door 4 × ISO 7380 M3 × 8 from below (heads 0.65 proud, 5.7 in the insert, tip 0.5 short); bracket
+  2 × ISO 7380 M3 × 8 from below; clips 2 × M3 × 8 self-tapping into Ø2.5 pilots; Pi 4 × M2.5 × 6; main board 4 × M2.5 × 6;
+  5807 and ReSpeaker M2 × 5; M2 inserts → Ruthex M2 × 4 (the XIXIAN OD3.2 don't bite in the Ø3.2 holes); leads cut: mic
+  L / R ≥ 175, VEML ≥ 260, radar ≥ 125.
+- Open, Daniel: BME680 pocket (CJMCU-680 outline / holes unpublished – caliper, or build to the 20 × 15 × 6 placeholder;
+  sensor + slots 4 mm up the wall); lip feather end (station-built end faces, or deburr); microSD extender on the Pi 5 (short
+  extender + bench test / card non-service / box wall outboard); VEML retention (board size). Bench: soak test; staking
+  (grommet pins, LD ribs, strips onto the pads); self-tapping pilots (clips, boxes); K13 path for the LD2410C; cap-insert
+  coupon (finding 34).
+- Hidden copies of every replaced state: `*_d0`, `*_d2`, `*_d4`, `*_d4c`, `*_d4e`, `*_d5a`, `*_d5b`, `*_d5e`, `*_d5h0`,
+  `*_d6`, `MAIN_BRACKET_d1split_*`; nothing deleted except temporary `D*_tmp` tools.
