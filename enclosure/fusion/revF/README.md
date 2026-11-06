@@ -971,8 +971,9 @@ Daniel 21:00: crank the main-board bracket's right column (d16's finger channel 
   screw from below; support under the knee.
 
 ## Printability – d19 (2026-11-06)
-Daniel 21:49: assess the prints for printability and change what helps without touching function or looks. Version "rev F
-WIP 2026-11-06 d19 …".
+Daniel 21:49: assess the prints for printability and change what helps without touching function or looks. 23:17: the cap
+prints top face down (the top takes the plate's texture; the edge round's first 0.9 mm comes out slightly soft). Version
+"rev F WIP 2026-11-06 d19 …".
 - Support area per print in its B6o orientation (faces more than 45° down, the bed excluded), mm²: front floor down 11 506;
   cap top face down 295 (3 060 as fitted); slab on its side 2 392 (glass side down 4 761); carrier 0; door 285; grommet
   flange down 241; 5807 cradle 170; bracket L 152 → 122, R 278 → 245; BME680 hood 34; boxes L 1 975, R 2 592 (1 735 of each
