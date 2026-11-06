@@ -199,6 +199,15 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_d7a_matrix.py` | d | read-only: full matrix on the audit's 83-part list + the two clips (433 pairs) | 76 non-zero: 70 as in the audit, 6 changed by design (pins in the thinner strip envelopes; door ∩ KO_capkey_* smaller where the vent slots cut the door), 0 new, 0 gone |
 | `v5f_d_sweep.py`, `v5f_d_tools.py`, `v5f_d_box_air.py` | d | the audit's a3a / a3b / a5a with a volume guard in place of the audited state | d-round sweeps all 0 (boxes, bracket halves, clips, touch tilt-in, grommet, door band, cradle, cap, LD2410C); strips into the cap: the pins through the strip holes only (as in the audit) |
 | `v5f_d7c_export.py` | d | RENDER_FABRIC_front hidden; version; f3d; STEP per printed part incl. the cap and the clips | see the d-round checkpoint |
+| `v5f_d8a_veml_probe.py`, `v5f_d8b_veml_pins.py` | d | audit 40, Daniel's caliper (board 15.26 × 15.20, Ø2.1 holes 11.0 apart): two Ø1.8 heat-stake pins at x_rel ±5.5, y −28.23 (hole inset 2.13 assumed) inside 1.0 stand-off collars Ø3.2, two 1.0 seat pads at the header-edge corners; board top 1.0 under the pocket ceiling (sensor 0.85), centred on the lux port; VEML_env rebuilt (board 1.6 assumed + sensor + 4 mm jumper band), LEAD_VEML extended to the board | cap 9.9227 → 9.9591; env ∩ cap 0; board up into the cap 0 |
+| `v5f_d9a_bme_probe.py`, `v5f_d9b_lead_probe.py`, `v5f_d9c_bme_cup.py`, `v5f_d9e_bme_tilt_sweep.py` | d | audit 37, decision 1 b (20 × 15 × 6 placeholder): first form, an open-top cup with a lid – the board could not drop in (the wall leans in above the cup; tilted, its face hit the cup's back wall) → replaced, kept hidden (`*_d9c`) | sweeps: straight down 79.9 mm³, tilted 0.5–133 mm³ |
+| `v5f_d9f_bme_tray_hood.py`, `v5f_d9g_bme_groove_hood.py` | d | second form: tray moulded to the wall (floor + 45° underside, side walls 2.4, corner pads, lead slot, pins) + separate hood (back + top plate) | board in along −w 0; hood on 0 against the shell |
+| `v5f_d10a_lip_probe.py`, `v5f_d10b_lip_stations.py`, `v5f_d10c_lip_square_end.py`, `v5f_d10d_lip_end_loft.py` | d | audit 4, decision 2 a: the end curve of the lip's outer face swept along d = (0, 0.957, −0.289) (the band's normal at the top) as a loft tool TOOL_lip_end (kept hidden); only the inner face's overhang goes, the outer lap face keeps its length | knife edges < 30° at the end 1 → 0 (min 58.8°); front −0.548 cm³; d10c (union of 300 station boxes) failed – lesson 69 |
+| `v5f_d11a_sd_probe.py`, `v5f_d11b_sd_space.py` | d | read-only: microSD extender (decision 3 A) – card end, right box, the space behind it | no extender route fits as decided (1.15 to the box wall; the plug rides in with the Pi) – superseded by d13a |
+| `v5f_d12a_bme_up.py` | d | the BME680 tray sat in the right box's B5j-3 path (sideways at lift 6, 72.5 mm³): everything 6 mm further up the wall (+10 from the original), underside clipped at z 83 (1.0 over the box's top in the path), board 0.6 further from the wall; front rebuilt from `_d9` and the lip-end cut re-applied; foam envelopes A13 behind the board, A12 under the hood's top | front 235.3238, BME_HOOD 0.8029 cm³; right box B5j-3 path 0; board in 0 (LEAD_RADAR crosses its path: BME680 first); hood on 0; cap 4 mm down 0; VEML up 0 |
+| `v5f_d12b_matrix.py` | d | read-only: d7a's matrix on the pairs with a changed body (d7's list + BME_HOOD and the two foam envelopes) | 140 pairs, 13 non-zero: as in d7 except 3 designed (foam ∩ top foam 19.95, front ∩ top foam 1.16, VEML_env ∩ LEAD_VEML 15.55 → 18.73) and 2 gone (BME680_env ∩ LEAD_BME680 2.22, BME680_env ∩ front 0.16) |
+| `v5f_d12c_save_export.py` | d | version, f3d, STEP of the changed parts (front, cap) and the new BME_HOOD (d7d's method) | "rev F WIP 2026-11-06 d12 …" saved; `revF-d12.f3d` 82.8 MB; STEP front / cap / bme_hood, 1 lump each |
+| `v5f_d13a_sd_options.py` | d | read-only: microSD access (Daniel 18:00: required) – card geometry, both chambers, trial regions vs the part list and the chamber air: floor hatch, rear tunnel, extender channel, socket / reader zones, a second USB-A plug | card x_rel −44.85…−29.45, z 6.71–7.41 (grip end 6.41–7.41 over the outer 1.72, nothing below it); chamber air lost (R lower bound 86.24): hatch pocket 0.71, rear tunnel 1.29, extender channel 3.65 (+ basket envelope 97 mm³); rear exit blocked by the bracket foot (37.7 mm³) and the tie bridge (22.7); second USB-A plug ∩ +x box 461, ∩ basket envelope 191 |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -374,6 +383,17 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     mating part instead (d4e's floor pads). Check B6o's orientation before any change at a bed face.
 68. Fillets whose edges run into a cove or a tangent-blended region fail with ASM_ABL_CAP_COMPLEX (the door boss / rib /
     wall junctions); boss roots on flat floors and plate undersides work (d5h groups A–E).
+69. A union of hundreds of slightly rotated station boxes (d10c, 300 boxes, tree-wise) ran 7 min and failed with
+    ASM_INCONS_REL. For a swept end face use one loft between two sketch profiles (d10d: 34 s) and keep the tool's faces
+    off the part's existing faces.
+70. A TemporaryBRep boolean with a tool face lying on a part face (d10d's first loft started in the lip's end plane) fails
+    with ASM_INCONS_REL; start the tool 0.5 behind the plane.
+71. A CombineFeature cut can split a sliver off the target as a new visible body `<name> (1)` (d10d: 0.0003 mm³ at the
+    lip's foot). After every combine, list the bodies named `<target> (n)` and hide / rename them.
+72. `device_commit_files` straight after an edit can upload the previous content (d10d ran the old file twice; the Mac's
+    d10b / d10c copies were still the first drafts at close-out): compare the Mac file's size with the local one before running.
+73. A part added to a wall must clear the other parts' insertion paths, not only their installed state: the BME680 tray
+    passed the matrix but sat in the right box's B5j-3 path (lift 6).
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -812,3 +832,31 @@ at 27.6°, no test: ball-end sockets owned). Versions "rev F WIP 2026-11-06 d3f 
   coupon (finding 34).
 - Hidden copies of every replaced state: `*_d0`, `*_d2`, `*_d4`, `*_d4c`, `*_d4e`, `*_d5a`, `*_d5b`, `*_d5e`, `*_d5h0`,
   `*_d6`, `MAIN_BRACKET_d1split_*`; nothing deleted except temporary `D*_tmp` tools.
+
+## Audit response – d8 to d13 (2026-11-06)
+Daniel 16:35: VEML6030 by caliper 15.26 × 15.20, Ø2.1 holes 11 mm apart (no tolerance added); 1 b (BME680 to the
+20 × 15 × 6 placeholder); 2 a (square lip end – feather edges do not print well); 3 A (short microSD extender, as in the
+watch winder). 18:00: card access is a requirement (V1 needs a full strip-down to reach it); three options asked. Version
+"rev F WIP 2026-11-06 d12 …".
+- Done (finding → change): 40 VEML6030: two Ø1.8 heat-stake pins in Ø3.2 × 1.0 stand-off collars + two 1.0 seat pads,
+  board 1.0 under the pocket ceiling, centred on the lux port; 37 BME680: tray moulded to the back-right wall 10 mm up
+  the wall from the placeholder's first spot (underside clipped at z 83, 1.0 over the right box's B5j-3 path) + separate
+  BME_HOOD (back + top plate, Ø2.4 holes over the pins), A13 foam behind the board and A12 under the hood's top, slots
+  moved with it; 4 lip end squared by TOOL_lip_end (the inner face's overhang only, knife edges 1 → 0, min 58.8°).
+- Assembly: the BME680 board and hood before the LD2410C lead is dressed (LEAD_RADAR crosses the board's path); the hood
+  is staked on the tray's pins. VEML6030 onto its two pins in the cap and staked.
+- Checks: right box B5j-3 path 0 (72.5 mm³ with the d9 tray); BME680 board in along −w 0; hood on 0; cap 4 mm down 0;
+  VEML board up 0; changed-pairs matrix 140 pairs, 13 non-zero = d7's except 3 designed and 2 gone (d12b row).
+- Volumes (cm³): front 235.3238, cap 9.9591, BME_HOOD 0.8029; the rest as in the d-round.
+- Exports: `~/Documents/HA_v5f_{front,cap,bme_hood}.step` (world frame; the other parts unchanged since d7),
+  `~/Documents/HA Panel v5 - tapered revF-d12.f3d` (82.8 MB).
+- Lead: BME680 routed 110, cut ≥ 165.
+- Open, Daniel: microSD access (d13a; card in the Pi's slot 1.15 from SPKBOX_R's inboard wall, the slot facing the box):
+  1 floor hatch – pocket in SPKBOX_R's inboard-bottom corner open downward (x_rel −61.0…−46.0, y −36.2…−23.6, to z 8.0,
+  1.5 walls, joins the lower bore) + 17.7 × 13.0 floor slot with a flush cover; the card is pulled 15.4 toward −x and
+  drops out below, door on; chamber R lower bound 86.24 → 85.53. 2 rear tunnel to the box's rear face (→ 84.95), door
+  off; the bracket's right foot and the tie bridge move. 3 extender channel along the Pi's slide (→ 82.59), door off,
+  push-push socket on the box's rear face; the channel's fold corner meets the basket envelope (97 mm³); High Speed only
+  unless the bench shows more. Dropped: USB card reader (a second side-exit USB-A plug meets the +x box and its basket
+  envelope). Bench: VEML pin staking; BME680 real board vs the placeholder; hood fit.
+- Hidden copies: `*_d8`, `*_d9`, `*_d9c`, `*_d9f`, `*_d10`, `*_d12`, `HOUSING_F_front_d12a`; TOOL_lip_end kept hidden.
