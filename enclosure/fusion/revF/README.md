@@ -220,6 +220,12 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_d16f_bridge_fin.py` | d | d16b's entry zone found a 0.1 × 4.0 × 5.4 fin on the floor: d16a cut the tie bridge to x_rel −61.7, it ran to −61.8 (d14: x −61.8…−55.2). Front minus x −62.0…−61.5 over the bridge's y / z; old state → `HOUSING_F_front_d16f` | front 235.2295 → 235.2273 (−2.18 mm³), 1 lump; no lump above the floor round the bridge; 4 / 4 probes |
 | `v5f_d16g_save_export.py` | d | version d16f, f3d (replaces revF-d16.f3d), STEP front | see the d16 checkpoint |
 | `v5f_d0_sections.py` (d16h: planes set by the loader) | d | read-only: plans z 7 / 12 / 16, sections x_rel −55, y −33 / −58 / −62.3; floor plans z 0.3 / 1.2 / 4 and z 30 / 38 round the right-back corner | the bracket's right column and foot stand behind the channel's inboard half (d16 checkpoint, Blocked); floor solid, no holes, at (−66, −57.5); the speaker lead runs at z 28–41 |
+| `v5f_d17a_bracket_probe.py` | d | read-only: Daniel 21:00 – crank the bracket column. The right bracket half per height; the floor round the old foot and the new spot; the shell's and the door's inner faces round the new foot, leg and knee (bars on cropped bodies, not rays: d16b's 112 rays took 10 min) | right half: foot boss Ø8 z 2.5–8.6, tab x −53.5…−46.5 z 8–11, column x −52.5…−46.5 / y −62.5…−58.5 to z 84.5, board-boss arms z 33.5–41.5 and 76.5–84.5; floor top z 2.5 at both feet, 2.55 on the tie bridge's footprint; shell's inner face x −69.0…−66.9 at y −62.5 and −72.9…−69.7 at y −58.5 (z 8–30); the door's bottom flange reaches y −61.4 at x −68 |
+| `v5f_d17b_bracket_crank.py` | d | MAIN_BRACKET's right half: foot, tab and column below z 21 cut (x −54.5…−44.5); new foot boss Ø8 z 2.5–11 with the Ruthex M3 hole Ø4.0 z 2.4–9.5 at (−65.0, −57.0); leg x −67.5…−62.0, y −59.5…−55.0 to z 27; knee x −66.0…−46.5, y −62.5…−55.0, z 21–27 (to −67.5 over the leg); 45° gusset under the knee at the leg (x −62…−58, z 17–21). Front: the old Ø3.4 + Ø6.5 × 1.0 c-bore filled, the same cut at the new axis, the tie bridge's 0.05 base layer cut (d16a / d16f cut from z 2.55; the floor's top is 2.5). At x −65.5 the new c-bore met the joint's underside relief by 0.49 mm³, at −65.0 by 0.26 (below the head's seat) | bracket 5.3431 → 6.1301 cm³, 2 lumps; front 235.2273 → 235.2269 (fill +46.8, hole −46.5, base layer −0.72 mm³), 1 lump; bracket ∩ every part 0 except MAIN_front_env 724.91 (designed, unchanged); 17 / 17 probes |
+| `v5f_d17c_finger_check.py` | d | read-only, lesson 76: a straight finger on the floor (bottom z 2.9), tip at y −33.5 with its inboard edge at x −45.5, stadium sections 13.5 × 11 / 14.5 × 12 / 16 × 13 / 17 × 14 back to y −95, vs every part but the door; the right box's lower-screw driver (Ø6 along y from behind to the bore's mouth) and the new foot screw's driver (Ø6 from below) | before d17b (control): finger ∩ MAIN_BRACKET 445.06 mm³ (foot + column), box driver ∩ bracket 108.9; after d17b and after d17e: 0, 0, 0 |
+| `v5f_d17d_matrix.py` | d | read-only: changed-pairs matrix for MAIN_BRACKET and the front (d16c's method; run on d17b and on d17e); right-half and door sweeps with `v5f_d_sweep.py` (the audit's runs 18 and 31: the half from 30 back at 1.5 inboard, lift 0.5; the door from 80 back, cropped to the right-back corner) | 111 pairs, 3 non-zero, all as before (TOUCH_PCB ∩ front 3.16, MAIN_front_env ∩ bracket 724.91, front ∩ FOAM_bme_top_env 1.16); right half 65 steps 0; door 161 steps 0 |
+| `v5f_d17e_leg.py` | d | the leg 5.5 × 4.5 → 5.5 × 6.5 (y −60.5…−54.0) over z 10.5–21: twice the old column's bending section about x | bracket 6.1301 → 6.2403 cm³; 2.0 behind the box's rear face; ∩ parts unchanged; d17c, the sweeps and the matrix re-run on it |
+| `v5f_d17g_save_export.py` | d | version d17, f3d, STEP front / main_bracket | see the d17 checkpoint |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -409,12 +415,15 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 73. A part added to a wall must clear the other parts' insertion paths, not only their installed state: the BME680 tray
     passed the matrix but sat in the right box's B5j-3 path (lift 6).
 74. Cut a feature away with a box taken from the feature's own bounding box in the old body, grown 0.2, then list the
-    region's lumps: d16a's hand-placed box stopped 0.1 short of the floor tie bridge's end and left a 0.1 mm fin.
+    region's lumps: d16a's hand-placed box stopped 0.1 short of the floor tie bridge's end and left a 0.1 mm fin, and its
+    bottom at z 2.55 left a 0.05 layer (the floor's top is 2.5 there; d17a measured it).
 75. A script's module-level names share the helpers' namespace: d16b's station list `WY` replaced v5f_common's world +y
     vector and every box failed. Keep WX / WY / WZ, C, S, H, XC and the helper names free.
 76. Empty zones are not a path. d16b's finger zones (way in, channel, grip end) were each clear, but no straight finger
     joins them: the bracket column stands behind the channel's inboard half. Check access with the finger's (or tool's)
     own solid along its line, and look at a plan section before calling a way in usable.
+77. Loaders read scripts with `open(path, encoding='utf-8')`: a plain `open()` failed on the en dash in v5f_d_sweep.py's
+    header (ascii codec) in the MCP's Python although other scripts with non-ASCII comments had passed.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -915,6 +924,7 @@ air; 19:58: finger notch, no extender. Versions "rev F WIP 2026-11-06 d16 …" a
   outboard of them (15.0–16.1 to the shell's back corner at y −62.3, z 8.5–25) and then reach x −45.5 at y −33 inside the
   18.1-wide channel: no finger 12 wide or more can do both. Open: Daniel to choose – crank the column (foot screw to
   about (−66, −57.5), lower column outboard, back to the column above z 17), re-image in place over USB-C (RPIBOOT), or both.
+  Fixed in d17 (Daniel 21:00: crank the column).
 - Front: solid floor again; the right floor tie bridge is gone (it stood in the finger's way; d16f took its last 0.1 mm)
   – re-place it only if a lead needs it.
 - Checks: d16b / d16c rows; B5j-3 path 0; matrix as before except SPK_R ∩ box +1.67 mm³.
@@ -923,4 +933,27 @@ air; 19:58: finger notch, no extender. Versions "rev F WIP 2026-11-06 d16 …" a
 - Exports: `~/Documents/HA_v5f_spkbox_R.step` (d16), `HA_v5f_front.step` (d16f), world frame; `~/Documents/HA Panel v5 -
   tapered revF-d16.f3d` (d16f).
 - Hidden copies: `SPKBOX_R_d16`, `_d16a`, `_d16d`; `HOUSING_F_front_d16`, `_d16f`; `HATCH_COVER_d16`, `SD_SLED_d16`.
-- Bench (once the way in is fixed): card out and back by finger, 5 / 5; the lower screw driven through the channel.
+- Bench: see d17.
+
+## microSD way in – d17 (2026-11-06)
+Daniel 21:00: crank the main-board bracket's right column (d16's finger channel was blocked by it). Version "rev F WIP
+2026-11-06 d17 …".
+- MAIN_BRACKET, right half: the foot screw moves to (−65.0, −57.0), 15.5 outboard and 1.0 forward. A leg (5.5 × 6.5 to z 21,
+  5.5 × 4.5 to z 27) rises from the new boss to a knee at z 21–27 that joins the column; the column and the board bosses
+  are unchanged from z 21 up. A 45° gusset under the knee at the leg. The knee's flat underside (≈ 105 mm²)
+  needs support when the half prints upright (B6o: +z).
+- Front floor: the old foot hole and c-bore filled; Ø3.4 + Ø6.5 × 1.0 c-bore at the new axis (its rim touches the joint's
+  underside relief by 0.26 mm³, below the head's seat); the tie bridge's 0.05 base layer gone.
+- Service: door off (4 × M3 from below); a finger straight in along the floor at x_rel ≈ −52, under the knee (z 21; the
+  finger model's top is z 16.9), into the channel to the card's grip end (17 mm past the box's rear face); nail the card
+  15.4 toward −x into the slot and draw it back. Refit: lay it in the slot, push it home with a fingertip.
+- Checks: d17c finger solid 0 (control before d17b: 445 mm³ on the bracket); the right half's insertion path 0; the door's
+  path 0 at the right-back corner; matrix 111 pairs, 3 as before. The right box's lower screw can now be driven with the
+  bracket in place (driver line 0).
+- Strength: the leg's bending section about x is twice the old column's; the knee offsets the column's load 15.25. Bench:
+  push the board's top at the right column; it should move no more than at the left.
+- Volumes (cm³): front 235.2269, MAIN_BRACKET 6.2403 (2 lumps), SPKBOX_R 26.3874; the rest as in d12.
+- Exports: `~/Documents/HA_v5f_{front,main_bracket}.step` (world frame), `~/Documents/HA Panel v5 - tapered revF-d17.f3d`.
+- Hidden copies: `MAIN_BRACKET_d17`, `MAIN_BRACKET_d17e`, `HOUSING_F_front_d17`.
+- Bench: card out and back by finger, 5 / 5, door off; the right box's lower screw driven through the channel; the foot
+  screw from below; support under the knee.
