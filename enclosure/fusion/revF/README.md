@@ -854,9 +854,10 @@ c2: …".
 
 ## Audit response – d-round (2026-11-06)
 Input: `claude/report-model-audit-2026-11-05.md` (43 findings). Daniel 10:27: decision 1 a (vents ≈ 5× at the floor intake and
-behind the cloth, cooler-exhaust deflector, BME680 in a pocket sealed from the interior air, ASA – or ABS, ASA being out of
-stock (Daniel 2026-11-07 15:01) – until a soak test on the finished unit passes), 2 a (the speaker boxes hold the touch PCB → two clips screwed to the boxes), 3 (cap SL / SR lanes stay
-at 27.6°, no test: ball-end sockets owned). Versions "rev F WIP 2026-11-06 d3f / d4 / d5 / d6 / d7".
+behind the cloth, cooler-exhaust deflector, BME680 in a pocket sealed from the interior air, ASA or ABS – ASA being out of
+stock (Daniel 2026-11-07 15:01) – with no soak test (Daniel 2026-11-07 16:11: V1 has run fine in use)), 2 a (the speaker
+boxes hold the touch PCB → two clips screwed to the boxes), 3 (cap SL / SR lanes stay at 27.6°, no test: ball-end sockets
+owned). Versions "rev F WIP 2026-11-06 d3f / d4 / d5 / d6 / d7".
 - Done (finding → change): 1 voids filled (front ×2, cap); 2 webs 4 wide between the tangent cradle legs and floor bosses;
   3 magnet pocket floors +0.2 (skin 0.49 on the axis, pocket 1.6, faces 1.4 → 1.6); 6 shelf 0.4 land; 7 door flange 0.85;
   8 RR stub cut, cradle leftover hole filled; 9 grommet pins Ø1.5 in Ø1.7 holes at ±13.85 (web 0.80); 10 two posts per
@@ -869,8 +870,8 @@ at 27.6°, no test: ball-end sockets owned). Versions "rev F WIP 2026-11-06 d3f 
   sealed); 38 strip seat pads (gasket 1.0 → 0.7); 40 LD2410C heat-stake ribs; 42 RENDER_FABRIC_front hidden, STEP / f3d
   re-exported (12 parts incl. cap and clips).
 - Thermal re-estimate (audit model, two outlets at z 166 / 88): interior rise 21–26 K with the cloth passing the slot area,
-  24–30 K at half (was 31–43 K); the walls carry about half the 14 W. ASA or ABS until the soak test (decision 1 a;
-  HDT at 1.8 MPa: ASA 92 °C, ABS 84 °C, Bambu's sheets).
+  24–30 K at half (was 31–43 K); the walls carry about half the 14 W. ASA or ABS (decision 1 a;
+  HDT at 1.8 MPa: ASA 92 °C, ABS 84 °C, Bambu's sheets): ABS stays ≥ 29 K below its HDT.
 - Checks: matrix 433 pairs (audit's 83 parts + clips) – 76 non-zero, 70 identical to the audit, 6 changed by design, 0 new,
   0 gone; sweeps 0: boxes L / R (B5j-3, with the touch PCB and KO), bracket halves, clips, touch tilt-in (seat face only),
   grommet and door bottom band 30 mm back, cradle, cap 4 mm down, LD2410C 4 mm in; strips into the cap: pins through the
@@ -886,7 +887,7 @@ at 27.6°, no test: ball-end sockets owned). Versions "rev F WIP 2026-11-06 d3f 
   L / R ≥ 175, VEML ≥ 260, radar ≥ 125.
 - Open, Daniel: BME680 pocket (CJMCU-680 outline / holes unpublished – caliper, or build to the 20 × 15 × 6 placeholder;
   sensor + slots 4 mm up the wall); lip feather end (station-built end faces, or deburr); microSD extender on the Pi 5 (short
-  extender + bench test / card non-service / box wall outboard); VEML retention (board size). Bench: soak test; staking
+  extender + bench test / card non-service / box wall outboard); VEML retention (board size). Bench: staking
   (grommet pins, LD ribs, strips onto the pads); self-tapping pilots (clips, boxes); K13 path for the LD2410C; cap-insert
   coupon (finding 34).
 - Hidden copies of every replaced state: `*_d0`, `*_d2`, `*_d4`, `*_d4c`, `*_d4e`, `*_d5a`, `*_d5b`, `*_d5e`, `*_d5h0`,
