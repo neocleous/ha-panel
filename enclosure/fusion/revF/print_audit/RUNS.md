@@ -46,6 +46,7 @@ Layers: first 0.20, then 0.20; each sampled at its mid-plane + 2e-4 mm (PrusaSli
 | `offline/pa_gcode.py <gcode…>` | extrusion volume by `;TYPE` (only moves with X/Y and positive E), print time and mass from the footer | `data/gcode_summary*.jsonl` |
 | `offline/pa_gview.py`, `pa_p11_views.py` | G-code layer views; offset = centre of the part's extrusion box minus the mesh box centre | `images/p11_*.png`, `data/p11_*.json` |
 | `offline/pa_contacts.py`, `pa_contact_faces.py`, `pa_contact_regions.py <gcode tag> <tag> <orient>` | support top cells (0.25 mm grid) with part extrusion in either of the next two layers; nearest mesh face (16 nearest centroids, exact distance) gives the touched face and its world normal; regions = 1 mm z bands, 8-connected | `data/contact_regions.json`, `data/layer_summaries.zip` (C_*, CF_*, cells) |
+| `offline/pa_wallcheck.py <gcode tag> <tag> <orient> x0 x1 y0 y1 z0 z1` | the part's extrusion moved to world coordinates; extrusion length per layer inside a world box (does the slicer print a thin wall) | console (cap front wall, cradle bezel, clip wall, cap lip end) |
 
 ## Slicer runs (PrusaSlicer 2.7.2, Ubuntu package; the GitHub release download was refused by the proxy)
 Profile `slicer/x2d_asa_assumed.ini` — **ASSUMED X2D / ASA settings, not Bambu Studio's**: bed 256 × 256, height 260;
