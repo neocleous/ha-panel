@@ -1,0 +1,54 @@
+--bed-shape 0x0,256x0,256x256,0x256
+--max-print-height 260
+--nozzle-diameter 0.4
+--layer-height 0.2
+--first-layer-height 0.2
+--perimeters 2
+--top-solid-layers 5
+--bottom-solid-layers 3
+--fill-density 15%
+--fill-pattern gyroid
+--perimeter-generator arachne
+--external-perimeter-extrusion-width 0.42
+--perimeter-extrusion-width 0.45
+--extrusion-width 0.45
+--infill-extrusion-width 0.45
+--solid-infill-extrusion-width 0.42
+--top-infill-extrusion-width 0.42
+--first-layer-extrusion-width 0.5
+--support-material-extrusion-width 0.42
+--temperature 260
+--first-layer-temperature 260
+--bed-temperature 100
+--first-layer-bed-temperature 100
+--filament-diameter 1.75
+--filament-density 1.05
+--filament-type ASA
+--support-material
+--support-material-auto
+--support-material-style organic
+--support-material-threshold 30
+--dont-support-bridges
+--support-material-contact-distance 0.2
+--skirts 0
+--brim-width 0
+--elefant-foot-compensation 0
+--gcode-flavor marlin2
+--machine-limits-usage time_estimate_only
+--machine-max-acceleration-extruding 10000
+--machine-max-acceleration-x 20000
+--machine-max-acceleration-y 20000
+--machine-max-feedrate-x 1000
+--machine-max-feedrate-y 1000
+--max-volumetric-speed 18
+--external-perimeter-speed 200
+--perimeter-speed 300
+--infill-speed 270
+--solid-infill-speed 250
+--top-solid-infill-speed 200
+--support-material-speed 150
+--support-material-interface-speed 80
+--bridge-speed 50
+--first-layer-speed 50
+--travel-speed 500
+--gcode-comments
