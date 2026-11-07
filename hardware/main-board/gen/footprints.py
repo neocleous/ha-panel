@@ -112,8 +112,13 @@ def tas5756m_dca(d):
     # silk: short end lines outside the land, pin-1 dot
     for y in (-7.85, 7.85):
         f.line(-2.6, y, 2.6, y, 'F.SilkS', 0.15)
-    f.circle(-4.2, -6.75, 0.25, 'F.SilkS', 0.15, fill=True)
-    f.rect(-4.7, -7.8, 4.7, 7.8, 'F.CrtYd', 0.05)
+    f.circle(-3.0, -6.7, 0.25, 'F.SilkS', 0.15, fill=True)       # pin-1 dot beside pin 1, clear of the bootstrap cap
+    # courtyard: body + pins (x +-4.7, y +-6.5) plus the exposed-land tongues to y +-7.8 (keeps the bootstrap caps legal
+    # beside pins 1/48 and 24/25, where only bare land copper extends past the package)
+    cy = [(-4.7, -6.5), (-2.75, -6.5), (-2.75, -7.8), (2.75, -7.8), (2.75, -6.5), (4.7, -6.5), (4.7, 6.5), (2.75, 6.5),
+          (2.75, 7.8), (-2.75, 7.8), (-2.75, 6.5), (-4.7, 6.5)]
+    for (x1, y1), (x2, y2) in zip(cy, cy[1:] + cy[:1]):
+        f.line(x1, y1, x2, y2, 'F.CrtYd', 0.05)
     f.text('${REFERENCE}', 0, 0, 'F.Fab', 1.0)
     f.write(d, -9.0, 9.0, '${KICAD9_3DMODEL_DIR}/Package_SO.3dshapes/TSSOP-48_6.1x12.5mm_P0.5mm.step')
     return f.name
@@ -189,8 +194,23 @@ def wirelink(d):
     return f.name
 
 
+def im69d120(d):
+    src = '/usr/share/kicad/footprints/Sensor_Audio.pretty/Infineon_PG-LLGA-5-1.kicad_mod'
+    s = open(src).read()
+    s = s.replace('(footprint "Infineon_PG-LLGA-5-1"', '(footprint "Infineon_IM69D120_PG-LLGA-5-1"')
+    import re as _re
+    s = _re.sub(r'\(descr "[^"]*"\)', '(descr "Infineon IM69D120 / IM69D130 PG-LLGA-5-1 4 x 3 x 1.2, bottom port; KiCad '
+                'Infineon_PG-LLGA-5-1 with pads 1-4 at 0.45 x 0.76 per IM69D120 datasheet rev 1.0 (2017-12-20) Fig. 12; '
+                'ring R0.58-R1.04, PCB sound hole 0.8")', s, count=1)
+    # pads 1-4: 0.45 x 0.7 -> 0.45 x 0.76
+    s = _re.sub(r'(\(pad "[1-4]" smd rect\s*\(at [^)]*\)\s*\(size )0\.45 0\.7(\))', r'\g<1>0.45 0.76\2', s)
+    s = s.replace('(property "Value" "Infineon_PG-LLGA-5-1"', '(property "Value" "Infineon_IM69D120_PG-LLGA-5-1"')
+    open(os.path.join(d, 'Infineon_IM69D120_PG-LLGA-5-1.kicad_mod'), 'w').write(s)
+    return 'Infineon_IM69D120_PG-LLGA-5-1'
+
+
 ALL = {'tas': tas5756m_dca, 'nid': nid100, 'csba': csba0850, 'electrode': electrode, 'wirepads': wirepads,
-       'wirelink': wirelink}
+       'wirelink': wirelink, 'im69': im69d120}
 
 if __name__ == '__main__':
     d = sys.argv[1]

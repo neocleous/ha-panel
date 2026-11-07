@@ -74,6 +74,18 @@ def msm261():
                          bottom=bottom, width=15.24)
 
 
+DS_IM69 = 'https://www.infineon.com/assets/row/public/documents/24/49/infineon-im69d120-datasheet-en.pdf'
+
+
+def im69d120():
+    left = [('2', 'VDD', 'power_in'), ('4', 'SELECT', 'input'), ('3', 'CLOCK', 'input')]
+    right = [('1', 'DATA', 'tri_state')]
+    bottom = [('5', 'GND', 'power_in')]
+    return kg.box_symbol('IM69D120', 'MK', 'IM69D120V01', 'ha_panel:Infineon_IM69D120_PG-LLGA-5-1', DS_IM69,
+                         'Bottom-port PDM MEMS microphone, -26 dBFS, SNR 69 dB(A), 1.62-3.6 V, PG-LLGA-5-1 4 x 3 x 1.2',
+                         left=left, right=right, bottom=bottom, width=15.24)
+
+
 def touch_electrode():
     return kg.box_symbol('TouchElectrode', 'E', 'TouchElectrode', 'ha_panel:TouchElectrode_16x16mm_R2', '~',
                          'Self-capacitance touch electrode: F.Cu copper under the solder mask, via to the back',
@@ -101,7 +113,7 @@ def power_20v():
 def build(path, which=('tas', 'tps1663', 'nid', 'tps709', 'msm', '+20V')):
     syms = []
     table = {'tas': tas5756m, 'tps1663': tps16630, 'nid': nid100, 'tps709': tps70933, 'msm': msm261, '+20V': power_20v,
-             'electrode': touch_electrode}
+             'electrode': touch_electrode, 'im69': im69d120}
     for k in which:
         syms.append(table[k]())
     kg.write_symbol_lib(path, syms)

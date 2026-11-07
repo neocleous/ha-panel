@@ -18,7 +18,6 @@ FRONT = {
     'PS1': (35.4, 7.0, 180),            # body x 10.0-60.8, y 1.0-13.0; pin 1 (+Vo) at x 59.56, pin row y 9.0
     'J10': (64.7, 6.5, 0),              # sensor landing 2 x 4
     'J5': (75.7, 4.0, 0),               # radar XH, landing x_rel -30.7, z 80 (decision 2)
-    'F5': (74.0, 10.5, 0),              # PVDD PTC
     'C6': (15.5, 19.0, 0),              # NID input C (EMC C2), under +Vin pins 9/10
     'L1': (27.6, 20.3, 0),              # EMC L1
     'C5': (27.8, 32.5, 0),              # EMC C1 (+20V)
@@ -31,19 +30,22 @@ FRONT = {
     'J8': (11.5, 44.0, 90),             # speaker L, landing x_rel +33.5, z 40
     'J6': (41.0, 24.0, 0),              # touch XH, landing x_rel 4, z 60
     'U100': (60.0, 25.5, 270),          # TAS5756M horizontal, output end toward the LC block (TI Fig. 86)
-    'C7': (55.5, 16.8, 0),              # NID output C (EMC C3), under +Vo pins
+    'C7': (44.5, 17.4, 0),              # NID output C (EMC C3), above J6 (frees the TAS top-row fan-out)
     # LC block: the output nearer the package end (OUT_xN) takes the nearer inductor, so the OUT traces fan out uncrossed
     'L101': (74.0, 18.6, 90), 'L100': (83.6, 18.6, 90),   # channel A (top row), pad 1 (OUT) at the bottom
     'L102': (74.0, 28.8, 270), 'L103': (83.6, 28.8, 270), # channel B (bottom row), pad 1 (OUT) at the top
-    'C104': (62.95, 19.35, 0), 'C108': (66.6, 19.35, 180), 'C100': (60.4, 19.35, 180),   # bootstraps A, PVDD 0.1u
-    'C115': (62.95, 31.6, 0), 'C111': (66.6, 31.6, 180), 'C121': (60.4, 31.6, 180),      # bootstraps B, PVDD 0.1u
+    'C104': (64.52, 19.35, 0), 'C108': (67.3, 20.6, 90),       # bootstraps A: C104 over pins 4/5, C108 upright past pin 1
+    #   (keeps PVDD pins 6/7 free for their via; OUT_A routes leave north of C108)
+    'C115': (64.52, 31.65, 0), 'C111': (67.3, 30.4, 270),      # bootstraps B: mirror of A
 }
 FIXED_BACK = {
     'J2': (20.0, 45.415, 0),            # USB4085: A1 at (22.975, 41.39) -> mouth flush with the bottom edge
     'LK1': (31.0, 46.3, 0),
+    'F5': (45.6, 30.0, 180),            # PVDD PTC (pad 1 +20V left / pad 2 PVDD right after the flip) 2920 (1.80 max), straddles the +20V / PVDD planes on L3
 }
 # back parts: anchor = (ref, pad) whose position the part is placed next to (mirrored onto the back)
 ANCHOR = {
+    'C100': ('U100', '6'), 'C121': ('U100', '42'),
     'C101': ('U100', '7'), 'C102': ('U100', '6'), 'C122': ('U100', '41'), 'C123': ('U100', '43'),
     'C103': ('U100', '8'), 'R101': ('U100', '9'), 'R100': ('U100', '9'),
     'C105': ('U100', '14'), 'C119': ('U100', '30'), 'C118': ('U100', '28'), 'C120': ('U100', '35'), 'C112': ('U100', '33'),
@@ -63,16 +65,17 @@ ANCHOR = {
     'TP1': ('U1', '1'), 'TP2': ('U1', '18'), 'TP3': ('U1', '14'), 'TP4': ('U1', '15'), 'TP5': ('U1', '16'), 'TP6': ('U1', '13'),
     'TP7': ('U1', '9'), 'TP8': ('C6', '1'), 'TP9': ('C7', '1'), 'TP10': ('LK1', '1'), 'TP11': ('J2', 'A9'),
     'TP12': ('J5', '1'), 'TP13': ('PS1', '12'), 'TP14': ('PS1', '13'), 'TP15': ('J2', 'A12'), 'TP16': ('J6', '1'),
-    'TP17': ('J6', '2'), 'TP18': ('F5', '2'), 'TP19': ('U100', '40'), 'TP20': ('U100', '39'),
+    'TP17': ('J6', '2'), 'TP19': ('U100', '40'), 'TP20': ('U100', '39'),
 }
-ORDER = ['C101', 'C102', 'C122', 'C123', 'C103', 'C105', 'C119', 'C118', 'C120', 'C112', 'R101', 'R100',
+ORDER = ['C100', 'C121', 'C101', 'C102', 'C122', 'C123', 'C103', 'C105', 'C119', 'C118', 'C120', 'C112', 'R101', 'R100',
          'C106', 'C107', 'C113', 'C114', 'R102', 'R103', 'R104', 'R105', 'R17', 'R14', 'R15', 'R16', 'R26', 'R27',
          'C109', 'C110', 'C117', 'C116',
          'C1', 'C2', 'R1', 'R2', 'R3', 'C3', 'R4', 'R5', 'R6', 'C4', 'D1', 'F1',
          'F2', 'C8', 'C9', 'R10', 'R11', 'F3', 'C10', 'R19', 'D2', 'R7', 'R8', 'R9',
          'U2', 'R12', 'C11', 'C12', 'R13', 'F4', 'R18', 'R20', 'R21', 'R22', 'R23', 'R24', 'R25']
-TPS = ['TP%d' % i for i in range(1, 21)]
+TPS = ['TP%d' % i for i in range(1, 21) if i != 18]      # TP18 dropped: PVDD probed at F5 pin 2
 BACK_KEEPOUT = [(52.3, 22.8, 67.7, 28.2),        # TAS thermal land / via field (rot 270)
+                (53.2, 17.6, 63.0, 21.0), (53.2, 30.0, 63.0, 33.4),   # TAS logic-pin fan-out via bands
                 (0.0, 0.0, 9.0, 9.0), (81.0, 0.0, 90.0, 9.0)]   # door touches the back top corners (K19)
 GAP = 0.45
 

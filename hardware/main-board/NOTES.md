@@ -1,4 +1,4 @@
-# Main board — schematic notes (checkpoint 1, 2026-11-07; updated for decisions 1–5, 2026-11-07 20:45)
+# Main board — schematic notes (checkpoint 1, 2026-11-07; updated for decisions 1–5, 2026-11-07 20:45) — layout 2026-11-07 22:30: §7
 
 KiCad **9.0.9**. Every value below is traced to a datasheet section or a project decision; sources and retrieval dates are at the end. "E" = engineering estimate, "not verified" = no source found.
 
@@ -105,7 +105,7 @@ All test pads are bare SMD pads Ø1.5 on the **back** (door side, `TestPoint_Pad
 | TP11 EXT5V | VBUS at J2 (USB4085) | 2.6/2.7 "EXT5V at the USB4105" |
 | TP12 RADAR | radar 5 V after F3 | 2.12 radar VCC |
 | TP13 TRIM, TP14 RC | NID pins 12 and 13 | V20 trim check, NID enable |
-| TP16 3V3, TP18 PVDD, TP19 FAULT | rails / amp status | bring-up |
+| TP16 3V3, TP19 FAULT | rails / amp status | bring-up (PVDD: probe F5 pin 2 on the back – TP18 dropped in layout, no free back spot on the PVDD side) |
 | TP7, TP15, TP17, TP20 | GND | probe returns |
 | LK1 | Pi branch link | 2.7 series current |
 
@@ -116,6 +116,15 @@ All test pads are bare SMD pads Ø1.5 on the **back** (door side, `TestPoint_Pad
 - **V18** — Bourns states only "Ferrite DR and RI" for the SRR1260 core; NiZn is not confirmable from Bourns. Würth's WE-PD 7447709150 (15 µH, 12 × 12 × 10 mm) datasheet states no core material either (rev 006.001, 2024-05-08). Kept SRR1260-150M: it meets the circuit's 15 µH and carries the ≈ 3 A worst-case NID input current (55 W / 93 % / 20 V) below its 4.6 A Isat; Mean Well's circuit is for Class B (the NID meets Class A without it).
 - **V19** — §1.
 - **V20** — trim network R8/R9 DNP + TP13 (§2); trim function unverified on stock units.
+
+## 7. Layout (block 2, 2026-11-07)
+- **Stack (4 layers, 1.6 mm; JLC stack-up picked in block 3):** L1 front parts + signals; In1 GND plane; In2 split power planes +5V, +20V and PVDD; L4 back parts + signals. F/B GND pours with stitching vias to In1.
+- **Rules (JLC capability page, checked 2026-11-07: 0.10/0.10 track/space, via 0.2/0.45 without surcharge):** tracks ≥ 0.15 mm except two 0.125 mm necks on CN at the TAS fan-out; clearance 0.15 (signals, PVDD, outputs) / 0.20 (default, 20 V); vias 0.45/0.2 signals, 0.6/0.3 power, 0.8/0.4 on the 20 V inlet; copper to edge 0.3.
+- **TAS5756M escape:** signal pins on two staggered via rows 0.5 and 1.25 mm beyond the pin tips; GND pins stubbed onto the exposed land; PVDD pins bridged (6–7, 41–43) to one 0.6/0.3 via each with the 0.1 µF (C100, C121) directly behind on the back; bootstrap caps C104/C115 over pins 4–5 / 44–45 and C108/C111 upright beside pins 1/48 (moved from the placement for this); outputs 0.6 mm on the front to the inductors; footprint courtyard trimmed to body + land tongues.
+- **Routing:** hand/maze pre-routes for the amplifier outputs, PVDD and the 20 V inlet (`gen/amp.py`, `gen/route_main.py` PREROUTES) → Freerouting 2.5.0 for the signals → maze-router fixes for what it left (POSTROUTES) → pours, stitching, dangling-via clean-up, silk placement. The KiCad board is the source of truth: Freerouting's result depends on the board's item order (random footprint UUIDs per placement run), so a regeneration routes differently and the POSTROUTES list fits this result only.
+- **Moves made in layout:** R14 (PI_BCLK series position) to the J3 landing on the back (60.5, 39.5) – source termination at the source and two short hops instead of a 65 mm detour round the amplifier; TP18 dropped (PVDD at F5 pin 2).
+- **Silkscreen:** 88 references on silk, 27 hidden where no clear spot exists (D1, U2, C1–C3, C10, C101, C112–C115, C118, C120, C122, R1, R3, R5, R6, R18, R26, R102, R104, R105, TP5–TP7, TP9, TP10); the block 3 assembly drawing (fab layers) carries every reference.
+- **DRC (KiCad 9.0.9, `drc-report.txt`):** 0 errors, 0 unconnected, schematic parity clean; 1 warning – J2's footprint differs from the library copy because its outline past the board edge was removed from the silkscreen.
 
 ## Sources (read 2026-11-07 unless noted)
 - TI TAS5756M, SLAS988B — https://www.ti.com/lit/ds/symlink/tas5756m.pdf

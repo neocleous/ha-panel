@@ -50,6 +50,7 @@ def load_fp(fpid):
     fp = pcbnew.FootprintLoad(path, name)
     if fp is None:
         raise RuntimeError('footprint not found: ' + fpid)
+    fp.SetFPID(pcbnew.LIB_ID(lib, name))       # keep the library nickname (schematic parity)
     return fp
 
 

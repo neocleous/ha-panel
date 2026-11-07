@@ -281,7 +281,8 @@ def design(prj):
            footprint='Fuse:Fuse_2920_7451Metric',
            fields=F('2920L260/33DR', 'Littelfuse', '18-2920L260/33DRCT-ND', 'PTC 2.6 A hold (1.81 A at 60 C), 33 V, R1max 75 mOhm'))
     s.pwr_flag('PVDD', (66.04, 60.96))
-    tp(s, 'TP18', 'PVDD', 88.9, 38.1, 'PVDD')
+    s.text('PVDD probe point: F5 pin 2 (back, 2920 land). No TP18: no free back spot on the PVDD side (layout 2026-11-07).',
+           88.9, 38.1, size=1.27)
     # PVDD decoupling (left side pins 6/7 and right side 41-43)
     for i, (ref, val, fp, spec) in enumerate([('C100', '0.1u 50V', C0603, '0.1 uF 50 V X7R 0603'),
                                               ('C101', '22u 35V', C0805, '22 uF 35 V X5R 0805'),

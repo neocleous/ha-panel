@@ -1,0 +1,14 @@
+** Drc report for main-board.kicad_pcb **
+** Created on 2026-11-07T22:25:52+0100 **
+** Report includes: Errors, Warnings **
+
+** Found 1 DRC violations **
+[lib_footprint_mismatch]: Footprint 'USB_C_Receptacle_GCT_USB4085' does not match copy in library 'Connector_USB'.
+    Local override; warning
+    @(22.9750 mm, 41.3900 mm): Footprint J2
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **

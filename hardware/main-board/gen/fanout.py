@@ -39,9 +39,28 @@ def seg_box_dist(ax, ay, bx, by, box):
     return best
 
 
+def _pt_seg(px, py, x1, y1, x2, y2):
+    dx, dy = x2 - x1, y2 - y1
+    L2 = dx * dx + dy * dy
+    u = 0.0 if L2 == 0 else max(0.0, min(1.0, ((px - x1) * dx + (py - y1) * dy) / L2))
+    return math.hypot(px - (x1 + u * dx), py - (y1 + u * dy))
+
+
+def _existing(board):
+    segs, vs = [], []
+    for t in board.GetTracks():
+        if t.Type() == pcbnew.PCB_VIA_T:
+            vs.append((TO(t.GetPosition().x), TO(t.GetPosition().y), TO(t.GetWidth(pcbnew.F_Cu)) / 2, t.GetNetname()))
+        else:
+            s, e = t.GetStart(), t.GetEnd()
+            segs.append((TO(s.x), TO(s.y), TO(e.x), TO(e.y), TO(t.GetWidth()) / 2, t.GetLayer(), t.GetNetname()))
+    return segs, vs
+
+
 def fanout(board, zones_in2, extra_obstacles=(), tas_ref='U100', skip=()):
     boxes = pad_boxes(board)
-    vias = []
+    ex_segs, ex_vias = _existing(board)
+    vias = [(x, y) for x, y, r, n in ex_vias]
     tracks = []
     added = 0
     failed = []
@@ -93,6 +112,12 @@ def fanout(board, zones_in2, extra_obstacles=(), tas_ref='U100', skip=()):
                         continue
                     if any(math.hypot(vx - x2, vy - y2) < VIA_D + CLR for x2, y2 in vias):
                         continue
+                    if any(sn != net and _pt_seg(vx, vy, *sg[:4]) < VIA_D / 2 + sg[4] + CLR for sg in ex_segs for sn in [sg[6]]):
+                        continue
+                    if any(sg[6] != net and sg[5] == lay and
+                           min(_pt_seg(px + (vx - px) * k / 8, py + (vy - py) * k / 8, *sg[:4]) for k in range(9)) < 0.15 + sg[4] + CLR
+                           for sg in ex_segs):
+                        continue
                     if any(o[0] - r < vx < o[2] + r and o[1] - r < vy < o[3] + r for o in extra_obstacles):
                         continue
                     ok = (vx, vy)
@@ -117,3 +142,58 @@ def fanout(board, zones_in2, extra_obstacles=(), tas_ref='U100', skip=()):
         t.SetWidth(MM(w)); t.SetLayer(lay); t.SetNet(nobj); t.SetLocked(True)
         board.Add(t)
     return added, failed
+
+
+def tas_fanout(board, ref='U100', skip_nets=('GND',), via_d=0.45, via_dr=0.2, w=0.2, clr=0.15):
+    """Stub + via for every TAS5756M pin except GND (stubbed to the EP) and the output/bootstrap pins, staggered."""
+    fp = board.FindFootprintByReference(ref)
+    boxes = pad_boxes(board)
+    out_nets = ('/Amplifier/OUT_AP', '/Amplifier/OUT_AN', '/Amplifier/OUT_BP', '/Amplifier/OUT_BN',
+                '/Amplifier/BST_AP', '/Amplifier/BST_AN', '/Amplifier/BST_BP', '/Amplifier/BST_BN')
+    vias = [(TO(v.GetPosition().x), TO(v.GetPosition().y), TO(v.GetWidth(pcbnew.F_Cu)) / 2)
+            for v in board.GetTracks() if v.Type() == pcbnew.PCB_VIA_T]
+    cy = TO(fp.GetPosition().y)
+    done, failed = 0, []
+    for p in sorted(fp.Pads(), key=lambda q: q.GetPosition().x):
+        n = p.GetNetname()
+        if not n or n.startswith('unconnected') or n in skip_nets or n in out_nets or p.GetNumber() == '49':
+            continue
+        px, py = TO(p.GetPosition().x), TO(p.GetPosition().y)
+        sgn = -1 if py < cy else 1                     # outward = away from the body
+        edge = py + sgn * 0.7375
+        ok = None
+        for d in (0.55, 1.35, 2.15, 2.95):
+            for dx in (0.0, -0.25, 0.25, -0.5, 0.5):
+                vx, vy = px + dx, edge + sgn * (d + via_d / 2)
+                bad = False
+                for b in boxes:
+                    if b[5] is p:
+                        continue
+                    ddx = max(b[0] - vx, 0, vx - b[2]); ddy = max(b[1] - vy, 0, vy - b[3])
+                    if b[4] != n and math.hypot(ddx, ddy) < via_d / 2 + clr:
+                        bad = True; break
+                    if b[4] != n and seg_box_dist(px, edge, vx, vy, b) < w / 2 + clr:
+                        bad = True; break
+                if bad:
+                    continue
+                if any(math.hypot(vx - x2, vy - y2) < via_d / 2 + r2 + clr for x2, y2, r2 in vias):
+                    continue
+                ok = (vx, vy); break
+            if ok:
+                break
+        if ok is None:
+            failed.append(p.GetNumber()); continue
+        nobj = p.GetNet()
+        for (a, b2) in (((px, py), (px, edge + sgn * 0.1)), ((px, edge + sgn * 0.1), ok)):
+            t = pcbnew.PCB_TRACK(board)
+            t.SetStart(pcbnew.VECTOR2I(MM(a[0]), MM(a[1]))); t.SetEnd(pcbnew.VECTOR2I(MM(b2[0]), MM(b2[1])))
+            t.SetWidth(MM(w)); t.SetLayer(pcbnew.F_Cu); t.SetNet(nobj); t.SetLocked(True)
+            board.Add(t)
+        v = pcbnew.PCB_VIA(board)
+        v.SetPosition(pcbnew.VECTOR2I(MM(ok[0]), MM(ok[1]))); v.SetWidth(MM(via_d)); v.SetDrill(MM(via_dr))
+        v.SetNet(nobj); v.SetLocked(True)
+        board.Add(v)
+        vias.append((ok[0], ok[1], via_d / 2))
+        boxes.append((ok[0] - via_d / 2, ok[1] - via_d / 2, ok[0] + via_d / 2, ok[1] + via_d / 2, n, None))
+        done += 1
+    return done, failed
