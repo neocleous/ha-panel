@@ -854,8 +854,8 @@ c2: …".
 
 ## Audit response – d-round (2026-11-06)
 Input: `claude/report-model-audit-2026-11-05.md` (43 findings). Daniel 10:27: decision 1 a (vents ≈ 5× at the floor intake and
-behind the cloth, cooler-exhaust deflector, BME680 in a pocket sealed from the interior air, ASA until a soak test on the
-finished unit passes), 2 a (the speaker boxes hold the touch PCB → two clips screwed to the boxes), 3 (cap SL / SR lanes stay
+behind the cloth, cooler-exhaust deflector, BME680 in a pocket sealed from the interior air, ASA – or ABS, ASA being out of
+stock (Daniel 2026-11-07 15:01) – until a soak test on the finished unit passes), 2 a (the speaker boxes hold the touch PCB → two clips screwed to the boxes), 3 (cap SL / SR lanes stay
 at 27.6°, no test: ball-end sockets owned). Versions "rev F WIP 2026-11-06 d3f / d4 / d5 / d6 / d7".
 - Done (finding → change): 1 voids filled (front ×2, cap); 2 webs 4 wide between the tangent cradle legs and floor bosses;
   3 magnet pocket floors +0.2 (skin 0.49 on the axis, pocket 1.6, faces 1.4 → 1.6); 6 shelf 0.4 land; 7 door flange 0.85;
@@ -869,7 +869,8 @@ at 27.6°, no test: ball-end sockets owned). Versions "rev F WIP 2026-11-06 d3f 
   sealed); 38 strip seat pads (gasket 1.0 → 0.7); 40 LD2410C heat-stake ribs; 42 RENDER_FABRIC_front hidden, STEP / f3d
   re-exported (12 parts incl. cap and clips).
 - Thermal re-estimate (audit model, two outlets at z 166 / 88): interior rise 21–26 K with the cloth passing the slot area,
-  24–30 K at half (was 31–43 K); the walls carry about half the 14 W. ASA until the soak test (decision 1 a).
+  24–30 K at half (was 31–43 K); the walls carry about half the 14 W. ASA or ABS until the soak test (decision 1 a;
+  HDT at 1.8 MPa: ASA 92 °C, ABS 84 °C, Bambu's sheets).
 - Checks: matrix 433 pairs (audit's 83 parts + clips) – 76 non-zero, 70 identical to the audit, 6 changed by design, 0 new,
   0 gone; sweeps 0: boxes L / R (B5j-3, with the touch PCB and KO), bracket halves, clips, touch tilt-in (seat face only),
   grommet and door bottom band 30 mm back, cradle, cap 4 mm down, LD2410C 4 mm in; strips into the cap: pins through the
