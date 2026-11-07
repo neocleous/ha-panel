@@ -238,6 +238,11 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_d21c_audit_fixes.py` | d | the audit's sub-millimetre options, sized for 0.20 mm layers: pads +0.1 and cap bosses −0.1 (contact 172.6 – a layer boundary of the front printed from z 0 and of the cap printed top face down from z 180; the cap does not move), door cutout top 27.9 → 28.0 (door from z 2.8: 126 layers), slot roof 138.65 → 138.85; each face extruded by its step as a new tool body, TemporaryBRep union / cut of a copy, tools deleted | front 235.2269 → 235.2569 (+29.98 mm³), cap 9.9591 → 9.9441 (−15.08), door 47.2694 → 47.2633 (−6.09) cm³, 1 lump each; 16 / 16 probes; old → `*_d21` |
 | `v5f_d21d_checks.py` | d | read-only: the front's added and removed material (new minus `HOUSING_F_front_d21`) and the added part vs every part and keep-out; cap / front, door / grommet, door / cradle, front / LD2410C, door / front; the pad / boss contact | added 43.02 mm³ in 4 lumps (z 172.5–172.6), removed 13.04 mm³ (slot roof); added ∩ parts 0; the five pairs 0 mm³; pad and boss meet at 172.6; the board's top edge 0.35 under the roof |
 | `v5f_d21g_save_export.py` | d | version d21, f3d, STEP front / cap / door | see the d21 checkpoint |
+| `v5f_d0_sections.py` (d22a / d22c planes), `v5f_d21b_face_probe.py` (d22b zones) | d | read-only: print audit F6 – sections round the side pads (x −43.36 / −39 / −35, z 160 / 165, y −29; plans z 169.6–172.5; y −31…−43) and the B-rep faces of the SR / SL pads, the SR rib and both side key lanes; the loader skips edges without an evaluator | pad underside 145.17 mm² at z 169.5 (disk r 5.5 round the axis + a strip to y −45.0 along the lane); one 2.0 rib under its outboard edge (lower edge 35°, flat bottom z 160); the back pad's outboard rib 2.8–5.4 inboard of the strip; the slab-boss plate's back face 6.9 in front of the disk; at the pad's first layer (169.5–170.1) the one rib is its only anchor; KO_capkey_SR r 2.5 from (−43.36, −32.85, 166.2) along (0.152, −0.4371, −0.8865) |
+| `v5f_d22d_f6_pad_anchors.py` | d | print audit F6 option 2: per side pad a web x ±(30.2…38.2), y −44.6…−32.6, z 169.5–172.6 to the back pad's outboard rib, and a 1.6 rib x ±(38.2…39.8) from y −33.0 into the slab-boss plate, top 170.0, underside a 46° plane through (y −33.0, z 169.5); gates: the tools ∩ every body but the front 0; 0.5 clear of the M3 head and its vertical insertion (r 2.75, z 155.5–169.5) and of the key lanes, the same keep-outs ∩ the old front 0 (lesson 80) | front 235.2569 → 235.9107 cm³ (+0.654), 1 lump; tools ∩ every other body 0; keep-outs (r + 0.5) ∩ tools 0, ∩ old front 0; 14 / 14 probes; old → `HOUSING_F_front_d22` |
+| `v5f_d22e_checks.py` | d | read-only: the added material vs every part, keep-out, lead and envelope near it; cap / front at rest and lifted 0.1–5.0; seats, holes and the pad / boss contact | added 656.7 mm³ in 6 lumps (webs 159.3, ribs 167.8, two 1.2 mm³ fills under the strips' sloped back ends), nothing removed; added ∩ the 17 bodies near it 0; cap / front 0, cap lifted 0.1–5.0 ∩ added 0; seats and holes open, pad / boss contact at 172.6 on all four |
+| `v5f_d22f_export_mesh.py`, `print_audit/slicer/d22_*` | d | the d22 front as STL (the audit's mesh settings) and PrusaSlicer 2.7.2 runs on the audit's ASSUMED profile: the front with and without the F6 parts; door and boxes at 0.4 / 0.20 vs 0.6 / 0.30; cap, slab and grommet at the planned layer heights | front d19 / d22 / d22 with the plan's pad, exhaust and lip-pocket blockers (3MF): 15 h 58 / 15 h 58 / 15 h 38, support 86.0 / 85.9 / 83.2 cm³; above z 162 under the side pads 0.29 / 0.30 → 0.25 / 0.25 → 0.05 / 0.05 cm³, head-seat interface 6 → 5 → 0 mm³. Door at 0.4: 4 h 11 with trees, 2 h 42 without (0.6: 2 h 20 / 1 h 29); boxes L / R 1 h 19 / 1 h 38 (0.6: 55 / 68 min); cap 27 → 38 min (0.20 → 0.12); slab 1 h 04 → 1 h 34 (0.20 → 0.10); grommet 12 → 19 min. The F6 parts as separate STL solids (`d22_run_f6.sh`, web / web + rib) were stopped: superseded by the built d22 front |
+| `v5f_d22g_save_export.py` | d | version d22, f3d, STEP front | see the print audit checkpoint |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -441,6 +446,12 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 79. A sweep's MOVE_CROP must still hold the whole moving piece after its shape changes: run 18's crop (x_rel −60…−30) cut
     off d17's leg (to −69) and the right box and the Pi dropped out of the swept region. Crop the right half at −72…−30
     and compare `fixed_in_region` with the last run's.
+80. Run a hand-built keep-out against the body it was derived from before gating on it. d22d's head-and-lane keep-out has
+    to be 0 against the old front (the KO_capkey lanes are clear of every part); its first run gave 36.6 / 96.5 mm³ because
+    the side lanes were mirrored the wrong way: they run inboard, SR toward +x, SL toward −x.
+81. Anchoring an overhang does not stop a slicer supporting it. After d22 the side pads slice as one bridge between ribs,
+    but PrusaSlicer still hangs interface under every pad's outline and screw hole (bridge perimeters; the back pads too).
+    Read the G-code, not the geometry, and pair the anchors with a support blocker: the anchors make the blocker safe.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -1005,10 +1016,10 @@ prints top face down (the top takes the plate's texture; the edge round's first 
 - Exports: `~/Documents/HA_v5f_main_bracket.step` (world frame), `~/Documents/HA Panel v5 - tapered revF-d19.f3d` (93.3 MB).
 - Hidden copies: `MAIN_BRACKET_d19`.
 
-## Print audit response – d21 (2026-11-07)
+## Print audit response – d21 / d22 (2026-11-07)
 The print audit (`claude/report-print-audit-2026-11-07.md`, handover `claude/handover-print-audit-2026-11-07.md`, scripts
 and settings in `print_audit/`) found Blocker 0 · Major 3 · Minor 12 · Note 12 and no print that needs a model change.
-Version "rev F WIP 2026-11-07 d21 …".
+Versions "rev F WIP 2026-11-07 d21 …" and "… d22 …".
 - Applied without asking (sub-millimetre and hidden), sized for 0.20 mm layers:
   - F8 – the cap printed 0.2 low after layer rounding: the front's four cap pads +0.1 and the cap's bosses −0.1, so they meet
     at 172.6, a layer boundary of both prints. The cap does not move; the insert holes are 5.9 deep for the 5.7 Ruthex M3.
@@ -1018,7 +1029,18 @@ Version "rev F WIP 2026-11-07 d21 …".
 - Checks (d21d): the added material ∩ every part and keep-out 0; cap / front, door / grommet, door / cradle, front / LD2410C
   and door / front 0 mm³; pad and boss meet at 172.6. The removed material only opens gaps, so the insertion paths can't get
   worse (LD2410C in, grommet on, cap down).
-- Volumes (cm³): front 235.2569, cap 9.9441, door 47.2633; the rest as in d19.
-- Exports: `~/Documents/HA_v5f_front.step`, `HA_v5f_cap.step`, `HA_v5f_door.step` (world frame),
-  `~/Documents/HA Panel v5 - tapered revF-d21.f3d` (96.0 MB). "HA Panel v5 - exploded prints (d19)" predates d21.
-- Hidden copies: `HOUSING_F_front_d21`, `HOUSING_F_cap_d21`, `HOUSING_F_door_d21`.
+- Volumes (cm³): front 235.9107 (d22), cap 9.9441, door 47.2633 (d21); the rest as in d19.
+- Exports: `~/Documents/HA_v5f_front.step` (d22), `HA_v5f_cap.step`, `HA_v5f_door.step` (d21; world frame),
+  `~/Documents/HA Panel v5 - tapered revF-d22.f3d` (98.8 MB). The front's STEP copy reads 235.8809 cm³ (a
+  transformed copy reads a few hundredths low; d21's read 235.2358). "HA Panel v5 - exploded prints (d19)" predates d21.
+- Hidden copies: `HOUSING_F_front_d21`, `HOUSING_F_cap_d21`, `HOUSING_F_door_d21`, `HOUSING_F_front_d22`.
+- F6 (d22, hidden, under Daniel's 13:20 rule for functional prints): each cap-screw side pad's first layer hung off one rib
+  and printed on a ~140 mm tree with interface on the M3 head seat. A web to the back pad's outboard rib and a 1.6 rib with
+  a 46° underside from the slab-boss plate anchor it on three sides. In the slice the pad's first layer is now one bridge
+  (≈ 25 mm, side pad's rib to the back pad's inboard rib), but PrusaSlicer still hung interface under every pad's outline and
+  screw hole: support above z 162 under the side pads 0.29 / 0.30 → 0.25 / 0.25 cm³. With support blockers under the four
+  pads (print plan) no support touches a pad or a head seat and the trees under the side pads go (z 28–160: 1.00 / 1.31 →
+  0.05 / 0.26 cm³); front 15 h 58 → 15 h 38 with those and the exhaust / lip-pocket blockers (PrusaSlicer, the audit's
+  profile).
+- Daniel's decisions, the status of every finding, the print plan and the bench checks:
+  `claude/enclosure-v5-revF-print-audit-response-2026-11-07.md`.
