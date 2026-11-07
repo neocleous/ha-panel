@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "ha_panel")(type "KiCad")(uri "${KIPRJMOD}/lib/ha_panel.kicad_sym")(options "")(descr "HA panel custom symbols"))
+)

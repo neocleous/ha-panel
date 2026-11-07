@@ -1,0 +1,26 @@
+# HA panel — main board
+
+Status: **block 1 — schematic (checkpoint 1, 2026-11-07).** Layout (block 2) and fab files, BOM and assembly notes (block 3) follow.
+
+- **KiCad 9.0.9.** Open `main-board.kicad_pro`. Project libraries: `lib/ha_panel.kicad_sym` (custom symbols: TAS5756M, TPS16630, NID100-5, TPS70933, +20V power symbol) and `lib/ha_panel.pretty` (custom footprints, created in block 2).
+- **Schematic PDF:** `main-board-schematic.pdf` (5 pages).
+- **ERC:** 0 errors, 6 warnings — all "footprint not found in library ha_panel" for the three footprints drawn in block 2 (TAS5756M HTSSOP-48 PowerPAD with via array, NID100 SIP-13, CODACA CSBA0850). Report: `erc-report.txt`.
+- **Notes with every value's source:** `NOTES.md`. **GPIO lead pin table and plug maps:** `gpio-leads.md`.
+- `gen/` holds the Python that generated the schematic (sexpr writer, KiCad symbol loader, sheet builder). From checkpoint 1 on, the KiCad files are the source of truth; the scripts are kept for provenance (symbol UUIDs are deterministic, so a regeneration keeps the PCB links).
+
+## Sheets
+1. Root — index.
+2. **20 V inlet and eFuse** — J1 (5807 pigtail) → F1 0453005.MR → TPS16630 (UVLO 17.05 V, OVP 24.06 V, I_OL 3.28 A, dV/dt 19.6 ms) → +20V bus with SMBJ22A.
+3. **5 V supply and outputs** — Mean Well EMC circuit (120 µF – SRR1260-150M – 120 µF) → NID100-5 (enabled by the eFuse PGOOD) → 22 µF + SMBJ6.0A-E → Pi branch (0453010.MR → wire link LK1 → USB4105, Rp 10 kΩ) and radar branch (0453001.MR). DNP trim network R8/R9.
+4. **3.3 V, Pi link, XH, D4a** — TPS70933 LDO (EN = Pi 3V3) → sensor PTC and amp logic rail; GPIO landing J3/J4 (13 wire pads); radar and touch XH headers; D4a ReSpeaker tap J7 with six DNP 0 Ω links.
+5. **Amplifier** — TAS5756M stereo BTL per SLAS988B Fig. 79 / Table 22 with the DigiAMP+ wiring (`rpi-digiampplus`: I²C 0x4C, GPIO22 mute), 20 dBV at 768 kHz, type-2 LC 10 µH + 0.68 µF, speaker XH headers.
+
+## Default fit (spin 1)
+| Option | Default | Alternative |
+|---|---|---|
+| Echo reference (D4a) | **Topology A, USB reference**: R20–R25 open | Topology B, I²S reference: fit R20–R23 (+R24/R25), I²S firmware, Pi as I²S clock consumer |
+| NID trim (V20) | R8, R9 open (5.0 V) | R8 Trim→Com raises Vout; value found on the bench via TP13 |
+| Amp logic rail | R26 fitted (board LDO) | R27 instead of R26 (Pi 3V3) |
+| I²S series | R14–R16 0 Ω | 22–47 Ω if edges ring |
+| NID enable | R7 0 Ω (eFuse PGOOD) | R7 open = NID free-running |
+| Pi branch | LK1 wire fitted | LK1 open + 10 A meter (bench 2.7) |

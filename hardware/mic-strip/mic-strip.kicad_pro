@@ -1,0 +1,25 @@
+{
+  "board": {},
+  "boards": [],
+  "libraries": {
+    "pinned_footprint_libs": [],
+    "pinned_symbol_libs": []
+  },
+  "meta": {
+    "filename": "mic-strip.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {},
+  "pcbnew": {},
+  "schematic": {
+    "legacy_lib_dir": "",
+    "legacy_lib_list": []
+  },
+  "sheets": [
+    [
+      "31d39363-56c9-5912-b886-242038b2ea79",
+      "Root"
+    ]
+  ],
+  "text_variables": {}
+}
