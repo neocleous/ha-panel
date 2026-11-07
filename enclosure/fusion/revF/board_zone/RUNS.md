@@ -1,4 +1,4 @@
-# Main-board outline study — runs (2026-11-07)
+# Main-board outline study and rev 2 body update — runs (2026-11-07 / 08)
 
 Question (electronics brief 2026-11-07 22:52, Project doc `claude/brief-main-board-outline-2026-11-07.md`): with every SMD
 part on the front, how big can the main board be at the current plane (front face y −63.4, 1.6 thick)?
@@ -44,3 +44,30 @@ volume 235.9236 cm³ against the body's 235.9107.
   (1.33), cradle / PD board 2.64 (11.90); back gap to the door ≥ 1.08 (tab top corners; 2.12 on the centre line); J2 plug unchanged (mouth line).
 - Plane moves (free area within |x| ≤ 45 above z 34, front ≥ 6, back ≥ 1; current 6,832 mm²): 4 mm back 5,618, 2 mm back
   6,224, 2 mm forward 7,421, 4 mm forward 7,662; tilt 3° top back 5,810, 3° top forward 7,844, 6° top forward 8,728.
+
+## e2 — main board rev 2 in the model (2026-11-08)
+Electronics: `claude/report-main-board-rev2-2026-11-08.md`, `hardware/main-board/MAIN_env.md` rev 2 (docs @ 733cb5a): the
+board is T's base, 90 × 55 (z 34–89, −x top corner cut); holes, connectors and K20 lengths unchanged. Answer: Project doc
+`claude/report-main-board-rev2-checks-2026-11-08.md`.
+
+| When | Script | Settings | Result |
+|---|---|---|---|
+| 2026-11-08 00:43:42 | `fusion/v5f_e2a_activate.py` | readOnly; activates the design (the exploded-prints copy was active) | 0.6 s; version 37 = latest, unmodified |
+| 2026-11-08 00:44:38 | `fusion/v5f_e2b_main_board_rev2.py`, first run | modifying | built the bodies at design x ±45 instead of x_rel ±45 (no XC offset), i.e. 2.55 mm toward +x_rel; seen in the bodies' boxes, not saved |
+| 2026-11-08 00:45:20 | `fusion/v5f_e2b0_undo_shift.py` | modifying; checks the three misplaced bodies by volume and design x-range, deletes them, gives the originals back their names | originals 7.2 / 130.14 / 15.75 cm³ again |
+| 2026-11-08 00:45:46 | `fusion/v5f_e2b_main_board_rev2.py`, corrected (x = XC + x_rel, placement check added) | modifying; guard volumes and names | MAIN_pcb 7.9192 (x_rel ±45), MAIN_front_env 146.9829, MAIN_back_env 14.2437 cm³, 1 lump each, as computed by hand; old bodies hidden as `MAIN_*_e2` |
+| 2026-11-08 00:46:50 | `fusion/v5f_e2c_checks.py` | readOnly; the six bodies (new, old) against 90 current bodies; TemporaryBRep intersection volume, else measure-manager minimum distance, for boxes within 1 mm | 12.5 s; table in the answer |
+| 2026-11-08 00:54:48 | `fusion/v5f_e2d_save.py` | saves, exports the f3d, re-activates the exploded-prints copy | version 38 "rev F WIP 2026-11-08 e2: main board rev 2 …"; `~/Documents/HA Panel v5 - tapered revF-e2.f3d` 98.6 MB |
+| 2026-11-08 00:55:31 | `fusion/v5f_e2e_verify.py` | readOnly, without activation | version 38 = latest, description as saved, unmodified; MAIN bodies as above |
+
+Bodies (world, x_rel): MAIN_pcb y −65.0…−63.4 on the outline. MAIN_front_env y −63.4…−33.4 for z 35.8–89 and y −63.4…−39.2
+for z 34–35.8, without x < −41.5 ∧ z > 83.5. MAIN_back_env y −65.0…−67.9 without the bare corners (x < −38 or > 43.5,
+z > 82), plus J2's courtyard x 19.72–30.28, z 34–43.67 to y −68.5.
+
+Offline (same container; `access*.py` read the `bz.py` column cache in `../bz/cache` and the board file on `docs` @ 733cb5a):
+
+| Script | What | Result |
+|---|---|---|
+| `offline/kpcb.py` | reads footprints (reference, layer, position, courtyard, pads) and Edge.Cuts from a `.kicad_pcb` | rev 2 and 50da2b8: every tall part and connector at the same place |
+| `offline/door_sweep.py` | door taken off straight back: door samples (0.25 mm) ahead of each body's rear face over its footprint; gap behind | board 4.18 mm from that door material (old 6.27); door ≥ 1.95 mm behind the board (old 2.90), at the +x top corner; the 2.9 back envelope touches at the bare zone's edge (x 43.5, z 89) |
+| `offline/access.py`, `access2.py`, `access4.py`, `access6.py`, `access7.py` | plugging the front-face leads after the board is on: 1 mm voxels; obstacles = step-10 parts (cap on or off, cradle in or out) + board slab + parts (courtyard × MAIN_env heights); a fingertip ball travels from behind the open back to the plug top (y −53.6); hand ball for the finger length | top edge 84 and 89 give the same result. J1, J5, J8, J9: Ø20 fingertip touches. J6: Ø14 gets within 1.1 mm, Ø16–20 within 2.1 (C7 beside it); without C7, Ø20 touches. All five over the top edge: sealing it stops Ø20, sealing below or the sides changes nothing |

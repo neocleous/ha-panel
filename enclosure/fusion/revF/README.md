@@ -244,6 +244,7 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_d22f_export_mesh.py`, `print_audit/slicer/d22_*` | d | the d22 front as STL (the audit's mesh settings) and PrusaSlicer 2.7.2 runs on the audit's ASSUMED profile: the front with and without the F6 parts; door and boxes at 0.4 / 0.20 vs 0.6 / 0.30; cap, slab and grommet at the planned layer heights | front d19 / d22 / d22 with the plan's pad, exhaust and lip-pocket blockers (3MF): 15 h 58 / 15 h 58 / 15 h 38, support 86.0 / 85.9 / 83.2 cm³; above z 162 under the side pads 0.29 / 0.30 → 0.25 / 0.25 → 0.05 / 0.05 cm³, head-seat interface 6 → 5 → 0 mm³. Door at 0.4: 4 h 11 with trees, 2 h 42 without (0.6: 2 h 20 / 1 h 29); boxes L / R 1 h 19 / 1 h 38 (0.6: 55 / 68 min); cap 27 → 38 min (0.20 → 0.12); slab 1 h 04 → 1 h 34 (0.20 → 0.10); grommet 12 → 19 min. The F6 parts as separate STL solids (`d22_run_f6.sh`, web / web + rib) were stopped: superseded by the built d22 front |
 | `v5f_d22g_save_export.py` | d | version d22, f3d, STEP front | see the print audit checkpoint |
 | `board_zone/` (`fusion/v5f_e1a_list_bodies.py`, `fusion/v5f_e1b_meshes.py`, `offline/*`) | e | read-only: main-board outline study (all SMD on the front, electronics brief 2026-11-07 22:52) – body list and world meshes read without activating the design, then y-ray column maps at the board plane: slab, door sweep, front and back gaps; runs in `board_zone/RUNS.md` | outline T 6,139 mm² / maximum 6,876 mm² (today 4,500) with no print and no connector change; see the e1 checkpoint |
+| `board_zone/fusion/v5f_e2a…e2e`, `board_zone/offline/{kpcb,door_sweep,access*}.py` | e | main board rev 2 (MAIN_env rev 2, docs 733cb5a): MAIN_pcb 90 × 55 (z 34–89, −x top corner cut), MAIN_front_env 30 / 24.2 below z 35.8 without the K5 corner, MAIN_back_env 2.9 + J2 3.5 without the bare top corners; old bodies hidden as `MAIN_*_e2`; checks against 90 bodies, door taken off, reach for plugging the front-face leads; runs in `board_zone/RUNS.md` | version 38; no new interference; see the e2 checkpoint |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -1055,3 +1056,13 @@ Daniel 22:48: no SMD on the main board's back, so the board grows. Study in `boa
   6,876 mm². Limits: the door's sweep and back wall, the K5 and cap-key lanes, the J2 plug path and the cradle.
 - Moving the plane back loses area; 2 mm forward gains ≈ 590 mm² but moves the bracket bosses and J2.
 - Answer, zones and polygons: `claude/report-main-board-outline-2026-11-07.md`.
+
+## Main board rev 2 – e2 (2026-11-08)
+Electronics rev 2 (`claude/report-main-board-rev2-2026-11-08.md`): T's base only, 90 × 55, every SMD part on the front.
+- Version 38 "rev F WIP 2026-11-08 e2 …": MAIN_pcb, MAIN_front_env and MAIN_back_env rebuilt to MAIN_env rev 2; the previous
+  ones hidden as `MAIN_*_e2`. No print changes.
+- Checks: no new interference. Door ≥ 1.77 mm from the board (+x top corner; was 2.64) and 4.18 mm from its sweep;
+  cap-key lanes 0.20 mm behind the 2.9 back envelope at the top edge (x ±30); the K5 lane clips the front envelope's front
+  1.2 mm at x < −43.7, z ≈ 83 (0.99 mm³, was 3.08).
+- Leads after mounting: J1, J5, J8, J9 yes, as before; J6 tight because of C7 (as before).
+- Answer: `claude/report-main-board-rev2-checks-2026-11-08.md`.
