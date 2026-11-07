@@ -234,6 +234,10 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_d19e_front_regions.py`, `v5f_d0_sections.py` (d19f planes) | d | read-only: every support region (≥ 2 mm²) of the front floor down and of the cap, door, 5807 cradle, boxes, carrier and hood in their orientations; sections and plans round the cap seat (z 150–182), the LD2410C cradle and the front's bottom edge | front: 550 regions, 11 497 mm²; 49 of ≥ 30 mm² hold 9 610: cloth recess 1 757, bottom edge 725 + 2 × 231 + 2 × 55, under-slab groove 659 + 426, slab ledges 499 + 468 + 107 + 49, rear rim 647, cradle floor 329, BME680 tray 305 + 32 (45° faces and the 1.2 flat at the wall's foot), cap seat, its four screw lobes and the vent bars (z 160–172) ≈ 1 400 – ledges on the back wall's top and bridges of 9–17 mm between the vent ribs –, four Ø13 recesses at z 0.5 (4 × 129); 501 regions under 30 mm² hold 1 887 |
 | `v5f_d19g_save_export.py` | d | version d19, f3d, STEP main_bracket | see the d19 checkpoint |
 | `v5f_d20a_exploded_doc.py` | d | Daniel 23:20 "an exploded view of the model in Fusion so I can inspect the parts": the 14 prints as of d19 copied into a new direct-design document, one component per print, world frame (z up, x centred), each occurrence moved by d18a's offset; d18a's three colours; saved next to the design model; the design model only read | "HA Panel v5 - exploded prints (d19)", version 1, 14 components, volumes as the copies; materials Steel as in the design model (no masses from it) |
+| `v5f_d21b_face_probe.py` | d | read-only: the B-rep faces behind the print audit's sub-millimetre options (`claude/report-print-audit-2026-11-07.md` F8, F10, F14): the front's four cap pads (lobe r 5.5 round the screw axis plus an arm, tops z 172.5, Ø3.4 holes), the cap's four bosses (Ø8, ends 172.5, Ø4.0 holes), the door's USB-C cutout (x ±12.2, z 13.3–27.9, sharp corners), the LD2410C slot | pad tops 114.17 (SL / SR) and 101.42 (BL / BR) mm², one planar face each; boss ends 37.70; cutout top 60.97; slot 16.3 (t) × 4.0 (n) × 22.3, roof face 65.2 mm² with corners at (−76.73, −29.04), (−73.30, −31.10), (−64.91, −17.13), (−68.34, −15.07); open on its +n side |
+| `v5f_d21c_audit_fixes.py` | d | the audit's sub-millimetre options, sized for 0.20 mm layers: pads +0.1 and cap bosses −0.1 (contact 172.6 – a layer boundary of the front printed from z 0 and of the cap printed top face down from z 180; the cap does not move), door cutout top 27.9 → 28.0 (door from z 2.8: 126 layers), slot roof 138.65 → 138.85; each face extruded by its step as a new tool body, TemporaryBRep union / cut of a copy, tools deleted | front 235.2269 → 235.2569 (+29.98 mm³), cap 9.9591 → 9.9441 (−15.08), door 47.2694 → 47.2633 (−6.09) cm³, 1 lump each; 16 / 16 probes; old → `*_d21` |
+| `v5f_d21d_checks.py` | d | read-only: the front's added and removed material (new minus `HOUSING_F_front_d21`) and the added part vs every part and keep-out; cap / front, door / grommet, door / cradle, front / LD2410C, door / front; the pad / boss contact | added 43.02 mm³ in 4 lumps (z 172.5–172.6), removed 13.04 mm³ (slot roof); added ∩ parts 0; the five pairs 0 mm³; pad and boss meet at 172.6; the board's top edge 0.35 under the roof |
+| `v5f_d21g_save_export.py` | d | version d21, f3d, STEP front / cap / door | see the d21 checkpoint |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -1000,3 +1004,21 @@ prints top face down (the top takes the plate's texture; the edge round's first 
 - Volumes (cm³): MAIN_BRACKET 6.5563 (2 lumps); the rest as in d17.
 - Exports: `~/Documents/HA_v5f_main_bracket.step` (world frame), `~/Documents/HA Panel v5 - tapered revF-d19.f3d` (93.3 MB).
 - Hidden copies: `MAIN_BRACKET_d19`.
+
+## Print audit response – d21 (2026-11-07)
+The print audit (`claude/report-print-audit-2026-11-07.md`, handover `claude/handover-print-audit-2026-11-07.md`, scripts
+and settings in `print_audit/`) found Blocker 0 · Major 3 · Minor 12 · Note 12 and no print that needs a model change.
+Version "rev F WIP 2026-11-07 d21 …".
+- Applied without asking (sub-millimetre and hidden), sized for 0.20 mm layers:
+  - F8 – the cap printed 0.2 low after layer rounding: the front's four cap pads +0.1 and the cap's bosses −0.1, so they meet
+    at 172.6, a layer boundary of both prints. The cap does not move; the insert holes are 5.9 deep for the 5.7 Ruthex M3.
+  - F10 – the door's USB-C cutout top 27.9 → 28.0: the grommet sleeve keeps 0.2 after rounding (was 0.1 → 0.0).
+  - F14 – the LD2410C slot roof 138.65 → 138.85: 0.35 over the board's top edge (0.3 after rounding, before any sag of
+    the bridged roof).
+- Checks (d21d): the added material ∩ every part and keep-out 0; cap / front, door / grommet, door / cradle, front / LD2410C
+  and door / front 0 mm³; pad and boss meet at 172.6. The removed material only opens gaps, so the insertion paths can't get
+  worse (LD2410C in, grommet on, cap down).
+- Volumes (cm³): front 235.2569, cap 9.9441, door 47.2633; the rest as in d19.
+- Exports: `~/Documents/HA_v5f_front.step`, `HA_v5f_cap.step`, `HA_v5f_door.step` (world frame),
+  `~/Documents/HA Panel v5 - tapered revF-d21.f3d` (96.0 MB). "HA Panel v5 - exploded prints (d19)" predates d21.
+- Hidden copies: `HOUSING_F_front_d21`, `HOUSING_F_cap_d21`, `HOUSING_F_door_d21`.
