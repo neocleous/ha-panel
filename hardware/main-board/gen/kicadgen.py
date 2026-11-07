@@ -360,11 +360,21 @@ class Project:
     def write_project_files(self, sym_libs=(), fp_libs=()):
         """Minimal .kicad_pro plus project lib tables (paths relative to ${KIPRJMOD})."""
         import json
+        prev = {}
+        pp = os.path.join(self.outdir, self.name + '.kicad_pro')
+        if os.path.exists(pp):
+            try:
+                prev = json.load(open(pp))
+            except Exception:
+                prev = {}
         pro = {'board': {}, 'boards': [], 'libraries': {'pinned_footprint_libs': [], 'pinned_symbol_libs': []},
                'meta': {'filename': self.name + '.kicad_pro', 'version': 1},
                'net_settings': {}, 'pcbnew': {}, 'schematic': {'legacy_lib_dir': '', 'legacy_lib_list': []},
                'sheets': [[self.root.uuid, 'Root']] + [[sh.sheet_sym_uuid, sh.name] for sh in self.sheets],
                'text_variables': {}}
+        for k in ('board', 'net_settings', 'pcbnew'):          # keep the PCB editor's settings (design rules)
+            if prev.get(k):
+                pro[k] = prev[k]
         with open(os.path.join(self.outdir, self.name + '.kicad_pro'), 'w', encoding='utf-8') as f:
             json.dump(pro, f, indent=2)
             f.write('\n')

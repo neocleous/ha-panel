@@ -182,7 +182,7 @@
 			)
 		)
 	)
-	(text "HA panel main board - schematic index\nSheet 2: 20 V inlet, fuse, TPS16630 eFuse, bus TVS\nSheet 3: NID100-5 5 V supply, Pi USB-C output, radar 5 V\nSheet 4: 3.3 V LDO, Pi GPIO landing, radar/touch XH, D4a echo-reference links\nSheet 5: TAS5756M amplifier and speaker outputs"
+	(text "HA panel main board - schematic index\nSheet 2: 20 V inlet, fuse, TPS16630 eFuse, bus TVS\nSheet 3: NID100-5 5 V supply, Pi USB-C output, radar 5 V\nSheet 4: 3.3 V LDO, Pi GPIO landing, radar/touch XH, sensor landing, D4a echo-reference links\nSheet 5: TAS5756M amplifier and speaker outputs"
 		(exclude_from_sim no)
 		(at 25.4 20.32 0)
 		(effects
@@ -191,7 +191,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "3d4af741-4388-4f64-87a6-92111ef286a4")
+		(uuid "df573b9b-edb1-430c-89e2-88aa8f3d8207")
 	)
 	(sheet_instances
 		(path "/"

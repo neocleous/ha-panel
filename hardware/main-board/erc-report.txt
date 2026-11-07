@@ -1,25 +1,7 @@
-ERC report (2026-11-07T18:55:04+0100, Encoding UTF8)
+ERC report (2026-11-07T21:00:54+0100, Encoding UTF8)
 Report includes: Errors, Warnings, Exclusions
 
 ***** Sheet /
-[footprint_link_issues]: Footprint 'TI_DCA0048A_HTSSOP-48-1EP' not found in library 'ha_panel'.
-    ; warning
-    @(190.50 mm, 129.54 mm): Symbol U100 [TAS5756M]
-[footprint_link_issues]: Footprint 'L_Codaca_CSBA0850' not found in library 'ha_panel'.
-    ; warning
-    @(233.68 mm, 182.88 mm): Symbol L100 [L]
-[footprint_link_issues]: Footprint 'L_Codaca_CSBA0850' not found in library 'ha_panel'.
-    ; warning
-    @(233.68 mm, 213.36 mm): Symbol L101 [L]
-[footprint_link_issues]: Footprint 'L_Codaca_CSBA0850' not found in library 'ha_panel'.
-    ; warning
-    @(309.88 mm, 182.88 mm): Symbol L103 [L]
-[footprint_link_issues]: Footprint 'L_Codaca_CSBA0850' not found in library 'ha_panel'.
-    ; warning
-    @(309.88 mm, 213.36 mm): Symbol L102 [L]
-[footprint_link_issues]: Footprint 'MeanWell_NID100_SIP-13' not found in library 'ha_panel'.
-    ; warning
-    @(165.10 mm, 73.66 mm): Symbol PS1 [NID100-5]
 
 ***** Sheet /20 V inlet and eFuse/
 
@@ -29,4 +11,4 @@ Report includes: Errors, Warnings, Exclusions
 
 ***** Sheet /Amplifier/
 
- ** ERC messages: 6  Errors 0  Warnings 6
+ ** ERC messages: 0  Errors 0  Warnings 0

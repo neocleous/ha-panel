@@ -5,6 +5,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import kicadgen as kg
 import lib_ha_panel
+import footprints
 import symlib
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else '/home/claude/work/out/main-board'
@@ -15,7 +16,7 @@ R0805 = 'Resistor_SMD:R_0805_2012Metric'
 C0603 = 'Capacitor_SMD:C_0603_1608Metric'
 C0805 = 'Capacitor_SMD:C_0805_2012Metric'
 C1206 = 'Capacitor_SMD:C_1206_3216Metric'
-TP_THT = 'TestPoint:TestPoint_THTPad_D2.0mm_Drill1.0mm'
+TP_BACK = 'TestPoint:TestPoint_Pad_D1.5mm'
 NANO2 = 'Fuse:Fuse_Littelfuse-NANO2-451_453'
 
 
@@ -38,8 +39,8 @@ def design(prj):
     s_amp = prj.add_sheet('Amplifier', 'amplifier.kicad_sch', 'Main board - amplifier')
 
     def tp(sh, ref, net, x, y, label, note=''):
-        sh.comp(ref, 'Connector:TestPoint', label, (x, y), nets={'1': net}, footprint=TP_THT,
-                fields=F(note=note or 'test pad (THT, reachable from the back face)'), in_bom=False)
+        sh.comp(ref, 'Connector:TestPoint', label, (x, y), nets={'1': net}, footprint=TP_BACK,
+                fields=F(note=note or 'bare test pad on the back (door side): probe with the door off'), in_bom=False)
 
     # =================================================================== 20 V INLET
     s = s_in
@@ -132,21 +133,23 @@ def design(prj):
     s.comp('F2', 'Device:Fuse', '10 A 0453010.MR', (241.3, 60.96), rot=90, nets={'1': '+5V', '2': '5V_PI_F'},
            footprint=NANO2, fields=F('0453010.MR', 'Littelfuse', 'F3141CT-ND', '10 A very fast, 5.6 mOhm cold', 'Pi branch'))
     s.comp('LK1', 'Jumper:Jumper_2_Bridged', 'wire link', (289.56, 60.96), nets={'1': '5V_PI_F', '2': 'VBUS_PI'},
-           footprint='TestPoint:TestPoint_Bridge_Pitch7.62mm_Drill1.3mm',
+           footprint='ha_panel:WireLink_P7.62mm_D1.3mm',
            fields=F(spec='tinned Cu wire 1.0 mm (18 AWG)', note='Pi-branch current link: open for bench 2.7 (10 A meter in series)'))
-    s.comp('J2', 'Connector:USB_C_Receptacle_USB2.0_16P', 'USB4105-GF-A', (360.68, 101.6),
+    s.comp('J2', 'Connector:USB_C_Receptacle_USB2.0_16P', 'USB4085-GF-A', (360.68, 101.6),
            nets={'A4': 'VBUS_PI', 'A9': 'VBUS_PI', 'B4': 'VBUS_PI', 'B9': 'VBUS_PI', 'A5': 'PI_CC1', 'B5': 'PI_CC2',
                  'A6': None, 'B6': None, 'A7': None, 'B7': None, 'A8': None, 'B8': None,
                  'A1': 'GND', 'A12': 'GND', 'B1': 'GND', 'B12': 'GND', 'S1': 'GND'},
-           footprint='Connector_USB:USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal',
-           fields=F('USB4105-GF-A', 'GCT', '2073-USB4105-GF-ACT-ND', '5 A VBUS, 3.31 mm tall (drawing B4)',
-                    'source port to the Pi: VBUS + Rp only, no data'))
+           footprint='Connector_USB:USB_C_Receptacle_GCT_USB4085',
+           fields=F('USB4085-GF-A', 'GCT', spec='USB 2.0 Type-C, THT dip / PCB top mount, 5.00 A VBUS, 6.25 A GND, 48 V; '
+                    '3.46 above the board, axis 1.88 (GCT USB4085 rev B 2023-02-28)',
+                    note='source port to the Pi: VBUS + Rp only, no data. Door side (B), soldered from the Pi side; '
+                         'mouth flush with the bottom edge (decision 3A)'))
     s.comp('R10', 'Device:R', '10k 1%', (317.5, 111.76), nets={'1': 'VBUS_PI', '2': 'PI_CC1'}, footprint=R0603,
            fields=F(spec='10 kOhm 1% 0603', note='Rp to 5 V = 3.0 A advertisement (USB Type-C)'))
     s.comp('R11', 'Device:R', '10k 1%', (330.2, 111.76), nets={'1': 'VBUS_PI', '2': 'PI_CC2'}, footprint=R0603,
            fields=F(spec='10 kOhm 1% 0603', note='Rp to 5 V = 3.0 A advertisement'))
     s.comp('C8', 'Device:C', '10u 25V', (317.5, 68.58), nets={'1': 'VBUS_PI', '2': 'GND'}, footprint=C1206,
-           fields=F(spec='10 uF 25 V X7R 1206', note='local at USB4105'))
+           fields=F(spec='10 uF 25 V X7R 1206', note='local at J2 (USB4085)'))
     s.comp('C9', 'Device:C', '100n 50V', (330.2, 68.58), nets={'1': 'VBUS_PI', '2': 'GND'}, footprint=C0603,
            fields=F(spec='100 nF 50 V X7R 0603'))
     # radar branch
@@ -167,8 +170,9 @@ def design(prj):
         '  fuse recommended 8 A; R.C.: on = open or 1.2-12 V, off = < 0.4 V; pin 12 "Trim (optional)", no formula published.',
         'L1 is a single winding in +Vin: the input return is the common board ground (non-isolated NID, amp on the same ground).',
         'External C on +5V: C7 22 uF + C8 10 uF (X7R 1206, ~70 % at 5 V) + C9 + C10 + LDO input path (behind 2.2 Ohm)  ~ 35 uF << 100 uF.',
-        'Pi output: 0453010.MR -> LK1 (wire link) -> USB4105 VBUS; CC1/CC2 Rp 10 k to 5 V (3 A); Pi uses PSU_MAX_CURRENT=5000.',
-        'Bench 2.7 test pads: 5V (NID out) | 5V_F (after fuse) | EXT5V (at USB4105) ; LK1 opened for the series current.',
+        'Pi output: 0453010.MR -> LK1 (wire link) -> J2 USB4085 VBUS; CC1/CC2 Rp 10 k to 5 V (3 A); Pi uses PSU_MAX_CURRENT=5000.',
+        'J2 USB4085-GF-A (THT, decision 3A) sits on the door side, mouth down at the bottom edge; all other parts on the Pi side.',
+        'Bench 2.7 test pads: 5V (NID out) | 5V_F (after fuse) | EXT5V (at J2) ; LK1 opened for the series current.',
         'Trim network DNP (D23/V20): R8 Trim->Com raises Vout, R9 Trim->+Vout lowers it (FB-divider convention, not published',
         '  by Mean Well). Spec lists pin 12 as "Trim (optional)" with no formula; on arrival measure R(pin 12-Com) unpowered and',
         '  Vout with a trimmer clipped from TP13 to GND before fitting R8. No response at pin 12 -> alternative-regulator decision.']),
@@ -233,7 +237,13 @@ def design(prj):
     s.comp('J6', 'Connector_Generic:Conn_01x04', 'B4B-XH-A touch', (238.76, 88.9),
            nets={'1': '3V3_SENS', '2': 'GND', '3': 'I2C_SDA', '4': 'I2C_SCL'},
            footprint='Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical',
-           fields=F('B4B-XH-A', 'JST', '455-B4B-XH-A-ND', note='rev C HOST cluster: VCC GND SDA SCL (no INT on rev C)'))
+           fields=F('B4B-XH-A', 'JST', '455-B4B-XH-A-ND', note='touch board (hardware/touch-board) HOST pads: VCC GND SDA SCL'))
+    s.comp('J10', 'Connector_Generic:Conn_02x04_Odd_Even', 'sensor landing (wire pads)', (330.2, 88.9),
+           nets={'1': '3V3_SENS', '3': 'GND', '5': 'I2C_SDA', '7': 'I2C_SCL',
+                 '2': '3V3_SENS', '4': 'GND', '6': 'I2C_SDA', '8': 'I2C_SCL'},
+           footprint='Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical', in_bom=False,
+           fields=F(note='wire pads (decision 5A): odd column BME680 (CJMCU-680 VCC GND SDA SCL), even column VEML6030 '
+                         '(3.3V GND SDA SCL); Dupont lead cut ends through the holes, soldered on the door side'))
 
     s.text('Echo-reference (D4a) - default topology A: all links OPEN', 208.28, 116.84, size=2.0, bold=True)
     s.comp('J7', 'Connector_Generic:Conn_01x08', 'D4a ReSpeaker tap', (238.76, 147.32),
@@ -259,6 +269,7 @@ def design(prj):
         'Pi pins: 3/5 SDA/SCL (GPIO2/3, 1.8 k pull-ups on the Pi); 8/10 TXD/RXD (GPIO14/15, uart0);',
         '  12/35/38/40 = GPIO18/19/20/21 I2S BCLK/LRCLK/DIN/DOUT; 15 = GPIO22 amp mute (rpi-digiampplus).',
         'I2C map: AT42QT1070 0x1B, VEML6030 0x48, TAS5756M 0x4C, BME680 0x76/0x77 (ReSpeaker 0x42/0x18 only if R24/R25 fitted).',
+        'Sensor branch 3V3_SENS (F4 0.2 A PTC): J6 touch board, J10 BME680 + VEML6030 (leads moved from the touch board, 5A).',
         'Topology B (bench 2.2): fit R20-R23 (+R24/R25 for XU316 I2C), jumper J7 to the ReSpeaker XIAO footprint, I2S firmware.']),
         25.4, 190.5)
 
@@ -269,9 +280,6 @@ def design(prj):
     s.comp('F5', 'Device:Polyfuse', '2.6 A 2920L260/33DR', (50.8, 45.72), rot=90, nets={'1': '+20V', '2': 'PVDD'},
            footprint='Fuse:Fuse_2920_7451Metric',
            fields=F('2920L260/33DR', 'Littelfuse', '18-2920L260/33DRCT-ND', 'PTC 2.6 A hold (1.81 A at 60 C), 33 V, R1max 75 mOhm'))
-    s.comp('C13', 'Device:C_Polarized', '120u 63V', (76.2, 53.34), nets={'1': 'PVDD', '2': 'GND'},
-           footprint='Capacitor_THT:CP_Radial_D10.0mm_P5.00mm',
-           fields=F('EEU-FR1J121B', 'Panasonic', 'P15289CT-ND', '120 uF 63 V', 'PVDD bulk behind the PTC'))
     s.pwr_flag('PVDD', (66.04, 60.96))
     tp(s, 'TP18', 'PVDD', 88.9, 38.1, 'PVDD')
     # PVDD decoupling (left side pins 6/7 and right side 41-43)
@@ -316,8 +324,9 @@ def design(prj):
     for lref, cref, a, b, x, y in lc:
         s.comp(lref, 'Device:L', '10u', (x, y), rot=90, nets={'1': a, '2': b},
                footprint='ha_panel:L_Codaca_CSBA0850',
-               fields=F('CSBA0850-100M', 'CODACA', '4044-CSBA0850-100MCT-ND', '10 uH, Isat 8 A (verify, block 3)',
-                        'LC output filter; Isat >= OCE 7.5 A keeps L >= 4.7 uH (SLAS988B 7.3)'))
+               fields=F('CSBA0850-100M', 'CODACA', '4044-CSBA0850-100MCT-ND',
+                        '10 uH +-20 %, Isat 3.50 A (L -10 %) / 8.00 A (L -30 %), DCR 31.6 mOhm max, Irms 5.60 A, 8.7 x 8.5 x 5.1',
+                        'LC output filter (CODACA CSBA0850 datasheet, revised 2026-03-16)'))
         s.comp(cref, 'Device:C', '0.68u 50V', (x + 22.86, y + 7.62), nets={'1': b, '2': 'GND'}, footprint=C0805,
                fields=F('CL21B684KBFVPNE', 'Samsung', '1276-7009-1-ND', '0.68 uF 50 V X7R 0805', 'LC filter C to GND (>1.8 x PVDD)'))
     s.comp('J8', 'Connector_Generic:Conn_01x02', 'B2B-XH-A speaker L', (294.64, 190.5),
@@ -353,9 +362,13 @@ def design(prj):
         '  window 2.33-3.10 V holds for GVDD 5.83-7.75 V). D22: software ceiling -4.0 dBFS keeps 10 W into 4 Ohm.',
         'LC: type 2 (L per leg, C to GND) as Fig. 79 and SLAA701B 1.3.2 for BD modulation; 10 uH + 0.68 uF: f0 61 kHz,',
         '  Q 0.52 at 4 Ohm (-0.8 dB at 20 kHz). Power budget cited SLAA701B 1.3.4.1 = type 1 (differential C) - corrected.',
+        'CSBA0850-100M: Isat 3.50 A (L -10 %) vs normal peak 2.6 A (10 W/4 Ohm 2.24 A + 0.33 A ripple at 768 kHz); at the 7.5 A',
+        '  OCE L >= 7 uH (-30 % at 8.00 A) vs 4.7 uH nominal / 1 uH min under short circuit (SLAS988B 7.3; CODACA 2026-03-16).',
         'Caps: TI Table 22 values; 0402 parts moved to 0603 (hand assembly D42). PVDD caps > 1.45 x PVDD, LC caps > 1.8 x PVDD.',
         'Overlay rpi-digiampplus: pcm5122@4c on i2c1, i2s_clk_producer, mute-gpios GPIO22 active high (driver sets 1 = unmute).',
-        'Thermal pad: via array + paste windows 70-80 % of the pad area (SLAS988B 11.1.3.2) - footprint in block 2.']),
+        'Thermal pad: via array + paste windows 70-80 % of the pad area (SLAS988B 11.1.3.2) - footprint in block 2.',
+        'No PVDD electrolytic at the amp (block 2, layout density): TI Table 22 says the 390 uF bulk "can be reduced or even removed";',
+        '  C5 (120 uF on +20V) feeds PVDD through F5 (75 mOhm max, tau 9 us), plus 4 x 22 uF + 2 x 0.1 uF at the PVDD pins.']),
         25.4, 243.84)
 
 
@@ -379,7 +392,7 @@ def build(out):
     prj.root.text('HA panel main board - schematic index\n'
                   'Sheet 2: 20 V inlet, fuse, TPS16630 eFuse, bus TVS\n'
                   'Sheet 3: NID100-5 5 V supply, Pi USB-C output, radar 5 V\n'
-                  'Sheet 4: 3.3 V LDO, Pi GPIO landing, radar/touch XH, D4a echo-reference links\n'
+                  'Sheet 4: 3.3 V LDO, Pi GPIO landing, radar/touch XH, sensor landing, D4a echo-reference links\n'
                   'Sheet 5: TAS5756M amplifier and speaker outputs', 25.4, 20.32, size=1.8)
     prj.write()
     prj.write_project_files(
@@ -387,9 +400,12 @@ def build(out):
         fp_libs=[('ha_panel', 'lib/ha_panel.pretty', 'HA panel custom footprints (block 2)')])
     pretty = os.path.join(out, 'lib', 'ha_panel.pretty')
     os.makedirs(pretty, exist_ok=True)
+    for k in ('tas', 'nid', 'csba', 'wirelink'):
+        footprints.ALL[k](pretty)
     with open(os.path.join(pretty, 'README.md'), 'w') as f:
-        f.write('# ha_panel footprints\n\nCreated in block 2 (layout): TI_DCA0048A_HTSSOP-48-1EP (TAS5756M, SLAS988B land '
-                'pattern + via array), MeanWell_NID100_SIP-13, L_Codaca_CSBA0850.\n')
+        f.write('# ha_panel footprints\n\nDrawn in block 2 from the datasheets (gen/footprints.py): '
+                'TI_DCA0048A_HTSSOP-48-1EP (TAS5756M, SLAS988B package addendum + via array + paste windows), '
+                'MeanWell_NID100_SIP-13 (NID100-SPEC 2024-10-30), L_Codaca_CSBA0850 (CODACA 2026-03-16).\n')
     return prj, seen
 
 

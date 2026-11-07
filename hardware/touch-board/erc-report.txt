@@ -1,0 +1,6 @@
+ERC report (2026-11-07T21:00:55+0100, Encoding UTF8)
+Report includes: Errors, Warnings, Exclusions
+
+***** Sheet /
+
+ ** ERC messages: 0  Errors 0  Warnings 0

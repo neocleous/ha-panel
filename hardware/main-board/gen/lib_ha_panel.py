@@ -74,6 +74,12 @@ def msm261():
                          bottom=bottom, width=15.24)
 
 
+def touch_electrode():
+    return kg.box_symbol('TouchElectrode', 'E', 'TouchElectrode', 'ha_panel:TouchElectrode_16x16mm_R2', '~',
+                         'Self-capacitance touch electrode: F.Cu copper under the solder mask, via to the back',
+                         left=[('1', 'E', 'passive')], width=7.62)
+
+
 def power_20v():
     s = symlib.load('power:+5V')
     s = copy.deepcopy(s)
@@ -94,7 +100,8 @@ def power_20v():
 
 def build(path, which=('tas', 'tps1663', 'nid', 'tps709', 'msm', '+20V')):
     syms = []
-    table = {'tas': tas5756m, 'tps1663': tps16630, 'nid': nid100, 'tps709': tps70933, 'msm': msm261, '+20V': power_20v}
+    table = {'tas': tas5756m, 'tps1663': tps16630, 'nid': nid100, 'tps709': tps70933, 'msm': msm261, '+20V': power_20v,
+             'electrode': touch_electrode}
     for k in which:
         syms.append(table[k]())
     kg.write_symbol_lib(path, syms)
