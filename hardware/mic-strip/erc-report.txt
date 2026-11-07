@@ -1,9 +1,6 @@
-ERC report (2026-11-07T18:51:40+0100, Encoding UTF8)
-Report includes: Errors, Warnings, Exclusions
+ERC report (2026-11-07T22:37:23+0100, Encoding UTF8)
+Report includes: Errors, Warnings
 
 ***** Sheet /
-[footprint_link_issues]: Footprint 'MEMSensing_MSM261DHP006_LGA-8_4x3mm' not found in library 'ha_panel'.
-    ; warning
-    @(177.80 mm, 76.20 mm): Symbol MK1 [MSM261DHP006]
 
- ** ERC messages: 1  Errors 0  Warnings 1
+ ** ERC messages: 0  Errors 0  Warnings 0

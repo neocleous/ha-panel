@@ -118,6 +118,15 @@ def build(board, reg, netname, classes):
             target = same[ln] if nn == netname else img(ln, net_clearance(nn, classes))
             s, e = t.GetStart(), t.GetEnd()
             _draw_stadium(ImageDraw.Draw(target), reg, s.x * T, s.y * T, e.x * T, e.y * T, t.GetWidth() * T)
+    for z in board.Zones():                       # rule areas that forbid tracks: obstacles on their layers
+        if not z.GetIsRuleArea() or not z.GetDoNotAllowTracks():
+            continue
+        for ln, lid in LAYERS.items():
+            if z.IsOnLayer(lid):
+                dr = ImageDraw.Draw(img(ln, 0.0))
+                for pl in _poly_px(reg, z.Outline()):
+                    if len(pl) > 2:
+                        dr.polygon(pl, fill=1)
     edge = Image.new('1', (reg.W, reg.H), 1)
     ol = pcbnew.SHAPE_POLY_SET()
     board.GetBoardPolygonOutlines(ol)
@@ -227,8 +236,8 @@ def route(board, netname, a, b, w, classes, via=(0.45, 0.2), margin=6.0, layers=
     if box:
         x0, y0, x1, y1 = box
     else:
-        x0 = max(0.0, min(a[0], b[0]) - margin); x1 = min(90.0, max(a[0], b[0]) + margin)
-        y0 = max(0.0, min(a[1], b[1]) - margin); y1 = min(50.0, max(a[1], b[1]) + margin)
+        x0 = max(-1.0, min(a[0], b[0]) - margin); x1 = min(91.0, max(a[0], b[0]) + margin)
+        y0 = max(-1.0, min(a[1], b[1]) - margin); y1 = min(51.0, max(a[1], b[1]) + margin)
     reg = Region(x0, y0, x1, y1)
     dist, edist, same = build(board, reg, netname, classes)
     clr = net_clearance(netname, classes)
@@ -355,8 +364,8 @@ def tracks_near(board, x, y, r=0.3, net=None):
 
 def drop_via(board, netname, pt, classes, w=0.3, via=(0.6, 0.3), layer='B', margin=4.0):
     """Connect same-net copper at pt (on `layer`) to a new via (for plane nets): shortest path to a via-legal cell."""
-    x0, y0 = max(0.0, pt[0] - margin), max(0.0, pt[1] - margin)
-    x1, y1 = min(90.0, pt[0] + margin), min(50.0, pt[1] + margin)
+    x0, y0 = max(-1.0, pt[0] - margin), max(-1.0, pt[1] - margin)
+    x1, y1 = min(91.0, pt[0] + margin), min(51.0, pt[1] + margin)
     reg = Region(x0, y0, x1, y1)
     dist, edist, same = build(board, reg, netname, classes)
     clr = net_clearance(netname, classes)
@@ -405,7 +414,7 @@ def stitch(board, classes, netname='GND', via=(0.6, 0.3), min_area=1.0):
             xs, ys = [p[0] for p in pts], [p[1] for p in pts]
             todo.append((min(xs), min(ys), max(xs), max(ys), pts))
     for x0, y0, x1, y1, pts in todo:
-        reg = Region(max(0, x0 - 0.5), max(0, y0 - 0.5), min(90, x1 + 0.5), min(50, y1 + 0.5))
+        reg = Region(x0 - 1.0, y0 - 1.0, x1 + 1.0, y1 + 1.0)
         im = Image.new('1', (reg.W, reg.H), 0)
         ImageDraw.Draw(im).polygon([reg.px(*p) for p in pts], fill=1)
         inside = np.array(im, dtype=bool)

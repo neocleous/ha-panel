@@ -2,7 +2,7 @@
 	(version 20241209)
 	(generator "ha_panel_gen")
 	(generator_version "9.0")
-	(symbol "MSM261DHP006"
+	(symbol "IM69D120"
 		(pin_names
 			(offset 1.016)
 		)
@@ -18,7 +18,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MSM261DHP006"
+		(property "Value" "IM69D120V01"
 			(at -7.62 -8.89 0)
 			(effects
 				(font
@@ -27,7 +27,7 @@
 				(justify left top)
 			)
 		)
-		(property "Footprint" "ha_panel:MEMSensing_MSM261DHP006_LGA-8_4x3mm"
+		(property "Footprint" "ha_panel:Infineon_IM69D120_PG-LLGA-5-1"
 			(at 0 0 0)
 			(effects
 				(font
@@ -36,7 +36,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/C22390138.pdf"
+		(property "Datasheet" "https://www.infineon.com/assets/row/public/documents/24/49/infineon-im69d120-datasheet-en.pdf"
 			(at 0 0 0)
 			(effects
 				(font
@@ -45,7 +45,7 @@
 				(hide yes)
 			)
 		)
-		(property "Description" "Top-port PDM MEMS microphone, 1.6-3.6 V, LGA-8 4 x 3 x 1 mm"
+		(property "Description" "Bottom-port PDM MEMS microphone, -26 dBFS, SNR 69 dB(A), 1.62-3.6 V, PG-LLGA-5-1 4 x 3 x 1.2"
 			(at 0 0 0)
 			(effects
 				(font
@@ -54,7 +54,7 @@
 				(hide yes)
 			)
 		)
-		(symbol "MSM261DHP006_0_1"
+		(symbol "IM69D120_0_1"
 			(rectangle
 				(start -7.62 7.62)
 				(end 7.62 -7.62)
@@ -67,29 +67,11 @@
 				)
 			)
 		)
-		(symbol "MSM261DHP006_1_1"
+		(symbol "IM69D120_1_1"
 			(pin power_in line
 				(at -10.16 5.08 0)
 				(length 2.54)
 				(name "VDD"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "1"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin input line
-				(at -10.16 2.54 0)
-				(length 2.54)
-				(name "L/R"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -105,9 +87,27 @@
 				)
 			)
 			(pin input line
+				(at -10.16 2.54 0)
+				(length 2.54)
+				(name "SELECT"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+				(number "4"
+					(effects
+						(font
+							(size 1.27 1.27)
+						)
+					)
+				)
+			)
+			(pin input line
 				(at -10.16 0 0)
 				(length 2.54)
-				(name "CLK"
+				(name "CLOCK"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -132,7 +132,7 @@
 						)
 					)
 				)
-				(number "4"
+				(number "1"
 					(effects
 						(font
 							(size 1.27 1.27)
@@ -141,7 +141,7 @@
 				)
 			)
 			(pin power_in line
-				(at -3.81 -10.16 90)
+				(at 0 -10.16 90)
 				(length 2.54)
 				(name "GND"
 					(effects
@@ -151,60 +151,6 @@
 					)
 				)
 				(number "5"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at -1.27 -10.16 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "6"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 1.27 -10.16 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "7"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-			)
-			(pin power_in line
-				(at 3.81 -10.16 90)
-				(length 2.54)
-				(name "GND"
-					(effects
-						(font
-							(size 1.27 1.27)
-						)
-					)
-				)
-				(number "8"
 					(effects
 						(font
 							(size 1.27 1.27)

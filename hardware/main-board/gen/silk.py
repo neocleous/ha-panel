@@ -78,3 +78,19 @@ def place(board, W=90.0, H=50.0, skip_prefix=('H', 'LOGO')):
 def _area(fp):
     bb = fp.GetBoundingBox(False)
     return bb.GetWidth() * bb.GetHeight()
+
+
+def trim_edge(board, W, H, margin=0.25, keep=None):
+    """Remove footprint silkscreen graphics that come within `margin` of the board edge (pin-1 marks on tiny boards)."""
+    n = 0
+    for fp in board.GetFootprints():
+        for g in list(fp.GraphicalItems()):
+            if g.GetLayer() not in (pcbnew.F_SilkS, pcbnew.B_SilkS) or g.GetClass() in ('PCB_FIELD', 'PCB_TEXT'):
+                continue
+            b = _box(g.GetBoundingBox())
+            if b[0] < margin or b[1] < margin or b[2] > W - margin or b[3] > H - margin:
+                fp.Remove(g)
+                if keep is not None:
+                    keep.append(g)
+                n += 1
+    return n

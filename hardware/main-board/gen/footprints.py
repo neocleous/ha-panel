@@ -181,6 +181,28 @@ def wirepads(d):
     return f.name
 
 
+def wirepads_col(d):
+    f = FP('WirePads_1x05_P1.10mm_2.0x0.7mm', 'Five SMD wire pads 2.0 x 0.7 at 1.1 pitch in one column (mic strip cable, '
+           'soldered conductors), mask open, no paste', 'wire pad solder cable')
+    for i in range(5):
+        f.pad(str(i + 1), 'smd', 'roundrect', 0, (i - 2) * 1.1, 2.0, 0.7, ['F.Cu', 'F.Mask'], rratio=0.15)
+    f.rect(-1.2, -2.85, 1.2, 2.85, 'F.CrtYd', 0.05)
+    f.text('${REFERENCE}', 0, 0, 'F.Fab', 0.8)
+    f.write(d, -3.4, 3.4)
+    return f.name
+
+
+def heatstake(d):
+    f = FP('HeatStake_D2.0mm_Head3.6mm', 'Heat-stake hole for a 1.8 mm pin (rev F K21), NPTH 2.0; staked head 3.6 on '
+           'the back (keep-out drawn on B.Fab, enforced by a rule area in the layout)', 'heat stake hole',
+           attr='board_only exclude_from_pos_files exclude_from_bom')
+    f.pad('', 'np_thru_hole', 'circle', 0, 0, 2.0, 2.0, ['*.Cu', '*.Mask'], drill=2.0)
+    f.circle(0, 0, 1.8, 'B.Fab', 0.1)
+    f.circle(0, 0, 1.25, 'F.CrtYd', 0.05)
+    f.write(d, -2.5, 2.5)
+    return f.name
+
+
 def wirelink(d):
     f = FP('WireLink_P7.62mm_D1.3mm', 'Wire link, 2 pads 7.62 apart, drill 1.3 for 1.0 mm (18 AWG) tinned Cu wire; '
            'opened for a series ammeter (bench 2.7)', 'wire link jumper bridge', attr='through_hole')
@@ -210,7 +232,7 @@ def im69d120(d):
 
 
 ALL = {'tas': tas5756m_dca, 'nid': nid100, 'csba': csba0850, 'electrode': electrode, 'wirepads': wirepads,
-       'wirelink': wirelink, 'im69': im69d120}
+       'wirelink': wirelink, 'im69': im69d120, 'wirecol': wirepads_col, 'stake': heatstake}
 
 if __name__ == '__main__':
     d = sys.argv[1]

@@ -14,7 +14,7 @@
 		(comment 3 "Two boards of this design: L and R set by the cable SEL wire")
 	)
 	(lib_symbols
-		(symbol "Connector_Generic_MountingPin:Conn_01x05_MountingPin"
+		(symbol "Connector_Generic:Conn_01x05"
 			(pin_names
 				(offset 1.016)
 				(hide yes)
@@ -30,13 +30,12 @@
 					)
 				)
 			)
-			(property "Value" "Conn_01x05_MountingPin"
-				(at 1.27 -7.62 0)
+			(property "Value" "Conn_01x05"
+				(at 0 -7.62 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
-					(justify left)
 				)
 			)
 			(property "Footprint" ""
@@ -57,7 +56,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Generic connectable mounting pin connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(property "Description" "Generic connector, single row, 01x05, script generated (kicad-library-utils/schlib/autogen/connector/)"
 				(at 0 0 0)
 				(effects
 					(font
@@ -75,7 +74,7 @@
 					(hide yes)
 				)
 			)
-			(property "ki_fp_filters" "Connector*:*_1x??-1MP*"
+			(property "ki_fp_filters" "Connector*:*_1x??_*"
 				(at 0 0 0)
 				(effects
 					(font
@@ -84,7 +83,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "Conn_01x05_MountingPin_1_1"
+			(symbol "Conn_01x05_1_1"
 				(rectangle
 					(start -1.27 6.35)
 					(end 1.27 -6.35)
@@ -149,27 +148,6 @@
 					)
 					(fill
 						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.016 -7.112)
-						(xy 1.016 -7.112)
-					)
-					(stroke
-						(width 0.1524)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(text "Mounting"
-					(at 0 -6.731 0)
-					(effects
-						(font
-							(size 0.381 0.381)
-						)
 					)
 				)
 				(pin passive line
@@ -255,24 +233,6 @@
 						)
 					)
 					(number "5"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -10.16 90)
-					(length 3.048)
-					(name "MountPin"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "MP"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1371,7 +1331,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "ha_panel:MSM261DHP006"
+		(symbol "ha_panel:IM69D120"
 			(pin_names
 				(offset 1.016)
 			)
@@ -1387,7 +1347,7 @@
 					(justify left)
 				)
 			)
-			(property "Value" "MSM261DHP006"
+			(property "Value" "IM69D120V01"
 				(at -7.62 -8.89 0)
 				(effects
 					(font
@@ -1396,7 +1356,7 @@
 					(justify left top)
 				)
 			)
-			(property "Footprint" "ha_panel:MEMSensing_MSM261DHP006_LGA-8_4x3mm"
+			(property "Footprint" "ha_panel:Infineon_IM69D120_PG-LLGA-5-1"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1405,7 +1365,7 @@
 					(hide yes)
 				)
 			)
-			(property "Datasheet" "https://www.lcsc.com/datasheet/C22390138.pdf"
+			(property "Datasheet" "https://www.infineon.com/assets/row/public/documents/24/49/infineon-im69d120-datasheet-en.pdf"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1414,7 +1374,7 @@
 					(hide yes)
 				)
 			)
-			(property "Description" "Top-port PDM MEMS microphone, 1.6-3.6 V, LGA-8 4 x 3 x 1 mm"
+			(property "Description" "Bottom-port PDM MEMS microphone, -26 dBFS, SNR 69 dB(A), 1.62-3.6 V, PG-LLGA-5-1 4 x 3 x 1.2"
 				(at 0 0 0)
 				(effects
 					(font
@@ -1423,7 +1383,7 @@
 					(hide yes)
 				)
 			)
-			(symbol "MSM261DHP006_0_1"
+			(symbol "IM69D120_0_1"
 				(rectangle
 					(start -7.62 7.62)
 					(end 7.62 -7.62)
@@ -1436,29 +1396,11 @@
 					)
 				)
 			)
-			(symbol "MSM261DHP006_1_1"
+			(symbol "IM69D120_1_1"
 				(pin power_in line
 					(at -10.16 5.08 0)
 					(length 2.54)
 					(name "VDD"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin input line
-					(at -10.16 2.54 0)
-					(length 2.54)
-					(name "L/R"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1474,9 +1416,27 @@
 					)
 				)
 				(pin input line
+					(at -10.16 2.54 0)
+					(length 2.54)
+					(name "SELECT"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
 					(at -10.16 0 0)
 					(length 2.54)
-					(name "CLK"
+					(name "CLOCK"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1501,7 +1461,7 @@
 							)
 						)
 					)
-					(number "4"
+					(number "1"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1510,7 +1470,7 @@
 					)
 				)
 				(pin power_in line
-					(at -3.81 -10.16 90)
+					(at 0 -10.16 90)
 					(length 2.54)
 					(name "GND"
 						(effects
@@ -1527,425 +1487,11 @@
 						)
 					)
 				)
-				(pin power_in line
-					(at -1.27 -10.16 90)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "6"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 1.27 -10.16 90)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "7"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin power_in line
-					(at 3.81 -10.16 90)
-					(length 2.54)
-					(name "GND"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "8"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "Jumper:SolderJumper_3_Open"
-			(pin_names
-				(offset 0)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom no)
-			(on_board yes)
-			(property "Reference" "JP"
-				(at -2.54 -2.54 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "SolderJumper_3_Open"
-				(at 0 2.794 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "Solder Jumper, 3-pole, open"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "Solder Jumper SPDT"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "SolderJumper*Open*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "SolderJumper_3_Open_0_1"
-				(polyline
-					(pts
-						(xy -2.54 0)
-						(xy -2.032 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy -1.016 1.016)
-						(xy -1.016 -1.016)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start -1.016 -1.016)
-					(mid -2.0276 0)
-					(end -1.016 1.016)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start -1.016 -1.016)
-					(mid -2.0276 0)
-					(end -1.016 1.016)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(rectangle
-					(start -0.508 1.016)
-					(end 0.508 -1.016)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 0 -1.27)
-						(xy 0 -1.016)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start 1.016 1.016)
-					(mid 2.0276 0)
-					(end 1.016 -1.016)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(arc
-					(start 1.016 1.016)
-					(mid 2.0276 0)
-					(end 1.016 -1.016)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type outline)
-					)
-				)
-				(polyline
-					(pts
-						(xy 1.016 1.016)
-						(xy 1.016 -1.016)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-				(polyline
-					(pts
-						(xy 2.54 0)
-						(xy 2.032 0)
-					)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "SolderJumper_3_Open_1_1"
-				(pin passive line
-					(at -5.08 0 0)
-					(length 2.54)
-					(name "A"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 0 -3.81 90)
-					(length 2.54)
-					(name "C"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "2"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-				(pin passive line
-					(at 5.08 0 180)
-					(length 2.54)
-					(name "B"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "3"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
-			)
-			(embedded_fonts no)
-		)
-		(symbol "Connector:TestPoint"
-			(pin_numbers
-				(hide yes)
-			)
-			(pin_names
-				(offset 0.762)
-				(hide yes)
-			)
-			(exclude_from_sim no)
-			(in_bom yes)
-			(on_board yes)
-			(property "Reference" "TP"
-				(at 0 6.858 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Value" "TestPoint"
-				(at 0 5.08 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-				)
-			)
-			(property "Footprint" ""
-				(at 5.08 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Datasheet" "~"
-				(at 5.08 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "Description" "test point"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_keywords" "test point tp"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(property "ki_fp_filters" "Pin* Test*"
-				(at 0 0 0)
-				(effects
-					(font
-						(size 1.27 1.27)
-					)
-					(hide yes)
-				)
-			)
-			(symbol "TestPoint_0_1"
-				(circle
-					(center 0 3.302)
-					(radius 0.762)
-					(stroke
-						(width 0)
-						(type default)
-					)
-					(fill
-						(type none)
-					)
-				)
-			)
-			(symbol "TestPoint_1_1"
-				(pin passive line
-					(at 0 0 90)
-					(length 2.54)
-					(name "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-					(number "1"
-						(effects
-							(font
-								(size 1.27 1.27)
-							)
-						)
-					)
-				)
 			)
 			(embedded_fonts no)
 		)
 	)
-	(text "MIC STRIP  (MSM261DHP006 PDM mic, one design for both strips; cable to the ReSpeaker Lite vacated U4/U5 pads)"
+	(text "MIC STRIP  (IM69D120 bottom-port PDM mic, one design for both strips; cable to the ReSpeaker Lite vacated U4/U5 pads)"
 		(exclude_from_sim no)
 		(at 20.32 15.24 0)
 		(effects
@@ -1955,27 +1501,18 @@
 			)
 			(justify left top)
 		)
-		(uuid "4dbf10ef-27bc-4b2c-96af-366c641ada16")
+		(uuid "47021668-1a4a-4275-91b5-990cc1d62a81")
 	)
 	(symbol
-		(lib_id "Connector_Generic_MountingPin:Conn_01x05_MountingPin")
+		(lib_id "Connector_Generic:Conn_01x05")
 		(at 40.64 66.04 0)
 		(unit 1)
 		(exclude_from_sim no)
-		(in_bom yes)
+		(in_bom no)
 		(on_board yes)
 		(dnp no)
 		(uuid "1a5cff4b-da14-5de2-91f8-4bc3ea96e46b")
 		(property "Reference" "J1"
-			(at 38.1 54.61 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "BM05B-SRSS-TB"
 			(at 38.1 57.15 0)
 			(effects
 				(font
@@ -1984,7 +1521,16 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_SH_BM05B-SRSS-TB_1x05-1MP_P1.00mm_Vertical"
+		(property "Value" "wire pads"
+			(at 38.1 74.93 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" "ha_panel:WirePads_1x05_P1.10mm_2.0x0.7mm"
 			(at 40.64 66.04 0)
 			(effects
 				(font
@@ -2002,25 +1548,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "BM05B-SRSS-TB"
-			(at 40.64 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Manufacturer" "JST"
-			(at 40.64 66.04 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Note" "cable A05SR05SR30K305B cut at the ReSpeaker end: 1 VDD->pad 1, 2 GND->pad 4/6, 3 CLK->pad 2, 4 SEL->pad 5 (L/R strap), 5 DATA->pad 3"
+		(property "Note" "cable A05SR05SR30K305B with both housings cut off, conductors in cable order 1 VDD, 2 GND, 3 CLK, 4 SEL, 5 DATA; ReSpeaker end: 1 VDD->pad 1, 2 GND->pad 4/6, 3 CLK->pad 2, 4 SEL->pad 5 (L/R strap), 5 DATA->pad 3; hot-melt strain relief over the pads"
 			(at 40.64 66.04 0)
 			(effects
 				(font
@@ -2030,22 +1558,19 @@
 			)
 		)
 		(pin "1"
-			(uuid "f1f3a643-b2ad-40d3-8823-954b8f5907bd")
+			(uuid "2e6d31c6-7bee-43b8-b8cf-d2375d629ea2")
 		)
 		(pin "2"
-			(uuid "c8856169-0b17-4b63-9b44-2705b7a13178")
+			(uuid "32360d21-e08c-4312-a89f-ec1aa2f94200")
 		)
 		(pin "3"
-			(uuid "cee5d4e2-f824-494c-a4a4-4cb8274dc2b3")
+			(uuid "6e045e43-d40c-4809-81d0-291e0bd7b0d0")
 		)
 		(pin "4"
-			(uuid "7762cae5-f14b-4823-b314-7586afa85e8b")
+			(uuid "3d1b8669-f5f7-467e-a691-8faebf90b64e")
 		)
 		(pin "5"
-			(uuid "0d7c5d52-3ea5-4b9d-b5d2-20560988633f")
-		)
-		(pin "MP"
-			(uuid "6ef4722b-6d67-4813-92a4-86ac3e02b0dc")
+			(uuid "bd92b7d2-92ef-4090-8f67-cca0fc6f3462")
 		)
 		(instances
 			(project "mic-strip"
@@ -2065,7 +1590,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "128120a2-318c-4f60-8a24-98ee23400dec")
+		(uuid "e589c0f0-4bb7-4e90-a287-9d8eacfd4999")
 	)
 	(label "VDD_C"
 		(at 33.02 60.96 180)
@@ -2076,7 +1601,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "ceb615da-db66-484f-a99d-b327f3220c68")
+		(uuid "fd06dc71-5204-4fc3-97d6-e40393600371")
 	)
 	(wire
 		(pts
@@ -2087,7 +1612,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "bea4d4bc-2858-4475-a5e4-c0eeb7c7b7f6")
+		(uuid "1e2ef83e-ef75-4822-9589-aeec92413d43")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -2097,7 +1622,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "143a90b5-a8a7-4a2b-9cd4-5f675f4248a0")
+		(uuid "371fcefd-381d-4a8c-983a-350d08acf81a")
 		(property "Reference" "#PWR001"
 			(at 27.94 63.5 90)
 			(effects
@@ -2135,7 +1660,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "7af186fe-ca0e-44b5-944c-a48354e4a212")
+			(uuid "7ef2b1af-1e97-4191-9db2-3ca07313b956")
 		)
 		(instances
 			(project "mic-strip"
@@ -2155,7 +1680,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "f377b0e4-6b25-4858-afb8-ddf869c9b744")
+		(uuid "d3f0f886-6dad-4a6d-bdda-d511ca886fce")
 	)
 	(label "CLK_C"
 		(at 33.02 66.04 180)
@@ -2166,7 +1691,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "0e51c661-afad-4cf8-8b57-32ad6121ab25")
+		(uuid "df2be7bb-f3cb-415f-8ffb-0c420d2c12f5")
 	)
 	(wire
 		(pts
@@ -2177,7 +1702,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "ea4b7bb4-8198-4d22-bb24-3ffabf713eb9")
+		(uuid "b86af46d-7fff-4926-aeaf-a3aa56c61462")
 	)
 	(label "SEL_C"
 		(at 33.02 68.58 180)
@@ -2188,7 +1713,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "039f48b3-7fae-4f70-89ea-a9b5b8102abf")
+		(uuid "5f69dd6e-e2c4-4b69-9473-5c94df95be5a")
 	)
 	(wire
 		(pts
@@ -2199,7 +1724,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "abbf32a2-6981-4195-94d7-fa79daafd42d")
+		(uuid "610492fa-6042-4ef1-8fa2-1adda74722a9")
 	)
 	(label "DATA_C"
 		(at 33.02 71.12 180)
@@ -2210,75 +1735,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "0a793e7f-579d-4f26-99e5-1917d9e787a5")
-	)
-	(wire
-		(pts
-			(xy 40.64 76.2)
-			(xy 40.64 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "c919607a-131b-4289-832d-23524371e176")
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 40.64 78.74 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "f53bb854-61f4-40ef-a569-e3880726cff5")
-		(property "Reference" "#PWR002"
-			(at 40.64 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 40.64 82.55 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 40.64 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 40.64 78.74 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "4c3e0399-bc19-4e9c-a465-b697832d8554")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR002")
-					(unit 1)
-				)
-			)
-		)
+		(uuid "193bc3fb-6881-4450-a45d-c9486e691b31")
 	)
 	(symbol
 		(lib_id "Power_Protection:TPD1E05U06DYA")
@@ -2362,10 +1819,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "c238a2ef-0a8e-40c5-81e2-b9db6ce2c438")
+			(uuid "37fc6f6c-ea12-4e70-b23d-832b9d9b5087")
 		)
 		(pin "2"
-			(uuid "6ada8d1c-8a31-4375-ad12-98633369ab99")
+			(uuid "b38ceb72-5e06-40d6-b5c1-8e60d1f99b18")
 		)
 		(instances
 			(project "mic-strip"
@@ -2385,7 +1842,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "c5d4657f-af90-4283-92a9-4dddfdb471e6")
+		(uuid "caf1f0eb-4701-47d6-9e46-cd509489bc07")
 	)
 	(label "VDD_C"
 		(at 63.5 93.98 270)
@@ -2396,7 +1853,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "1650ab98-1ed0-422a-98ac-ea9315e859c2")
+		(uuid "748d96f9-09a3-4622-b2fd-392ebe4e9a50")
 	)
 	(wire
 		(pts
@@ -2407,7 +1864,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4a858c32-06a7-4e62-bfb6-0fcdef11f1a8")
+		(uuid "2a929659-a9d9-4f45-9733-762e6c4d447b")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -2417,8 +1874,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "0b2e1061-9b7d-4f6f-96f9-8374ff0461ce")
-		(property "Reference" "#PWR003"
+		(uuid "fd72d0db-6144-4a25-bace-b35283ee0dbb")
+		(property "Reference" "#PWR002"
 			(at 76.2 86.36 90)
 			(effects
 				(font
@@ -2455,12 +1912,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "081493c0-4b2e-4d41-a215-37f34a567a62")
+			(uuid "0e826337-82db-46b6-b5f6-66b6b3c8269e")
 		)
 		(instances
 			(project "mic-strip"
 				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR003")
+					(reference "#PWR002")
 					(unit 1)
 				)
 			)
@@ -2548,10 +2005,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "27ebc93f-2bd6-4154-a8fc-11012b3fc059")
+			(uuid "3d84d3fb-02eb-46bf-a82e-57769230b2d8")
 		)
 		(pin "2"
-			(uuid "a28b5856-9e7b-4a90-af7c-bb1c6e29a719")
+			(uuid "a0a887c6-aefc-4499-8fee-3112b5f05bb7")
 		)
 		(instances
 			(project "mic-strip"
@@ -2571,7 +2028,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5c6669f4-5dbe-4aee-88c1-4e3879b613c8")
+		(uuid "504928cd-dab8-4412-9ea3-6fe89f6949ae")
 	)
 	(label "CLK_C"
 		(at 86.36 93.98 270)
@@ -2582,7 +2039,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "7a73706c-41fc-49b2-aa88-c63bb3c5baae")
+		(uuid "3201c689-c6f1-4faf-b54f-dd796f3a2ff7")
 	)
 	(wire
 		(pts
@@ -2593,7 +2050,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "143b7310-3989-4a40-a5b0-9ab1d3b4c7d5")
+		(uuid "fefd070c-04e8-4c97-81b4-63615268cf15")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -2603,8 +2060,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "633c9e05-3144-4a1b-822c-2e6defb6c9be")
-		(property "Reference" "#PWR004"
+		(uuid "f593ac57-df81-48db-bebc-1b0bf0dab4a5")
+		(property "Reference" "#PWR003"
 			(at 99.06 86.36 90)
 			(effects
 				(font
@@ -2641,12 +2098,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "35d5e083-ce9f-44d1-b1e2-ea66b1ef9a68")
+			(uuid "b9e11af1-39e5-481a-b0b8-b7d201622b10")
 		)
 		(instances
 			(project "mic-strip"
 				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR004")
+					(reference "#PWR003")
 					(unit 1)
 				)
 			)
@@ -2734,10 +2191,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "a53cecad-36b2-451d-9403-76969a90b1a6")
+			(uuid "958b7dde-fcc2-4e15-a52d-5eff74b993f2")
 		)
 		(pin "2"
-			(uuid "d0e1848b-af54-49df-af7e-ad2641583cec")
+			(uuid "9bc3a8e9-144a-4249-959a-08d59edd3f4b")
 		)
 		(instances
 			(project "mic-strip"
@@ -2757,7 +2214,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "0d8312cc-dcf1-4c90-8922-703278310390")
+		(uuid "7e6decd0-ba83-403a-9f33-5bdef70b7c8a")
 	)
 	(label "DATA_C"
 		(at 109.22 93.98 270)
@@ -2768,7 +2225,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "4db5c6f1-6bff-4ea8-bfa1-d39072ae18c5")
+		(uuid "bad9dcd7-b192-4d11-80ab-bda2b299b75d")
 	)
 	(wire
 		(pts
@@ -2779,7 +2236,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "854bd111-9404-4bf2-857c-437f58a052cd")
+		(uuid "c75d9420-51ba-44aa-b02b-300a2992e273")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -2789,8 +2246,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "5e911158-347e-43c9-b80d-f9501488ecfe")
-		(property "Reference" "#PWR005"
+		(uuid "0c736443-86ab-40b2-91c2-18a49b7fa744")
+		(property "Reference" "#PWR004"
 			(at 121.92 86.36 90)
 			(effects
 				(font
@@ -2827,12 +2284,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "414a4d96-dee9-40af-b5cb-3d5aab37732c")
+			(uuid "2144e61c-1a8f-4c0b-8122-0aa7b7610a30")
 		)
 		(instances
 			(project "mic-strip"
 				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR005")
+					(reference "#PWR004")
 					(unit 1)
 				)
 			)
@@ -2900,10 +2357,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "7654eba1-9db5-4400-9140-b416ac1f2ab3")
+			(uuid "9aee75f3-459d-45d7-a127-5905d3948f82")
 		)
 		(pin "2"
-			(uuid "c34f9051-68f9-4db4-a1d8-259a33305cca")
+			(uuid "a436faa2-de6a-462a-bfb5-aecffd892729")
 		)
 		(instances
 			(project "mic-strip"
@@ -2923,7 +2380,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "4139c49e-7d84-451c-9b35-000910ff621f")
+		(uuid "39551e7d-64d0-43a8-b7f6-1e360800a298")
 	)
 	(label "VDD_C"
 		(at 95.25 45.72 180)
@@ -2934,7 +2391,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "9e7caaaf-197f-4ea9-8aa2-3b5a4adceda4")
+		(uuid "96ecff39-9b91-4f79-b2fa-676a5448c6be")
 	)
 	(wire
 		(pts
@@ -2945,7 +2402,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "56ebf1cc-ae47-4bfb-a712-0444f5318d2f")
+		(uuid "d4fd8733-04c9-4d4b-ac0c-8b350e840001")
 	)
 	(label "VDD_MIC"
 		(at 107.95 45.72 0)
@@ -2956,7 +2413,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "ebc1713d-1703-48f5-b3ba-759f23512546")
+		(uuid "278585a5-34c6-40e5-bd06-fe691ebddc85")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -3022,10 +2479,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "c76a9e3a-e7b6-4bf3-9dd4-04401f698ad9")
+			(uuid "f1dea328-8d10-423a-b7c8-8e6be9d08fb3")
 		)
 		(pin "2"
-			(uuid "8c368fad-21c3-4ba3-9351-f4f2e69b2de3")
+			(uuid "9a690e9f-82a5-444c-8388-75ffa690fef0")
 		)
 		(instances
 			(project "mic-strip"
@@ -3045,7 +2502,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "1f89adb1-891b-41a8-8a46-f53532f51245")
+		(uuid "b24518b9-cf37-46a5-854a-ca8a80508dd6")
 	)
 	(label "VDD_MIC"
 		(at 121.92 46.99 90)
@@ -3056,7 +2513,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "1b7180a9-7ac9-41fe-866c-fbd54ba31357")
+		(uuid "d295a12b-7e1f-4b82-915c-fe8a15589ab0")
 	)
 	(wire
 		(pts
@@ -3067,7 +2524,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "fb835d56-02c4-4015-9ea4-0ae04358134d")
+		(uuid "899e0d09-681c-4661-91d3-9b68008fd43a")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -3077,8 +2534,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "13df73c0-b2b3-4278-9051-b8a0284c81ed")
-		(property "Reference" "#PWR006"
+		(uuid "3890ac6e-7b9a-47e3-b107-1c10385160a1")
+		(property "Reference" "#PWR005"
 			(at 121.92 63.5 0)
 			(effects
 				(font
@@ -3115,12 +2572,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "68efe77c-3101-42c8-9067-427ac3c0c876")
+			(uuid "5d350c70-2e85-46f3-89b1-55dcf8372870")
 		)
 		(instances
 			(project "mic-strip"
 				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR006")
+					(reference "#PWR005")
 					(unit 1)
 				)
 			)
@@ -3190,10 +2647,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "29f4ffe9-1a84-47c4-adfe-513a531cf776")
+			(uuid "c304a184-96da-4dd8-8ce2-f0590536012b")
 		)
 		(pin "2"
-			(uuid "12f668b5-3958-415d-acf7-c3f07bb0050c")
+			(uuid "8f0855f7-39a7-43fb-9b55-a23cc5fc4a81")
 		)
 		(instances
 			(project "mic-strip"
@@ -3213,7 +2670,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "5e54001b-1844-446e-8656-7acb8eb69345")
+		(uuid "62ef86ab-0962-40a6-b269-fcf354d894a1")
 	)
 	(label "VDD_MIC"
 		(at 137.16 46.99 90)
@@ -3224,7 +2681,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "4b273cdc-6364-4967-9e0c-d4ab4fb04fa8")
+		(uuid "2022dcd0-8e27-417f-b0b3-3739ec94d47d")
 	)
 	(wire
 		(pts
@@ -3235,7 +2692,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "220e4a41-fead-410c-abd3-8931c71e10e3")
+		(uuid "4fe1839e-1866-4cfc-a9fe-2e7929e41850")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -3245,8 +2702,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "0078e630-0412-4c78-b126-d4096e874473")
-		(property "Reference" "#PWR007"
+		(uuid "5ee1c00f-7e61-4d68-bd88-ec0721fb1b19")
+		(property "Reference" "#PWR006"
 			(at 137.16 63.5 0)
 			(effects
 				(font
@@ -3283,12 +2740,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "339b9144-2da2-4c30-b485-cb9060097ce2")
+			(uuid "107d0ef5-3366-40b9-abd0-fc170c6e00a3")
 		)
 		(instances
 			(project "mic-strip"
 				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR007")
+					(reference "#PWR006")
 					(unit 1)
 				)
 			)
@@ -3302,7 +2759,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "2a374819-cc0f-4cb4-836d-a50b8bf5d3e1")
+		(uuid "9e385da3-a87c-495e-b526-50ce5dee854f")
 		(property "Reference" "#FLG001"
 			(at 50.8 34.29 0)
 			(effects
@@ -3339,7 +2796,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "ea05b140-4e94-48b6-9b13-6f3b93c42be3")
+			(uuid "3b88533b-2286-40e8-b7cf-fd36e17be8ca")
 		)
 		(instances
 			(project "mic-strip"
@@ -3359,7 +2816,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b0ab5ab8-fc69-40e7-8fbd-4a37caf53b2c")
+		(uuid "ac32605b-0c34-458b-871c-ec0338394841")
 	)
 	(label "VDD_C"
 		(at 50.8 40.64 270)
@@ -3370,7 +2827,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "d3315f91-aaa5-4eb7-9657-7cd37edc08e4")
+		(uuid "e56d7200-625f-4b53-af4c-12633d2c66ce")
 	)
 	(symbol
 		(lib_id "power:PWR_FLAG")
@@ -3380,7 +2837,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "07edd6f8-be9a-4ecc-94f1-d1c16d1c30ec")
+		(uuid "fde6f501-11af-43c7-8fba-f363bcf86e42")
 		(property "Reference" "#FLG002"
 			(at 147.32 34.29 0)
 			(effects
@@ -3417,7 +2874,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "8d921ba3-2880-4981-8104-c511e7502994")
+			(uuid "4f39067c-3e17-41e6-84c5-046fcd2750d6")
 		)
 		(instances
 			(project "mic-strip"
@@ -3437,7 +2894,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6909fb35-67fe-4f06-a4fc-1511a5f43075")
+		(uuid "72a816f1-239c-40cb-bf0a-8cfe9dc2135f")
 	)
 	(label "VDD_MIC"
 		(at 147.32 40.64 270)
@@ -3448,7 +2905,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "dd00f129-520b-4828-87dc-ce147e0a2615")
+		(uuid "3b4038d6-73d7-4804-be38-8727aa83d4b9")
 	)
 	(symbol
 		(lib_id "power:PWR_FLAG")
@@ -3458,7 +2915,7 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "1593bb63-8665-41f1-a574-0fe5a14a5f1a")
+		(uuid "4f27dac9-7c4f-4618-a006-c203f15eea8f")
 		(property "Reference" "#FLG003"
 			(at 63.5 34.29 0)
 			(effects
@@ -3495,7 +2952,7 @@
 			)
 		)
 		(pin "1"
-			(uuid "cf4b5dc1-90eb-4d33-9727-d3bd5075f253")
+			(uuid "6efda323-df57-4788-bb63-1f6e79d6cd41")
 		)
 		(instances
 			(project "mic-strip"
@@ -3515,7 +2972,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d2aa21b0-dff8-4917-bed1-ed43bff11302")
+		(uuid "6f5f0d70-4edb-4fa5-9853-4c617954885a")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -3525,8 +2982,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "9d60b5f3-3b7f-403a-9e1d-6822cefbad4a")
-		(property "Reference" "#PWR008"
+		(uuid "4e18db4b-1603-4cb5-bc73-7d8ca9f75fea")
+		(property "Reference" "#PWR007"
 			(at 63.5 44.45 0)
 			(effects
 				(font
@@ -3563,12 +3020,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "0d53fa0b-4960-442a-821e-3aecd9218faf")
+			(uuid "18b7aeea-633b-4c08-b2eb-3de417d6ccb9")
 		)
 		(instances
 			(project "mic-strip"
 				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR008")
+					(reference "#PWR007")
 					(unit 1)
 				)
 			)
@@ -3638,10 +3095,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "321a625b-bcee-4a16-9f6e-9d437c501a19")
+			(uuid "77fc54a2-28bd-4df2-b967-002c22eaec4b")
 		)
 		(pin "2"
-			(uuid "921b8579-831a-4cba-9735-b3fbbf0b770a")
+			(uuid "cee659d1-c0ae-422b-bf8e-f1997794a0c0")
 		)
 		(instances
 			(project "mic-strip"
@@ -3661,7 +3118,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "6f0957a7-4629-46a9-a1b1-287a123afa4f")
+		(uuid "fb354f68-b44e-46b4-9fe8-31e17abd1642")
 	)
 	(label "CLK_C"
 		(at 76.2 118.11 90)
@@ -3672,7 +3129,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "6f92613d-f846-4858-b3e7-2849327139c8")
+		(uuid "5191d343-db0c-45fa-8b52-9fa1d0c1f23a")
 	)
 	(wire
 		(pts
@@ -3683,7 +3140,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d988036d-13b1-45f2-b1cc-a020f637e3a1")
+		(uuid "f7e0da07-b75b-4ba5-b39e-c99c364a1a56")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -3693,8 +3150,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "b91565b9-7615-4604-9019-4886dfe76595")
-		(property "Reference" "#PWR009"
+		(uuid "656eab2a-0508-4623-80e9-4c9c1268fb22")
+		(property "Reference" "#PWR008"
 			(at 76.2 134.62 0)
 			(effects
 				(font
@@ -3731,12 +3188,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "729f44fe-151c-4829-8ad7-cb0927af0f82")
+			(uuid "38dc5e46-f311-473f-b6d0-ed91e6a57067")
 		)
 		(instances
 			(project "mic-strip"
 				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR009")
+					(reference "#PWR008")
 					(unit 1)
 				)
 			)
@@ -3833,19 +3290,19 @@
 			)
 		)
 		(pin "2"
-			(uuid "0b66036c-bfb2-4768-a921-619a95d289e5")
+			(uuid "cf05165c-e9f2-4bb6-97fd-4875a4b0e339")
 		)
 		(pin "1"
-			(uuid "02fd02ee-f100-4c61-b5c6-ed3f6440aaf3")
+			(uuid "57a2a041-b187-498c-af6d-c0cef8e4df8f")
 		)
 		(pin "5"
-			(uuid "2f1f91e5-210a-4842-b293-22eebd05c8f9")
+			(uuid "bbbabb21-7646-4db8-a1d3-fc365876cfd5")
 		)
 		(pin "3"
-			(uuid "ab879e85-d964-4be1-891b-4f06be6dd6ba")
+			(uuid "f2260a5e-3da3-496b-a09f-ab85ee820b05")
 		)
 		(pin "4"
-			(uuid "65dfecdb-f74b-46c4-9ac1-3339f2936fb8")
+			(uuid "061869d7-e05a-4c87-a115-d949f72fb4ec")
 		)
 		(instances
 			(project "mic-strip"
@@ -3865,7 +3322,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "036facac-c8cc-4110-9144-e0493163141a")
+		(uuid "744c9aff-c107-4a63-b89e-98c203c55fbd")
 	)
 	(label "CLK_C"
 		(at 119.38 116.84 180)
@@ -3876,7 +3333,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "edcfb4eb-0860-4cde-ae6d-d5829773eac9")
+		(uuid "9cb0b841-6b52-428e-b2e8-cdc8d915160e")
 	)
 	(wire
 		(pts
@@ -3887,7 +3344,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2beb8643-8d15-460b-8446-ab7325fcd4f7")
+		(uuid "080e0ffb-d131-4142-ae82-a54234aa4596")
 	)
 	(label "VDD_MIC"
 		(at 129.54 104.14 90)
@@ -3898,7 +3355,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "9e5bdd47-bfcc-4f4d-83bf-27b465dff027")
+		(uuid "3712b7c5-6743-44a1-bbe2-3672118ce82b")
 	)
 	(wire
 		(pts
@@ -3909,7 +3366,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "beabc51b-8326-4d0c-9eb8-3bfc6e6123d5")
+		(uuid "6af3808a-b013-484f-9eb6-da4e67efafef")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -3919,8 +3376,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "84d05061-11f8-4697-ac16-67acc11190a1")
-		(property "Reference" "#PWR010"
+		(uuid "b7ee06e1-c739-4e24-a869-6e88a36afd09")
+		(property "Reference" "#PWR009"
 			(at 129.54 133.35 0)
 			(effects
 				(font
@@ -3957,12 +3414,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "7bc11bcb-dff2-4569-bf8c-6fa5b73bb490")
+			(uuid "a46c8549-8c52-45ee-ba9a-1df646255d93")
 		)
 		(instances
 			(project "mic-strip"
 				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR010")
+					(reference "#PWR009")
 					(unit 1)
 				)
 			)
@@ -3977,7 +3434,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "3b3a527a-f7ae-4454-8bb8-9187b406942f")
+		(uuid "6abc3eaf-1eb0-4d11-948a-329d63d1e86e")
 	)
 	(label "CLK_MIC"
 		(at 147.32 116.84 0)
@@ -3988,7 +3445,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "ca727a71-f087-46f1-9594-e19179e3af68")
+		(uuid "ae4c59a4-f25a-41ec-ae89-3c79dd31ec42")
 	)
 	(symbol
 		(lib_id "Device:C")
@@ -4054,10 +3511,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "de3310a2-c36f-44e9-b24f-b2471bcd506f")
+			(uuid "30d8bee3-9dc2-46b6-b2a2-61c302fc1d47")
 		)
 		(pin "2"
-			(uuid "e46e5c28-beb4-4877-a5b1-0ce69efcc16e")
+			(uuid "d7272e30-07c9-4b66-8948-7cd5b801444f")
 		)
 		(instances
 			(project "mic-strip"
@@ -4077,7 +3534,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2b43d871-2459-43b1-928c-5243505699a6")
+		(uuid "5053e605-1bfb-41ed-aa6f-69a6d669d2d6")
 	)
 	(label "VDD_MIC"
 		(at 165.1 102.87 90)
@@ -4088,7 +3545,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "122533a5-456b-4dc9-9a5b-d38d6be72b03")
+		(uuid "90392f6a-d192-45a4-aa63-54957b5644a1")
 	)
 	(wire
 		(pts
@@ -4099,7 +3556,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "b0a1f828-e5c0-44e2-9dfd-6f4f5d7e288c")
+		(uuid "e4dd5b9b-706a-4e44-baf8-d4742699207a")
 	)
 	(symbol
 		(lib_id "power:GND")
@@ -4109,8 +3566,8 @@
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "8a845ada-a9ba-4e60-b84f-0f6ea05d7203")
-		(property "Reference" "#PWR011"
+		(uuid "1bc2ecef-0031-4db0-b9de-7843ee6bc248")
+		(property "Reference" "#PWR010"
 			(at 165.1 119.38 0)
 			(effects
 				(font
@@ -4147,139 +3604,19 @@
 			)
 		)
 		(pin "1"
-			(uuid "d717bd05-88b1-46f7-817a-f0fc453e7011")
+			(uuid "64403c76-15d1-4ef4-a40e-f0f3ed4b5235")
 		)
 		(instances
 			(project "mic-strip"
 				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR011")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 134.62 142.24 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp yes)
-		(uuid "0b893c3e-1125-58c5-9ef3-b1bb07dd61a6")
-		(property "Reference" "R3"
-			(at 134.62 139.7 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "0R DNP"
-			(at 134.62 146.05 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
-			(at 134.62 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 134.62 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Spec" "0 Ohm 0603"
-			(at 134.62 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Note" "buffer bypass: fit R3 only with U1 removed (bench 2.5 lever)"
-			(at 134.62 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "89846f08-aa2a-47c0-94fa-88c239ba3032")
-		)
-		(pin "2"
-			(uuid "c4ee49d9-a9f2-4856-8b42-b4c5c19dae67")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "R3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 130.81 142.24)
-			(xy 128.27 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2138ed4f-29e9-48b3-9593-65e04562840f")
-	)
-	(label "CLK_C"
-		(at 128.27 142.24 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "f128cf78-fad1-4a72-bfc9-2ccf7d907747")
-	)
-	(wire
-		(pts
-			(xy 138.43 142.24)
-			(xy 140.97 142.24)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4b3d09b7-4f88-4d98-803a-5ec9d8fcc7be")
-	)
-	(label "CLK_MIC"
-		(at 140.97 142.24 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "a59042c1-c6a3-4157-96db-ad89b4ea1380")
-	)
-	(symbol
-		(lib_id "ha_panel:MSM261DHP006")
+		(lib_id "ha_panel:IM69D120")
 		(at 177.8 76.2 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -4296,7 +3633,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "MSM261DHP006"
+		(property "Value" "IM69D120V01"
 			(at 170.18 66.04 0)
 			(effects
 				(font
@@ -4305,7 +3642,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "ha_panel:MEMSensing_MSM261DHP006_LGA-8_4x3mm"
+		(property "Footprint" "ha_panel:Infineon_IM69D120_PG-LLGA-5-1"
 			(at 177.8 76.2 0)
 			(effects
 				(font
@@ -4314,7 +3651,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.lcsc.com/datasheet/C22390138.pdf"
+		(property "Datasheet" "https://www.infineon.com/assets/row/public/documents/24/49/infineon-im69d120-datasheet-en.pdf"
 			(at 177.8 76.2 0)
 			(effects
 				(font
@@ -4323,7 +3660,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "MSM261DHP006"
+		(property "MPN" "IM69D120V01XTSA1"
 			(at 177.8 76.2 0)
 			(effects
 				(font
@@ -4332,7 +3669,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "MEMSensing"
+		(property "Manufacturer" "Infineon"
 			(at 177.8 76.2 0)
 			(effects
 				(font
@@ -4341,7 +3678,7 @@
 				(hide yes)
 			)
 		)
-		(property "Note" "LCSC C22390138, shipped with the boards (not at DigiKey); bottom port through the board to the cap port"
+		(property "DigiKey" "IM69D120V01XTSA1CT-ND"
 			(at 177.8 76.2 0)
 			(effects
 				(font
@@ -4350,29 +3687,38 @@
 				(hide yes)
 			)
 		)
-		(pin "1"
-			(uuid "b44eed25-35df-4d1b-acc7-eacde34b5c79")
+		(property "Spec" "-26 dBFS +-1, SNR 69 dB(A) at 3.072 MHz, 2.9-3.3 MHz range, 980 uA typ"
+			(at 177.8 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Note" "decision 8.1; bottom port through the strip (PCB hole 0.8), mic on the inner side"
+			(at 177.8 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
 		)
 		(pin "2"
-			(uuid "d79b7c1d-5c52-4c6c-8ef0-96912a5fb550")
-		)
-		(pin "3"
-			(uuid "ed49b068-f9e4-4c2d-b644-44d01cce75e7")
+			(uuid "148fd308-ed80-4b48-86d8-b28c6c9ca22c")
 		)
 		(pin "4"
-			(uuid "ba661b03-0794-41a6-8962-6ea785f8e94e")
+			(uuid "e55a7502-0dbf-4b83-b82e-b2d293cc550d")
+		)
+		(pin "3"
+			(uuid "7569beda-3290-494d-9761-b2eaa0868a4a")
+		)
+		(pin "1"
+			(uuid "727ce5d1-d6ca-4af3-aad7-946e0df66959")
 		)
 		(pin "5"
-			(uuid "af72b6b2-f609-497b-963c-f21003510af6")
-		)
-		(pin "6"
-			(uuid "cfc87462-7406-4bee-ac62-af9540e39219")
-		)
-		(pin "7"
-			(uuid "6c3f77f5-d003-4940-a144-ab2f30f6c082")
-		)
-		(pin "8"
-			(uuid "b6036f39-f8d8-440f-8aca-4559fb794389")
+			(uuid "a3140707-9633-4270-8ed7-49c9848b1fc6")
 		)
 		(instances
 			(project "mic-strip"
@@ -4392,7 +3738,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "7aff9cbc-5fc5-4be5-8142-fc7ecdf02e48")
+		(uuid "c47652b7-6d86-4c53-a2b6-5b4dcaa25c46")
 	)
 	(label "VDD_MIC"
 		(at 165.1 71.12 180)
@@ -4403,7 +3749,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "4bcde46c-eefe-4bff-83c6-484714130624")
+		(uuid "2db425ab-8b68-4ce0-bf9c-86a157e4dbe1")
 	)
 	(wire
 		(pts
@@ -4414,7 +3760,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "249afe33-a5e0-4ca4-8c7e-88c7967603d8")
+		(uuid "6c079e73-2440-49a2-a0cc-a15adea1696a")
 	)
 	(label "MIC_LR"
 		(at 165.1 73.66 180)
@@ -4425,7 +3771,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "da9f32e2-14ee-47e2-86cc-36aad592e87e")
+		(uuid "ef738848-c37a-403f-99d2-ddda7f44c8b6")
 	)
 	(wire
 		(pts
@@ -4436,7 +3782,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "bccb243d-98c8-4e72-995e-7e20ba6f6e35")
+		(uuid "1cddbc7b-55c6-46f3-89d2-b6348d09dfe1")
 	)
 	(label "CLK_MIC"
 		(at 165.1 76.2 180)
@@ -4447,7 +3793,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "82790a40-459c-4358-8039-3fe8599e7bbd")
+		(uuid "4155eaa4-f0c2-4ba7-934b-44ac574b32b1")
 	)
 	(wire
 		(pts
@@ -4458,7 +3804,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "bb2255f4-2520-45b8-955c-dc2aed571545")
+		(uuid "ef4c3f99-d9fb-4a68-bb3c-7ccec7164164")
 	)
 	(label "DATA_MIC"
 		(at 190.5 71.12 0)
@@ -4469,30 +3815,30 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "8357696c-8278-41e0-96fe-6b8106dc6584")
+		(uuid "69d4bac8-45dc-4ad3-90a6-d015125eb0a5")
 	)
 	(wire
 		(pts
-			(xy 173.99 86.36)
-			(xy 173.99 88.9)
+			(xy 177.8 86.36)
+			(xy 177.8 88.9)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "59afe4db-1060-4cbc-b9ef-1f57ebaf78b2")
+		(uuid "020248f6-33f4-47d4-8904-c62a2c73ceb2")
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 173.99 88.9 0)
+		(at 177.8 88.9 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
-		(uuid "f5ead747-2dea-4729-afe9-d8f9cf047dc2")
-		(property "Reference" "#PWR012"
-			(at 173.99 92.71 0)
+		(uuid "5c8218b5-25f4-4b5f-b926-90823001e660")
+		(property "Reference" "#PWR011"
+			(at 177.8 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4501,7 +3847,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 173.99 92.71 0)
+			(at 177.8 92.71 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4510,7 +3856,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 173.99 88.9 0)
+			(at 177.8 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4519,7 +3865,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 173.99 88.9 0)
+			(at 177.8 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -4528,216 +3874,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "764a601c-f4a6-450a-be35-0a32ad81f8b0")
+			(uuid "99a51804-3055-44e7-9a5a-f9a4a1aeea0c")
 		)
 		(instances
 			(project "mic-strip"
 				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR012")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 176.53 86.36)
-			(xy 176.53 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "dbf2bf20-32b8-4ebb-b7d9-e96bd73177ff")
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 176.53 88.9 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "7dbd6aca-eeea-4215-b720-fd30a73e231e")
-		(property "Reference" "#PWR013"
-			(at 176.53 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 176.53 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 176.53 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 176.53 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f0fd5032-3b18-4c94-805b-2d965aa4a9e8")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR013")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 179.07 86.36)
-			(xy 179.07 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bab2f0eb-ab64-48d5-b5e2-21962ff017a1")
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 179.07 88.9 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "41b14381-76e6-4343-8382-ac8881ef4d82")
-		(property "Reference" "#PWR014"
-			(at 179.07 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 179.07 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 179.07 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 179.07 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "c7a7f3f0-6472-450f-91d0-a3ddc87ec942")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR014")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 181.61 86.36)
-			(xy 181.61 88.9)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "ace5edc5-3f1b-4624-85af-04607d726831")
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 181.61 88.9 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "0f42d373-6cd1-4f68-bb66-150dddf1823a")
-		(property "Reference" "#PWR015"
-			(at 181.61 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 181.61 92.71 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 181.61 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 181.61 88.9 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8d6f82da-95df-44e0-8082-09f462af5e5c")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR015")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -4805,10 +3947,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "fd2a5505-e610-4fa0-8598-829a27e12622")
+			(uuid "d1326079-abc7-44dd-9b7a-21f1c8507e95")
 		)
 		(pin "2"
-			(uuid "96af29aa-0655-4e70-af6e-e50691df9761")
+			(uuid "ab5e4410-b432-4982-a791-9f225c2cfa48")
 		)
 		(instances
 			(project "mic-strip"
@@ -4828,7 +3970,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "8194cf64-2ec1-48cc-89ec-6b55ac871f25")
+		(uuid "26109ca1-d0d3-42a8-9730-1e4061e66815")
 	)
 	(label "DATA_MIC"
 		(at 209.55 83.82 180)
@@ -4839,7 +3981,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "8107bb81-ca21-42c9-8aa1-6428daf3c681")
+		(uuid "4a7da535-d4c7-408c-9c28-3b94dc52964b")
 	)
 	(wire
 		(pts
@@ -4850,7 +3992,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "d9fad0b7-94ec-468b-90fd-3ba4e718247e")
+		(uuid "8ca1d77e-53c5-4ea7-bbf1-df078b49e366")
 	)
 	(label "DATA_C"
 		(at 222.25 83.82 0)
@@ -4861,7 +4003,7 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "52bd5e4e-90c4-4a11-84b9-591f9d7b8445")
+		(uuid "d35ccb94-fe08-45bd-a17d-37b59e3eb8ba")
 	)
 	(symbol
 		(lib_id "Device:R")
@@ -4915,7 +4057,7 @@
 				(hide yes)
 			)
 		)
-		(property "Note" "L/R from the cable (ReSpeaker pad 5 strap); remove to use JP1"
+		(property "Note" "L/R from the cable SEL wire (strapped at the ReSpeaker end, pad 5): GND = L, VDD = R"
 			(at 215.9 116.84 0)
 			(effects
 				(font
@@ -4925,10 +4067,10 @@
 			)
 		)
 		(pin "1"
-			(uuid "5a9004d8-72d5-4f29-b068-8c3ed2a8bf53")
+			(uuid "8d85e01d-9b76-41c7-8bc6-a03bfd2cd41b")
 		)
 		(pin "2"
-			(uuid "5f1b0a12-9993-4cbf-bdfc-a0d11100c24c")
+			(uuid "f4df2606-b435-4066-af41-987ab9a20008")
 		)
 		(instances
 			(project "mic-strip"
@@ -4948,7 +4090,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "2952296e-b9ce-4da9-82f2-fa313212b038")
+		(uuid "33f1d000-a2a2-40af-974e-f7ad8745f10b")
 	)
 	(label "SEL_C"
 		(at 209.55 116.84 180)
@@ -4959,7 +4101,7 @@
 			)
 			(justify right bottom)
 		)
-		(uuid "0164c1f6-c536-4833-94d4-19c3cecec628")
+		(uuid "a77baa1d-c377-40dd-9fad-388a02944b28")
 	)
 	(wire
 		(pts
@@ -4970,7 +4112,7 @@
 			(width 0)
 			(type default)
 		)
-		(uuid "ddd542e6-9cca-443f-8abe-6bdc51f590eb")
+		(uuid "beb376ec-a53f-4cb6-9596-413cf2092ffe")
 	)
 	(label "MIC_LR"
 		(at 222.25 116.84 0)
@@ -4981,591 +4123,9 @@
 			)
 			(justify left bottom)
 		)
-		(uuid "3edcedd6-b9bc-4b5a-a981-daf2df9b1d57")
+		(uuid "899433fd-cae7-42a6-b51f-539d7517095d")
 	)
-	(symbol
-		(lib_id "Jumper:SolderJumper_3_Open")
-		(at 190.5 129.54 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "20ca2ba1-4681-5406-a077-b5866c5da98a")
-		(property "Reference" "JP1"
-			(at 187.96 123.19 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "L/R GND-VDD"
-			(at 187.96 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "Jumper:SolderJumper-3_P1.3mm_Open_RoundedPad1.0x1.5mm"
-			(at 190.5 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 190.5 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Note" "local L/R strap: bridge 1-2 = GND (L), 2-3 = VDD (R); only with R5 removed"
-			(at 190.5 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1e3c0c26-309e-4d6d-b254-6c0f773bd556")
-		)
-		(pin "2"
-			(uuid "e9795e0c-6f8c-4f89-9b24-22b1ee9c4585")
-		)
-		(pin "3"
-			(uuid "8902efda-15ef-40cb-8606-8301a65e03c5")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "JP1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 185.42 129.54)
-			(xy 182.88 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3abb31c4-a2eb-4eb6-ab00-2eaf56bce19c")
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 182.88 129.54 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "49ef1ef5-3396-4a0b-a642-c626ff66715d")
-		(property "Reference" "#PWR016"
-			(at 177.8 129.54 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 177.8 129.54 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 182.88 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 182.88 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "85545bf0-fe17-4202-b0b2-10b4c7afd3fc")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR016")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 190.5 133.35)
-			(xy 190.5 135.89)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3d8bacd7-9fcb-49ab-8355-87697912fc71")
-	)
-	(label "MIC_LR"
-		(at 190.5 135.89 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "0ca97781-b3c4-476f-9487-6650e1656e01")
-	)
-	(wire
-		(pts
-			(xy 195.58 129.54)
-			(xy 198.12 129.54)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "2f72b964-eb27-44e7-bb11-ea8bc58dc0d3")
-	)
-	(label "VDD_MIC"
-		(at 198.12 129.54 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "6a61362e-ef4e-468a-ab1c-4e51614d27dc")
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 220.98 38.1 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "659ea64a-15ee-56a2-8698-1a0b9569b926")
-		(property "Reference" "TP1"
-			(at 222.25 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "CLK"
-			(at 222.25 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 220.98 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 220.98 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Note" "test pad (bench 2.4/2.5: CLK edge and DATA at the mic, if a scope is borrowed)"
-			(at 220.98 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "894eb300-7332-43d7-99a6-a07493e91b55")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "TP1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 220.98 38.1)
-			(xy 220.98 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0a66b22e-db10-4f5d-bcd4-46d6856471ab")
-	)
-	(label "CLK_MIC"
-		(at 220.98 40.64 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "0cccb83e-8afc-45d5-8c00-1d6d7ef7ce98")
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 233.68 38.1 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "29f3fc1d-8b05-5ef8-80a9-ddea1e692460")
-		(property "Reference" "TP2"
-			(at 234.95 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "DATA"
-			(at 234.95 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 233.68 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 233.68 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Note" "test pad (bench 2.4/2.5: CLK edge and DATA at the mic, if a scope is borrowed)"
-			(at 233.68 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "d251f9c9-727b-4b05-b0b1-5da8f90aebd6")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "TP2")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 233.68 38.1)
-			(xy 233.68 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "291c9171-6219-4fff-9711-7d808a4c330f")
-	)
-	(label "DATA_MIC"
-		(at 233.68 40.64 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "0f50b5a2-4383-4b75-bae8-f27d11666ac9")
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 246.38 38.1 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "167827d0-99f6-5404-aa27-4e0fc5513913")
-		(property "Reference" "TP3"
-			(at 247.65 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "VDD"
-			(at 247.65 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 246.38 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 246.38 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Note" "test pad (bench 2.4/2.5: CLK edge and DATA at the mic, if a scope is borrowed)"
-			(at 246.38 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "2bad5a82-9dcf-4a46-b1cd-7565db8825f3")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "TP3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 246.38 38.1)
-			(xy 246.38 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "64847260-f5d6-4298-bf5e-43aa08749866")
-	)
-	(label "VDD_MIC"
-		(at 246.38 40.64 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right bottom)
-		)
-		(uuid "ed031575-fe48-4331-883f-54e77ae01931")
-	)
-	(symbol
-		(lib_id "Connector:TestPoint")
-		(at 259.08 38.1 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom no)
-		(on_board yes)
-		(dnp no)
-		(uuid "dfae73f0-aaf7-57ed-801f-241ea5d63786")
-		(property "Reference" "TP4"
-			(at 260.35 36.83 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "GND"
-			(at 260.35 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "TestPoint:TestPoint_Pad_D1.0mm"
-			(at 259.08 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 259.08 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Note" "test pad (bench 2.4/2.5: CLK edge and DATA at the mic, if a scope is borrowed)"
-			(at 259.08 38.1 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "1aed6e34-3de9-49cf-ba02-73b2c13e1046")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "TP4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(wire
-		(pts
-			(xy 259.08 38.1)
-			(xy 259.08 40.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e8868924-2477-455b-9a92-67aabc4fd009")
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 259.08 40.64 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(uuid "5d6d21ac-0e35-420a-83fa-52691dd77693")
-		(property "Reference" "#PWR017"
-			(at 259.08 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "GND"
-			(at 259.08 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" ""
-			(at 259.08 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 259.08 40.64 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "53d8b1bc-2e35-4c2a-b13c-a761d5085741")
-		)
-		(instances
-			(project "mic-strip"
-				(path "/31d39363-56c9-5912-b886-242038b2ea79"
-					(reference "#PWR017")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(text "MSM261DHP006 (MEMSensing DS-042 Ver.1.1): VDD 1.6-3.6 V, IDD 670 uA at 2.4 MHz, VIH 0.7 VDD, VIL 0.3 VDD,\n  clock 1.1-4.8 MHz, edge <= 20 ns; L/R = GND -> DATA valid on CLK falling edge.\nCable (JST SR 1.0, A05SR05SR30K305B, cut >= 175 mm): 1 VDD, 2 GND, 3 CLK, 4 SEL, 5 DATA - SEL is static,\n  so it separates CLK from DATA like a ground. Default: U1 fitted, R3 open, R4 33 Ohm, R5 0 Ohm, JP1 open.\nLevers (bench 2.5): R3 bypass with U1 removed; R4 100 Ohm; R5 out + JP1 if the cable SEL is not wanted.\nPassives 0603 (D42); ESD in SOD-523 (D42: leaded alternative to the X1SON); MK1 LGA accepted as is."
+	(text "IM69D120 (Infineon datasheet rev 1.0, 2017-12-20): VDD 1.62-3.6 V; 3.072 MHz lies in the 2.9-3.3 MHz operating range\n  (no mode-entry restriction; start-up 20 ms), clock duty 48-52 % at >= 2.9 MHz, rise/fall 13 ns; IDD 980 uA typ;\n  -26 dBFS, SNR 69 dB(A); ambient <= 70 C above VDD 3.0 V. SELECT has no stated internal pull: driven by the SEL wire via R5.\nCable (JST SR 1.0, A05SR05SR30K305B, both ends cut, soldered to J1): 1 VDD, 2 GND, 3 CLK, 4 SEL, 5 DATA - SEL is static,\n  so it separates CLK from DATA like a ground. Default: U1 fitted, R4 33 Ohm, R5 0 Ohm.\nLevers (bench 2.5): U1 bypass = U1 removed, its pads 2-4 bridged with wire (R3 dropped for space); R4 100 Ohm.\nTest points: the wire pads (no TP1-TP4, decision 9.1).\nPassives 0603 (D42); ESD in SOD-523 (D42: leaded alternative to the X1SON); MK1 LGA (no leaded MEMS exists).\nDecision 8.1 (2026-11-07): SPH0641LU4H-1 dropped - it must not start in ultrasonic mode (3.072-4.8 MHz), where the XU316 runs."
 		(exclude_from_sim no)
 		(at 20.32 160.02 0)
 		(effects
@@ -5574,7 +4134,7 @@
 			)
 			(justify left top)
 		)
-		(uuid "2d563ae2-98c5-4669-84e8-fd3441f08f5a")
+		(uuid "5a8f655b-9c6f-41f8-a908-d53e73c17dbd")
 	)
 	(sheet_instances
 		(path "/"

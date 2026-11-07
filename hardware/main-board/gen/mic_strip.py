@@ -28,12 +28,13 @@ def design(prj):
     s = prj.root
     s.text('MIC STRIP  (IM69D120 bottom-port PDM mic, one design for both strips; cable to the ReSpeaker Lite vacated U4/U5 pads)',
            20.32, 15.24, size=1.8, bold=True)
-    # cable connector
-    s.comp('J1', 'Connector_Generic_MountingPin:Conn_01x05_MountingPin', 'BM05B-SRSS-TB', (40.64, 66.04),
-           nets={'1': 'VDD_C', '2': 'GND', '3': 'CLK_C', '4': 'SEL_C', '5': 'DATA_C', 'MP': 'GND'},
-           footprint='Connector_JST:JST_SH_BM05B-SRSS-TB_1x05-1MP_P1.00mm_Vertical',
-           fields=F('BM05B-SRSS-TB', 'JST', note='cable A05SR05SR30K305B cut at the ReSpeaker end: 1 VDD->pad 1, 2 GND->pad 4/6, '
-                                                '3 CLK->pad 2, 4 SEL->pad 5 (L/R strap), 5 DATA->pad 3'))
+    # cable: soldered wire pads (decision 9.1 - no room for J1 BM05B-SRSS-TB on the 28 x 6 strip)
+    s.comp('J1', 'Connector_Generic:Conn_01x05', 'wire pads', (40.64, 66.04),
+           nets={'1': 'VDD_C', '2': 'GND', '3': 'CLK_C', '4': 'SEL_C', '5': 'DATA_C'},
+           footprint='ha_panel:WirePads_1x05_P1.10mm_2.0x0.7mm', in_bom=False,
+           fields=F(note='cable A05SR05SR30K305B with both housings cut off, conductors in cable order 1 VDD, 2 GND, 3 CLK, '
+                         '4 SEL, 5 DATA; ReSpeaker end: 1 VDD->pad 1, 2 GND->pad 4/6, 3 CLK->pad 2, 4 SEL->pad 5 (L/R strap), '
+                         '5 DATA->pad 3; hot-melt strain relief over the pads'))
     # ESD at the connector
     for i, (ref, net) in enumerate((('D1', 'VDD_C'), ('D2', 'CLK_C'), ('D3', 'DATA_C'))):
         s.comp(ref, 'Power_Protection:TPD1E05U06DYA', 'TPD1E05U06', (63.5 + i * 22.86, 86.36),
@@ -61,8 +62,6 @@ def design(prj):
                     'fitted by default: re-drives CLK next to the mic (bench 2.4 designed out)'))
     s.comp('C3', 'Device:C', '100n 50V', (165.1, 109.22), nets={'1': 'VDD_MIC', '2': 'GND'}, footprint=C0603,
            fields=F(spec='100 nF 50 V X7R 0603', note='buffer VCC decoupling'))
-    s.comp('R3', 'Device:R', '0R DNP', (134.62, 142.24), rot=90, nets={'1': 'CLK_C', '2': 'CLK_MIC'}, footprint=R0603, dnp=True,
-           fields=F(spec='0 Ohm 0603', note='buffer bypass: fit R3 only with U1 removed (bench 2.5 lever)'))
     # mic
     s.comp('MK1', 'ha_panel:IM69D120', 'IM69D120V01', (177.8, 76.2),
            nets={'1': 'DATA_MIC', '2': 'VDD_MIC', '3': 'CLK_MIC', '4': 'MIC_LR', '5': 'GND'},
@@ -74,22 +73,15 @@ def design(prj):
            fields=F(spec='33 Ohm 1% 0603', note='DATA source termination (100 Ohm alternative, bench 2.5 lever)'))
     # L/R select
     s.comp('R5', 'Device:R', '0R', (215.9, 116.84), rot=90, nets={'1': 'SEL_C', '2': 'MIC_LR'}, footprint=R0603,
-           fields=F(spec='0 Ohm 0603', note='L/R from the cable (ReSpeaker pad 5 strap); remove to use JP1'))
-    s.comp('JP1', 'Jumper:SolderJumper_3_Open', 'L/R GND-VDD', (190.5, 129.54),
-           nets={'1': 'GND', '2': 'MIC_LR', '3': 'VDD_MIC'}, footprint='Jumper:SolderJumper-3_P1.3mm_Open_RoundedPad1.0x1.5mm',
-           in_bom=False, fields=F(note='local L/R strap: bridge 1-2 = GND (L), 2-3 = VDD (R); only with R5 removed'))
-    # test pads
-    for i, (ref, net, lab) in enumerate((('TP1', 'CLK_MIC', 'CLK'), ('TP2', 'DATA_MIC', 'DATA'), ('TP3', 'VDD_MIC', 'VDD'),
-                                         ('TP4', 'GND', 'GND'))):
-        s.comp(ref, 'Connector:TestPoint', lab, (220.98 + i * 12.7, 38.1), nets={'1': net}, footprint=TP_SMD, in_bom=False,
-               fields=F(note='test pad (bench 2.4/2.5: CLK edge and DATA at the mic, if a scope is borrowed)'))
+           fields=F(spec='0 Ohm 0603', note='L/R from the cable SEL wire (strapped at the ReSpeaker end, pad 5): GND = L, VDD = R'))
     s.text('\n'.join([
         'IM69D120 (Infineon datasheet rev 1.0, 2017-12-20): VDD 1.62-3.6 V; 3.072 MHz lies in the 2.9-3.3 MHz operating range',
         '  (no mode-entry restriction; start-up 20 ms), clock duty 48-52 % at >= 2.9 MHz, rise/fall 13 ns; IDD 980 uA typ;',
-        '  -26 dBFS, SNR 69 dB(A); ambient <= 70 C above VDD 3.0 V. SELECT has no stated internal pull: driven via R5 or JP1.',
-        'Cable (JST SR 1.0, A05SR05SR30K305B, cut >= 175 mm): 1 VDD, 2 GND, 3 CLK, 4 SEL, 5 DATA - SEL is static,',
-        '  so it separates CLK from DATA like a ground. Default: U1 fitted, R3 open, R4 33 Ohm, R5 0 Ohm, JP1 open.',
-        'Levers (bench 2.5): R3 bypass with U1 removed; R4 100 Ohm; R5 out + JP1 if the cable SEL is not wanted.',
+        '  -26 dBFS, SNR 69 dB(A); ambient <= 70 C above VDD 3.0 V. SELECT has no stated internal pull: driven by the SEL wire via R5.',
+        'Cable (JST SR 1.0, A05SR05SR30K305B, both ends cut, soldered to J1): 1 VDD, 2 GND, 3 CLK, 4 SEL, 5 DATA - SEL is static,',
+        '  so it separates CLK from DATA like a ground. Default: U1 fitted, R4 33 Ohm, R5 0 Ohm.',
+        'Levers (bench 2.5): U1 bypass = U1 removed, its pads 2-4 bridged with wire (R3 dropped for space); R4 100 Ohm.',
+        'Test points: the wire pads (no TP1-TP4, decision 9.1).',
         'Passives 0603 (D42); ESD in SOD-523 (D42: leaded alternative to the X1SON); MK1 LGA (no leaded MEMS exists).',
         'Decision 8.1 (2026-11-07): SPH0641LU4H-1 dropped - it must not start in ultrasonic mode (3.072-4.8 MHz), where the XU316 runs.']),
         20.32, 160.02)
@@ -111,9 +103,12 @@ def build(out):
     pretty = os.path.join(out, 'lib', 'ha_panel.pretty')
     os.makedirs(pretty, exist_ok=True)
     footprints.ALL['im69'](pretty)
+    footprints.ALL['wirecol'](pretty)
+    footprints.ALL['stake'](pretty)
     with open(os.path.join(pretty, 'README.md'), 'w') as f:
         f.write('# ha_panel footprints\n\nInfineon_IM69D120_PG-LLGA-5-1: KiCad Sensor_Audio:Infineon_PG-LLGA-5-1 with pads '
-                '0.45 x 0.76 per the IM69D120 datasheet rev 1.0 Fig. 12 (pin numbering checked against Fig. 11 bottom view).\n')
+                '0.45 x 0.76 per the IM69D120 datasheet rev 1.0 Fig. 12 (pin numbering checked against Fig. 11 bottom view).\n'
+                '\nWirePads_1x05_P1.10mm_2.0x0.7mm: five cable pads in one column across the strip (decision 9.1).\n')
     return prj
 
 
