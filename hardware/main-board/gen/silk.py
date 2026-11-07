@@ -32,6 +32,8 @@ def place(board, W=90.0, H=50.0, skip_prefix=('H', 'LOGO')):
         if d.GetLayer() in obst:
             obst[d.GetLayer()].append(_box(d.GetBoundingBox(), SILK_GAP))
     shown, hidden = 0, []
+    ol = pcbnew.SHAPE_POLY_SET()
+    board.GetBoardPolygonOutlines(ol)
     fps = sorted(board.GetFootprints(), key=lambda f: -_area(f))
     for fp in fps:
         ref = fp.Reference()
@@ -58,7 +60,9 @@ def place(board, W=90.0, H=50.0, skip_prefix=('H', 'LOGO')):
             for (x, y) in cands:
                 ref.SetPosition(pcbnew.VECTOR2I(MM(x), MM(y)))
                 tb = _box(ref.GetBoundingBox())
-                if tb[0] < EDGE or tb[1] < EDGE or tb[2] > W - EDGE or tb[3] > H - EDGE:
+                if not all(ol.Contains(pcbnew.VECTOR2I(MM(px), MM(py))) for px, py in
+                           ((tb[0] - EDGE, tb[1] - EDGE), (tb[2] + EDGE, tb[1] - EDGE), (tb[2] + EDGE, tb[3] + EDGE),
+                            (tb[0] - EDGE, tb[3] + EDGE))):
                     continue
                 if any(_hit(tb, o) for o in obst[lay]):
                     continue

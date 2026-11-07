@@ -21,6 +21,11 @@ def remove(board, item):
     GRAVE.append(item)
 
 
+def board_box(board, m=1.0):
+    bb = board.GetBoardEdgesBoundingBox()
+    return (bb.GetX() * T - m, bb.GetY() * T - m, bb.GetRight() * T + m, bb.GetBottom() * T + m)
+
+
 def net_clearance(name, classes):
     for _, (tw, cl, vd, vdr, nets) in classes.items():
         if name in nets:
@@ -236,8 +241,9 @@ def route(board, netname, a, b, w, classes, via=(0.45, 0.2), margin=6.0, layers=
     if box:
         x0, y0, x1, y1 = box
     else:
-        x0 = max(-1.0, min(a[0], b[0]) - margin); x1 = min(91.0, max(a[0], b[0]) + margin)
-        y0 = max(-1.0, min(a[1], b[1]) - margin); y1 = min(51.0, max(a[1], b[1]) + margin)
+        bx0, by0, bx1, by1 = board_box(board)
+        x0 = max(bx0, min(a[0], b[0]) - margin); x1 = min(bx1, max(a[0], b[0]) + margin)
+        y0 = max(by0, min(a[1], b[1]) - margin); y1 = min(by1, max(a[1], b[1]) + margin)
     reg = Region(x0, y0, x1, y1)
     dist, edist, same = build(board, reg, netname, classes)
     clr = net_clearance(netname, classes)
@@ -364,8 +370,9 @@ def tracks_near(board, x, y, r=0.3, net=None):
 
 def drop_via(board, netname, pt, classes, w=0.3, via=(0.6, 0.3), layer='B', margin=4.0):
     """Connect same-net copper at pt (on `layer`) to a new via (for plane nets): shortest path to a via-legal cell."""
-    x0, y0 = max(-1.0, pt[0] - margin), max(-1.0, pt[1] - margin)
-    x1, y1 = min(91.0, pt[0] + margin), min(51.0, pt[1] + margin)
+    bx0, by0, bx1, by1 = board_box(board)
+    x0, y0 = max(bx0, pt[0] - margin), max(by0, pt[1] - margin)
+    x1, y1 = min(bx1, pt[0] + margin), min(by1, pt[1] + margin)
     reg = Region(x0, y0, x1, y1)
     dist, edist, same = build(board, reg, netname, classes)
     clr = net_clearance(netname, classes)
@@ -458,8 +465,9 @@ def relocate(board, ref, target, classes, within=None, rmax=8.0, step=0.25, laye
         bb = f.GetCourtyard(side_cy).BBox() if f.GetCourtyard(side_cy).OutlineCount() else None
         if bb is not None:
             others.append((bb.GetX() * T, bb.GetY() * T, bb.GetRight() * T, bb.GetBottom() * T))
-    reg = Region(max(0, target[0] - rmax - 3), max(0, target[1] - rmax - 3), min(90, target[0] + rmax + 3),
-                 min(50, target[1] + rmax + 3))
+    bx0, by0, bx1, by1 = board_box(board)
+    reg = Region(max(bx0, target[0] - rmax - 3), max(by0, target[1] - rmax - 3), min(bx1, target[0] + rmax + 3),
+                 min(by1, target[1] + rmax + 3))
     old = fp.GetPosition()
     fp.SetPosition(pcbnew.VECTOR2I(MM(-50), MM(-50)))       # out of the way while rasterising
     dist, edist, same = build(board, reg, '__none__', classes)
@@ -514,8 +522,9 @@ def relocate_fp(board, ref, target, classes, rmax=6.0, step=0.25, rots=(0, 90, 1
             continue
         bb = f.GetCourtyard(pcbnew.B_CrtYd).BBox()
         others.append((bb.GetX() * T, bb.GetY() * T, bb.GetRight() * T, bb.GetBottom() * T))
-    reg = Region(max(0, target[0] - rmax - 4), max(0, target[1] - rmax - 4), min(90, target[0] + rmax + 4),
-                 min(50, target[1] + rmax + 4))
+    bx0, by0, bx1, by1 = board_box(board)
+    reg = Region(max(bx0, target[0] - rmax - 4), max(by0, target[1] - rmax - 4), min(bx1, target[0] + rmax + 4),
+                 min(by1, target[1] + rmax + 4))
     old_pos, old_rot = fp.GetPosition(), fp.GetOrientationDegrees()
     fp.SetPosition(pcbnew.VECTOR2I(MM(-50), MM(-50)))
     dist, edist, same = build(board, reg, '__none__', classes)

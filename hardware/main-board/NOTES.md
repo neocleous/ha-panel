@@ -1,4 +1,4 @@
-# Main board — schematic notes (checkpoint 1, 2026-11-07; updated for decisions 1–5, 2026-11-07 20:45) — layout 2026-11-07 22:30: §7
+# Main board — schematic notes (checkpoint 1, 2026-11-07; updated for decisions 1–5, 2026-11-07 20:45) — layout rev 2 (single-sided) 2026-11-08: §7
 
 KiCad **9.0.9**. Every value below is traced to a datasheet section or a project decision; sources and retrieval dates are at the end. "E" = engineering estimate, "not verified" = no source found.
 
@@ -117,14 +117,37 @@ All test pads are bare SMD pads Ø1.5 on the **back** (door side, `TestPoint_Pad
 - **V19** — §1.
 - **V20** — trim network R8/R9 DNP + TP13 (§2); trim function unverified on stock units.
 
-## 7. Layout (block 2, 2026-11-07)
-- **Stack (4 layers, 1.6 mm; JLC stack-up picked in block 3):** L1 front parts + signals; In1 GND plane; In2 split power planes +5V, +20V and PVDD; L4 back parts + signals. F/B GND pours with stitching vias to In1.
-- **Rules (JLC capability page, checked 2026-11-07: 0.10/0.10 track/space, via 0.2/0.45 without surcharge):** tracks ≥ 0.15 mm except two 0.125 mm necks on CN at the TAS fan-out; clearance 0.15 (signals, PVDD, outputs) / 0.20 (default, 20 V); vias 0.45/0.2 signals, 0.6/0.3 power, 0.8/0.4 on the 20 V inlet; copper to edge 0.3.
-- **TAS5756M escape:** signal pins on two staggered via rows 0.5 and 1.25 mm beyond the pin tips; GND pins stubbed onto the exposed land; PVDD pins bridged (6–7, 41–43) to one 0.6/0.3 via each with the 0.1 µF (C100, C121) directly behind on the back; bootstrap caps C104/C115 over pins 4–5 / 44–45 and C108/C111 upright beside pins 1/48 (moved from the placement for this); outputs 0.6 mm on the front to the inductors; footprint courtyard trimmed to body + land tongues.
-- **Routing:** hand/maze pre-routes for the amplifier outputs, PVDD and the 20 V inlet (`gen/amp.py`, `gen/route_main.py` PREROUTES) → Freerouting 2.5.0 for the signals → maze-router fixes for what it left (POSTROUTES) → pours, stitching, dangling-via clean-up, silk placement. The KiCad board is the source of truth: Freerouting's result depends on the board's item order (random footprint UUIDs per placement run), so a regeneration routes differently and the POSTROUTES list fits this result only.
-- **Moves made in layout:** R14 (PI_BCLK series position) to the J3 landing on the back (60.5, 39.5) – source termination at the source and two short hops instead of a 65 mm detour round the amplifier; TP18 dropped (PVDD at F5 pin 2).
-- **Silkscreen:** 88 references on silk, 27 hidden where no clear spot exists (D1, U2, C1–C3, C10, C101, C112–C115, C118, C120, C122, R1, R3, R5, R6, R18, R26, R102, R104, R105, TP5–TP7, TP9, TP10); the block 3 assembly drawing (fab layers) carries every reference.
-- **DRC (KiCad 9.0.9, `drc-report.txt`):** 0 errors, 0 unconnected, schematic parity clean; 1 warning – J2's footprint differs from the library copy because its outline past the board edge was removed from the silkscreen.
+## 7. Layout (block 2; single-sided rev, 2026-11-08)
+- **Single-sided SMD** (Daniel 2026-11-07 22:48: no SMD on the back, no SMD by iron).
+  - Every SMD part is on the front.
+  - The back holds J2 (USB4085, THT), LK1, through-hole joints and the 19 bare test pads.
+  - Assembly: front SMD on the hotplate, then the through-hole parts by iron.
+- **Outline 90 × 55** (MAIN_env rev 2):
+  - It is the base of the design chat's outline T (`claude/report-main-board-outline-2026-11-07.md`): the top edge rises from z 84 to z 89, with the −x corner cut for the K5 lane.
+  - T's tab (z 89–116) was laid out but stayed empty, so it was cut off.
+- **Stack (4 layers, 1.6 mm; JLC stack-up picked in block 3):** L1 front parts + signals; In1 GND plane; In2 split power planes +5V, +20V and PVDD; L4 back signals. F/B GND pours with stitching vias to In1.
+- **Rules** (JLC capabilities, checked 2026-11-07: 0.10/0.10 track/space, via 0.2/0.45 without surcharge):
+  - tracks ≥ 0.10, set by Freerouting necks at the 0.5/0.65 mm pins; 0.15–0.8 elsewhere;
+  - clearance 0.15 (signals, PVDD, outputs) and 0.20 (default, 20 V);
+  - vias 0.45/0.2 signals, 0.6/0.3 power, 0.8/0.4 on the 20 V inlet;
+  - copper to edge 0.3.
+- **Placement:**
+  - The big parts and connectors keep their 2026-11-07 positions.
+  - Every former back-side part is placed on the front, next to the pin it serves: a spiral search with keep-outs for the TAS fan-out rows, the bracket bosses and the two amplifier output corridors.
+  - F5 (PVDD PTC) sits at (45.6, 30.45), straddling the +20V and PVDD planes.
+  - J4's courtyard is trimmed to its pads, because it is a wire landing with no header body.
+  - The farthest parts are the 3.3 V LDO group (U2 and its caps, F4) and D1/D2, at 15–20 mm from their anchors. They are supply parts; the TAS decoupling stays within about 11 mm.
+- **TAS escape:** as in the two-sided rev: staggered fan-out rows, GND pins onto the land, PVDD bridges with one 0.6/0.3 via per side, bootstrap caps at the pins, outputs 0.6 mm to the inductors (`gen/amp.py`). The 0.1 µF PVDD caps C100/C121 are now on the front, with their own plane vias.
+- **Routing:** pre-routes for the amplifier outputs and the 20 V inlet → Freerouting 2.5.0 (32 left) → GND pours, stitching, dangling-via clean-up → fixes in `gen/fix_main1s.py`:
+  - VIN_EF ties;
+  - R1 link;
+  - PI_LRCLK around F5;
+  - C4's ground;
+  - F5 moved 0.45 mm off J6's courtyard.
+
+  The KiCad board is the source of truth. Re-running the scripts gives a different Freerouting result.
+- **Silkscreen:** 69 references on silk and 46 hidden in the dense areas. The block 3 assembly drawing (fab layers) carries every reference.
+- **DRC (KiCad 9.0.9, `drc-report.txt`):** 0 errors, 0 unconnected, schematic parity clean. Two warnings: J2's outline past the board edge removed, and J4's courtyard trimmed to its pads (both footprints differ from the library copy).
 
 ## Sources (read 2026-11-07 unless noted)
 - TI TAS5756M, SLAS988B — https://www.ti.com/lit/ds/symlink/tas5756m.pdf

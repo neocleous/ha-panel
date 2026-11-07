@@ -29,11 +29,13 @@ CLASSES = {   # name: (track, clearance, via_d, via_drill, nets) - widths that s
                                    '/3.3 V, Pi link, sensors, radar, echo-ref/LDO_IN', '/3.3 V, Pi link, sensors, radar, echo-ref/PI_3V3',
                                    '/Amplifier/GVDD', '/Amplifier/DVDD_REG', '/Amplifier/CPVSS', '/Amplifier/CP', '/Amplifier/CN']),
 }
-P5 = [(0.6, 0.6), (72.5, 0.6), (72.5, 8.8), (62.2, 8.8), (62.2, 14.6), (58.9, 14.6), (58.9, 20.4), (39.6, 20.4),
+P5 = [(0.6, -4.4), (25.9, -4.4), (25.9, -31.4), (64.1, -31.4), (64.1, -4.4), (72.5, -4.4), (72.5, 8.8), (62.2, 8.8), (62.2, 14.6), (58.9, 14.6), (58.9, 20.4), (39.6, 20.4),
       (39.6, 27.6), (33.4, 27.6), (33.4, 14.6), (20.6, 14.6), (20.6, 40.0), (0.6, 40.0)]
-P20 = [(21.2, 15.2), (32.8, 15.2), (32.8, 28.2), (44.3, 28.2), (44.3, 40.5), (21.2, 40.5)]
-PPV = [(62.8, 9.4), (89.4, 9.4), (89.4, 34.6), (47.2, 34.6), (47.2, 21.0), (59.5, 21.0), (59.5, 15.2), (62.8, 15.2)]
-FULL = [(0.4, 0.4), (89.6, 0.4), (89.6, 49.6), (0.4, 49.6)]
+P20 = [(21.2, 15.2), (32.8, 15.2), (32.8, 28.2), (44.3, 28.2), (44.3, 40.5), (34.0, 40.5), (34.0, 47.6), (25.0, 47.6),
+       (25.0, 40.5), (21.2, 40.5)]
+PPV = [(62.8, 9.4), (89.4, 9.4), (89.4, 39.0), (66.0, 39.0), (66.0, 34.6), (47.2, 34.6), (47.2, 21.0), (59.5, 21.0),
+       (59.5, 15.2), (62.8, 15.2)]
+FULL = [(-1.0, -33.0), (91.0, -33.0), (91.0, 51.0), (-1.0, 51.0)]   # clipped to the T outline by the filler
 
 
 def zone(board, net, layer, pts, prio=0, thermal=False, clearance=0.3, minw=0.25):
@@ -117,22 +119,29 @@ def efuse_bridges(board):
         trk(p, pcbnew.VECTOR2I(p.x, c.y) if rows_horizontal else pcbnew.VECTOR2I(c.x, p.y), pads[n].GetNet(), 0.3)
 
 
-PREROUTES = [   # (net, from, to, width, layers, box) - maze-routed and locked before Freerouting
+PREROUTES = [   # (net, from, to, width, layers, box[, forbid]); a point is (x, y) or (ref, pad)
     ('/Amplifier/OUT_AN', (67.3, 19.825), (74.0, 21.9), 0.6, ('F',), (65.5, 16.0, 77.0, 24.0)),
     ('/Amplifier/OUT_AP', (65.295, 19.35), (83.6, 21.9), 0.6, ('F',), (63.0, 13.0, 87.5, 24.0)),
     ('/Amplifier/OUT_BN', (67.3, 31.175), (74.0, 25.5), 0.6, ('F',), (65.5, 23.5, 77.0, 35.0)),
     ('/Amplifier/OUT_BP', (65.295, 31.65), (83.6, 25.5), 0.6, ('F',), (63.0, 23.5, 87.5, 38.0)),
-    ('/Amplifier/PVDD', (64.28, 21.48), (63.0, 20.555), 0.3, ('B',), (61.5, 19.0, 66.0, 23.0)),
-    ('/Amplifier/PVDD', (64.50, 31.15), (62.75, 30.445), 0.3, ('B',), (61.0, 28.5, 66.0, 32.5)),
-    ('/20 V inlet and eFuse/VIN_EF', (50.05, 42.32), (34.73, 41.26), 0.8, ('F', 'B'), (30.0, 36.0, 53.0, 49.6),
-     [('*', 35.7, 41.0, 41.5, 44.0)]),     # keep the escape below U1 pins 4-10 (UVLO/OVP/DVDT vias) free
-    ('/20 V inlet and eFuse/VIN_EF', (37.32, 41.26), (37.16, 43.21), 0.3, ('F', 'B'), (33.0, 39.0, 41.0, 45.5)),
+    ('/20 V inlet and eFuse/VIN_EF', ('F1', '2'), (34.73, 41.26), 0.8, ('F', 'B'), (20.0, 30.0, 60.0, 50.0),
+     [('F', 35.7, 41.0, 41.5, 44.0)]),     # keep the front escape below U1 pins 4-10 free
+    ('/20 V inlet and eFuse/VIN_EF', (37.32, 41.26), ('C2', '1'), 0.3, ('F', 'B'), (30.0, 36.0, 46.0, 50.0)),
 ]
+
+
+def _pt(b, p):
+    if isinstance(p[0], str):
+        fp = b.FindFootprintByReference(p[0])
+        q = [x for x in fp.Pads() if x.GetNumber() == p[1]][0].GetPosition()
+        return (q.x * 1e-6, q.y * 1e-6)
+    return p
 
 
 def preroute(b):
     for pr in PREROUTES:
         net, a, c, w, lays, box = pr[:6]
+        a, c = _pt(b, a), _pt(b, c)
         forbid = pr[6] if len(pr) > 6 else ()
         via = (0.8, 0.4) if w >= 0.8 else (0.6, 0.3)
         ok, info = mroute.route(b, net, a, c, w, CLASSES, via=via, layers=lays, box=box, forbid=forbid)
@@ -141,40 +150,12 @@ def preroute(b):
 
 N3 = '/3.3 V, Pi link, sensors, radar, echo-ref/'
 NEF = '/20 V inlet and eFuse/'
-POSTROUTES = [   # after Freerouting (deterministic, run e 2026-11-07): rips, one move, maze routes, links; all locked
-    ('r', '/Amplifier/PVDD', (66.56, 20.97), (64.28, 21.48), 0.3, ('B',), None),
-    ('r', '/Amplifier/PVDD', (66.82, 31.65), (64.50, 31.15), 0.3, ('B',), None),
-    ('r', NEF + 'EF_UVLO', (37.98, 41.26), (39.38, 41.57), 0.2, ('F', 'B'), None),
-    ('r', NEF + 'EF_OVP', (38.62, 41.26), (41.57, 40.44), 0.2, ('F', 'B'), None),
-    ('r', NEF + 'VIN_EF', (33.12, 41.86), (34.08, 41.26), 0.5, ('F', 'B'), None),
-    ('t', NEF + 'VIN_EF', (37.16, 43.21), (37.16, 44.02), 0.8, ('B',), None),   # C2.1 onto the inlet run
-    ('t', NEF + 'VIN_EF', (39.38, 43.22), (39.38, 44.02), 0.5, ('B',), None),   # R1.1 onto the inlet run
-    ('v', 'GND', (84.55, 32.10), None, 0.3, ('B',), None),
-    # EF_OVP: Freerouting's 30 mm detour round U1 to R3 boxes C1/C2 GND in; EF_PGOOD's run under U1 blocks R3
-    ('x', NEF + 'EF_OVP', [(38.06, 41.10, 38.65, 41.10), (38.06, 41.09, 38.06, 41.10), (37.29, 40.32, 38.06, 41.09),
-                           (34.67, 40.32, 37.29, 40.32), (30.71, 40.32, 34.67, 40.32), (29.45, 41.58, 30.71, 40.32),
-                           (29.45, 42.64, 29.45, 41.58), (31.56, 44.75, 29.45, 42.64), (35.50, 44.75, 31.56, 44.75),
-                           (35.54, 44.79, 35.50, 44.75), (35.97, 45.22, 35.54, 44.79), (39.21, 45.22, 35.97, 45.22)]),
-    ('x', 'EF_PGOOD', [(31.38, 34.42, 30.47, 35.34), (30.47, 35.34, 30.47, 37.61), (30.47, 37.61, 31.17, 38.31),
-                       (31.17, 38.41, 31.17, 38.31), (31.17, 39.84, 31.17, 38.41), (35.06, 43.73, 31.17, 39.84),
-                       (35.19, 43.73, 35.06, 43.73), (35.24, 43.73, 35.19, 43.73), (36.26, 44.75, 35.24, 43.73),
-                       (40.82, 44.75, 36.26, 44.75), (42.45, 43.12, 40.82, 44.75), (43.57, 43.12, 42.45, 43.12),
-                       (46.37, 40.32, 43.57, 43.12), (46.37, 41.54, 46.37, 40.32)]),
-    ('xv', 'EF_PGOOD', (46.37, 40.32)),
-    ('r', 'GND', (37.16, 41.66), (37.0, 39.7), 0.3, ('B',), None),                       # C2.2/C1.2 to the eFuse vias
-    ('r', NEF + 'EF_OVP', (39.21, 45.22), (40.28, 42.49), 0.2, ('F', 'B'), None),          # R3.1
-    ('r', 'EF_PGOOD', (46.37, 41.54), (36.67, 35.54), 0.2, ('F', 'B'), (28.0, 30.0, 50.0, 47.0)),   # TP5
-    # R14 (PI_BCLK series R) to the Pi landing J3: source termination at the source, short hops both sides
-    ('x', 'I2S_BCLK', [(49.94, 18.36, 50.80, 19.22), (50.80, 19.22, 53.11, 19.22), (53.11, 19.22, 53.58, 19.69),
-                       (53.58, 19.69, 53.58, 20.40)]),
-    ('m', 'R14', (60.52, 39.54), 0),
-    ('r', N3 + 'PI_BCLK', (59.69, 39.54), (59.50, 35.00), 0.2, ('F', 'B'), None),
-    ('r', 'I2S_BCLK', (61.34, 39.54), (54.82, 39.86), 0.2, ('F', 'B'), None),
+POSTROUTES = [   # filled from the single-sided run's leftovers
 ]
 
 
 def postroute(b, items=None):
-    for it in (items or POSTROUTES):
+    for it in (items if items is not None else POSTROUTES):
         kind, net = it[0], it[1]
         if kind == 'x':
             ok, info = True, 'removed %d' % mroute.remove_segments(b, net, it[2])
@@ -211,7 +192,7 @@ def autoroute(board_path, passes=40):
     efuse_bridges(b)
     print('tas stage vias', len(amp.stage(b)))
     preroute(b)
-    added, failed = fo.fanout(b, {'+5V': P5, '+20V': P20, '/Amplifier/PVDD': PPV}, skip=('C100', 'C121'))
+    added, failed = fo.fanout(b, {'+5V': P5, '+20V': P20, '/Amplifier/PVDD': PPV})
     print('fanout vias', added, 'failed', failed)
     pcbnew.SaveBoard(board_path, b)
     dsn = board_path.replace('.kicad_pcb', '.dsn')
@@ -297,7 +278,8 @@ def widen_necks(b, wmin=0.15):
         s, e = t.GetStart(), t.GetEnd()
         x0, y0 = min(s.x, e.x) * 1e-6 - 1.0, min(s.y, e.y) * 1e-6 - 1.0
         x1, y1 = max(s.x, e.x) * 1e-6 + 1.0, max(s.y, e.y) * 1e-6 + 1.0
-        reg = mroute.Region(max(0, x0), max(0, y0), min(90, x1), min(50, y1))
+        bx0, by0, bx1, by1 = mroute.board_box(b)
+        reg = mroute.Region(max(bx0, x0), max(by0, y0), min(bx1, x1), min(by1, y1))
         dist, edist, same = mroute.build(b, reg, t.GetNetname(), CLASSES)
         ln = 'F' if t.GetLayer() == pcbnew.F_Cu else 'B'
         done = False

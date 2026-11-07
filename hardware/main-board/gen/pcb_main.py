@@ -80,7 +80,14 @@ def outline(board, w, h, r=0.0):
         arc((r, h - r), (r, h), 90); arc((r, r), (0, r), 90)
 
 
-def build(netlist, out, plan, layers=2, extra=None, size=(W, H), radius=0.0):
+def outline_poly(board, pts):
+    for a, b in zip(pts, pts[1:] + pts[:1]):
+        s = pcbnew.PCB_SHAPE(board); s.SetShape(pcbnew.SHAPE_T_SEGMENT)
+        s.SetStart(pcbnew.VECTOR2I(MM(a[0]), MM(a[1]))); s.SetEnd(pcbnew.VECTOR2I(MM(b[0]), MM(b[1])))
+        s.SetLayer(pcbnew.Edge_Cuts); s.SetWidth(MM(0.1)); board.Add(s)
+
+
+def build(netlist, out, plan, layers=2, extra=None, size=(W, H), radius=0.0, poly=None):
     comps, nets = read_netlist(netlist)
     board = pcbnew.NewBoard(out)
     board.SetCopperLayerCount(layers)
@@ -97,7 +104,10 @@ def build(netlist, out, plan, layers=2, extra=None, size=(W, H), radius=0.0):
     ds.m_MinSilkTextThickness = MM(0.15)
     nc = ds.m_NetSettings.GetDefaultNetclass()
     nc.SetClearance(MM(0.15)); nc.SetTrackWidth(MM(0.2)); nc.SetViaDiameter(MM(0.6)); nc.SetViaDrill(MM(0.3))
-    outline(board, size[0], size[1], radius)
+    if poly:
+        outline_poly(board, poly)
+    else:
+        outline(board, size[0], size[1], radius)
     # nets
     ninfo = {}
     for name in nets:

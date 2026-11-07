@@ -58,6 +58,11 @@ def _existing(board):
 
 
 def fanout(board, zones_in2, extra_obstacles=(), tas_ref='U100', skip=()):
+    ol = pcbnew.SHAPE_POLY_SET()
+    board.GetBoardPolygonOutlines(ol)
+
+    def board_inside(x, y, m=0.8):
+        return all(ol.Contains(pcbnew.VECTOR2I(MM(x + dx), MM(y + dy))) for dx in (-m, m) for dy in (-m, m))
     boxes = pad_boxes(board)
     ex_segs, ex_vias = _existing(board)
     vias = [(x, y) for x, y, r, n in ex_vias]
@@ -94,7 +99,7 @@ def fanout(board, zones_in2, extra_obstacles=(), tas_ref='U100', skip=()):
                     a = math.radians(ang)
                     vx = px + math.cos(a) * (hw + dist)
                     vy = py + math.sin(a) * (hh + dist)
-                    if not (0.8 < vx < 89.2 and 0.8 < vy < 49.2):
+                    if not board_inside(vx, vy):
                         continue
                     if net != 'GND' and not inside(zones_in2[net], vx, vy):
                         continue
