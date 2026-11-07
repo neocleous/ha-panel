@@ -243,6 +243,7 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_d22e_checks.py` | d | read-only: the added material vs every part, keep-out, lead and envelope near it; cap / front at rest and lifted 0.1–5.0; seats, holes and the pad / boss contact | added 656.7 mm³ in 6 lumps (webs 159.3, ribs 167.8, two 1.2 mm³ fills under the strips' sloped back ends), nothing removed; added ∩ the 17 bodies near it 0; cap / front 0, cap lifted 0.1–5.0 ∩ added 0; seats and holes open, pad / boss contact at 172.6 on all four |
 | `v5f_d22f_export_mesh.py`, `print_audit/slicer/d22_*` | d | the d22 front as STL (the audit's mesh settings) and PrusaSlicer 2.7.2 runs on the audit's ASSUMED profile: the front with and without the F6 parts; door and boxes at 0.4 / 0.20 vs 0.6 / 0.30; cap, slab and grommet at the planned layer heights | front d19 / d22 / d22 with the plan's pad, exhaust and lip-pocket blockers (3MF): 15 h 58 / 15 h 58 / 15 h 38, support 86.0 / 85.9 / 83.2 cm³; above z 162 under the side pads 0.29 / 0.30 → 0.25 / 0.25 → 0.05 / 0.05 cm³, head-seat interface 6 → 5 → 0 mm³. Door at 0.4: 4 h 11 with trees, 2 h 42 without (0.6: 2 h 20 / 1 h 29); boxes L / R 1 h 19 / 1 h 38 (0.6: 55 / 68 min); cap 27 → 38 min (0.20 → 0.12); slab 1 h 04 → 1 h 34 (0.20 → 0.10); grommet 12 → 19 min. The F6 parts as separate STL solids (`d22_run_f6.sh`, web / web + rib) were stopped: superseded by the built d22 front |
 | `v5f_d22g_save_export.py` | d | version d22, f3d, STEP front | see the print audit checkpoint |
+| `board_zone/` (`fusion/v5f_e1a_list_bodies.py`, `fusion/v5f_e1b_meshes.py`, `offline/*`) | e | read-only: main-board outline study (all SMD on the front, electronics brief 2026-11-07 22:52) – body list and world meshes read without activating the design, then y-ray column maps at the board plane: slab, door sweep, front and back gaps; runs in `board_zone/RUNS.md` | outline T 6,139 mm² / maximum 6,876 mm² (today 4,500) with no print and no connector change; see the e1 checkpoint |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -1046,3 +1047,11 @@ Versions "rev F WIP 2026-11-07 d21 …" and "… d22 …".
   profile).
 - Daniel's decisions, the status of every finding, the print plan and the bench checks:
   `claude/enclosure-v5-revF-print-audit-response-2026-11-07.md`.
+
+## Main-board outline – e1 (2026-11-07)
+Daniel 22:48: no SMD on the main board's back, so the board grows. Study in `board_zone/` (read-only; version 37 d22).
+- At the current plane the board can grow up and, optionally, down without moving a hole, a connector or any print:
+  T (base x_rel ±45, z 34–89 + tab ±19.5 to z 119.5) 6,139 mm²; maximum (T + steps between the lanes + legs to z 24)
+  6,876 mm². Limits: the door's sweep and back wall, the K5 and cap-key lanes, the J2 plug path and the cradle.
+- Moving the plane back loses area; 2 mm forward gains ≈ 590 mm² but moves the bracket bosses and J2.
+- Answer, zones and polygons: `claude/report-main-board-outline-2026-11-07.md`.
