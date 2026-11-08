@@ -1,23 +1,23 @@
 # DigiKey BOM — main board, mic strips, harness (block 3, 2026-11-08)
 
-Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9.1 and 10.1). Prices are DigiKey CH, CHF excl. VAT, cut tape at the quantity bought, seen 2026-11-08; stock as shown the same day. Build: one main board and two strips. Spares: small passives +50 % (rounded up), ICs +1, cheap discretes and connectors +1.
+Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9.1 and 10.1). Prices are DigiKey CH, CHF excl. VAT, cut tape at the quantity bought, seen 2026-11-08; stock as shown the same day. Build: one main board and two strips. Spares (Daniel, 2026-11-08): at least 3 for 0603 and smaller parts (SC-70 and SOD-523 included), at least 2 for 0805 and 1206 and for the MEMS mic, 1 for larger parts and ICs; the next price break is taken where it costs CHF 0.40 or less more. L1 and C5/C6 have no spare (large, robust).
 
-**Total: CHF 169.97 excl. VAT** (55 lines; CHF 183.74 incl. 8.1 % VAT). The DigiKey quick-add list is `digikey-bom.csv`.
+**Total: CHF 176.11 excl. VAT** (55 lines; CHF 190.37 incl. 8.1 % VAT). The DigiKey quick-add list is `digikey-bom.csv`.
 
 
 ## Main board
 
 | Refs | Part | DigiKey | Need | Buy | Unit | Ext | Stock | Note |
 |---|---|---|---|---|---|---|---|---|
-| C1, C10 | KYOCERA AVX 08055C105KAT2A — 1UF 50V X7R 0805 | [478-KGM21AR71H105KUCT-ND](https://www.digikey.ch/en/products/result?keywords=478-KGM21AR71H105KUCT-ND) | 2 | 3 | 0.650 | 1.95 | 101'175 | Samsung, Yageo, TDK, Taiyo Yuden 1 µF 50 V 0805 at 0 stock |
+| C1, C10 | KYOCERA AVX 08055C105KAT2A — 1UF 50V X7R 0805 | [478-KGM21AR71H105KUCT-ND](https://www.digikey.ch/en/products/result?keywords=478-KGM21AR71H105KUCT-ND) | 2 | 4 | 0.650 | 2.60 | 101'175 | Samsung, Yageo, TDK, Taiyo Yuden 1 µF 50 V 0805 at 0 stock |
 | C2, C4, C9, C100, C121; strip C2, C3 ×2 | Yageo CC0603KRX7R9BB104 — 0.1UF 50V X7R 0603 | [311-1344-1-ND](https://www.digikey.ch/en/products/detail/yageo/CC0603KRX7R9BB104/2103082) | 9 | 14 | 0.066 | 0.92 | 3'588'632 | Samsung CL10B104KB8NNNC at 0 stock (61 wk) |
-| C3 | Samsung CL10B473KB8NNNC — 0.047UF 50V X7R 0603 | [1276-1063-1-ND](https://www.digikey.ch/en/products/result?keywords=1276-1063-1-ND) | 1 | 2 | 0.090 | 0.18 | 768'520 |  |
+| C3 | Samsung CL10B473KB8NNNC — 0.047UF 50V X7R 0603 | [1276-1063-1-ND](https://www.digikey.ch/en/products/result?keywords=1276-1063-1-ND) | 1 | 10 | 0.031 | 0.31 | 768'520 |  |
 | C5, C6 | Panasonic EEU-FR1J121B — CAP ALUM 120UF 20% 63V RADIAL TH | [P15289CT-ND](https://www.digikey.ch/en/products/detail/panasonic-industry/EEU-FR1J121B/3072306) | 2 | 2 | 0.960 | 1.92 | 146 |  |
 | C7 | Würth 860160572003 — CAP ALUM 22UF 20% 35V RADIAL TH | [732-9541-1-ND](https://www.digikey.ch/en/products/detail/w%C3%BCrth-elektronik/860160572003/5727771) | 1 | 2 | 0.120 | 0.24 | 19'381 |  |
-| C8, C11 | KEMET C1206C106K4RACTU — 10UF 16V X7R 1206 | [399-C1206C106K4RACTUCT-ND](https://www.digikey.ch/en/products/result?keywords=399-C1206C106K4RACTUCT-ND) | 2 | 3 | 0.410 | 1.23 | 166'752 | 16 V instead of 25 V (5 V rails); the 25 V X7R/X5R 1206 parts checked are at 0 stock or 2'193 |
-| C12 | Samsung CL21B475KOFNNNE — 4.7UF 16V X7R 0805 | [1276-2873-1-ND](https://www.digikey.ch/en/products/result?keywords=1276-2873-1-ND) | 1 | 2 | 0.210 | 0.42 | 620'082 |  |
+| C8, C11 | KEMET C1206C106K4RACTU — 10UF 16V X7R 1206 | [399-C1206C106K4RACTUCT-ND](https://www.digikey.ch/en/products/result?keywords=399-C1206C106K4RACTUCT-ND) | 2 | 4 | 0.410 | 1.64 | 166'752 | 16 V instead of 25 V (5 V rails); the 25 V X7R/X5R 1206 parts checked are at 0 stock or 2'193 |
+| C12 | Samsung CL21B475KOFNNNE — 4.7UF 16V X7R 0805 | [1276-2873-1-ND](https://www.digikey.ch/en/products/result?keywords=1276-2873-1-ND) | 1 | 3 | 0.210 | 0.63 | 620'082 |  |
 | C101, C102, C122, C123 | Cal-Chip GMC21X5R226M35NT — CAP0805 X5R 22UF 20% 35V | [4713-GMC21X5R226M35NTCT-ND](https://www.digikey.ch/en/products/detail/cal-chip-electronics-inc/GMC21X5R226M35NT/18151151) | 4 | 6 | 2.920 | 17.52 | 2'927 | dearest passive line; the TDK C2012X5R1V226M125AC alternative is at 0 stock |
-| C103 | Taiyo Yuden UMK107AB7105KA-T — 1UF 50V X7R 0603 | [587-3247-1-ND](https://www.digikey.ch/en/products/detail/taiyo-yuden/UMK107AB7105KA-T/3660085) | 1 | 2 | 0.170 | 0.34 | 589'009 |  |
+| C103 | Taiyo Yuden UMK107AB7105KA-T — 1UF 50V X7R 0603 | [587-3247-1-ND](https://www.digikey.ch/en/products/detail/taiyo-yuden/UMK107AB7105KA-T/3660085) | 1 | 10 | 0.097 | 0.97 | 589'009 |  |
 | C104, C108, C111, C115 | Samsung CL10B224KB8NNNC — 0.22UF 50V X7R 0603 | [1276-CL10B224KB8NNNCCT-ND](https://www.digikey.ch/en/products/detail/samsung-electro-mechanics/CL10B224KB8NNNC/10479537) | 4 | 10 | 0.065 | 0.65 | 138'738 |  |
 | C105, C112, C118, C119, C120 | Yageo CC0603KRX7R8BB105 — 1UF 25V X7R 0603 | [311-1802-1-ND](https://www.digikey.ch/en/products/result?keywords=311-1802-1-ND) | 5 | 10 | 0.160 | 1.60 | 171'602 |  |
 | C106, C107, C113, C114 | Yageo CC0603KRX7R7BB225 — 2.2UF 16V X7R 0603 | [311-3490-1-ND](https://www.digikey.ch/en/products/result?keywords=311-3490-1-ND) | 4 | 10 | 0.369 | 3.69 | 2'295 | 16 V instead of 25 V (≤ 3.3 V audio coupling); no 25 V X7R 0603 in stock |
@@ -27,7 +27,7 @@ Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9
 | F1 | Littelfuse 0453005.MR — FUSE BRD MNT 5A 125VAC/VDC 2SMD | [F3139CT-ND](https://www.digikey.ch/en/products/detail/littelfuse-inc/0453005-MR/552261) | 1 | 2 | 1.850 | 3.70 | 9'445 |  |
 | F2 | Littelfuse 0453010.MR — FUSE BRD MNT 10A 125VAC/VDC 2SMD | [F3141CT-ND](https://www.digikey.ch/en/products/detail/littelfuse-inc/0453010-MR/552264) | 1 | 2 | 2.820 | 5.64 | 7'781 |  |
 | F3 | Littelfuse 0453001.MR — FUSE BRD MNT 1A 125VAC/VDC 2SMD | [F3137CT-ND](https://www.digikey.ch/en/products/detail/littelfuse-inc/0453001-MR/552257) | 1 | 2 | 1.850 | 3.70 | 4'762 |  |
-| F4 | Bel 0ZCJ0020FF2E — PTC RESET FUSE 30V 200MA 1206 | [5923-0ZCJ0020FF2ECT-ND](https://www.digikey.ch/en/products/detail/bel-fuse-inc/0ZCJ0020FF2E/4156326) | 1 | 2 | 0.190 | 0.38 | 455'041 |  |
+| F4 | Bel 0ZCJ0020FF2E — PTC RESET FUSE 30V 200MA 1206 | [5923-0ZCJ0020FF2ECT-ND](https://www.digikey.ch/en/products/detail/bel-fuse-inc/0ZCJ0020FF2E/4156326) | 1 | 5 | 0.156 | 0.78 | 455'041 |  |
 | F5 | Littelfuse 2920L260/33DR — POLYSWITCH RESETTABLE PPTC | [18-2920L260/33DRCT-ND](https://www.digikey.ch/en/products/detail/littelfuse-inc/2920L260-33DR/21801850) | 1 | 2 | 1.230 | 2.46 | 28'323 |  |
 | J1, J8, J9 | JST B2B-XH-A — CONN HEADER VERT 2POS 2.5MM | [455-B2B-XH-A-ND](https://www.digikey.ch/en/products/detail/jst-sales-america-inc/B2B-XH-A/1651045) | 3 | 4 | 0.080 | 0.32 | 215'441 |  |
 | J5, J6 | JST B4B-XH-A — CONN HEADER VERT 4POS 2.5MM | [455-B4B-XH-A-ND](https://www.digikey.ch/en/products/detail/jst-sales-america-inc/B4B-XH-A/1651047) | 2 | 3 | 0.140 | 0.42 | 58'775 |  |
@@ -53,10 +53,10 @@ Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9
 
 | Refs | Part | DigiKey | Need | Buy | Unit | Ext | Stock | Note |
 |---|---|---|---|---|---|---|---|---|
-| strip C1 ×2 | Taiyo Yuden EMK107BBJ106MA-T — 10UF 16V X5R 0603 | [587-3238-1-ND](https://www.digikey.ch/en/products/result?keywords=587-3238-1-ND) | 2 | 3 | 0.260 | 0.78 | 258'433 | 16 V instead of 10 V; every 10 µF 6.3–10 V 0603 checked is at 0 stock |
+| strip C1 ×2 | Taiyo Yuden EMK107BBJ106MA-T — 10UF 16V X5R 0603 | [587-3238-1-ND](https://www.digikey.ch/en/products/result?keywords=587-3238-1-ND) | 2 | 10 | 0.153 | 1.53 | 258'433 | 16 V instead of 10 V; every 10 µF 6.3–10 V 0603 checked is at 0 stock |
 | strip D1–D3 ×2 | TI ESD321DYAR — TVS DIODE 3.6VWM 6.3VC SOT5X3 | [296-ESD321DYARCT-ND](https://www.digikey.ch/en/products/detail/texas-instruments/ESD321DYAR/17394968) | 6 | 10 | 0.391 | 3.91 | 238'921 | decision 10.1 (Daniel 2026-11-08): replaces TPD1E05U06DYAR (0 stock, 26 wk). 0.9 pF, 3.6 V VRWM; DYA pin 1 = GND, so the footprints are turned 180° |
-| strip MK1 ×2 | Infineon IM69D120V01XTSA1 — MIC MEMS DIGITAL PDM OMNI -26DB | [IM69D120V01XTSA1CT-ND](https://www.digikey.ch/en/products/result?keywords=IM69D120V01XTSA1CT-ND) | 2 | 3 | 2.150 | 6.45 | 4'464 |  |
-| strip U1 ×2 | TI SN74LVC1G17DCKR — IC BUFF 1.65V SC-70-5 | [296-11934-1-ND](https://www.digikey.ch/en/products/detail/texas-instruments/SN74LVC1G17DCKR/389053) | 2 | 3 | 0.220 | 0.66 | 166'385 |  |
+| strip MK1 ×2 | Infineon IM69D120V01XTSA1 — MIC MEMS DIGITAL PDM OMNI -26DB | [IM69D120V01XTSA1CT-ND](https://www.digikey.ch/en/products/result?keywords=IM69D120V01XTSA1CT-ND) | 2 | 4 | 2.150 | 8.60 | 4'464 |  |
+| strip U1 ×2 | TI SN74LVC1G17DCKR — IC BUFF 1.65V SC-70-5 | [296-11934-1-ND](https://www.digikey.ch/en/products/detail/texas-instruments/SN74LVC1G17DCKR/389053) | 2 | 10 | 0.147 | 1.47 | 166'385 |  |
 | strip R1 ×2 (+2 for the R4 100 Ω option) | Stackpole RMCF0603FT100R — RES 100 OHM 1% 1/10W 0603 | [RMCF0603FT100RCT-ND](https://www.digikey.ch/en/products/result?keywords=RMCF0603FT100RCT-ND) | 2 | 10 | 0.017 | 0.17 | 1'820'162 | Yageo at 0 stock; +2 for the R4 100 Ω option |
 | strip R4 ×2 | Stackpole RMCF0603FT33R0 — RES 33 OHM 1% 1/10W 0603 | [RMCF0603FT33R0CT-ND](https://www.digikey.ch/en/products/result?keywords=RMCF0603FT33R0CT-ND) | 2 | 10 | 0.017 | 0.17 | 373'329 | Yageo RC0603FR-0733RL: 3 in stock |
 
@@ -105,9 +105,9 @@ Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9
 
 ## DigiKey basket (rebuilt 2026-11-08, not ordered)
 - **Removed:** the 39 old "HA panel" / "HA panel provisional" electronics lines (order list rev 4 §2.2). **Kept:** 56 × 3M SJ-5012 feet (SJ5012-0-ND, CHF 6.35).
-- **Added:** the 55 lines above from `digikey-bom.csv`, customer reference "HA panel". Quantities and prices were checked line by line against this list after the upload: CHF 169.97, every line "Immediate".
-- **HA panel in the basket:** CHF 176.32 excl. VAT (list 169.97 + feet 6.35), CHF 190.60 incl. 8.1 % VAT.
-- **Not touched:** 21 lines with "V2 …" references and 2 lines without a reference (Chip Quik CQ2LF-1.0, MG Chemicals 8342-10ML). Whole basket: CHF 265.98 excl. VAT + VAT 21.54 = CHF 287.52, shipping free (DigiKey, 2026-11-08).
+- **Added:** the 55 lines above from `digikey-bom.csv`, customer reference "HA panel". Spares raised on nine small-part lines the same day (C1/C10, C3, C8/C11, C12, C103, F4, strip C1, U1, MK1). Quantities and prices were checked line by line against this list afterwards: CHF 176.11, every line "Immediate".
+- **HA panel in the basket:** CHF 182.46 excl. VAT (list 176.11 + feet 6.35), CHF 197.24 incl. 8.1 % VAT.
+- **Not touched:** 21 lines with "V2 …" references and 2 lines without a reference (Chip Quik CQ2LF-1.0, MG Chemicals 8342-10ML). Whole basket: CHF 272.12 excl. VAT + VAT 22.04 = CHF 294.16, shipping free (DigiKey, 2026-11-08).
 - **Shared part numbers:** RMCF0603FT100KCT-ND, RMCF0603FT100RCT-ND and 1528-261-ND are also on V2 lines. DigiKey keeps them as separate lines and flags "Duplicate line item"; its note only asks that stock covers the combined quantity (35, 20 and 2 against 802'912, 1'820'162 and 29'215).
 
 ## Decision 10 — strip ESD diodes (D1–D3 on each strip): option 1 (Daniel, 2026-11-08)
