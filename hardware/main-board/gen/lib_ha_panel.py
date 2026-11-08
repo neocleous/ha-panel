@@ -110,10 +110,41 @@ def power_20v():
     return s
 
 
+DS_ESD321 = 'https://www.ti.com/lit/ds/symlink/esd321.pdf'
+
+
+def esd321():
+    """ESD321 in the DYA (SOD-523) package: pin 1 = GND, pin 2 = IO (ESD321 datasheet rev C, table 4-2).
+    Drawn from KiCad's TPD1E05U06DPY symbol with the pin numbers swapped (that symbol has I/O = 1, GND = 2)."""
+    s = copy.deepcopy(symlib.load('Power_Protection:TPD1E05U06DPY'))
+    s[1] = 'ESD321DYA'
+    for e in s:
+        if isinstance(e, list) and e and e[0] == 'property':
+            if e[1] == 'Value':
+                e[2] = 'ESD321'
+            elif e[1] == 'Footprint':
+                e[2] = 'Diode_SMD:D_SOD-523'
+            elif e[1] == 'Datasheet':
+                e[2] = DS_ESD321
+            elif e[1] == 'Description':
+                e[2] = 'Unidirectional ESD diode, 3.6 V VRWM, 0.9 pF, SOD-523 (DYA): pin 1 GND, pin 2 IO'
+            elif e[1] == 'ki_keywords':
+                e[2] = 'ESD TVS protection'
+        if isinstance(e, list) and e and e[0] == 'symbol' and isinstance(e[1], str) and e[1].startswith('TPD1E05U06DPY_'):
+            e[1] = 'ESD321DYA' + e[1][len('TPD1E05U06DPY'):]
+            for pin in findall(e, 'pin'):
+                nm, num = find(pin, 'name'), find(pin, 'number')
+                if nm[1] == 'I/O':
+                    num[1] = '2'
+                elif nm[1] == 'GND':
+                    num[1] = '1'
+    return s
+
+
 def build(path, which=('tas', 'tps1663', 'nid', 'tps709', 'msm', '+20V')):
     syms = []
     table = {'tas': tas5756m, 'tps1663': tps16630, 'nid': nid100, 'tps709': tps70933, 'msm': msm261, '+20V': power_20v,
-             'electrode': touch_electrode, 'im69': im69d120}
+             'electrode': touch_electrode, 'im69': im69d120, 'esd321': esd321}
     for k in which:
         syms.append(table[k]())
     kg.write_symbol_lib(path, syms)

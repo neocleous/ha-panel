@@ -1,6 +1,6 @@
 # DigiKey BOM — main board, mic strips, harness (block 3, 2026-11-08)
 
-Derived from the schematics on `docs` (main board rev 2.1, mic strip decision 9.1). Prices are DigiKey CH, CHF excl. VAT, cut tape at the quantity bought, seen 2026-11-08; stock as shown the same day. Build: one main board and two strips. Spares: small passives +50 % (rounded up), ICs +1, cheap discretes and connectors +1.
+Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9.1 and 10.1). Prices are DigiKey CH, CHF excl. VAT, cut tape at the quantity bought, seen 2026-11-08; stock as shown the same day. Build: one main board and two strips. Spares: small passives +50 % (rounded up), ICs +1, cheap discretes and connectors +1.
 
 **Total: CHF 169.97 excl. VAT** (55 lines; CHF 183.74 incl. 8.1 % VAT). The DigiKey quick-add list is `digikey-bom.csv`.
 
@@ -54,7 +54,7 @@ Derived from the schematics on `docs` (main board rev 2.1, mic strip decision 9.
 | Refs | Part | DigiKey | Need | Buy | Unit | Ext | Stock | Note |
 |---|---|---|---|---|---|---|---|---|
 | strip C1 ×2 | Taiyo Yuden EMK107BBJ106MA-T — 10UF 16V X5R 0603 | [587-3238-1-ND](https://www.digikey.ch/en/products/result?keywords=587-3238-1-ND) | 2 | 3 | 0.260 | 0.78 | 258'433 | 16 V instead of 10 V; every 10 µF 6.3–10 V 0603 checked is at 0 stock |
-| strip D1–D3 ×2 | TI ESD321DYAR — TVS DIODE 3.6VWM 6.3VC SOT5X3 | [296-ESD321DYARCT-ND](https://www.digikey.ch/en/products/detail/texas-instruments/ESD321DYAR/17394968) | 6 | 10 | 0.391 | 3.91 | 238'921 | **decision 10**: TPD1E05U06DYAR at 0 stock (26 wk). ESD321: 0.9 pF, 3.6 V VRWM, DYA pin 1 = GND (TPD1E05U06: pin 1 = I/O) — fit rotated |
+| strip D1–D3 ×2 | TI ESD321DYAR — TVS DIODE 3.6VWM 6.3VC SOT5X3 | [296-ESD321DYARCT-ND](https://www.digikey.ch/en/products/detail/texas-instruments/ESD321DYAR/17394968) | 6 | 10 | 0.391 | 3.91 | 238'921 | decision 10.1 (Daniel 2026-11-08): replaces TPD1E05U06DYAR (0 stock, 26 wk). 0.9 pF, 3.6 V VRWM; DYA pin 1 = GND, so the footprints are turned 180° |
 | strip MK1 ×2 | Infineon IM69D120V01XTSA1 — MIC MEMS DIGITAL PDM OMNI -26DB | [IM69D120V01XTSA1CT-ND](https://www.digikey.ch/en/products/result?keywords=IM69D120V01XTSA1CT-ND) | 2 | 3 | 2.150 | 6.45 | 4'464 |  |
 | strip U1 ×2 | TI SN74LVC1G17DCKR — IC BUFF 1.65V SC-70-5 | [296-11934-1-ND](https://www.digikey.ch/en/products/detail/texas-instruments/SN74LVC1G17DCKR/389053) | 2 | 3 | 0.220 | 0.66 | 166'385 |  |
 | strip R1 ×2 (+2 for the R4 100 Ω option) | Stackpole RMCF0603FT100R — RES 100 OHM 1% 1/10W 0603 | [RMCF0603FT100RCT-ND](https://www.digikey.ch/en/products/result?keywords=RMCF0603FT100RCT-ND) | 2 | 10 | 0.017 | 0.17 | 1'820'162 | Yageo at 0 stock; +2 for the R4 100 Ω option |
@@ -100,14 +100,10 @@ Derived from the schematics on `docs` (main board rev 2.1, mic strip decision 9.
 - **Samsung CL21B104KBCNNNC** (100 nF 0805) and **CL32B106KBJNNNE** (10 µF 1210): not in the schematic.
 - **JST BM05B-SRSS-TB**: no strip connector (decision 9.1).
 - **GCT USB4105-GF-A**: replaced by the through-hole USB4085-GF-A (decision 3A).
-- **TI TPD1E05U06DPYR** (0402): replaced by the SOD-523 footprint in block 1; see decision 10.
+- **TI TPD1E05U06DPYR** (0402): replaced by the SOD-523 footprint in block 1. The SOD-523 TPD1E05U06DYAR then gave way to the ESD321DYAR (decision 10.1).
 - **Kept unchanged in the basket:** the 3M SJ-5012 feet.
 
-## Decision 10 — strip ESD diodes (D1–D3 on each strip)
-TPD1E05U06DYAR is at 0 stock with a 26-week factory lead time (DigiKey, 2026-11-08).
-1. **Recommended: TI ESD321DYAR,** in stock (238'921).
-   - 0.9 pF typ / 1.1 pF max, VRWM 3.6 V, leakage 50 nA max at 3.6 V, SOD-523 (ESD321 datasheet rev C, 2025-06-04).
-   - The 3.3 V lines stay below its 3.6 V standoff.
-   - **Its DYA pinout is reversed:** pin 1 = GND, pin 2 = IO. TPD1E05U06 DYA has pin 1 = I/O, pin 2 = GND (SLVSBO7O).
-   - Change: the strip schematic gets an ESD321 symbol and the three footprints turn 180°. The copper is unchanged and the pin-1 mark follows the part.
-2. Keep TPD1E05U06DYAR on backorder: about 26 weeks, which holds up the single order.
+## Decision 10 — strip ESD diodes (D1–D3 on each strip): option 1 (Daniel, 2026-11-08)
+TPD1E05U06DYAR was at 0 stock with a 26-week factory lead time (DigiKey, 2026-11-08), so **TI ESD321DYAR** is fitted (238'921 in stock).
+- 0.9 pF typ / 1.1 pF max, VRWM 3.6 V, leakage 50 nA max at 3.6 V, SOD-523 (ESD321 datasheet rev C, 2025-06-04). The 3.3 V lines stay below its 3.6 V standoff.
+- Its DYA pinout is the reverse of the TPD1E05U06 DYA: pin 1 = GND, pin 2 = IO. The strip schematic has an ESD321 symbol and the three footprints are turned 180°; the copper is unchanged and the silk pin-1 mark sits at the GND pad.

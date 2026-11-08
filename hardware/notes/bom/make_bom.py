@@ -48,17 +48,13 @@ FOOTER = """
 - **Samsung CL21B104KBCNNNC** (100 nF 0805) and **CL32B106KBJNNNE** (10 µF 1210): not in the schematic.
 - **JST BM05B-SRSS-TB**: no strip connector (decision 9.1).
 - **GCT USB4105-GF-A**: replaced by the through-hole USB4085-GF-A (decision 3A).
-- **TI TPD1E05U06DPYR** (0402): replaced by the SOD-523 footprint in block 1; see decision 10.
+- **TI TPD1E05U06DPYR** (0402): replaced by the SOD-523 footprint in block 1. The SOD-523 TPD1E05U06DYAR then gave way to the ESD321DYAR (decision 10.1).
 - **Kept unchanged in the basket:** the 3M SJ-5012 feet.
 
-## Decision 10 — strip ESD diodes (D1–D3 on each strip)
-TPD1E05U06DYAR is at 0 stock with a 26-week factory lead time (DigiKey, 2026-11-08).
-1. **Recommended: TI ESD321DYAR,** in stock (238'921).
-   - 0.9 pF typ / 1.1 pF max, VRWM 3.6 V, leakage 50 nA max at 3.6 V, SOD-523 (ESD321 datasheet rev C, 2025-06-04).
-   - The 3.3 V lines stay below its 3.6 V standoff.
-   - **Its DYA pinout is reversed:** pin 1 = GND, pin 2 = IO. TPD1E05U06 DYA has pin 1 = I/O, pin 2 = GND (SLVSBO7O).
-   - Change: the strip schematic gets an ESD321 symbol and the three footprints turn 180°. The copper is unchanged and the pin-1 mark follows the part.
-2. Keep TPD1E05U06DYAR on backorder: about 26 weeks, which holds up the single order.
+## Decision 10 — strip ESD diodes (D1–D3 on each strip): option 1 (Daniel, 2026-11-08)
+TPD1E05U06DYAR was at 0 stock with a 26-week factory lead time (DigiKey, 2026-11-08), so **TI ESD321DYAR** is fitted (238'921 in stock).
+- 0.9 pF typ / 1.1 pF max, VRWM 3.6 V, leakage 50 nA max at 3.6 V, SOD-523 (ESD321 datasheet rev C, 2025-06-04). The 3.3 V lines stay below its 3.6 V standoff.
+- Its DYA pinout is the reverse of the TPD1E05U06 DYA: pin 1 = GND, pin 2 = IO. The strip schematic has an ESD321 symbol and the three footprints are turned 180°; the copper is unchanged and the silk pin-1 mark sits at the GND pad.
 """
 
 rows = []
@@ -86,7 +82,7 @@ def fmt_need(n):
 
 total = sum(r['ext'] for r in rows if r['ext'] is not None)
 md = ['# DigiKey BOM — main board, mic strips, harness (block 3, %s)' % DATE, '',
-      'Derived from the schematics on `docs` (main board rev 2.1, mic strip decision 9.1). Prices are DigiKey CH, CHF excl. VAT, '
+      'Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9.1 and 10.1). Prices are DigiKey CH, CHF excl. VAT, '
       'cut tape at the quantity bought, seen %s; stock as shown the same day. Build: one main board and two strips. '
       'Spares: small passives +50 %% (rounded up), ICs +1, cheap discretes and connectors +1.' % DATE, '',
       '**Total: CHF %.2f excl. VAT** (%d lines; CHF %.2f incl. 8.1 %% VAT). The DigiKey quick-add list is `digikey-bom.csv`.' % (total, len(rows), total * 1.081), '']

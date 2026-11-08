@@ -38,7 +38,7 @@ NOTES = {
  'U2':            '**substitute**: TPS70933DBVR at 0 stock (26 wk); the -Q1 version has the same DBV pinout and 2.7–30 V input (SLVSCE6D)',
  'PS1':           '2nd = fallback (decision 4)',
  'S_C10u':        '16 V instead of 10 V; every 10 µF 6.3–10 V 0603 checked is at 0 stock',
- 'S_TPD':         '**decision 10**: TPD1E05U06DYAR at 0 stock (26 wk). ESD321: 0.9 pF, 3.6 V VRWM, DYA pin 1 = GND (TPD1E05U06: pin 1 = I/O) — fit rotated',
+ 'S_TPD':         'decision 10.1 (Daniel 2026-11-08): replaces TPD1E05U06DYAR (0 stock, 26 wk). 0.9 pF, 3.6 V VRWM; DYA pin 1 = GND, so the footprints are turned 180°',
  'S_100R':        'Yageo at 0 stock; +2 for the R4 100 Ω option',
  'S_33R':         'Yageo RC0603FR-0733RL: 3 in stock',
  'XH_wire':       'black only on DigiKey; mark + leads with a pen or heat-shrink',
