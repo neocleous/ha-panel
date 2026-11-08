@@ -245,6 +245,7 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_d22g_save_export.py` | d | version d22, f3d, STEP front | see the print audit checkpoint |
 | `board_zone/` (`fusion/v5f_e1a_list_bodies.py`, `fusion/v5f_e1b_meshes.py`, `offline/*`) | e | read-only: main-board outline study (all SMD on the front, electronics brief 2026-11-07 22:52) – body list and world meshes read without activating the design, then y-ray column maps at the board plane: slab, door sweep, front and back gaps; runs in `board_zone/RUNS.md` | outline T 6,139 mm² / maximum 6,876 mm² (today 4,500) with no print and no connector change; see the e1 checkpoint |
 | `board_zone/fusion/v5f_e2a…e2e`, `board_zone/offline/{kpcb,door_sweep,access*}.py` | e | main board rev 2 (MAIN_env rev 2, docs 733cb5a): MAIN_pcb 90 × 55 (z 34–89, −x top corner cut), MAIN_front_env 30 / 24.2 below z 35.8 without the K5 corner, MAIN_back_env 2.9 + J2 3.5 without the bare top corners; old bodies hidden as `MAIN_*_e2`; checks against 90 bodies, door taken off, reach for plugging the front-face leads; runs in `board_zone/RUNS.md` | version 38; no new interference; see the e2 checkpoint |
+| `board_zone/fusion/v5f_e3a…e3c`, `board_zone/offline/access8.py`, `access9.py` | e | main board rev 2.1 (C7 to the top strip above the NID, docs 236be84): MAIN_C7_env (Ø5.5 × 12.5 at x_rel −5.67, z 86.05) and KO_C7_vent (3 mm above the vent), hidden; checks against 93 bodies; lead reach re-run; runs in `board_zone/RUNS.md` | version 39; all pass, see the e3 checkpoint |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -1066,3 +1067,10 @@ Electronics rev 2 (`claude/report-main-board-rev2-2026-11-08.md`): T's base only
   1.2 mm at x < −43.7, z ≈ 83 (0.99 mm³, was 3.08).
 - Leads after mounting: J1, J5, J8, J9 yes, as before; J6 tight because of C7 (as before).
 - Answer: `claude/report-main-board-rev2-checks-2026-11-08.md`.
+
+## Main board rev 2.1 – e3 (2026-11-08)
+C7 (Ø5 × 12.5) moved from the gap between the NID and J6 to the top strip above the NID.
+- Version 39: MAIN_C7_env and KO_C7_vent (3 mm above the vent), hidden; nothing else changed.
+- C7 and its vent space touch only the main-board envelopes; nearest other body 20.9 mm (LCD 5 V lead).
+- Leads after mounting: a Ø24 fingertip reaches all five plugs (J1, J5, J6, J8, J9); J6 is no longer tight.
+- Answer: `claude/report-main-board-rev2-1-checks-2026-11-08.md`.

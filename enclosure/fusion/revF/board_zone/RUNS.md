@@ -71,3 +71,22 @@ Offline (same container; `access*.py` read the `bz.py` column cache in `../bz/ca
 | `offline/kpcb.py` | reads footprints (reference, layer, position, courtyard, pads) and Edge.Cuts from a `.kicad_pcb` | rev 2 and 50da2b8: every tall part and connector at the same place |
 | `offline/door_sweep.py` | door taken off straight back: door samples (0.25 mm) ahead of each body's rear face over its footprint; gap behind | board 4.18 mm from that door material (old 6.27); door ≥ 1.95 mm behind the board (old 2.90), at the +x top corner; the 2.9 back envelope touches at the bare zone's edge (x 43.5, z 89) |
 | `offline/access.py`, `access2.py`, `access4.py`, `access6.py`, `access7.py` | plugging the front-face leads after the board is on: 1 mm voxels; obstacles = step-10 parts (cap on or off, cradle in or out) + board slab + parts (courtyard × MAIN_env heights); a fingertip ball travels from behind the open back to the plug top (y −53.6); hand ball for the finger length | top edge 84 and 89 give the same result. J1, J5, J8, J9: Ø20 fingertip touches. J6: Ø14 gets within 1.1 mm, Ø16–20 within 2.1 (C7 beside it); without C7, Ø20 touches. All five over the top edge: sealing it stops Ø20, sealing below or the sides changes nothing |
+
+## e3 — main board rev 2.1: C7 moved (2026-11-08)
+Electronics: `claude/report-main-board-rev2-1-c7-2026-11-08.md`, MAIN_env rev 2.1 (docs @ 236be84): C7 (Würth 860160572003,
+Ø5.0 ± 0.5 × 12.5) from (x_rel 0.5, z 66.6) to the top strip above the NID, centre (−5.67, 86.05); nothing else moved
+(`kpcb.py`: every other footprint, the outline and the via / segment counts equal to 733cb5a). Answer: Project doc
+`claude/report-main-board-rev2-1-checks-2026-11-08.md`.
+
+| When | Script | Settings | Result |
+|---|---|---|---|
+| 2026-11-08 11:11:24 | `fusion/v5f_e3a_c7.py` | modifying; activates the design; guard volumes, document unmodified | MAIN_C7_env 0.29698 cm³ (Ø5.5 × 12.5, y −63.4…−50.9, x_rel −8.42…−2.92) and KO_C7_vent 0.07127 cm³ (Ø5.5 × 3, y −50.9…−47.9), hidden |
+| 2026-11-08 11:11:49 | `fusion/v5f_e3b_c7_checks.py` | readOnly; both bodies against 93 bodies within 20 mm: intersection volume and minimum distance | 0.6 s; only the main-board envelopes touch (inside MAIN_front_env, on MAIN_pcb); nearest others: LCD 5 V lead 20.9 mm from the vent space, bracket 29.5, DSI ribbon 42.4, VEML lead 44.3 |
+| 2026-11-08 11:13:59 | `fusion/v5f_e3c_save.py` | saves, f3d, re-activates the exploded-prints copy | version 39 "rev F WIP 2026-11-08 e3: main board rev 2.1 …"; `~/Documents/HA Panel v5 - tapered revF-e3.f3d` 98.7 MB |
+
+Offline: `access8.py` (rev 2 against rev 2.1, Ø14 / 16 / 20, cradle out and in, openings sealed one at a time) and
+`access9.py` (Ø24 / 28; finger length beyond a Ø40 hand). Their `rev2.kicad_pcb` / `rev21.kicad_pcb` are `git show 733cb5a:` /
+`236be84:hardware/main-board/main-board.kicad_pcb`. Rev 2.1: a Ø24 fingertip touches all five plug tops, J6
+included (rev 2: Ø14 within 1.1 mm, Ø16–24 within 2.1); J1, J5, J8, J9 as in rev 2; all over the top edge. At Ø28 J6
+stops 12.1 mm short in both. Finger beyond a Ø40 hand (Ø16): J1 42 (43 cradle in), J5 13, J6 46 (rev 2: none), J8 44,
+J9 41 mm. C7's joints: 9.3 mm back gap to the door, nothing else behind.
