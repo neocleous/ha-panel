@@ -24,7 +24,7 @@ The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `f
 | Inner copper | 0.5 oz (JLC default) | — |
 | Via hole / diameter | 0.2 / 0.45 mm, which carries no surcharge | 0.2 / 0.45 mm |
 | Via covering | tented | tented |
-| Surface finish | **ENIG** recommended (flat pads for the 0.5 mm HTSSOP-48 and its PowerPAD on the hotplate); LeadFree HASL is the cheaper fallback | **ENIG** recommended (small LGA pads of the IM69D120); LeadFree HASL as fallback |
+| Surface finish | **ENIG** (Daniel, 2026-11-08) | **ENIG** (Daniel, 2026-11-08) |
 | Mask / silkscreen | green / white | green / white |
 | Order number on the board | JLC default placement | JLC default placement |
 | Gold fingers, castellations, edge plating | no | no |
@@ -42,7 +42,20 @@ The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `f
 | Silkscreen | text 1.0 high, 0.15 stroke; KiCad library outlines 0.12 | outlines and polarity marks only (no room for references) | text 1.0 / 0.15, lines ≥ 0.15 |
 
 - **Thin silk outlines.** The 0.12 mm outlines come from the KiCad standard footprints and may print thin. The block 3 assembly drawing carries every reference, polarity mark and pin-1 mark.
-- **Paste layers are included,** for an optional JLC stencil. Main board: F.Paste only, since B.Paste is empty. Strip: B.Paste only, because its parts are on the back.
+- **Paste layers are included.** Main board: F.Paste only, since B.Paste is empty. Strip: B.Paste only, because its parts are on the back.
+
+## Stencil (main board front; Daniel, 2026-11-08)
+One JLC SMT stencil for the main board's front, ordered with the same zip. The strip's 12 SMD parts are pasted by syringe, unless a second stencil is added.
+
+| Option | Choice | Why |
+|---|---|---|
+| Stencil type | Non-framework | hand use on the hotplate; framework stencils are for printers |
+| Stencil side | Top only | every SMD part is on the front |
+| Thickness | 0.12 mm | standard thickness at no extra cost; JLC suggests 0.10–0.12 for fine pitch |
+| Polishing | Electropolishing | JLC lists it as ideal for ICs at or below 0.5 mm pitch (the TAS5756M) |
+| Fiducials | No fiducial | aligned by hand to the pads |
+| Size | the smallest size the order page offers | the board is 90 × 55 |
+| **Remark** | "Please cut the paste apertures 1:1 as drawn." | By default JLC resizes apertures for IC packages and 0805+ parts. The TAS5756M thermal-pad windows (70–80 % of the pad, SLAS988B 11.1.3.2) are designed and must stay as drawn. |
 
 ## Export settings
 JLC's KiCad 9 guide, applied with kicad-cli 9.0.9:
@@ -69,4 +82,5 @@ Read 2026-11-08:
 - JLC PCB capabilities — https://jlcpcb.com/capabilities/pcb-capabilities
 - JLC "How to generate Gerber and Drill files in KiCAD 9" — https://jlcpcb.com/help/article/how-to-generate-gerber-and-drill-files-in-kicad-9
 - JLC stack-ups — https://jlcpcb.com/impedance
+- JLC stencil capabilities — https://jlcpcb.com/capabilities/pcb-stencil-manufacturing
 - GCT USB4085 drawing rev B (2023-02-28), recommended PCB layout — https://gct.co/files/drawings/usb4085.pdf (read 2026-11-07)
