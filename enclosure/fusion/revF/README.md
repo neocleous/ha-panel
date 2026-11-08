@@ -246,6 +246,10 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `board_zone/` (`fusion/v5f_e1a_list_bodies.py`, `fusion/v5f_e1b_meshes.py`, `offline/*`) | e | read-only: main-board outline study (all SMD on the front, electronics brief 2026-11-07 22:52) – body list and world meshes read without activating the design, then y-ray column maps at the board plane: slab, door sweep, front and back gaps; runs in `board_zone/RUNS.md` | outline T 6,139 mm² / maximum 6,876 mm² (today 4,500) with no print and no connector change; see the e1 checkpoint |
 | `board_zone/fusion/v5f_e2a…e2e`, `board_zone/offline/{kpcb,door_sweep,access*}.py` | e | main board rev 2 (MAIN_env rev 2, docs 733cb5a): MAIN_pcb 90 × 55 (z 34–89, −x top corner cut), MAIN_front_env 30 / 24.2 below z 35.8 without the K5 corner, MAIN_back_env 2.9 + J2 3.5 without the bare top corners; old bodies hidden as `MAIN_*_e2`; checks against 90 bodies, door taken off, reach for plugging the front-face leads; runs in `board_zone/RUNS.md` | version 38; no new interference; see the e2 checkpoint |
 | `board_zone/fusion/v5f_e3a…e3c`, `board_zone/offline/access8.py`, `access9.py` | e | main board rev 2.1 (C7 to the top strip above the NID, docs 236be84): MAIN_C7_env (Ø5.5 × 12.5 at x_rel −5.67, z 86.05) and KO_C7_vent (3 mm above the vent), hidden; checks against 93 bodies; lead reach re-run; runs in `board_zone/RUNS.md` | version 39; all pass, see the e3 checkpoint |
+| `v5f_e4a_m2_probe.py` | e | read-only: the four ruthex M2 holes before the change – hole and boss faces, material along each axis (r 0 and 0.8, 0.1 steps, transitions bisected), other bodies within 12 mm beyond each bottom (18 min: it also tested the hidden shell copies, lesson 82) | carrier Ø3.2 × 4.5 in Ø6 × 5.0 bosses, 2.5 of plate under each bottom (7.0 below the face); cradle Ø3.2 × 4.5 in Ø6 posts, 1.5 under each bottom (6.0, plate underside z 14.5) |
+| `v5f_e4b_m2_pilots.py` | e | M2 × 6 screws for plastic (Daniel 2026-11-08): each insert hole filled (Ø3.4 plug flush with the face, 0.1 into the material under it), re-cut as a Ø1.6 pilot with a 0.3 × 45° entry chamfer, 5.5 deep or through where a blind hole would leave < 1.2; the cradle's bezel roof slotted 4.6 wide over both screws (Daniel: slot the roof); gates: the plug's ring in material 5.5732 mm³ and the pilot in material (11.3129 blind / 12.3182 through) equal to the analytic values, each slot removes only roof (17.71), 16 probes per hole, 6 per slot | carrier 10.0716 → 10.1214 cm³ (blind), cradle 2.1775 → 2.1898 (through, slots); 1 lump each; old → `RESP_CARRIER_e4`, `CRADLE_5807_e4` (hidden) |
+| `v5f_e4c_m2_checks.py` | e | read-only, on the built solids: wall = largest ring round the bore inside the part (control: the old holes give the audit's 1.4, and 1.15 at the +x post, lesson 84), chamfer wall, skin, depth, boss; M2 × 6 tip margin and engagement; shank and head allowance (Ø4.2 × 1.8) against every current body; bodies near the exits; the 5807 driver straight up (Ø1.5 / 3.0 / 4.0, step-11 bodies); interference new vs old | see the e4 checkpoint |
+| `v5f_e4d_save_export.py`, `v5f_e4e_verify.py` | e | version 40, f3d, STEP carrier and cradle (d7d method) read back into new documents; version, bodies and files verified without activation | STEP read back 10.1214 / 2.1898 cm³, Ø1.6 bores, no Ø3.2 left |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -455,6 +459,14 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 81. Anchoring an overhang does not stop a slicer supporting it. After d22 the side pads slice as one bridge between ribs,
     but PrusaSlicer still hangs interface under every pad's outline and screw hole (bridge perimeters; the back pads too).
     Read the G-code, not the geometry, and pair the anchors with a support blocker: the anchors make the blocker safe.
+82. A probe that asks "what lies on this axis" of every body must skip the hidden copies. e4a ran `pointContainment` on ≈ 30
+    hidden states of the front shell per axis (≈ 50 ms a point) and blocked Fusion for 18 min; e4c's current-body list (as
+    e3b's) did the same job in seconds.
+83. A re-staged script reached the Mac unchanged once although `device_commit_files` reported it written: stage each
+    revision under a new name and compare checksums on both sides before running it.
+84. Take a wall from the solid, not from the boss OD. The ring test (largest ring round the bore that lies in the part) gave
+    the audit's 1.4 at the −x cradle post but 1.15 at the +x post, where the plate's edge (x_rel 10.5) runs 2.75 from the
+    axis below the post's cylinder; the audit had taken Ø6 − Ø3.2 for both.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -1074,3 +1086,29 @@ C7 (Ø5 × 12.5) moved from the gap between the NID and J6 to the top strip abov
 - C7 and its vent space touch only the main-board envelopes; nearest other body 20.9 mm (LCD 5 V lead).
 - Leads after mounting: a Ø24 fingertip reaches all five plugs (J1, J5, J6, J8, J9); J6 is no longer tight.
 - Answer: `claude/report-main-board-rev2-1-checks-2026-11-08.md`.
+
+## M2 screws for plastic – e4 (2026-11-08)
+Daniel 2026-11-08: the ReSpeaker Lite and the Adafruit 5807 go on M2 × 6 pan-head screws for plastic, straight into the
+printed bosses (neither board comes off in service); no inserts in these four holes. Supersedes the ruthex M2 × 4 and the
+DIN912 M2 × 5 (audit findings 28–29). 18:58, after the driver check: slot the cradle's bezel roof.
+- Version 40 "rev F WIP 2026-11-08 e4 …". Each Ø3.2 × 4.5 insert hole filled and re-cut as a Ø1.6 pilot (PT table: 0.80 d in
+  ABS, 0.78 d in ASA) with a 0.3 × 45° entry chamfer (Ø2.2 at the face). Old parts hidden as `RESP_CARRIER_e4`,
+  `CRADLE_5807_e4`.
+  - Carrier (vertical in print, plate down): 5.5 deep, blind; skin 1.5 to the plate's front face; wall 2.2 (1.9 at the
+    chamfer). M2 × 6 through the 1.51 board: 4.49 in the plastic (4.19 below the chamfer), tip 1.01 above the bottom.
+  - Cradle (sideways in print, rear face down): a blind 5.5 would leave 0.5 under it, so through the post and plate (6.0,
+    exit on the plate's underside, z 14.5); wall 2.2 (−x) / 1.95 (+x, the plate's edge); M2 × 6 through the 1.6 board
+    (estimate): 4.40 in (4.10 below the chamfer), tip 1.60 short of the exit. Below the exit: air to the floor (z 2.5);
+    with the door on, the grommet sleeve passes 0.4 under the bore's rear edge (0.53 from the exit centre).
+  - Bezel roof over the PCB's receptacle end (y −83.8…−81.6, z 24.95–26.7): its front edge was 0.44 behind both screw
+    axes, 2.85 above the board, so a straight driver could not reach a pan head (a hex key would have needed ≈ 25° from
+    the front). Slotted 4.6 wide over each screw (x_rel 5.45…10.05 and −9.79…−5.19) back to the 0.8 back wall: Ø1.5 /
+    3.0 / 4.0 drivers free ≥ 150 straight up at step 11. The outer face, the receptacle window and the door / grommet fit
+    are unchanged; the roof stays over the receptacle (x_rel −5.19…5.45).
+- Checks (e4c): shank and head allowance (Ø4.2 × 1.8) ∩ every current body 0; interference changed only where the filled
+  ring sits inside the board envelopes' designed overlaps (RESP_mic_env 111.91 → 147.59, PD_5807_env 64.71 → 76.26 mm³:
+  exactly the added ring and chamfer volume).
+- Volumes (cm³): RESP_CARRIER 10.1214, CRADLE_5807 2.1898.
+- Exports: `~/Documents/HA_v5f_resp_carrier.step`, `HA_v5f_cradle_5807.step` (world frame; read back 10.1214 / 2.1898),
+  `~/Documents/HA Panel v5 - tapered revF-e4.f3d` (98.9 MB). "HA Panel v5 - exploded prints (d19)" predates this.
+- Answer: `claude/report-m2-screws-for-plastic-2026-11-08.md`.
