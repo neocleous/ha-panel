@@ -51,6 +51,13 @@ FOOTER = """
 - **TI TPD1E05U06DPYR** (0402): replaced by the SOD-523 footprint in block 1. The SOD-523 TPD1E05U06DYAR then gave way to the ESD321DYAR (decision 10.1).
 - **Kept unchanged in the basket:** the 3M SJ-5012 feet.
 
+## DigiKey basket (rebuilt 2026-11-08, not ordered)
+- **Removed:** the 39 old "HA panel" / "HA panel provisional" electronics lines (order list rev 4 §2.2). **Kept:** 56 × 3M SJ-5012 feet (SJ5012-0-ND, CHF 6.35).
+- **Added:** the 55 lines above from `digikey-bom.csv`, customer reference "HA panel". Quantities and prices were checked line by line against this list after the upload: CHF 169.97, every line "Immediate".
+- **HA panel in the basket:** CHF 176.32 excl. VAT (list 169.97 + feet 6.35), CHF 190.60 incl. 8.1 % VAT.
+- **Not touched:** 21 lines with "V2 …" references and 2 lines without a reference (Chip Quik CQ2LF-1.0, MG Chemicals 8342-10ML). Whole basket: CHF 265.98 excl. VAT + VAT 21.54 = CHF 287.52, shipping free (DigiKey, 2026-11-08).
+- **Shared part numbers:** RMCF0603FT100KCT-ND, RMCF0603FT100RCT-ND and 1528-261-ND are also on V2 lines. DigiKey keeps them as separate lines and flags "Duplicate line item"; its note only asks that stock covers the combined quantity (35, 20 and 2 against 802'912, 1'820'162 and 29'215).
+
 ## Decision 10 — strip ESD diodes (D1–D3 on each strip): option 1 (Daniel, 2026-11-08)
 TPD1E05U06DYAR was at 0 stock with a 26-week factory lead time (DigiKey, 2026-11-08), so **TI ESD321DYAR** is fitted (238'921 in stock).
 - 0.9 pF typ / 1.1 pF max, VRWM 3.6 V, leakage 50 nA max at 3.6 V, SOD-523 (ESD321 datasheet rev C, 2025-06-04). The 3.3 V lines stay below its 3.6 V standoff.
