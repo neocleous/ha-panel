@@ -137,16 +137,21 @@ All test pads are bare SMD pads Ø1.5 on the **back** (door side, `TestPoint_Pad
   - F5 (PVDD PTC) sits at (45.6, 30.45), straddling the +20V and PVDD planes.
   - J4's courtyard is trimmed to its pads, because it is a wire landing with no header body.
   - The farthest parts are the 3.3 V LDO group (U2 and its caps, F4) and D1/D2, at 15–20 mm from their anchors. They are supply parts; the TAS decoupling stays within about 11 mm.
+  - **Rev 2.1 (2026-11-08):** C7 (12.5 tall) sits in the top strip above the NID, body centre (50.67, −2.05), + towards the
+    +Vo pins. Between the NID and J6 it blocked a fingertip from J6's plug (design chat reach check), so the touch lead
+    would have had to go on before mounting. It stays 11 mm from the NID output pins and reaches In2 +5V and In1 GND
+    through its own pads, so no track changed (`gen/fix_c7.py`).
 - **TAS escape:** as in the two-sided rev: staggered fan-out rows, GND pins onto the land, PVDD bridges with one 0.6/0.3 via per side, bootstrap caps at the pins, outputs 0.6 mm to the inductors (`gen/amp.py`). The 0.1 µF PVDD caps C100/C121 are now on the front, with their own plane vias.
 - **Routing:** pre-routes for the amplifier outputs and the 20 V inlet → Freerouting 2.5.0 (32 left) → GND pours, stitching, dangling-via clean-up → fixes in `gen/fix_main1s.py`:
   - VIN_EF ties;
   - R1 link;
   - PI_LRCLK around F5;
   - C4's ground;
-  - F5 moved 0.45 mm off J6's courtyard.
+  - F5 moved 0.45 mm off J6's courtyard;
+  - rev 2.1: C7 to the top strip (`gen/fix_c7.py`).
 
   The KiCad board is the source of truth. Re-running the scripts gives a different Freerouting result.
-- **Silkscreen:** 69 references on silk and 46 hidden in the dense areas. The block 3 assembly drawing (fab layers) carries every reference.
+- **Silkscreen:** 73 references on silk and 42 hidden in the dense areas (rev 2.1; C7's old place freed room for four). The block 3 assembly drawing (fab layers) carries every reference.
 - **DRC (KiCad 9.0.9, `drc-report.txt`):** 0 errors, 0 unconnected, schematic parity clean. Two warnings: J2's outline past the board edge removed, and J4's courtyard trimmed to its pads (both footprints differ from the library copy).
 
 ## Sources (read 2026-11-07 unless noted)

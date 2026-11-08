@@ -1,6 +1,6 @@
 # HA panel — main board
 
-Status: **block 2 — layout rev 2, single-sided SMD, routed, DRC clean (2026-11-08).** Fab files, BOM and assembly notes follow in block 3.
+Status: **block 2 — layout rev 2.1, single-sided SMD, routed, DRC clean (2026-11-08).** Rev 2.1 moves C7 to the top strip so every front lead plugs after mounting (`MAIN_env.md`). Fab files, BOM and assembly notes follow in block 3.
 
 - **KiCad 9.0.9.** Open `main-board.kicad_pro`. Project libraries: `lib/ha_panel.kicad_sym` (custom symbols: TAS5756M, TPS16630, NID100-5, TPS70933, +20V power symbol) and `lib/ha_panel.pretty` (custom footprints, created in block 2).
 - **Schematic PDF:** `main-board-schematic.pdf` (5 pages).

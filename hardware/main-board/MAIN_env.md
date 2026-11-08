@@ -1,9 +1,14 @@
-# MAIN_env confirmation — main board, single-sided SMD (rev 2, 2026-11-08)
+# MAIN_env confirmation — main board, single-sided SMD (rev 2.1, 2026-11-08)
 
 Replaces the 2026-11-07 two-sided issue. Daniel 2026-11-07 22:48: no SMD on the back; the board grows instead. Outline from
 the design chat's answer `claude/report-main-board-outline-2026-11-07.md` (outline T). The layout left T's tab empty (no
 parts, no tracks), so the tab was cut off: the board is **T's base, 90 × 55**.
 Board frame: KiCad top = Pi side (front), x_board = 45 − x_rel, y_board = 84 − z (y < 0 above the old top edge).
+
+**Rev 2.1 (2026-11-08 01:35):** C7 (the NID output capacitor, 12.5 tall) moves from the gap between the NID and J6 to the
+top strip above the NID, so every front lead, J6 included, can be plugged after mounting (design chat reach check,
+`claude/report-main-board-rev2-checks-2026-11-08.md`). Same part, nets and footprint. Outline, holes, connectors and every
+other part are unchanged. Position: section "C7 (rev 2.1)" below.
 
 ## Board
 - **Outline, 90 × 55 × 1.6.** −x top corner cut for the K5 lower LCD-screw lane.
@@ -26,7 +31,7 @@ Board frame: KiCad top = Pi side (front), x_board = 45 − x_rel, y_board = 84 �
 |---|---|---|---|---|
 | Front | **27.5** | NID100-5 upright, z ≥ 35.8 (unchanged position) | NID100-SPEC 2024-10-30 | ≤ 30 on the base; K7 ≤ 24.2 below z 35.8 ✓ |
 | Front | 16 | C5, C6 EEU-FR1J121B Ø10 × 16 | order list rev 4 | |
-| Front | 12.5 | C7 Würth 860160572003 | order list rev 4 | |
+| Front | 12.5 | C7 Würth 860160572003, top strip since rev 2.1 | order list rev 4 | ≤ 30 in the top strip ✓ |
 | Front | 9.8 | JST XH plugs mated | JST XH catalog | |
 | Front | 6.5 | L1 SRR1260-150M | order list rev 4 | |
 | Front | 5.4 | L100–L103 CSBA0850 | CODACA 2026-03-16 | |
@@ -38,7 +43,7 @@ Board frame: KiCad top = Pi side (front), x_board = 45 − x_rel, y_board = 84 �
 
 Zone checks:
 - **K5 −x top corner** (x_rel < −41.5, z > 83.5; front 26 → 6): no parts.
-- **New top strip z 84–89** (front ≤ 30): F3 NANO2, D2 SMB and R19 only.
+- **New top strip z 84–89** (front ≤ 30): F3 NANO2, D2 SMB, R19 and, since rev 2.1, C7 (12.5).
 - **Strip z 34–35.8** (front ≤ 24.2 in the K7 band): R11 and R18 (0603), plus the edges of the J1/J8 courtyards. The J1 and J8 bodies stay at z ≥ 35.8 as before.
 - **Back bare zones** (top corners: x_rel < −38 or > 43.5, above z 82): no test pads and no through-hole joints.
 
@@ -59,10 +64,32 @@ Unchanged from the 2026-11-07 issue (same world positions, same KiCad coordinate
 | J10 | BME680 + VEML6030 landing, 2 × 4 | front | pins x_rel −18.42 / −20.97, z 73.69 … 81.31 |
 | LK1 | Pi-branch wire link | back | pads x_rel 10.19 / 17.81, z 37.7 |
 
-## For the enclosure session
-- Main-board body: the outline above. The base top edge rises 84 → 89 (5 mm), within T.
-- **No tab:**
-  - The reach over the board's top centre stays as the design chat measured it for the base. The front-face leads (J1, J5, J6, J8, J9) may go back to being plugged after mounting; please confirm with the 5 mm higher edge.
-  - The door's closest approach is the design chat's base value, not the tab's 1.1 mm.
-- **Door and clash checks** to re-run on this outline.
+## C7 (rev 2.1)
+Würth 860160572003 (WCAP-ATLL), 22 µF 35 V, Ø5.0 ± 0.5, 12.5 max, 2.0 pitch, through-hole on the front. Courtyard as KiCad
+reports it (incl. line width); body from the datasheet.
+
+| | KiCad (x, y) | World (x_rel, z) |
+|---|---|---|
+| Body centre | (50.67, −2.05) | (−5.67, 86.05) |
+| Body Ø5.0 (Ø5.5 max) | x 48.17–53.17, y −4.55…0.45 | x_rel −8.17…−3.17, z 83.55…88.55 |
+| Courtyard | x 47.88–53.46, y −4.84…0.74 | x_rel −8.46…−2.88, z 83.26…88.84 |
+| Pad 1 (+5V) / pad 2 (GND) | (51.67, −2.05) / (49.67, −2.05) | (−6.67, 86.05) / (−4.67, 86.05) |
+| Height above the front face | 12.5 max | y −63.4 … −50.9 |
+
+- **Clearances:**
+  - body to the top edge (z 89): 0.45, or 0.20 at Ø5.5;
+  - body to the NID body (z 83.0): 0.55, or 0.30 at Ø5.5.
+- **Distance to the plugged leads:**
+  - J5's courtyard is 15.5 mm away in x;
+  - J6's is 19.8 mm away, with the NID (27.5) between;
+  - J1, J8 and J9 are more than 40 mm away.
+- **Vent:** Würth asks for at least 3 mm free above the vent (datasheet §1.6), i.e. nothing within 15.5 mm of the front face over C7 (y −63.4 … −47.9).
+- **Electrical:** 11.1 mm from the NID +Vo pin 4 and GND pin 5, as before (11.2 / 8.7 in the old place).
+- **Old place, for the record:** body centre (44.5, 17.4), world (0.5, 66.6).
+
+## For the enclosure session (rev 2.1)
+- **C7 moved and is taller than 9.8 mm.** It is not near J1, J5, J6, J8 or J9 (nearest J5, 15.5 mm). Please re-run the
+  reach check, and check the 3 mm vent clearance in front of C7.
 - **V23** (BME680/VEML6030 leads to J10) still open; J10 doesn't move.
+- The rev 2 asks (reach with the 5 mm higher edge, door and clash checks) are answered in
+  `claude/report-main-board-rev2-checks-2026-11-08.md`.

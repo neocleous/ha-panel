@@ -19,6 +19,7 @@ EDGE = 0.45                     # courtyard to board edge
 GAP = 0.3                       # courtyard to courtyard
 FRONT = dict(p2.FRONT)
 FRONT['F5'] = (45.6, 30.45, 0)   # PVDD PTC on the front: pad 1 (+20V) in the +20V plane, pad 2 (PVDD) in the PVDD plane
+FRONT['C7'] = (50.67, -2.05, 180)   # rev 2.1 (2026-11-08): top strip above the NID, so J6 plugs after mounting (fix_c7.py)
 FIXED_BACK = {'J2': p2.FIXED_BACK['J2'], 'LK1': p2.FIXED_BACK['LK1']}
 ANCHOR = dict(p2.ANCHOR)
 EF_FIRST = ['F1', 'C1', 'C2', 'C4', 'D1', 'R1', 'R2', 'R3', 'C3', 'R4', 'R5', 'R6']   # inlet path first: F1 next to J1
