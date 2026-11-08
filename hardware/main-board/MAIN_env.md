@@ -87,9 +87,10 @@ reports it (incl. line width); body from the datasheet.
 - **Electrical:** 11.1 mm from the NID +Vo pin 4 and GND pin 5, as before (11.2 / 8.7 in the old place).
 - **Old place, for the record:** body centre (44.5, 17.4), world (0.5, 66.6).
 
-## For the enclosure session (rev 2.1)
-- **C7 moved and is taller than 9.8 mm.** It is not near J1, J5, J6, J8 or J9 (nearest J5, 15.5 mm). Please re-run the
-  reach check, and check the 3 mm vent clearance in front of C7.
-- **V23** (BME680/VEML6030 leads to J10) still open; J10 doesn't move.
-- The rev 2 asks (reach with the 5 mm higher edge, door and clash checks) are answered in
-  `claude/report-main-board-rev2-checks-2026-11-08.md`.
+## Enclosure checks (rev 2.1)
+Answered by the design chat in `claude/report-main-board-rev2-1-checks-2026-11-08.md` (model version 39, `docs` @ 8d5ac19):
+- **Reach:** a Ø24 fingertip reaches J1, J5, J6, J8 and J9 after mounting; J6 is no longer tight.
+- **C7 and its 3 mm vent space** touch only the main-board envelopes. Nearest other body: the LCD 5 V lead, 20.9 mm.
+- **C7's back joints** are 9.3 mm from the door.
+- **Vent keep-out** for routing the leads: x_rel −8.4 … −2.9, z 83.3 … 88.8, up to y −47.9.
+- **Still open:** V23 (BME680/VEML6030 leads to J10). J10 doesn't move, and those leads will be routed clear of the vent keep-out.
