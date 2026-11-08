@@ -233,15 +233,26 @@ REPO_DIR=/opt/ha-panel/repo
 ORIGIN="$(printf '%s' "$REPO_URL" | sed -E 's#^([a-z]+://)([^/@]*@)?([^/]+).*#\1\3#')"
 log "═══ HA Panel first boot, part 2 — $REPO_URL"
 
+# Part 1 enabled SSH; make sure it is really listening while this runs, so a
+# stalled or failed part 2 can be reached without a keyboard on the panel.
+systemctl enable --now ssh >/dev/null 2>&1 || true
+
+# Wait up to 15 minutes. On the very first boot with Wi-Fi, NetworkManager's
+# first association attempts can fail and it then blocks the connection for
+# 300 s before retrying — a 300 s wait here lost that race by seconds on a real
+# panel (2026-11-08). Progress goes to the screen once a minute.
 up=""
-deadline=$((SECONDS + 300))
+deadline=$((SECONDS + 900))
+ticks=0
 while [ "$SECONDS" -lt "$deadline" ]; do
   code="$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 "$ORIGIN/" || true)"
   if [ -n "$code" ] && [ "$code" != 000 ]; then up=1; break; fi
+  ticks=$((ticks + 1))
+  if [ $((ticks % 30)) -eq 0 ]; then log "Waiting for the network — ${SECONDS} s (first Wi-Fi association can take ~5 min)"; fi
   sleep 2
 done
 if [ -z "$up" ]; then
-  log "ERROR: no network after 300 s — check the Ethernet cable, or the Wi-Fi name, password and country"
+  log "ERROR: no network after 900 s — check the Ethernet cable, or the Wi-Fi name, password and country"
   log "Part 2 stays armed and runs again at the next boot"
   exit 1
 fi
@@ -347,6 +358,9 @@ const page = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>HA Panel S
   <label>HA base URL</label><input id="ha_base">
   <label>Dashboard URL for this panel</label><input id="ha_url">
   <div class="hint">Create the dashboard with this url_path in HA before first boot</div>
+  <div class="actions" style="margin:0.9rem 0 0">
+    <button id="testha">Test connection</button><span id="hastate"></span>
+  </div>
 </fieldset>
 <fieldset><legend>MQTT broker</legend>
   <div class="row">
@@ -388,7 +402,7 @@ const page = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>HA Panel S
 </div>
 <script>
 const $=id=>document.getElementById(id);
-let mqttOK=false;
+let mqttOK=false, haOK=false;
 function fld(){return{panel_num:$('panel_num').value,hostname:$('hostname').value,
  username:$('username').value,pi_pass:$('pi_pass').value,ha_base:$('ha_base').value,
  ha_url:$('ha_url').value,mqtt_host:$('mqtt_host').value,mqtt_port:$('mqtt_port').value,
@@ -423,12 +437,21 @@ async function pollSD(){
 }
 function gate(sd){
  const f=fld();
- const ready=sd&&mqttOK&&f.pi_pass&&f.mqtt_pass&&(!f.wifi_ssid||f.wifi_pass);
+ const ready=sd&&mqttOK&&haOK&&f.pi_pass&&f.mqtt_pass&&(!f.wifi_ssid||f.wifi_pass);
  $('write').disabled=!ready;
 }
 $('panel_num').addEventListener('input',syncNames);
 $('ha_base').addEventListener('input',syncNames);
-document.addEventListener('input',()=>{mqttOK=false;$('mqttstate').textContent='';pollSD();});
+document.addEventListener('input',()=>{mqttOK=false;haOK=false;$('mqttstate').textContent='';$('hastate').textContent='';pollSD();});
+$('testha').onclick=async()=>{
+ $('hastate').textContent='Testing…';
+ const r=await(await fetch('/api/ha',{method:'POST',headers:{'Content-Type':'application/json'},
+   body:JSON.stringify(fld())})).json();
+ haOK=r.ok;
+ $('hastate').innerHTML=r.ok?'<span class="ok">Home Assistant answered at '+r.host+'</span>'
+   :'<span class="bad">'+r.error+'</span>';
+ pollSD();
+};
 $('testmqtt').onclick=async()=>{
  $('mqttstate').textContent='Testing…';
  const r=await(await fetch('/api/mqtt',{method:'POST',headers:{'Content-Type':'application/json'},

@@ -233,6 +233,31 @@ func mqttCheck(host, portStr, user, pass string) (int, error) {
 	return int(resp[3]), nil
 }
 
+// haCheck asks the HA base URL for /api/, which Home Assistant answers with
+// 401 (no token) — any other answer means something else is at that address,
+// and no answer means the name or port is wrong. It exists because a panel was
+// written with the factory default still in the field (2026-11-08): the card
+// looked fine, the kiosk opened on "site can't be reached".
+func haCheck(base string) (host string, err error) {
+	base = strings.TrimRight(strings.TrimSpace(base), "/")
+	u, perr := url.Parse(base)
+	if perr != nil || (u.Scheme != "http" && u.Scheme != "https") || u.Host == "" {
+		return "", errors.New("HA base URL must be http(s)://host[:port]")
+	}
+	client := &http.Client{Timeout: 5 * time.Second}
+	resp, gerr := client.Get(base + "/api/")
+	if gerr != nil {
+		return u.Host, fmt.Errorf("Cannot reach Home Assistant at %s: %v", u.Host, gerr)
+	}
+	defer resp.Body.Close()
+	switch resp.StatusCode {
+	case http.StatusUnauthorized, http.StatusOK:
+		return u.Host, nil
+	default:
+		return u.Host, fmt.Errorf("%s answered HTTP %d for /api/ — not Home Assistant, or a wrong port", u.Host, resp.StatusCode)
+	}
+}
+
 // ── SHA-512-crypt ($6$) — byte-identical to `openssl passwd -6` ──────────────
 
 const itoa64 = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
@@ -630,6 +655,20 @@ func routes() *http.ServeMux {
 			jsonResp(w, 200, map[string]any{"ok": false,
 				"error": fmt.Sprintf("Broker refused (code %d)", rc)})
 		}
+	})
+
+	mux.HandleFunc("/api/ha", func(w http.ResponseWriter, r *http.Request) {
+		var f formData
+		if json.NewDecoder(r.Body).Decode(&f) != nil {
+			jsonResp(w, 400, map[string]any{"ok": false, "error": "bad request"})
+			return
+		}
+		host, err := haCheck(f["ha_base"])
+		if err != nil {
+			jsonResp(w, 200, map[string]any{"ok": false, "host": host, "error": err.Error()})
+			return
+		}
+		jsonResp(w, 200, map[string]any{"ok": true, "host": host})
 	})
 
 	mux.HandleFunc("/api/write", func(w http.ResponseWriter, r *http.Request) {

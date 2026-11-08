@@ -381,6 +381,57 @@ func TestTheWriteHandler(t *testing.T) {
 	}
 }
 
+// On a real panel (2026-11-08) the first Wi-Fi association took ~5 min and a
+// 300 s wait in part 2 timed out seconds before the IP arrived. SSH was also
+// unreachable on the first boots, so part 2 now makes sure it is up.
+func TestPart2OutwaitsFirstBootWiFiAndKeepsSSHUp(t *testing.T) {
+	p2 := part2(t, render(t, goodForm())["firstrun.sh"])
+	for _, want := range []string{"deadline=$((SECONDS + 900))", "systemctl enable --now ssh"} {
+		if !strings.Contains(p2, want) {
+			t.Errorf("firstboot.sh lacks %q", want)
+		}
+	}
+	if strings.Contains(p2, "SECONDS + 300") {
+		t.Error("the 300 s wait is back")
+	}
+}
+
+// The HA test accepts what Home Assistant answers for /api/ without a token
+// (401) and refuses anything else, so the factory-default URL cannot be written
+// unless something that is HA actually answers there.
+func TestTheHAHandler(t *testing.T) {
+	ha := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/api/" {
+			w.WriteHeader(http.StatusUnauthorized)
+			_, _ = w.Write([]byte(`{"message":"401: Unauthorized"}`))
+			return
+		}
+		http.NotFound(w, r)
+	}))
+	defer ha.Close()
+	notHA := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) { http.NotFound(w, r) }))
+	defer notHA.Close()
+	dead := httptest.NewServer(http.NotFoundHandler())
+	deadURL := dead.URL
+	dead.Close()
+
+	srv := httptest.NewServer(routes())
+	defer srv.Close()
+	for base, wantOK := range map[string]bool{
+		ha.URL: true, ha.URL + "/": true, notHA.URL: false, deadURL: false, "homeassistant.local:8123": false, "": false,
+	} {
+		f := goodForm()
+		f["ha_base"] = base
+		r := post(t, srv, "/api/ha", f)
+		if (r["ok"] == true) != wantOK {
+			t.Errorf("/api/ha for %q: %v", base, r)
+		}
+	}
+	if !strings.Contains(servedPage, "haOK") || !strings.Contains(servedPage, "/api/ha") {
+		t.Error("the page does not gate the write on the HA test")
+	}
+}
+
 // Every field the page posts is one the tool reads, and vice versa.
 func TestThePageSendsEveryField(t *testing.T) {
 	for k := range goodForm() {

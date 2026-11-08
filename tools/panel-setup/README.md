@@ -2,7 +2,7 @@
 
 Graphical tool that prepares the SD card for a new HA touch panel. Opens a
 browser UI, pre-fills everything it can, tests your MQTT credentials against
-the broker before writing anything, and writes `userconf.txt`, `firstrun.sh` and
+the broker and your Home Assistant URL before writing anything, and writes `userconf.txt`, `firstrun.sh` and
 the first-boot hook in `cmdline.txt` straight to a freshly flashed Pi OS Lite
 boot partition. Flash, run this, insert, power on — about 10–15 minutes and two
 reboots later the panel boots into your dashboard.
@@ -23,6 +23,14 @@ Grab the latest build from the [Releases page](../../../releases).
 The binaries are unsigned (this is a hobby project — no paid signing
 certificates). The source is right here; build it yourself if you prefer:
 
+**macOS and "no route to host".** If the MQTT or HA test fails with `no route
+to host` for an address that works from Terminal, macOS's *Local Network*
+permission has not attached to this (unsigned, rebuilt) binary — it can show as
+enabled under System Settings → Privacy & Security → Local Network and still not
+apply. Either toggle Panel Setup off and on there and relaunch, or run the
+binary from Terminal, which lends it Terminal's own permission:
+`"Panel Setup.app/Contents/MacOS/PanelSetup"`.
+
 ```
 cd tools/panel-setup && go build -o panel-setup .
 ```
@@ -31,7 +39,7 @@ cd tools/panel-setup && go build -o panel-setup .
 
 1. Flash Raspberry Pi OS Lite (64-bit) with Raspberry Pi Imager — **no** Imager customisation
 2. Leave the SD card mounted, run Panel Setup
-3. Fill the form (it scans your network for existing panels and pre-selects the next free number; the write button unlocks after the MQTT test passes and the card is detected)
+3. Fill the form (it scans your network for existing panels and pre-selects the next free number; the write button unlocks after both **Test connection** buttons — MQTT broker and Home Assistant — pass and the card is detected). Check the HA base URL: it is remembered from the last run, and the factory default `homeassistant.local` is not what every network answers to
 4. Write, eject, insert into the panel, power on
 
 ## What the first boot does
@@ -43,7 +51,7 @@ Imager uses) runs it early, before the network is up.
 | Boot | What runs | Takes | Log on the boot partition |
 |---|---|---|---|
 | 1 | **Part 1** — `firstrun.sh`, no network: renames Pi OS's first user to yours, hostname, SSH, Wi-Fi connection + country, timezone/locale, turns on the DSI display (overlay + portrait console) for the next boot, writes `/opt/ha-panel/config` and `sensor-config.py` (mode 600), arms part 2, removes its `cmdline.txt` hook and deletes itself and `userconf.txt` | ~1 min, then reboots — the screen stays dark this boot | `firstrun.log` |
-| 2 | **Part 2** — `panel-firstboot.service`, after the network is up: installs git, clones the repo, runs `system/install.sh --unattended`, disables itself | 5–15 min (progress on the panel's screen), then reboots | `firstboot.log` |
+| 2 | **Part 2** — `panel-firstboot.service`, after the network is up (it waits up to 15 min; the first Wi-Fi association on a fresh install can take ~5 min): makes sure SSH is up, installs git, clones the repo, runs `system/install.sh --unattended`, disables itself | 5–20 min (progress on the panel's screen), then reboots | `firstboot.log` |
 | 3 | The kiosk: TTY1 autologin → labwc → Chromium on your dashboard | — | — |
 
 `firstrun.log` ends with `Part 1 done — rebooting` (or `WITH ERRORS`, listing

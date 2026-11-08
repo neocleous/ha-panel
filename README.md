@@ -37,7 +37,7 @@ All sensors sit on the Pi's I2C bus 1. The sensor cluster lives at the base of t
 The easy way — **[Panel Setup](tools/panel-setup/)** (macOS / Windows / Linux, single binary, no dependencies):
 
 1. Flash Raspberry Pi OS Lite (64-bit) with Raspberry Pi Imager — **no** Imager customisation
-2. Run Panel Setup, fill the form (it tests your MQTT credentials against the broker before letting you write)
+2. Run Panel Setup, fill the form (it tests your MQTT credentials against the broker and your Home Assistant URL before letting you write)
 3. It writes `userconf.txt`, `firstrun.sh` and the first-boot hook in `cmdline.txt` to the SD card
 4. Insert, power on, wait 10–15 minutes. The first boot configures the panel and reboots; the second installs everything (progress on screen) and reboots into your dashboard. Logs: `firstrun.log` and `firstboot.log` on the SD card — details in [tools/panel-setup/README.md](tools/panel-setup/README.md#what-the-first-boot-does)
 
