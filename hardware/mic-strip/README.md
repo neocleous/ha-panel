@@ -1,6 +1,6 @@
 # HA panel — mic strip (two boards of one design)
 
-Status: **block 2 — layout routed, DRC clean (2026-11-07).** Laid out with **decision 9 option 1** (recommended; awaiting Daniel's confirmation): soldered wire pads instead of the JST connector. Fab files follow in block 3.
+Status: **block 3 — fab files issued (2026-11-08).** Decision 9 → **option 1** (Daniel, 2026-11-08): soldered wire pads instead of the JST connector. JLC upload: `fab/mic-strip-jlc-2026-11-08.zip`; order options in `../notes/jlc-fab.md` (0.8 mm, 2 layers, ENIG recommended). Assembly notes follow in block 3.
 
 - **KiCad 9.0.9.** Open `mic-strip.kicad_pro`. Project libraries: `lib/ha_panel.kicad_sym` (IM69D120) and `lib/ha_panel.pretty` (IM69D120 land pattern, 5-pad wire column, heat-stake hole).
 - **Schematic PDF:** `mic-strip-schematic.pdf`. **ERC:** 0 errors, 0 warnings (`erc-report.txt`).

@@ -222,13 +222,16 @@
     "viewports": []
   },
   "boards": [],
+  "cvpcb": {
+    "equivalence_files": []
+  },
   "libraries": {
     "pinned_footprint_libs": [],
     "pinned_symbol_libs": []
   },
   "meta": {
     "filename": "mic-strip.kicad_pro",
-    "version": 1
+    "version": 3
   },
   "net_settings": {
     "classes": [
@@ -258,7 +261,20 @@
     "netclass_assignments": null,
     "netclass_patterns": []
   },
-  "pcbnew": {},
+  "pcbnew": {
+    "last_paths": {
+      "gencad": "",
+      "idf": "",
+      "netlist": "",
+      "plot": "",
+      "pos_files": "",
+      "specctra_dsn": "",
+      "step": "",
+      "svg": "",
+      "vrml": ""
+    },
+    "page_layout_descr_file": ""
+  },
   "schematic": {
     "legacy_lib_dir": "",
     "legacy_lib_list": []

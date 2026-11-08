@@ -6,6 +6,7 @@ Status: **block 2 — layout rev 2.1, single-sided SMD, routed, DRC clean (2026-
 - **Schematic PDF:** `main-board-schematic.pdf` (5 pages).
 - **ERC:** 0 errors, 0 warnings (`erc-report.txt`). **DRC:** 0 errors, 0 unconnected, parity clean, 2 warnings (J2 silk trimmed at the board edge, J4 courtyard trimmed to its wire pads) (`drc-report.txt`).
 - **Board:** 90 × 55, 4 layers (F parts + signals / In1 GND / In2 +5V, +20V, PVDD / B signals). Every SMD part on the front; the back carries only J2, LK1, through-hole joints and bare test pads. Renders: `main-board-routed-3d.png` (front, back), `main-board-copper-F-B.png` (front copper, back copper mirrored). Layout notes: `NOTES.md` §7; envelope: `MAIN_env.md`.
+- **Fab (JLC, bare board):** `fab/main-board-jlc-2026-11-08.zip`; order options and what the files use against JLC's limits in `../notes/jlc-fab.md`.
 - **Notes with every value's source:** `NOTES.md`. **GPIO lead pin table and plug maps:** `gpio-leads.md`.
 - `gen/` holds the Python that generated the schematic and the layout (sheet builder, footprints, placement, TAS escape, maze router, Freerouting driver, silk placement). The KiCad files are the source of truth; the scripts are kept for provenance (symbol UUIDs are deterministic, so a schematic regeneration keeps the PCB links; a layout regeneration routes differently, see NOTES §7).
 
