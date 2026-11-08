@@ -110,6 +110,9 @@ def outward(rot, ang):
 
 
 # ---------------------------------------------------------------- schematic sheet
+EXTRA_FIELDS = {}   # ref -> {field: value}, set by the generators (block 3 purchase fields)
+
+
 class Sheet:
     def __init__(self, name, filename, title, paper='A3', page=1, project=None):
         self.name, self.filename, self.title, self.paper, self.page = name, filename, title, paper, page
@@ -193,6 +196,8 @@ class Sheet:
              stub=2.54, datasheet=None, value_pos=None, hide_value=False, ref_pos=None, unit=1):
         """Place a symbol; connect each pin (by number) to a net via stub + label/power symbol.
         nets: {pin_number: netname | None (no-connect) | '~' (leave open, no flag)}."""
+        if 'Value' in EXTRA_FIELDS.get(ref, {}):   # block 3: fitted part replaces the value
+            value = EXTRA_FIELDS[ref]['Value']
         lib = self._lib(lib_id)
         nets = nets or {}
         X, Y = snap(at[0]), snap(at[1])
@@ -245,7 +250,11 @@ class Sheet:
                  eff(just_val, hide=hide_value)],
                 [Sym('property'), 'Footprint', footprint, [Sym('at'), X, Y, 0], eff(hide=True)],
                 [Sym('property'), 'Datasheet', ds or '~', [Sym('at'), X, Y, 0], eff(hide=True)]]
-        for k, v in (fields or {}).items():
+        fields = dict(fields or {})
+        for k, v in EXTRA_FIELDS.get(ref, {}).items():   # block 3: purchase fields (gen/bom_fields_*.json)
+            if k != 'Value':
+                fields[k] = v
+        for k, v in fields.items():
             node.append([Sym('property'), k, v, [Sym('at'), X, Y, 0], eff(hide=True)])
         for p in pins:
             node.append([Sym('pin'), p['number'], [Sym('uuid'), U()]])

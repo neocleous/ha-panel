@@ -1,0 +1,612 @@
+{
+"CL21B475KOFNNNE": {
+"q": "CL21B475KOFNNNE",
+"dk": "1276-2873-1-ND",
+"mpn": "CL21B475KOFNNNE",
+"mfr": "Samsung Electro-Me",
+"desc": "4.7UF 16V X7R 0805",
+"tiers": "1@0.21000 10@0.12200 50@0.08780 100@0.07730",
+"stock": "In-Stock: 620082",
+"url": ""
+},
+"CC0603KRX7R8BB105": {
+"q": "CC0603KRX7R8BB105",
+"dk": "311-1802-1-ND",
+"mpn": "CC0603KRX7R8BB105",
+"mfr": "YAGEO",
+"desc": "1UF 25V X7R 0603",
+"tiers": "1@0.27000 10@0.16000 50@0.11520 100@0.10170",
+"stock": "In-Stock: 171602",
+"url": ""
+},
+"C1206C106K4RACTU": {
+"q": "C1206C106K4RACTU",
+"dk": "399-C1206C106K4RACTUCT-ND",
+"mpn": "C1206C106K4RACTU",
+"mfr": "KEMET",
+"desc": "10UF 16V X7R 1206",
+"tiers": "1@0.41000 10@0.24200 50@0.17780 100@0.15840",
+"stock": "In-Stock: 166752",
+"url": ""
+},
+"08055C105KAT2A": {
+"q": "08055C105KAT2A",
+"dk": "478-KGM21AR71H105KUCT-ND",
+"mpn": "08055C105KAT2A",
+"mfr": "KYOCERA AVX",
+"desc": "1UF 50V X7R 0805",
+"tiers": "1@0.65000 10@0.40200 50@0.30400 100@0.27420",
+"stock": "In-Stock: 101175",
+"url": ""
+},
+"CC0603KRX7R7BB225": {
+"q": "CC0603KRX7R7BB225",
+"dk": "311-3490-1-ND",
+"mpn": "CC0603KRX7R7BB225",
+"mfr": "YAGEO",
+"desc": "2.2UF 16V X7R 0603",
+"tiers": "1@0.60000 10@0.36900 50@0.27800 100@0.25010",
+"stock": "In-Stock: 2295",
+"url": ""
+},
+"CL10A225KO8NNNC": {
+"q": "CL10A225KO8NNNC",
+"dk": "1276-1040-1-ND",
+"mpn": "CL10A225KO8NNNC",
+"mfr": "Samsung Electro-Me",
+"desc": "2.2UF 16V X5R 0603",
+"tiers": "1@0.09000 10@0.04800 50@0.03320 100@0.02860",
+"stock": "In-Stock: 50758",
+"url": ""
+},
+"EMK107BBJ106MA-T": {
+"q": "EMK107BBJ106MA-T",
+"dk": "587-3238-1-ND",
+"mpn": "EMK107BBJ106MA-T",
+"mfr": "Taiyo Yuden",
+"desc": "10UF 16V X5R 0603",
+"tiers": "1@0.26000 10@0.15300 50@0.11120 100@0.09850",
+"stock": "In-Stock: 258433",
+"url": ""
+},
+"RC0603FR-07412KL": {
+"q": "RC0603FR-07412KL",
+"dk": "311-412KHRCT-ND",
+"mpn": "RC0603FR-07412KL",
+"mfr": "YAGEO",
+"desc": "RES 412K OHM 1% 1/10W 0603",
+"tiers": "1@0.08000 10@0.02300 25@0.01720 50@0.01380",
+"stock": "In-Stock: 44451",
+"url": ""
+},
+"RC0603FR-079K09L": {
+"q": "RC0603FR-079K09L",
+"dk": "311-9.09KHRCT-ND",
+"mpn": "RC0603FR-079K09L",
+"mfr": "YAGEO",
+"desc": "RES 9.09K OHM 1% 1/10W 0603",
+"tiers": "1@0.08000 10@0.02300 25@0.01720 50@0.01380",
+"stock": "In-Stock: 35336",
+"url": ""
+},
+"RC0603FR-0722K1L": {
+"q": "RC0603FR-0722K1L",
+"dk": "311-22.1KHRCT-ND",
+"mpn": "RC0603FR-0722K1L",
+"mfr": "YAGEO",
+"desc": "RES 22.1K OHM 1% 1/10W 0603",
+"tiers": "1@0.08000 10@0.02300 25@0.01720 50@0.01380",
+"stock": "In-Stock: 435710",
+"url": ""
+},
+"RC0603FR-075K49L": {
+"q": "RC0603FR-075K49L",
+"dk": "311-5.49KHRCT-ND",
+"mpn": "RC0603FR-075K49L",
+"mfr": "YAGEO",
+"desc": "RES 5.49K OHM 1% 1/10W 0603",
+"tiers": "1@0.09000 10@0.02500 25@0.01840 50@0.01460",
+"stock": "In-Stock: 371427",
+"url": ""
+},
+"RC0603JR-070RL": {
+"q": "RC0603JR-070RL",
+"dk": "311-0.0GRCT-ND",
+"mpn": "RC0603JR-070RL",
+"mfr": "YAGEO",
+"desc": "RES 0 OHM JUMPER 1/10W 0603",
+"tiers": "1@0.08000 10@0.01200 25@0.00920 50@0.00820",
+"stock": "In-Stock: 7930327",
+"url": ""
+},
+"RC0603FR-074K7L": {
+"q": "RC0603FR-074K7L",
+"dk": "311-4.70KHRCT-ND",
+"mpn": "RC0603FR-074K7L",
+"mfr": "YAGEO",
+"desc": "RES 4.7K OHM 1% 1/10W 0603",
+"tiers": "1@0.08000 10@0.02300 25@0.01720 50@0.01380",
+"stock": "In-Stock: 3300117",
+"url": ""
+},
+"RC0603FR-07150KL": {
+"q": "RC0603FR-07150KL",
+"dk": "311-150KHRCT-ND",
+"mpn": "RC0603FR-07150KL",
+"mfr": "YAGEO",
+"desc": "RES 150K OHM 1% 1/10W 0603",
+"tiers": "1@0.08000 10@0.02300 25@0.01720 50@0.01380",
+"stock": "In-Stock: 123027",
+"url": ""
+},
+"P15289CT-ND": {
+"q": "P15289CT-ND",
+"dk": "P15289CT-ND",
+"mpn": "EEU-FR1J121B",
+"mfr": "Panasonic Industry",
+"desc": "CAP ALUM 120UF 20% 63V RADIAL TH",
+"tiers": "1@0.96000 10@0.61100 50@0.46540 100@0.41910",
+"stock": "In-Stock: 146",
+"url": "https://www.digikey.ch/en/products/detail/panasonic-industry/EEU-FR1J121B/3072306"
+},
+"732-9541-1-ND": {
+"q": "732-9541-1-ND",
+"dk": "732-9541-1-ND",
+"mpn": "860160572003",
+"mfr": "Würth Elektronik",
+"desc": "CAP ALUM 22UF 20% 35V RADIAL TH",
+"tiers": "1@0.12000 50@0.10440 100@0.09110 250@0.08032",
+"stock": "In-Stock: 19381",
+"url": "https://www.digikey.ch/en/products/detail/w%C3%BCrth-elektronik/860160572003/5727771"
+},
+"4713-GMC21X5R226M35NTCT-ND": {
+"q": "4713-GMC21X5R226M35NTCT-ND",
+"dk": "4713-GMC21X5R226M35NTCT-ND",
+"mpn": "GMC21X5R226M35NT",
+"mfr": "Cal-Chip Electroni",
+"desc": "CAP0805 X5R 22UF 20% 35V",
+"tiers": "1@2.92000 10@2.04400 50@1.69500 100@1.58710",
+"stock": "In-Stock: 2927",
+"url": "https://www.digikey.ch/en/products/detail/cal-chip-electronics-inc/GMC21X5R226M35NT/18151151"
+},
+"587-3247-1-ND": {
+"q": "587-3247-1-ND",
+"dk": "587-3247-1-ND",
+"mpn": "UMK107AB7105KA-T",
+"mfr": "Taiyo Yuden",
+"desc": "1UF 50V X7R 0603",
+"tiers": "1@0.17000 10@0.09700 50@0.06880 100@0.06030",
+"stock": "In-Stock: 589009",
+"url": "https://www.digikey.ch/en/products/detail/taiyo-yuden/UMK107AB7105KA-T/3660085"
+},
+"1276-CL10B224KB8NNNCCT-ND": {
+"q": "1276-CL10B224KB8NNNCCT-ND",
+"dk": "1276-CL10B224KB8NNNCCT-ND",
+"mpn": "CL10B224KB8NNNC",
+"mfr": "Samsung Electro-Me",
+"desc": "0.22UF 50V X7R 0603",
+"tiers": "1@0.12000 10@0.06500 50@0.04580 100@0.03980",
+"stock": "In-Stock: 138738",
+"url": "https://www.digikey.ch/en/products/detail/samsung-electro-mechanics/CL10B224KB8NNNC/10479537"
+},
+"1276-7009-1-ND": {
+"q": "1276-7009-1-ND",
+"dk": "1276-7009-1-ND",
+"mpn": "CL21B684KBFVPNE",
+"mfr": "Samsung Electro-Me",
+"desc": "0.68UF 50V X7R 0805",
+"tiers": "1@0.22000 10@0.13200 50@0.09580 100@0.08450",
+"stock": "In-Stock: 54031",
+"url": "https://www.digikey.ch/en/products/detail/samsung-electro-mechanics/CL21B684KBFVPNE/7320514"
+},
+"F3139CT-ND": {
+"q": "F3139CT-ND",
+"dk": "F3139CT-ND",
+"mpn": "0453005.MR",
+"mfr": "Littelfuse Inc.",
+"desc": "FUSE BRD MNT 5A 125VAC/VDC 2SMD",
+"tiers": "1@1.85000 5@1.53600 10@1.41800 50@1.17620",
+"stock": "In-Stock: 9445",
+"url": "https://www.digikey.ch/en/products/detail/littelfuse-inc/0453005-MR/552261"
+},
+"F3141CT-ND": {
+"q": "F3141CT-ND",
+"dk": "F3141CT-ND",
+"mpn": "0453010.MR",
+"mfr": "Littelfuse Inc.",
+"desc": "FUSE BRD MNT 10A 125VAC/VDC 2SMD",
+"tiers": "1@2.82000 5@2.33200 10@2.15200 50@1.78540",
+"stock": "In-Stock: 7781",
+"url": "https://www.digikey.ch/en/products/detail/littelfuse-inc/0453010-MR/552264"
+},
+"F3137CT-ND": {
+"q": "F3137CT-ND",
+"dk": "F3137CT-ND",
+"mpn": "0453001.MR",
+"mfr": "Littelfuse Inc.",
+"desc": "FUSE BRD MNT 1A 125VAC/VDC 2SMD",
+"tiers": "1@1.85000 5@1.53600 10@1.41800 50@1.17620",
+"stock": "In-Stock: 4762",
+"url": "https://www.digikey.ch/en/products/detail/littelfuse-inc/0453001-MR/552257"
+},
+"5923-0ZCJ0020FF2ECT-ND": {
+"q": "5923-0ZCJ0020FF2ECT-ND",
+"dk": "5923-0ZCJ0020FF2ECT-ND",
+"mpn": "0ZCJ0020FF2E",
+"mfr": "Bel Fuse Inc.",
+"desc": "PTC RESET FUSE 30V 200MA 1206",
+"tiers": "1@0.19000 5@0.15600 10@0.14300 50@0.11880",
+"stock": "In-Stock: 455041",
+"url": "https://www.digikey.ch/en/products/detail/bel-fuse-inc/0ZCJ0020FF2E/4156326"
+},
+"18-2920L260/33DRCT-ND": {
+"q": "18-2920L260/33DRCT-ND",
+"dk": "18-2920L260/33DRCT-ND",
+"mpn": "2920L260/33DR",
+"mfr": "Littelfuse Inc.",
+"desc": "POLYSWITCH RESETTABLE PPTC",
+"tiers": "1@1.23000 5@1.01600 10@0.93800 50@0.77840",
+"stock": "In-Stock: 28323",
+"url": "https://www.digikey.ch/en/products/detail/littelfuse-inc/2920L260-33DR/21801850"
+},
+"455-B2B-XH-A-ND": {
+"q": "455-B2B-XH-A-ND",
+"dk": "455-B2B-XH-A-ND",
+"mpn": "B2B-XH-A",
+"mfr": "JST Sales America",
+"desc": "CONN HEADER VERT 2POS 2.5MM",
+"tiers": "1@0.08000 10@0.07200 100@0.06140 500@0.05480",
+"stock": "In-Stock: 215441",
+"url": "https://www.digikey.ch/en/products/detail/jst-sales-america-inc/B2B-XH-A/1651045"
+},
+"455-B4B-XH-A-ND": {
+"q": "455-B4B-XH-A-ND",
+"dk": "455-B4B-XH-A-ND",
+"mpn": "B4B-XH-A",
+"mfr": "JST Sales America",
+"desc": "CONN HEADER VERT 4POS 2.5MM",
+"tiers": "1@0.14000 10@0.11900 100@0.10150 500@0.09056",
+"stock": "In-Stock: 58775",
+"url": "https://www.digikey.ch/en/products/detail/jst-sales-america-inc/B4B-XH-A/1651047"
+},
+"SRR1260-150MCT-ND": {
+"q": "SRR1260-150MCT-ND",
+"dk": "SRR1260-150MCT-ND",
+"mpn": "SRR1260-150M",
+"mfr": "Bourns Inc.",
+"desc": "FIXED IND 15UH 5A 27 MOHM SMD",
+"tiers": "1@0.92000 10@0.75800 100@0.62290",
+"stock": "In-Stock: 1406",
+"url": "https://www.digikey.ch/en/products/detail/bourns-inc/SRR1260-150M/1969956"
+},
+"4044-CSBA0850-100MCT-ND": {
+"q": "4044-CSBA0850-100MCT-ND",
+"dk": "4044-CSBA0850-100MCT-ND",
+"mpn": "CSBA0850-100M",
+"mfr": "CODACA",
+"desc": "SMD HIGH CURRENT POWER INDUCTOR",
+"tiers": "1@1.47000 10@1.21000 100@0.99440",
+"stock": "In-Stock: 690",
+"url": "https://www.digikey.ch/en/products/detail/codaca/CSBA0850-100M/29538896"
+},
+"1866-NID100-5-ND": {
+"q": "1866-NID100-5-ND",
+"dk": "1866-NID100-5-ND",
+"mpn": "NID100-5",
+"mfr": "MEAN WELL USA Inc.",
+"desc": "DC DC CONVERTER 5V 55W",
+"tiers": "1@9.21000",
+"stock": "In-Stock: 1523",
+"url": "https://www.digikey.ch/en/products/detail/mean-well-usa-inc/NID100-5/10659917"
+},
+"296-TPS16630PWPTCT-ND": {
+"q": "296-TPS16630PWPTCT-ND",
+"dk": "296-TPS16630PWPTCT-ND",
+"mpn": "TPS16630PWPT",
+"mfr": "Texas Instruments",
+"desc": "IC ELECTRONIC FUSE 2% 20HTSSOP",
+"tiers": "1@4.38000 10@3.34300 25@3.08280 100@2.79690",
+"stock": "In-Stock: 419",
+"url": "https://www.digikey.ch/en/products/detail/texas-instruments/TPS16630PWPT/10715348"
+},
+"296-40565-1-ND": {
+"q": "296-40565-1-ND",
+"dk": "296-40565-1-ND",
+"mpn": "TAS5756MDCAR",
+"mfr": "Texas Instruments",
+"desc": "IC AUDIO AMP D 48-HTSSOP",
+"tiers": "1@5.37000 10@4.12300 25@3.81160 100@3.46970",
+"stock": "In-Stock: 5508",
+"url": "https://www.digikey.ch/en/products/detail/texas-instruments/TAS5756MDCAR/4914148"
+},
+"296-11934-1-ND": {
+"q": "296-11934-1-ND",
+"dk": "296-11934-1-ND",
+"mpn": "SN74LVC1G17DCKR",
+"mfr": "Texas Instruments",
+"desc": "IC BUFF 1.65V SC-70-5",
+"tiers": "1@0.22000 10@0.14700 25@0.13080 100@0.11200",
+"stock": "In-Stock: 166385",
+"url": "https://www.digikey.ch/en/products/detail/texas-instruments/SN74LVC1G17DCKR/389053"
+},
+"IM69D120V01XTSA1CT-ND": {
+"q": "IM69D120V01XTSA1CT-ND",
+"dk": "IM69D120V01XTSA1CT-ND",
+"mpn": "IM69D120V01XTSA1",
+"mfr": "Infineon Technologies",
+"desc": "MIC MEMS DIGITAL PDM OMNI -26DB",
+"tiers": "1@2.15000 10@1.63600 25@1.47400 50@1.36480",
+"stock": "In-Stock: 4464",
+"url": ""
+},
+"USB4085-GF-A": {
+"q": "USB4085-GF-A",
+"dk": "2073-USB4085-GF-ACT-ND",
+"mpn": "USB4085-GF-A",
+"mfr": "GCT",
+"desc": "CONN RCPT USB2.0 TYPE C 16+8POS",
+"tiers": "1@0.75000 10@0.63900 25@0.59920 50@0.57040",
+"stock": "In-Stock: 78873",
+"url": ""
+},
+"ASXHSXH22K305": {
+"q": "ASXHSXH22K305",
+"dk": "455-3241-ND",
+"mpn": "ASXHSXH22K305",
+"mfr": "JST Sales America",
+"desc": "JUMPER SXH-001T-P0.6 X2 12\"",
+"tiers": "1@0.70000 10@0.59800 25@0.56000 50@0.53320",
+"stock": "In-Stock: 25541",
+"url": ""
+},
+"1597-107990273-ND": {
+"q": "1597-107990273-ND",
+"dk": "1597-107990273-ND",
+"mpn": "107990273",
+"mfr": "Seeed Technology Co",
+"desc": "RESPEAKER LITE USB 2MIC ARRAY AI",
+"tiers": "1@20.62000",
+"stock": "In-Stock: 205",
+"url": ""
+},
+"2648-SC1132-ND": {
+"q": "2648-SC1132-ND",
+"dk": "2648-SC1132-ND",
+"mpn": "SC1132",
+"mfr": "Raspberry Pi",
+"desc": "RPI5 DISPLAY CABLE 300MM QTY 1",
+"tiers": "1@1.66000",
+"stock": "In-Stock: 494",
+"url": ""
+},
+"1528-1379-ND": {
+"q": "1528-1379-ND",
+"dk": "1528-1379-ND",
+"mpn": "266",
+"mfr": "Adafruit Industries",
+"desc": "JUMPER WIRE F/F 40-ZIPPABLE 1PC",
+"tiers": "1@3.27000",
+"stock": "In-Stock: 50",
+"url": ""
+},
+"1528-261-ND": {
+"q": "1528-261-ND",
+"dk": "1528-261-ND",
+"mpn": "261",
+"mfr": "Adafruit Industries",
+"desc": "CABLE ASSY JST PH 2PIN 4\"",
+"tiers": "1@0.62000",
+"stock": "In-Stock: 29215",
+"url": ""
+},
+"ERJ-3EKF1002V": {
+"q": "ERJ-3EKF1002V",
+"dk": "P10.0KHCT-ND",
+"mpn": "ERJ-3EKF1002V",
+"mfr": "Panasonic Industry",
+"desc": "RES SMD 10K OHM 1% 1/10W 0603",
+"tiers": "1@0.08000 10@0.03200 25@0.02400 50@0.01960",
+"stock": "In-Stock: 621467",
+"url": ""
+},
+"RMCF0603FT10K0": {
+"q": "RMCF0603FT10K0",
+"dk": "RMCF0603FT10K0CT-ND",
+"mpn": "RMCF0603FT10K0",
+"mfr": "Stackpole Electronics",
+"desc": "RES 10K OHM 1% 1/10W 0603",
+"tiers": "1@0.09000 10@0.01800 25@0.01320 50@0.01060",
+"stock": "In-Stock: 2282031",
+"url": ""
+},
+"RMCF0603FT100K": {
+"q": "RMCF0603FT100K",
+"dk": "RMCF0603FT100KCT-ND",
+"mpn": "RMCF0603FT100K",
+"mfr": "Stackpole Electronics",
+"desc": "RES 100K OHM 1% 1/10W 0603",
+"tiers": "1@0.09000 10@0.01800 25@0.01320 50@0.01060",
+"stock": "In-Stock: 802912",
+"url": ""
+},
+"RMCF0603FT100R": {
+"q": "RMCF0603FT100R",
+"dk": "RMCF0603FT100RCT-ND",
+"mpn": "RMCF0603FT100R",
+"mfr": "Stackpole Electronics",
+"desc": "RES 100 OHM 1% 1/10W 0603",
+"tiers": "1@0.08000 10@0.01700 25@0.01240 50@0.01000",
+"stock": "In-Stock: 1820162",
+"url": ""
+},
+"RMCF0603FT33R0": {
+"q": "RMCF0603FT33R0",
+"dk": "RMCF0603FT33R0CT-ND",
+"mpn": "RMCF0603FT33R0",
+"mfr": "Stackpole Electronics",
+"desc": "RES 33 OHM 1% 1/10W 0603",
+"tiers": "1@0.08000 10@0.01700 25@0.01240 50@0.01000",
+"stock": "In-Stock: 373329",
+"url": ""
+},
+"RMCF0805FT2R20": {
+"q": "RMCF0805FT2R20",
+"dk": "RMCF0805FT2R20CT-ND",
+"mpn": "RMCF0805FT2R20",
+"mfr": "Stackpole Electronics",
+"desc": "RES 2.2 OHM 1% 1/8W 0805",
+"tiers": "1@0.08000 10@0.02600 25@0.01920 50@0.01560",
+"stock": "In-Stock: 69544",
+"url": ""
+},
+"1528-5807-ND": {
+"q": "1528-5807-ND",
+"dk": "1528-5807-ND",
+"mpn": "5807",
+"mfr": "Adafruit Industries",
+"desc": "EVAL BOARD FOR HUSB238",
+"tiers": "1@4.93000",
+"stock": "In-Stock: 1996",
+"url": "https://www.digikey.ch/en/products/detail/adafruit-industries-llc/5807/21839778"
+},
+"/en/products/detail/littelfuse-inc/SMBJ22A/285992": {
+"q": "/en/products/detail/littelfuse-inc/SMBJ22A/285992",
+"dk": "SMBJ22ALFCT-ND",
+"mpn": "SMBJ22A",
+"mfr": "Littelfuse Inc.",
+"desc": "TVS DIODE 22VWM 35.5VC DO214AA",
+"tiers": "1@0.41000 10@0.25700 50@0.18540 100@0.16220",
+"stock": "In-Stock: 3431",
+"url": "https://www.digikey.ch/en/products/detail/littelfuse-inc/SMBJ22A/285992"
+},
+"/en/products/detail/littelfuse-inc/SMBJ6-0A-E/27575275": {
+"q": "/en/products/detail/littelfuse-inc/SMBJ6-0A-E/27575275",
+"dk": "18-SMBJ6.0A-ECT-ND",
+"mpn": "SMBJ6.0A-E",
+"mfr": "Littelfuse Inc.",
+"desc": "TVS SURF MT DO214AA - SMBJ6.0A C",
+"tiers": "1@0.44000 10@0.27200 50@0.19640 100@0.17200",
+"stock": "In-Stock: 2985",
+"url": "https://www.digikey.ch/en/products/detail/littelfuse-inc/SMBJ6-0A-E/27575275"
+},
+"/en/products/detail/jst-sales-america-inc/A05SR05SR30K305B/6708516": {
+"q": "/en/products/detail/jst-sales-america-inc/A05SR05SR30K305B/6708516",
+"dk": "455-3712-ND",
+"mpn": "A05SR05SR30K305B",
+"mfr": "JST Sales America",
+"desc": "JUMPER 05SR-3S - 05SR-3S 12\"",
+"tiers": "1@1.62000 10@1.37900 25@1.29280",
+"stock": "In-Stock: 1332",
+"url": "https://www.digikey.ch/en/products/detail/jst-sales-america-inc/A05SR05SR30K305B/6708516"
+},
+"CC0603KRX7R9BB104": {
+"q": "CC0603KRX7R9BB104",
+"dk": "311-1344-1-ND",
+"mpn": "CC0603KRX7R9BB104",
+"mfr": "YAGEO",
+"desc": "0.1UF 50V X7R 0603",
+"tiers": "1@0.12000 10@0.06600 50@0.04580 100@0.03960",
+"stock": "In-Stock: 3588632",
+"url": "https://www.digikey.ch/en/products/detail/yageo/CC0603KRX7R9BB104/2103082"
+},
+"CL10B473KB8NNNC": {
+"q": "CL10B473KB8NNNC",
+"dk": "1276-1063-1-ND",
+"mpn": "CL10B473KB8NNNC",
+"mfr": "Samsung Electro-Me",
+"desc": "0.047UF 50V X7R 0603",
+"tiers": "1@0.09000 10@0.03100 50@0.02040 100@0.01740",
+"stock": "In-Stock: 768520",
+"url": ""
+},
+"AP2112K-3.3TRG1": {
+"q": "AP2112K-3.3TRG1",
+"dk": "AP2112K-3.3TRG1DICT-ND",
+"mpn": "AP2112K-3.3TRG1",
+"mfr": "Diodes Incorporated",
+"desc": "IC REG LINEAR 3.3V 600MA SOT-25",
+"tiers": "1@0.23000 10@0.15800 25@0.14000",
+"stock": "In-Stock: 407292",
+"url": ""
+},
+"TLV70233DBVR": {
+"q": "TLV70233DBVR",
+"dk": "296-32415-1-ND",
+"mpn": "TLV70233DBVR",
+"mfr": "Texas Instruments",
+"desc": "IC REG LINEAR 3.3V 300MA SOT23-5",
+"tiers": "1@0.25000 10@0.16900 25@0.15000",
+"stock": "In-Stock: 2220",
+"url": ""
+},
+"TPS70933QDBVRQ1": {
+"dk": "296-40931-1-ND",
+"mpn": "TPS70933QDBVRQ1",
+"mfr": "Texas Instruments",
+"desc": "IC REG LINEAR 3.3V 150MA SOT23-5",
+"tiers": "1@1.73000 10@1.27300 25@1.16000",
+"stock": "In-Stock: 14034",
+"q": "TPS70933QDBVRQ1",
+"url": ""
+},
+"ESD321DYAR": {
+"dk": "296-ESD321DYARCT-ND",
+"mpn": "ESD321DYAR",
+"mfr": "Texas Instruments",
+"desc": "TVS DIODE 3.6VWM 6.3VC SOT5X3",
+"tiers": "1@0.63000 10@0.39100 50@0.28500 100@0.25060",
+"stock": "In-Stock: 238921",
+"url": "https://www.digikey.ch/en/products/detail/texas-instruments/ESD321DYAR/17394968",
+"q": "ESD321DYAR"
+},
+"XHP-2": {
+"dk": "455-2266-ND",
+"mpn": "XHP-2",
+"mfr": "JST Sales America",
+"desc": "CONN RCPT HSG 2POS 2.50MM",
+"tiers": "1@0.08000 10@0.04900 25@0.04600 50@0.04380",
+"stock": "In-Stock: 203699",
+"url": "https://www.digikey.ch/en/products/detail/jst-sales-america-inc/XHP-2/555485",
+"q": "XHP-2"
+},
+"XHP-4": {
+"dk": "455-2267-ND",
+"mpn": "XHP-4",
+"mfr": "JST Sales America",
+"desc": "CONN RCPT HSG 4POS 2.50MM",
+"tiers": "1@0.08000 10@0.05400 25@0.05080",
+"stock": "In-Stock: 86019",
+"q": "XHP-4",
+"url": ""
+},
+"1528-1960-ND": {
+"dk": "1528-1960-ND",
+"mpn": "1949",
+"mfr": "Adafruit Industries",
+"desc": "JUMPER WIRE F TO F 12\" 28AWG",
+"tiers": "1@3.27000",
+"stock": "In-Stock: 1199",
+"url": "https://www.digikey.ch/en/products/detail/adafruit-industries-llc/1949/6827083",
+"q": "1528-1960-ND"
+},
+"TPS70933DBVR": {
+"dk": "296-35483-1-ND",
+"mpn": "TPS70933DBVR",
+"mfr": "Texas Instruments",
+"desc": "IC REG LINEAR 3.3V 150MA SOT23-5",
+"tiers": "1@1.25000 10@0.91200 25@0.82760",
+"stock": "In-Stock: 0",
+"q": "TPS70933DBVR",
+"url": ""
+},
+"TPD1E05U06DYAR": {
+"dk": "296-TPD1E05U06DYARCT-ND",
+"mpn": "TPD1E05U06DYAR",
+"mfr": "Texas Instruments",
+"desc": "TVS DIODE 5.5VWM 14VC SOT5X3",
+"tiers": "1@0.54000 10@0.33000 50@0.23960 100@0.21050",
+"stock": "In-Stock: 0",
+"q": "TPD1E05U06DYAR",
+"url": ""
+}
+}

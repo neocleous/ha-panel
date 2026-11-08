@@ -1,0 +1,37 @@
+{
+ "C1": {
+  "MPN": "EMK107BBJ106MA-T",
+  "Manufacturer": "Taiyo Yuden",
+  "DigiKey": "587-3238-1-ND"
+ },
+ "C2": {
+  "MPN": "CC0603KRX7R9BB104",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1344-1-ND"
+ },
+ "C3": {
+  "MPN": "CC0603KRX7R9BB104",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1344-1-ND"
+ },
+ "R1": {
+  "MPN": "RMCF0603FT100R",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100RCT-ND"
+ },
+ "R2": {
+  "MPN": "RMCF0603FT100K",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100KCT-ND"
+ },
+ "R4": {
+  "MPN": "RMCF0603FT33R0",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT33R0CT-ND"
+ },
+ "R5": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ }
+}

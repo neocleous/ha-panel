@@ -4159,6 +4159,33 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "RC0603JR-070RL"
+			(at 114.3 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 114.3 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "311-0.0GRCT-ND"
+			(at 114.3 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "fc42eb20-fb95-4684-9e11-ddb9a37b898d")
 		)
@@ -5410,6 +5437,15 @@
 				(hide yes)
 			)
 		)
+		(property "DigiKey" "2073-USB4085-GF-ACT-ND"
+			(at 360.68 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "S1"
 			(uuid "b7c69acc-9a2e-47d5-b778-2194244df5e2")
 		)
@@ -5759,6 +5795,33 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "RMCF0603FT10K0"
+			(at 317.5 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Stackpole"
+			(at 317.5 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "RMCF0603FT10K0CT-ND"
+			(at 317.5 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "68228f68-3711-49e0-8d73-4f7a63d321ad")
 		)
@@ -5881,6 +5944,33 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "RMCF0603FT10K0"
+			(at 330.2 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Stackpole"
+			(at 330.2 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "RMCF0603FT10K0CT-ND"
+			(at 330.2 111.76 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "d66ac616-d61f-4ea4-bd02-4420cb420cf6")
 		)
@@ -5995,6 +6085,33 @@
 			)
 		)
 		(property "Note" "local at J2 (USB4085)"
+			(at 317.5 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "C1206C106K4RACTU"
+			(at 317.5 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "KEMET"
+			(at 317.5 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "399-C1206C106K4RACTUCT-ND"
 			(at 317.5 68.58 0)
 			(effects
 				(font
@@ -6154,6 +6271,33 @@
 			)
 		)
 		(property "Spec" "100 nF 50 V X7R 0603"
+			(at 330.2 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "CC0603KRX7R9BB104"
+			(at 330.2 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "YAGEO"
+			(at 330.2 68.58 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "311-1344-1-ND"
 			(at 330.2 68.58 0)
 			(effects
 				(font
@@ -6525,6 +6669,33 @@
 			)
 		)
 		(property "Note" "radar local decoupling"
+			(at 279.4 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "08055C105KAT2A"
+			(at 279.4 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "KYOCERA AVX"
+			(at 279.4 147.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "478-KGM21AR71H105KUCT-ND"
 			(at 279.4 147.32 0)
 			(effects
 				(font

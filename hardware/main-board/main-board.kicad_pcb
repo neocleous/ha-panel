@@ -17498,7 +17498,7 @@
 				)
 			)
 		)
-		(property "Value" "TPS70933DBVR"
+		(property "Value" "TPS70933QDBVRQ1"
 			(at 0 2.4 0)
 			(layer "F.Fab")
 			(uuid "e5dae741-09c5-4520-b425-215d9070e6b8")

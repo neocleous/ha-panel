@@ -1,0 +1,268 @@
+{
+ "C1": {
+  "MPN": "08055C105KAT2A",
+  "Manufacturer": "KYOCERA AVX",
+  "DigiKey": "478-KGM21AR71H105KUCT-ND"
+ },
+ "C10": {
+  "MPN": "08055C105KAT2A",
+  "Manufacturer": "KYOCERA AVX",
+  "DigiKey": "478-KGM21AR71H105KUCT-ND"
+ },
+ "C2": {
+  "MPN": "CC0603KRX7R9BB104",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1344-1-ND"
+ },
+ "C4": {
+  "MPN": "CC0603KRX7R9BB104",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1344-1-ND"
+ },
+ "C9": {
+  "MPN": "CC0603KRX7R9BB104",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1344-1-ND"
+ },
+ "C100": {
+  "MPN": "CC0603KRX7R9BB104",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1344-1-ND"
+ },
+ "C121": {
+  "MPN": "CC0603KRX7R9BB104",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1344-1-ND"
+ },
+ "C3": {
+  "MPN": "CL10B473KB8NNNC",
+  "Manufacturer": "Samsung Electro-Mechanics",
+  "DigiKey": "1276-1063-1-ND"
+ },
+ "C8": {
+  "MPN": "C1206C106K4RACTU",
+  "Manufacturer": "KEMET",
+  "DigiKey": "399-C1206C106K4RACTUCT-ND"
+ },
+ "C11": {
+  "MPN": "C1206C106K4RACTU",
+  "Manufacturer": "KEMET",
+  "DigiKey": "399-C1206C106K4RACTUCT-ND"
+ },
+ "C12": {
+  "MPN": "CL21B475KOFNNNE",
+  "Manufacturer": "Samsung Electro-Mechanics",
+  "DigiKey": "1276-2873-1-ND"
+ },
+ "C105": {
+  "MPN": "CC0603KRX7R8BB105",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1802-1-ND"
+ },
+ "C112": {
+  "MPN": "CC0603KRX7R8BB105",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1802-1-ND"
+ },
+ "C118": {
+  "MPN": "CC0603KRX7R8BB105",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1802-1-ND"
+ },
+ "C119": {
+  "MPN": "CC0603KRX7R8BB105",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1802-1-ND"
+ },
+ "C120": {
+  "MPN": "CC0603KRX7R8BB105",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-1802-1-ND"
+ },
+ "C106": {
+  "MPN": "CC0603KRX7R7BB225",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-3490-1-ND"
+ },
+ "C107": {
+  "MPN": "CC0603KRX7R7BB225",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-3490-1-ND"
+ },
+ "C113": {
+  "MPN": "CC0603KRX7R7BB225",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-3490-1-ND"
+ },
+ "C114": {
+  "MPN": "CC0603KRX7R7BB225",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-3490-1-ND"
+ },
+ "J2": {
+  "MPN": "USB4085-GF-A",
+  "Manufacturer": "GCT",
+  "DigiKey": "2073-USB4085-GF-ACT-ND"
+ },
+ "R1": {
+  "MPN": "RC0603FR-07412KL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-412KHRCT-ND"
+ },
+ "R2": {
+  "MPN": "RC0603FR-079K09L",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-9.09KHRCT-ND"
+ },
+ "R3": {
+  "MPN": "RC0603FR-0722K1L",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-22.1KHRCT-ND"
+ },
+ "R4": {
+  "MPN": "RC0603FR-075K49L",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-5.49KHRCT-ND"
+ },
+ "R5": {
+  "MPN": "RMCF0603FT10K0",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT10K0CT-ND"
+ },
+ "R10": {
+  "MPN": "RMCF0603FT10K0",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT10K0CT-ND"
+ },
+ "R11": {
+  "MPN": "RMCF0603FT10K0",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT10K0CT-ND"
+ },
+ "R6": {
+  "MPN": "RMCF0603FT100K",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100KCT-ND"
+ },
+ "R13": {
+  "MPN": "RMCF0603FT100K",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100KCT-ND"
+ },
+ "R17": {
+  "MPN": "RMCF0603FT100K",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100KCT-ND"
+ },
+ "R18": {
+  "MPN": "RMCF0603FT100K",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100KCT-ND"
+ },
+ "R100": {
+  "MPN": "RMCF0603FT100K",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100KCT-ND"
+ },
+ "R102": {
+  "MPN": "RMCF0603FT100K",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100KCT-ND"
+ },
+ "R103": {
+  "MPN": "RMCF0603FT100K",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100KCT-ND"
+ },
+ "R104": {
+  "MPN": "RMCF0603FT100K",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100KCT-ND"
+ },
+ "R105": {
+  "MPN": "RMCF0603FT100K",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0603FT100KCT-ND"
+ },
+ "R7": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R14": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R15": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R16": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R26": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R20": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R21": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R22": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R23": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R24": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R25": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R27": {
+  "MPN": "RC0603JR-070RL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-0.0GRCT-ND"
+ },
+ "R12": {
+  "MPN": "RMCF0805FT2R20",
+  "Manufacturer": "Stackpole",
+  "DigiKey": "RMCF0805FT2R20CT-ND"
+ },
+ "R19": {
+  "MPN": "RC0603FR-074K7L",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-4.70KHRCT-ND"
+ },
+ "R101": {
+  "MPN": "RC0603FR-07150KL",
+  "Manufacturer": "YAGEO",
+  "DigiKey": "311-150KHRCT-ND"
+ },
+ "U2": {
+  "MPN": "TPS70933QDBVRQ1",
+  "Manufacturer": "Texas Instruments",
+  "DigiKey": "296-40931-1-ND",
+  "Value": "TPS70933QDBVRQ1"
+ }
+}

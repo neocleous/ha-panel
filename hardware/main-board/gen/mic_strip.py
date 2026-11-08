@@ -88,6 +88,9 @@ def design(prj):
 
 
 def build(out):
+    # block 3 (2026-11-08): purchase fields (MPN, Manufacturer, DigiKey; U2 value) chosen in the DigiKey BOM
+    import json
+    kg.EXTRA_FIELDS = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bom_fields_strip.json')))
     lib_path = os.path.join(out, 'lib', 'ha_panel.kicad_sym')
     lib_ha_panel.build(lib_path, which=('im69',))
     prj = kg.Project('mic-strip', out, 'HA panel mic strip', DATE, '1', 'HA panel (neocleous/ha-panel)',
