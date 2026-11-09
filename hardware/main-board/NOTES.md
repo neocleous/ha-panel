@@ -73,7 +73,7 @@ TAS5756M per TI SLAS988B Figure 79 (stereo BTL) and Table 22, wired like the Ras
 |---|---|---|
 | U100 | TI TAS5756MDCAR | Decided (D1 = a). I²C 0x4C: ADR0 (26) = ADR1 (20) = GND (pin table: GND = address bit 0). PVDD 4.5–26.4 V recommended, 30 V absolute (7.3/7.1). MCLK (22) = GND: the pcm512x driver runs the PLL from BCLK when no MCLK is given (overlay has no clock). GPIO0–2 held low by R103–R105 (unused). |
 | F5 | Littelfuse 2920L260/33DR | Decided. Hold 2.6 A at 25 °C (1.81 A at 60 °C). Amp average at 2 × 10 W into 4 Ω ≈ 1.2 A from 20 V (E, 85 % efficiency). |
-| C13 | EEU-FR1J121B 120 µF 63 V | PVDD bulk behind the PTC (power budget). |
+| ~~C13~~ | removed in block 2 (`dea5621`) | TI Table 22 note; C5 behind F5 is the PVDD bulk. (Line kept so old references resolve.) |
 | C100, C121 | 0.1 µF 50 V X7R **0603** | Table 22 (0402 there; moved to 0603 for hand assembly, D42). At PVDD pins 6/7 and 41–43. |
 | C101, C102, C122, C123 | Cal-Chip GMC21X5R226M35NT 22 µF 35 V X5R 0805 | Table 22 PVDD bulk; voltage > 1.45 × PVDD (Table 22 note). |
 | C103 | Taiyo Yuden UMK107AB7105KA-T 1 µF 50 V 0603 | GVDD_REG (> 16 V required). |
@@ -105,7 +105,7 @@ All test pads are bare SMD pads Ø1.5 on the **back** (door side, `TestPoint_Pad
 | TP11 EXT5V | VBUS at J2 (USB4085) | 2.6/2.7 "EXT5V at the USB4105" |
 | TP12 RADAR | radar 5 V after F3 | 2.12 radar VCC |
 | TP13 TRIM, TP14 RC | NID pins 12 and 13 | V20 trim check, NID enable |
-| TP16 3V3, TP19 FAULT | rails / amp status | bring-up (PVDD: probe F5 pin 2 on the back – TP18 dropped in layout, no free back spot on the PVDD side) |
+| TP16 3V3, TP19 FAULT | rails / amp status | bring-up (PVDD: probe F5 pin 2 **on the front, bench only** – TP18 dropped in layout, no free back spot on the PVDD side; PVDD has no exposed copper on the back, corrected 2026-11-09) |
 | TP7, TP15, TP17, TP20 | GND | probe returns |
 | LK1 | Pi branch link | 2.7 series current |
 

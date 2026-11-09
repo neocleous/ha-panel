@@ -21,8 +21,15 @@ warnings the error-only DRC had not shown).
 Layout: front copper = electrodes only. Back: U1, R1–R4, C1, C2, J1 pads, all traces (0.25 mm signal, 0.4 mm supply),
 B.Cu track keep-outs behind the electrodes, electrode vias at each electrode's top edge (tented).
 
-Assembly (one SMD side, the back): stencil or paste by hand, hotplate with the front face down on a clean sheet (the front
-has no parts), then solder the HOST lead (iron). Bring-up: `i2cdetect -y 1` shows 0x1B.
+**Assembly (2026-11-09).** One SMD side, the back. Drawing: `touch-board-assembly.pdf` (back, as seen from the back).
+1. Bare board: VCC–GND on the HOST pads must read open.
+2. Paste the back through the touch area of the combined stencil (`../stencil/`).
+   - Use the stencil the same way up as for the main board: the touch pattern is already mirrored to match the back seen from above.
+   - The HOST pads get no paste.
+3. Place U1 (pin 1 at the chamfered corner), C1 100 nF, C2 10 µF, R1–R4 4.7 kΩ.
+4. Hotplate with the front face down on a clean sheet (the front has no parts). Same paste and profile as the main board (`../main-board/README.md`).
+5. Solder the touch lead to the HOST pads with the iron: VCC, GND, SDA, SCL as labelled. Lead: XH 4P from main-board J6, cut ≈ 105 (`../notes/harness.md`).
+6. Bring-up: VCC–GND not shorted; then, on the Pi, `sudo i2cdetect -y 1` shows **1b**.
 
 Files: `touch-board.kicad_sch/.kicad_pcb/.kicad_pro`, `lib/` (ha_panel symbol + footprints), `touch-board-schematic.pdf`,
 `erc-report.txt`, `drc-report.txt`, `touch-board-front.png`, `touch-board-back.png`.

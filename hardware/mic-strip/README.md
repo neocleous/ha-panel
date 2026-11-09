@@ -1,6 +1,6 @@
 # HA panel — mic strip (two boards of one design)
 
-Status: **block 3 — fab files issued (2026-11-08).** Decision 9 → **option 1** (Daniel, 2026-11-08): soldered wire pads instead of the JST connector. Decision 10 → **option 1** (Daniel, 2026-11-08): ESD321DYAR for D1–D3. JLC upload: `fab/mic-strip-jlc-2026-11-08.zip`; order options in `../notes/jlc-fab.md` (0.8 mm, 2 layers, ENIG — Daniel, 2026-11-08). Assembly notes follow in block 3.
+Status: **block 3 done (2026-11-09) — fab files, assembly notes and drawing issued.** Decision 9 → **option 1** (Daniel, 2026-11-08): soldered wire pads instead of the JST connector. Decision 10 → **option 1** (Daniel, 2026-11-08): ESD321DYAR for D1–D3. JLC upload: `fab/mic-strip-jlc-2026-11-08.zip`; order options in `../notes/jlc-fab.md` (0.8 mm, 2 layers, ENIG — Daniel, 2026-11-08). Assembly drawing: `mic-strip-assembly.pdf`; assembly and bring-up: below.
 
 - **KiCad 9.0.9.** Open `mic-strip.kicad_pro`. Project libraries: `lib/ha_panel.kicad_sym` (IM69D120) and `lib/ha_panel.pretty` (IM69D120 land pattern, 5-pad wire column, heat-stake hole).
 - **Schematic PDF:** `mic-strip-schematic.pdf`. **ERC:** 0 errors, 0 warnings (`erc-report.txt`).
@@ -32,4 +32,51 @@ Removed against checkpoint 1: J1 connector, JP1, TP1–TP4 (decision 9.1), R3 (s
 
 Cable termination at the ReSpeaker (bench plan "connect by function"): VDD → pad 1, CLK → pad 2, DATA → pad 3, GND → pad 4 (and 6), **SEL → pad 5**. SEL is static and sits between CLK and DATA in the cable.
 
-Sources (read 2026-11-07): Infineon IM69D120 datasheet rev 1.0 (2017-12-20); TI SN74LVC1G17 SCES351Y (https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf); TI TPD1E05U06 SLVSBO7O (https://www.ti.com/lit/ds/symlink/tpd1e05u06.pdf); read 2026-11-08: TI ESD321 datasheet rev C, 2025-06-04 (https://www.ti.com/lit/ds/symlink/esd321.pdf, table 4-2) and TI E2E on the DYA pin-1 mark (https://e2e.ti.com/support/interface-group/interface/f/interface-forum/1410599/esd321-pin1-position, https://e2e.ti.com/support/interface-group/interface/f/interface-forum/1449663/esd321-pin-1-clarify); rev F geometry from `claude/enclosure-v5-revF-2026-11-03.md` (Top: mic strips) and `claude/enclosure-v5-revF-audit-response-2026-11-06.md` (finding 38); cable from `claude/E0-order-list-2026-11-01.md` rev 4; JLC capabilities https://jlcpcb.com/capabilities.
+Sources (read 2026-11-07, assembly notes 2026-11-09): Infineon IM69D120 datasheet rev 1.0 (2017-12-20); TI SN74LVC1G17 SCES351Y (https://www.ti.com/lit/ds/symlink/sn74lvc1g17.pdf); TI TPD1E05U06 SLVSBO7O (https://www.ti.com/lit/ds/symlink/tpd1e05u06.pdf); read 2026-11-08: TI ESD321 datasheet rev C, 2025-06-04 (https://www.ti.com/lit/ds/symlink/esd321.pdf, table 4-2) and TI E2E on the DYA pin-1 mark (https://e2e.ti.com/support/interface-group/interface/f/interface-forum/1410599/esd321-pin1-position, https://e2e.ti.com/support/interface-group/interface/f/interface-forum/1449663/esd321-pin-1-clarify); rev F geometry from `claude/enclosure-v5-revF-2026-11-03.md` (Top: mic strips) and `claude/enclosure-v5-revF-audit-response-2026-11-06.md` (finding 38); cable from `claude/E0-order-list-2026-11-01.md` rev 4; JLC capabilities https://jlcpcb.com/capabilities.
+
+## Assembly (block 3, 2026-11-09) — build two identical strips
+Drawing: `mic-strip-assembly.pdf` (back, as seen from the back). One hotplate pass, parts side up.
+
+**Before you start**
+- Paste: the same Sn63/Pb37 no-clean as the main board, dispensed by syringe. The combined stencil has no strip area (`../notes/jlc-fab.md`).
+- Bare strip:
+  - hold it against the light: the Ø0.8 port hole must be open;
+  - meter: VDD–GND (J1 pads 1–2) open.
+- **What the makers say about the port:**
+  - Infineon's IM69D120 datasheet (rev 1.0) gives only the reflow qualification: 3 reflows, peak 260 °C, IPC/JEDEC J-STD-020D-01. It has no handling, flux or washing rules.
+  - Other makers' bottom-port MEMS guides agree:
+    - TDK/InvenSense: water must not reach the port when washing; no blow-off, no ultrasonic cleaning.
+    - InvenSense AN-100: the port is sensitive to solder flux.
+    - ST: seal the port with tape during soldering.
+  - So: no-clean paste, **no washing, no IPA or air near the port**, and Kapton tape over the hole on the front while soldering.
+
+**Build order**
+1. Kapton over the port hole on the front (gasket side).
+2. Small paste dots on the back pads. Nothing in or next to the port hole.
+3. Place:
+   - D1–D3 ESD321: pin 1 = GND (dot or notch on the body), at the closed end of the silk bracket;
+   - C1 10 µF, C2 100 nF, C3 100 nF;
+   - R1 100 Ω, R2 100 kΩ, R4 33 Ω, R5 0 Ω (**required**);
+   - U1 SN74LVC1G17 (pin 1 at the chamfer);
+   - MK1 last, lid up, port over the hole. Handle it by the lid only.
+4. Hotplate with the front (gasket side) down, same profile as the main board (`../main-board/README.md`). One pass. The IM69D120 is qualified for 3 reflows, and a rework pass counts as one.
+5. Remove the Kapton when the strip is cool. Leave the no-clean residue.
+6. **Checks, meter only:**
+   - D1–D3 in diode mode: red on the GND pad, black on the signal pad → conducts; reversed → open (`fix_esd321.py`, ESD321 DYA pinout).
+   - VDD–GND not shorted.
+   - R5 present.
+7. **Cable:** cut A05SR05SR30K305B to length (`../notes/harness.md`: ≥ 175).
+   - Strip end: solder the conductors in cable order to J1 pads 1–5: 1 VDD, 2 GND, 3 CLK, 4 SEL, 5 DATA. Pad 1 is at the top in the drawing. Hot-melt strain relief over the pads.
+   - ReSpeaker end ("connect by function"): VDD → pad 1, CLK → 2, DATA → 3, GND → 4 (and 6), SEL → 5.
+   - SEL strap at the ReSpeaker end: one strip to GND (left), the other to VDD (right), matching the U7 map (bench plan 1.8).
+
+**Bring-up:** no stand-alone power test. With both strips on the ReSpeaker, run `arecord -l`; the pass/fail is bench plan 2.5 (click count, noise floor, FRR).
+- If 2.5 fails, the levers are:
+  - bypass U1 (remove it, wire pads 2–4);
+  - change R4 33 Ω to 100 Ω.
+
+Assembly sources (read 2026-11-09):
+- Infineon IM69D120 datasheet rev 1.0 (2017-12-20), table 6 "Reflow Solder".
+- TDK/InvenSense T5837 DS-000447 rev 1.2 §9 (board wash) — https://www.manualslib.com/manual/3421793/Tdk-T5837.html?page=20
+- InvenSense AN-100 rev 1.1 (port sensitive to flux) — https://www.cdiweb.com/datasheets/invensense/MEMS-Microphone-Handling-Guide.pdf
+- ST community answer on MEMS microphone soldering (seal the port with tape; no ultrasonic cleaning) — https://community.st.com/t5/mems-sensors/what-are-the-recommended-soldering-parameters-i-e-solder-paste/td-p/469500

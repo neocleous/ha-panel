@@ -36,4 +36,8 @@ Rebuild both whenever either board's paste changes.
   - there are no other flashes.
 - **Render:** `stencil-preview.png` shows both patterns, including the TAS5756M thermal-pad windows (2 × 4).
 
+## Use
+- Use the same face of the stencil up for both boards. The touch pattern is already mirrored to match the touch board's back seen from above, with the board lying front-down.
+- Paste one board at a time. Keep the squeegee off the other pattern.
+
 The order options and the remark for JLC are in `../notes/jlc-fab.md` ("Stencil").
