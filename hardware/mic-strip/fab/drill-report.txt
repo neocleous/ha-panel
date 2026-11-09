@@ -1,5 +1,5 @@
 Drill report for mic-strip.kicad_pcb
-Created on 2026-11-08T15:42:42+0100
+Created on 2026-11-09T17:06:03+0100
 
 Copper Layer Stackup:
     =============================================================
@@ -10,9 +10,9 @@ Copper Layer Stackup:
 Drill file 'mic-strip-PTH.drl' contains
     plated through holes:
     =============================================================
-    T1  0.200mm  0.0079"  (28 holes)
+    T1  0.300mm  0.0118"  (25 holes)
 
-    Total plated holes count 28
+    Total plated holes count 25
 
 
 Drill file 'mic-strip-NPTH.drl' contains

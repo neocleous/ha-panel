@@ -2,12 +2,12 @@
 
 Three boards and one stencil go into Daniel's JLC order (the one with the Spooky Manor boards; D54). **Bare boards only:** no SMT assembly, so no BOM or CPL files go to JLC. Daniel assembles the boards himself.
 
-Rev 2026-11-09: touch board rev D added (D57: 2 layers, 1.6, ENIG); the stencil now covers the main board's front **and** the touch board's back, from its own zip (D57).
+Rev 2026-11-09: touch board rev D added (D57: 2 layers, 1.6, ENIG); the stencil now covers the main board's front **and** the touch board's back, from its own zip (D57). Later the same day: strip vias 0.3/0.5 and a new strip zip (D63 = b, "Strip vias").
 
 | Upload | Board | KiCad source |
 |---|---|---|
 | `hardware/main-board/fab/main-board-jlc-2026-11-08.zip` | main board, layout rev 2.1 | `hardware/main-board/main-board.kicad_pcb` |
-| `hardware/mic-strip/fab/mic-strip-jlc-2026-11-08.zip` | mic strip; one design, used twice | `hardware/mic-strip/mic-strip.kicad_pcb` |
+| `hardware/mic-strip/fab/mic-strip-jlc-2026-11-09.zip` | mic strip; one design, used twice. Vias 0.3/0.5 (D63 = b); it replaces the 2026-11-08 zip, which was removed from the tree. | `hardware/mic-strip/mic-strip.kicad_pcb` |
 | `hardware/touch-board/fab/touch-board-jlc-2026-11-09.zip` | touch board rev D | `hardware/touch-board/touch-board.kicad_pcb` |
 | `hardware/stencil/fab/stencil-main-touch-jlc-2026-11-09.zip` | **stencil line only:** main-board front + touch-board back paste | `hardware/stencil/stencil-main-touch.kicad_pcb` (generated; `hardware/stencil/README.md`) |
 
@@ -26,13 +26,13 @@ The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `f
 | Layer stack-up | JLC04161H-7628: 7628 prepreg 0.2104, core 1.065; the same build as "No requirement" | — | — |
 | Outer copper | 1 oz | 1 oz | 1 oz |
 | Inner copper | 0.5 oz (JLC default) | — | — |
-| Via hole / diameter | 0.2 / 0.45 mm, which carries no surcharge | 0.2 / 0.45 mm | 0.3 / 0.6 mm |
+| Via hole / diameter | 0.2 / 0.45 mm, which carries no surcharge | **0.3 / 0.5 mm** (D63 = b, 2026-11-09) | 0.3 / 0.6 mm |
 | Via covering | **plugged** (JLC's default; "Tented" is greyed out for 4 layers on the order page, 2026-11-09) | tented | tented |
 | Surface finish | **ENIG** (Daniel, 2026-11-08) | **ENIG** (Daniel, 2026-11-08) | **ENIG** (Daniel, 2026-11-09, D57) |
 | Mask / silkscreen | green / white | green / white | green / white |
 | Mark on PCB | "Remove Mark" (the order page's default, no charge, 2026-11-09) | same | same |
 | Gold fingers, castellations, edge plating | no | no | no |
-| Min via hole size/diameter (order page) | "0.3mm/(0.4/0.45mm)": the page's note says that on multilayer boards a 0.2 mm hole with ≥ 0.45 mm diameter costs nothing extra | "0.3mm/(0.4/0.45mm)", see "Strip vias" below | "0.3mm/(0.4/0.45mm)" (vias 0.3/0.6) |
+| Min via hole size/diameter (order page) | "0.3mm/(0.4/0.45mm)": the page's note says that on multilayer boards a 0.2 mm hole with ≥ 0.45 mm diameter costs nothing extra | "0.3mm/(0.4/0.45mm)": the vias are 0.3/0.5, inside the free class (D63 = b) | "0.3mm/(0.4/0.45mm)" (vias 0.3/0.6) |
 | 4-Wire Kelvin Test (Advanced Options) | **No**: the page switches it on by itself when a smaller via class is picked; switch it back | No | No |
 | "Stencil: Order together with PCB" on this line | **off** (see "Stencil") | off | **off** (see "Stencil") |
 
@@ -40,7 +40,7 @@ The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `f
 | Item | Main board | Mic strip | Touch board rev D | JLC limit |
 |---|---|---|---|---|
 | Track / space | 0.10 / 0.15 | 0.20 / 0.15 | 0.25 / 0.15 (rule; supply 0.40) | 0.09 / 0.09 multilayer; 0.10 / 0.10 for 1–2 layers |
-| Vias | 0.2/0.45 ×18, 0.3/0.6 ×131, 0.4/0.8 ×4 | 0.2/0.45 ×28 | 0.3/0.6 ×4 (electrode feeds) | 0.15/0.25 minimum; 0.2 preferred; extra cost below 0.45 diameter at 0.2–0.25 hole |
+| Vias | 0.2/0.45 ×18, 0.3/0.6 ×131, 0.4/0.8 ×4 | **0.3/0.5 ×25** (D63 = b): ring 0.10, hole to hole ≥ 0.45, hole to other-net copper ≥ 0.29 | 0.3/0.6 ×4 (electrode feeds) | 0.15/0.25 minimum; 0.2 preferred; extra cost below 0.45 diameter at 0.2–0.25 hole |
 | Component hole annular ring | 0.35 min, except J2 | — | — (no component holes) | multilayer 1 oz: 0.20 recommended, 0.15 absolute |
 | J2 (USB4085) ring | 0.15: 16 contacts Ø0.4 in Ø0.7 pads (GCT's recommended layout) | — | — | at the multilayer absolute minimum, so JLC's review may mention it |
 | Plated slots | J2's 4 shell stakes, 0.6 × 1.4 and 0.6 × 2.1 | — | — | 0.35 multilayer (0.5 in the description) |
@@ -72,19 +72,40 @@ The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `f
 | Stencil aperture openings | **"1:1 as per Paste Layer"** | The default "Follow JLCPCB's Standard" resizes apertures. The TAS5756M thermal-pad windows (70–80 % of the pad, SLAS988B 11.1.3.2) are designed and must stay as drawn. |
 | **Stencil remark** | "Two PCBs on one stencil: main board top paste, and touch board bottom paste already mirrored in this file. No copper layer on purpose. Keep each pattern's orientation; spacing may change." | the pattern orientation is the one thing a re-arrangement must not change |
 
-## Strip vias: possible surcharge (2026-11-09)
-- **The vias:** the strip has 28 vias at 0.2 mm hole / 0.45 mm diameter, on 2 layers.
-- **JLC's note on the order page reads two ways:**
-  - "Additional charges will apply when the via hole < 0.3mm and the via diameter ≤ 0.4mm." Read literally, 0.45 is free.
-  - It then says the 0.2 mm hole is free at ≥ 0.45 mm "for multi-layer boards". That suggests a 2-layer board does not get the exemption.
-- **Worst case:** the order page prices the "0.2mm/(0.3/0.35mm)" class for the strip at **+€44.45**:
+## Strip vias: resolved by D63 = (b) (Daniel, 2026-11-09)
+**The strip is re-routed with 0.3 mm via holes:** 28 vias at 0.2/0.45 became **25 vias at 0.3/0.5**.
+- Upload: `hardware/mic-strip/fab/mic-strip-jlc-2026-11-09.zip`.
+- Details: `hardware/mic-strip/README.md` and `claude/report-electronics-strip-vias-2026-11-09.md`.
+
+**Why it was needed:**
+- JLC's order-page note states its 0.2 mm exemption ("free at ≥ 0.45 mm diameter") only "for multi-layer boards", and the strip has 2 layers.
+- The worst case at review was +€44.45:
   - via class €14.82;
-  - 4-wire Kelvin test €14.82, switched on by the page;
+  - a 4-wire Kelvin test the page adds by itself, €14.82;
   - plugged instead of tented vias, €14.81.
-- **Re-drilling to 0.3 mm in the same 0.45 pads is not a quick fix:**
-  - it breaks the board's 0.10 mm via-ring and 0.25 mm hole-clearance rules;
-  - two GND vias would sit 0.24 mm apart.
-- **What to do at the order:** order with the free class selected. JLC's review asks for any extra payment before production. Decision in the closing report.
+- A plain re-drill in the 0.45 pads would have broken the board's 0.10 via ring and 0.25 hole clearance, and left two GND vias 0.24 apart.
+
+**JLC capabilities, 2-layer, re-read 2026-11-09** (https://jlcpcb.com/capabilities/pcb-capabilities):
+
+| Item | JLC figure |
+|---|---|
+| Minimum via hole / diameter | 0.15 / 0.25 mm |
+| Via diameter vs hole | 0.10 mm larger, 0.15 preferred |
+| Via hole to hole | 0.2 mm; the page does not split same net and different nets |
+| Pad hole to hole | 0.45 mm |
+| Via hole to track | 0.2 mm |
+| NPTH to track | 0.2 mm |
+| PTH annular ring, 1 oz | 0.25 recommended / 0.18 minimum. There is no separate via-ring row; the via rule is the 0.10 difference above. |
+| Small vias | 0.1 or 0.15 mm holes, and 0.2 or 0.25 mm holes under 0.45 mm diameter, "will cost more". |
+
+**The strip against those figures:**
+- vias 0.3/0.5: diameter 0.20 over the hole, ring 0.10;
+- via hole to hole ≥ 0.45;
+- via hole to NPTH ≥ 0.56;
+- via hole to other-net track ≥ 0.29;
+- every figure is within the board's own stricter rules (hole clearance 0.25, hole to hole 0.25).
+
+**Order:** select "0.3mm/(0.4/0.45mm)" and leave the 4-wire Kelvin test off. Re-quoted 2026-11-09 at €18.62, unchanged.
 
 ## Export settings
 JLC's KiCad 9 guide, applied with kicad-cli 9.0.9:
@@ -102,7 +123,7 @@ JLC's KiCad 9 guide, applied with kicad-cli 9.0.9:
 
 **Check:** rendered from the exported files with pygerber 2.4.3, and matching the KiCad boards:
 - the main-board front stack (copper, mask, silk, edge);
-- both sides of the strip;
+- both sides of the strip, re-checked 2026-11-09 after D63: 25 via flashes Ø0.5 on each copper layer and none on either mask (tented); drill report 25 × Ø0.300 PTH, NPTH unchanged;
 - both sides of the touch board (2026-11-09): the front has the four electrodes under the mask with no openings, and the back has the parts, the HOST pads and their labels;
 - the stencil, which is also checked flash by flash against both boards' paste files (`hardware/stencil/README.md`).
 
@@ -126,7 +147,7 @@ JLC offers only EUR and USD for Switzerland. CHF is indicative at the ECB refere
 | Line | Options as above | Build time | Price |
 |---|---|---|---|
 | Main board | 4 L, 90 × 55, 5 pcs, 1.6, ENIG 1U", FR4 TG135, 1/0.5 oz, plugged | 3–4 days | €22.56 = €7.16 + ENIG €15.40 (≈ CHF 20.71) |
-| Mic strip | 2 L, 28 × 6, 5 pcs, 0.8, ENIG 1U", tented, deburring (page default for small boards) | 3 days | €18.62 = €3.58 + ENIG €14.86 + deburring €0.18 (≈ CHF 17.09); worst case +€44.45, see "Strip vias" |
+| Mic strip | 2 L, 28 × 6, 5 pcs, 0.8, ENIG 1U", tented, deburring (page default for small boards), via class 0.3mm/(0.4/0.45mm), 4-wire test off | 3 days | €18.62 = €3.58 + ENIG €14.86 + deburring €0.18 (≈ CHF 17.09). Re-quoted 2026-11-09 ≈ 17:05 after D63, unchanged; the vias are now in the free class. |
 | Touch board rev D | 2 L, 90 × 44, 5 pcs, 1.6, ENIG 1U", tented | 3 days | €18.80 = €3.58 + ENIG €15.22 (≈ CHF 17.26) |
 | Stencil | non-framework, top, custom 190 × 190, 0.12, two PCBs, electropolished, 1:1 | 1–2 days | €10.91 = €6.46 + electropolishing €4.45 (≈ CHF 10.02) |
 | **Total, our part of the order** | | | **€70.89 (≈ CHF 65.08)**, shipping excluded |

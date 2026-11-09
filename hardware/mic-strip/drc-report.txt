@@ -1,14 +1,8 @@
 ** Drc report for mic-strip.kicad_pcb **
-** Created on 2026-11-08T15:42:29+0100 **
-** Report includes: Errors, Warnings **
+** Created on 2026-11-09T17:05:29+0100 **
+** Report includes: Errors, Warnings, Exclusions **
 
-** Found 2 DRC violations **
-[lib_footprint_mismatch]: Footprint 'Infineon_IM69D120_PG-LLGA-5-1' does not match copy in library 'ha_panel'.
-    Local override; warning
-    @(2.0000 mm, 3.6800 mm): Footprint MK1
-[lib_footprint_mismatch]: Footprint 'SOT-353_SC-70-5' does not match copy in library 'Package_TO_SOT_SMD'.
-    Local override; warning
-    @(11.1700 mm, 1.3200 mm): Footprint U1
+** Found 0 DRC violations **
 
 ** Found 0 unconnected pads **
 
