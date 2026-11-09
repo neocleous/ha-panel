@@ -60,7 +60,7 @@ KiCad **9.0.9**. Every value below is traced to a datasheet section or a project
 | J5 | JST B4B-XH-A | LD2410C: 1 VCC 5 V, 2 GND, 3 LD TX, 4 LD RX (envelope sheet: lead soldered to LD2410C pins 1, 2, 4, 5; OUT not wired). |
 | R19 | 4.7 kΩ | LD TX → Pi RXD. Replaces the provisional 1 kΩ: limits current into an unpowered Pi (radar stays on 5 V when the Pi is off) to 0.64 mA; with ≈ 10 pF the RC is 47 ns ≪ 3.9 µs bit time at 256000 Bd. |
 | J6 | JST B4B-XH-A | Touch board rev D (`hardware/touch-board`, decision 5A) HOST pads: VCC, GND, SDA, SCL. No INT (CHANGE# unused, as on rev C). |
-| J10 | wire pads, 2 × 4 at 2.54 | **Decision 5A:** the BME680 (CJMCU-680) and VEML6030 Dupont leads land here instead of on the touch board: odd column BME680 (3V3_SENS, GND, SDA, SCL), even column VEML6030 (same). 3V3_SENS through F4. |
+| J10 | 2 × 4 male header, 2.54 (plugged, D59, 2026-11-09; the footprint was already the header pattern) | **Decision 5A:** the BME680 (CJMCU-680) and VEML6030 Dupont leads land here instead of on the touch board: odd column BME680 (3V3_SENS, GND, SDA, SCL), even column VEML6030 (same). 3V3_SENS through F4. |
 | J7 | 1 × 8 wire pads | D4a ReSpeaker tap, to the XIAO footprint (Seeed pinout): 1 GND, 2 I2S_BCLK, 3 I2S_LRCLK, 4 → I2S_DIN_SEC(dout) (reference into the XU316), 5 ← I2S_DIN_XIAO(din) (XU316 output), 6 GND, 7 SDA, 8 SCL. |
 | R20–R25 | 0 Ω 0603, **DNP** | Topology A (USB reference, default): all open. Topology B (bench 2.2): fit R20–R23 (+R24/R25 to reach the XU316 over I²C), I²S firmware, Pi as I²S clock consumer (custom overlay). |
 | H1–H4 | Ø2.7 NPTH | Fixed interface: 83 × 43 pattern, M2.5 into ruthex inserts in the bracket bosses. |

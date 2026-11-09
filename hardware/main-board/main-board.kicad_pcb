@@ -721,7 +721,7 @@
 				)
 			)
 		)
-		(property "Value" "sensor landing (wire pads)"
+		(property "Value" "2x04 male header 2.54 (D59)"
 			(at 1.27 10 0)
 			(layer "F.Fab")
 			(uuid "66673431-579c-4ce1-8036-dbcdd8bdf318")

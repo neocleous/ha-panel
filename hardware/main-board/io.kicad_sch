@@ -6816,7 +6816,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "sensor landing (wire pads)"
+		(property "Value" "2x04 male header 2.54 (D59)"
 			(at 327.66 97.79 0)
 			(effects
 				(font
@@ -6844,6 +6844,33 @@
 			)
 		)
 		(property "Note" "wire pads (decision 5A): odd column BME680 (CJMCU-680 VCC GND SDA SCL), even column VEML6030 (3.3V GND SDA SCL); Dupont lead cut ends through the holes, soldered on the door side"
+			(at 330.2 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "generic 2 x 4 male pin header, 2.54 mm pitch, THT, vertical"
+			(at 330.2 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "generic"
+			(at 330.2 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "none - DigiKey basket frozen (D51, D56); order prep or own stock"
 			(at 330.2 88.9 0)
 			(effects
 				(font
