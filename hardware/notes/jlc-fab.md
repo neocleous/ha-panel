@@ -27,12 +27,14 @@ The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `f
 | Outer copper | 1 oz | 1 oz | 1 oz |
 | Inner copper | 0.5 oz (JLC default) | — | — |
 | Via hole / diameter | 0.2 / 0.45 mm, which carries no surcharge | 0.2 / 0.45 mm | 0.3 / 0.6 mm |
-| Via covering | tented | tented | tented |
+| Via covering | **plugged** (JLC's default; "Tented" is greyed out for 4 layers on the order page, 2026-11-09) | tented | tented |
 | Surface finish | **ENIG** (Daniel, 2026-11-08) | **ENIG** (Daniel, 2026-11-08) | **ENIG** (Daniel, 2026-11-09, D57) |
 | Mask / silkscreen | green / white | green / white | green / white |
-| Order number on the board | JLC default placement | JLC default placement | JLC default placement (the front has no silk and sits behind the wall) |
+| Mark on PCB | "Remove Mark" (the order page's default, no charge, 2026-11-09) | same | same |
 | Gold fingers, castellations, edge plating | no | no | no |
-| SMT stencil tick box on this line | **no** (see "Stencil") | no | **no** (see "Stencil") |
+| Min via hole size/diameter (order page) | "0.3mm/(0.4/0.45mm)": the page's note says that on multilayer boards a 0.2 mm hole with ≥ 0.45 mm diameter costs nothing extra | "0.3mm/(0.4/0.45mm)", see "Strip vias" below | "0.3mm/(0.4/0.45mm)" (vias 0.3/0.6) |
+| 4-Wire Kelvin Test (Advanced Options) | **No**: the page switches it on by itself when a smaller via class is picked; switch it back | No | No |
+| "Stencil: Order together with PCB" on this line | **off** (see "Stencil") | off | **off** (see "Stencil") |
 
 ## What the files use against JLC's limits
 | Item | Main board | Mic strip | Touch board rev D | JLC limit |
@@ -52,19 +54,37 @@ The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `f
 ## Stencil (main board front + touch board back; D57, Daniel 2026-11-09)
 **One JLC SMT stencil, ordered as its own stencil line from `hardware/stencil/fab/stencil-main-touch-jlc-2026-11-09.zip`.**
 - That file's top paste layer holds both patterns: the main board's front as drawn, and the touch board's back mirrored, 10 mm below it. The pattern extent is 90.1 × 109.2 mm.
-- Do not tick the stencil box on the main-board or touch-board PCB lines; that would cut a stencil from one board's zip alone.
+- Leave the stencil toggle on the main-board and touch-board PCB lines off; it would cut a stencil from one board's zip alone.
 - The strip's 12 SMD parts are pasted by syringe.
 - How the file is built and checked: `hardware/stencil/README.md`.
 
 | Option | Choice | Why |
 |---|---|---|
-| Stencil type | Non-framework | hand use on the hotplate; framework stencils are for printers |
-| Stencil side | **Top** | both patterns are on the file's top paste layer; the touch board's back pattern is already mirrored |
-| Thickness | 0.12 mm | standard thickness at no extra cost; JLC suggests 0.10–0.12 for fine pitch |
-| Polishing | Electropolishing | JLC lists it as ideal for ICs at or below 0.5 mm pitch (the TAS5756M) |
+| Product | "SMT Stencil" (its own quote page, not the PCB line's stencil toggle) | the upload is the combined stencil zip |
+| Framework | No | hand use on the hotplate; framework stencils are for printers |
+| Stencil side | **Top only** | both patterns are on the file's top paste layer; the touch board's back pattern is already mirrored |
+| Dimensions | **Custom 190 × 190 mm** | same price as the smallest standard size (380 × 280), 0.33 kg instead of 0.96 kg; holds the 90.1 × 109.2 pattern; rev C used 190 × 190 |
+| Thickness | "Select by Customer", **0.12 mm** | no extra charge; JLC suggests 0.10–0.12 for fine pitch |
+| Stencil process type | Solder paste stencil | |
+| Multiple PCBs on one stencil | **Yes** | The page's note: "If you have multiple different PCBs on one stencil, please click Yes." The pop-up then asks whether JLC may re-arrange the patterns' typesetting or distance. The option only stays on with **Yes**, at no extra charge. |
+| Polishing | Electropolishing (+€4.45) | JLC lists it as ideal for ICs at or below 0.5 mm pitch (the TAS5756M) |
 | Fiducials | No fiducial | aligned by hand to the pads |
-| Size | the smallest size the order page offers that holds 90.1 × 109.2 mm | both outlines; size and price in the order list rev 5 |
-| **Remark** | "One stencil, two boards: main board top paste and touch board bottom paste, already mirrored in this file. No copper layer on purpose. Please cut every aperture 1:1 as drawn and keep both patterns where they are." | By default JLC resizes apertures for IC packages and 0805+ parts. The TAS5756M thermal-pad windows (70–80 % of the pad, SLAS988B 11.1.3.2) are designed and must stay as drawn. |
+| Stencil aperture openings | **"1:1 as per Paste Layer"** | The default "Follow JLCPCB's Standard" resizes apertures. The TAS5756M thermal-pad windows (70–80 % of the pad, SLAS988B 11.1.3.2) are designed and must stay as drawn. |
+| **Stencil remark** | "Two PCBs on one stencil: main board top paste, and touch board bottom paste already mirrored in this file. No copper layer on purpose. Keep each pattern's orientation; spacing may change." | the pattern orientation is the one thing a re-arrangement must not change |
+
+## Strip vias: possible surcharge (2026-11-09)
+- **The vias:** the strip has 28 vias at 0.2 mm hole / 0.45 mm diameter, on 2 layers.
+- **JLC's note on the order page reads two ways:**
+  - "Additional charges will apply when the via hole < 0.3mm and the via diameter ≤ 0.4mm." Read literally, 0.45 is free.
+  - It then says the 0.2 mm hole is free at ≥ 0.45 mm "for multi-layer boards". That suggests a 2-layer board does not get the exemption.
+- **Worst case:** the order page prices the "0.2mm/(0.3/0.35mm)" class for the strip at **+€44.45**:
+  - via class €14.82;
+  - 4-wire Kelvin test €14.82, switched on by the page;
+  - plugged instead of tented vias, €14.81.
+- **Re-drilling to 0.3 mm in the same 0.45 pads is not a quick fix:**
+  - it breaks the board's 0.10 mm via-ring and 0.25 mm hole-clearance rules;
+  - two GND vias would sit 0.24 mm apart.
+- **What to do at the order:** order with the free class selected. JLC's review asks for any extra payment before production. Decision in the closing report.
 
 ## Export settings
 JLC's KiCad 9 guide, applied with kicad-cli 9.0.9:
@@ -99,3 +119,20 @@ Read 2026-11-08 (the touch-board column and the stencil options use the same pag
 - JLC stack-ups — https://jlcpcb.com/impedance
 - JLC stencil capabilities — https://jlcpcb.com/capabilities/pcb-stencil-manufacturing
 - GCT USB4085 drawing rev B (2023-02-28), recommended PCB layout — https://gct.co/files/drawings/usb4085.pdf (read 2026-11-07)
+
+## Quotes (jlcpcb.com quote page, 2026-11-09, not signed in, no coupons)
+JLC offers only EUR and USD for Switzerland. CHF is indicative at the ECB reference rate of 2026-11-05: 0.9180 CHF/EUR.
+
+| Line | Options as above | Build time | Price |
+|---|---|---|---|
+| Main board | 4 L, 90 × 55, 5 pcs, 1.6, ENIG 1U", FR4 TG135, 1/0.5 oz, plugged | 3–4 days | €22.56 = €7.16 + ENIG €15.40 (≈ CHF 20.71) |
+| Mic strip | 2 L, 28 × 6, 5 pcs, 0.8, ENIG 1U", tented, deburring (page default for small boards) | 3 days | €18.62 = €3.58 + ENIG €14.86 + deburring €0.18 (≈ CHF 17.09); worst case +€44.45, see "Strip vias" |
+| Touch board rev D | 2 L, 90 × 44, 5 pcs, 1.6, ENIG 1U", tented | 3 days | €18.80 = €3.58 + ENIG €15.22 (≈ CHF 17.26) |
+| Stencil | non-framework, top, custom 190 × 190, 0.12, two PCBs, electropolished, 1:1 | 1–2 days | €10.91 = €6.46 + electropolishing €4.45 (≈ CHF 10.02) |
+| **Total, our part of the order** | | | **€70.89 (≈ CHF 65.08)**, shipping excluded |
+
+- **Shipping:**
+  - The page shows DHL Express at €21.06 (2–4 business days) for each line on its own; the stencil at 190 × 190 also shows €21.06, at 0.33 kg.
+  - The parcel is shared with the Spooky Manor boards, so the real figure appears at checkout.
+  - Weights: main 0.21 kg, strip 0.14 kg, touch 0.19 kg, stencil 0.33 kg.
+- **Desktop prices:** the page shows lower "Desktop Price" figures (from €20.77 / €16.83 / €17.01 / €9.12) for orders placed through JLC's desktop app.

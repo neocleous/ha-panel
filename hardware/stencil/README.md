@@ -8,6 +8,7 @@ One JLC stencil holds two paste patterns (Daniel 2026-11-09, architect log 2026-
 | Touch board rev D, back (U1, C1, C2, R1–R4) | 26 | mirrored left-right: seen from the back, the way the stencil meets the touch board lying front-down |
 
 - The touch area sits 10 mm below the main board, left edges aligned. Both outlines are drawn.
+- JLC may change the spacing: its "Multiple PCBs on one stencil" option needs consent to re-arrange the patterns. The remark asks it to keep each pattern's orientation (`../notes/jlc-fab.md`).
 - The pattern extent is 90.1 × 109.2 mm.
 - The mic strip has no area on this stencil. Its 12 parts are pasted by syringe (`../notes/jlc-fab.md`).
 
