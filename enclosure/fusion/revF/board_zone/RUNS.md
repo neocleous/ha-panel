@@ -90,3 +90,29 @@ Offline: `access8.py` (rev 2 against rev 2.1, Ø14 / 16 / 20, cradle out and in,
 included (rev 2: Ø14 within 1.1 mm, Ø16–24 within 2.1); J1, J5, J8, J9 as in rev 2; all over the top edge. At Ø28 J6
 stops 12.1 mm short in both. Finger beyond a Ø40 hand (Ø16): J1 42 (43 cradle in), J5 13, J6 46 (rev 2: none), J8 44,
 J9 41 mm. C7's joints: 9.3 mm back gap to the door, nothing else behind.
+
+## e5 — J10 sensor leads, touch board rev D, mic strip (2026-11-09)
+Architect 2026-11-09 (log 2026-11-08 §8, D55): V23b route the BME680 and VEML6030 leads to J10 (clear of the C7 vent
+keep-out) with routed and cut lengths; V26 touch board rev D's back parts against KO_touch_back; V27 the strip's Ø0.8 port
+against the cap's Ø1.5 ports. Board files on `docs` @ 6cfb845. Fusion scripts in `../` (`v5f_e5*.py`); the design was
+closed at the start and opened from the hub (version 40, unmodified). Answer: Project doc
+`claude/brief-architect-update-2026-11-09.md`.
+
+| When | Script | Settings | Result |
+|---|---|---|---|
+| 2026-11-09 09:05:30 | `../v5f_e5a_probe.py` | readOnly | boxes, cap ports and pins; V26 part void (loose design box, README lesson 85) |
+| 09:07:17 | `../v5f_e5a2_v26.py` | readOnly; vertex extents | V26 pass (see the README e5 checkpoint) |
+| 09:08:25 | `../v5f_e5b_meshes.py` | readOnly; 94 bodies, tolerance 0.1 | 222 MB in `~/Documents/HA_panel_renders/e5/mesh`, 71 s |
+| 09:20:39 | `../v5f_e5c_lead_checks.py` | readOnly; temporary tubes | new leads ∩ every body 0 except the designed contacts; nothing within 2.0 but the sensor ends' bodies; parts near J10: BME680 within 1.0 of the NID, VEML within 2.0 of the NID and J5's plug |
+| ≈ 09:22 | `../v5f_e5d_leads.py` | modifying | ran and wrote its status, then rolled back by the MCP (the wrapper's own `run()` call failed; README lesson 86) |
+| 09:24:25 | `../v5f_e5d_leads.py` | modifying; loader with a no-op `run()` | LEAD_BME680 0.6381, LEAD_VEML 0.8101 cm³ added; old → `*_e5`; exact distances as in the checkpoint |
+| 09:24:40 | `../v5f_e5e_save.py` | saves | version 41, `revF-e5.f3d` 93.4 MB |
+| 09:25:17 | `../v5f_e5f_verify.py` | readOnly | version 41 latest, not modified, bodies and file as saved |
+
+Offline (same container; work folder with the e5b meshes in `mesh/`):
+
+| Script | What | Result |
+|---|---|---|
+| `offline/lead_vox.py` | z-column winding voxels, 0.5 mm, x_rel −95…25, y −80…10, z 60…190, of every mesh but MAIN_front_env and the two old sensor leads; main board rev 2.1's front parts as courtyard × height boxes (NID 27.5, C5 / C6 16, C7 12.5, XH mated 9.8, L1 6.5, L100–L103 5.4, NANO2 2.94, SMB 2.7, 2920 1.8, wire-pad headers 2.0, the rest 1.8; J10 left out); distance field | 240 × 180 × 260, 2,160,562 voxels occupied, 3.9 s |
+| `offline/lead_route.py bme -66.557 -36.212 84.387 -18.42 -50 77.5 '{"need": 4.0, "pref": 6.0, "relax": [[[[-23, -63.4, 74], [-16.5, -44, 81]], 2.3]]}'` | BME680 from bo (d12a) to 13.4 in front of its J10 column | (−66.56, −36.21, 84.39) → (−43.25, −35.75, 96.75) → (−18.42, −50.0, 77.5), 60.9 |
+| `offline/lead_route.py veml 0 -39.7 165 -20.97 -50 77.5 '{"need": 4.0, "pref": 6.0}'` | VEML6030 from below the cap exit (c2c) to 13.4 in front of its column | (0, −39.7, 165) → (−21.75, −48.75, 77.75) → (−20.97, −50.0, 77.5), 91.9; built as the straight line (0, −39.7, 165) → (−20.97, −50, 77.5), 90.6, which e5c / e5d check exactly |

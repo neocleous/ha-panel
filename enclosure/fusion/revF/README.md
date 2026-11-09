@@ -250,6 +250,12 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_e4b_m2_pilots.py` | e | M2 × 6 screws for plastic (Daniel 2026-11-08): each insert hole filled (Ø3.4 plug flush with the face, 0.1 into the material under it), re-cut as a Ø1.6 pilot with a 0.3 × 45° entry chamfer, 5.5 deep or through where a blind hole would leave < 1.2; the cradle's bezel roof slotted 4.6 wide over both screws (Daniel: slot the roof); gates: the plug's ring in material 5.5732 mm³ and the pilot in material (11.3129 blind / 12.3182 through) equal to the analytic values, each slot removes only roof (17.71), 10 probes per hole, 6 per slot | carrier 10.0716 → 10.1214 cm³ (blind), cradle 2.1775 → 2.1898 (through, slots); 1 lump each; old → `RESP_CARRIER_e4`, `CRADLE_5807_e4` (hidden) |
 | `v5f_e4c_m2_checks.py` | e | read-only, on the built solids: wall = largest ring round the bore inside the part (control: the old holes give the audit's 1.4, and 1.15 at the +x post, lesson 84), chamfer wall, skin, depth, boss; M2 × 6 tip margin and engagement; shank and head allowance (Ø4.2 × 1.8) against every current body; bodies near the exits; the 5807 driver straight up (Ø1.5 / 3.0 / 4.0, step-11 bodies); interference new vs old | see the e4 checkpoint |
 | `v5f_e4d_save_export.py`, `v5f_e4e_verify.py` | e | version 40, f3d, STEP carrier and cradle (d7d method) read back into new documents; version, bodies and files verified without activation | STEP read back 10.1214 / 2.1898 cm³, Ø1.6 bores, no Ø3.2 left |
+| `v5f_e5a_probe.py` | e | read-only: world boxes of the touch, strip, sensor, lead and main-board bodies; the cap's Ø1.5 ports and Ø1.8 pins (axis ends and direction). Its V26 part is void: it placed the parts from the loose design box (lesson 85) | ports at x_rel ±35.5, y −26.5 (z 178.3–180.0); strip pins ±30.0 / ±11.5 on y −26.5 (z 174.8–178.3); VEML pins ±5.5, y −28.23 |
+| `v5f_e5a2_v26.py` | e | read-only: V26 on vertex extents – touch board rev D's back parts (KiCad courtyards; U1 1.75, the 0603 parts banded ≤ 1.0) on TOUCH_PCB's back face (y 2.70) against KO_touch_back and every current body, again grown 1.0; LEAD_TOUCH against J1's pads | all seven inside the keep-out (x ±43, y −0.2…2.7, z 6–50), grown 1.0 still inside; grown parts ∩ every body 0; J1's pads x_rel 5.75…18.25, z 44.3…47.3 under LEAD_TOUCH's end |
+| `v5f_e5b_meshes.py` | e | read-only: 94 current bodies as world STL (0.1 tolerance) without activating the design; skips files already written, so a timed-out run resumes | 222 MB in 71 s; input of `board_zone/offline/lead_vox.py` |
+| `board_zone/offline/lead_vox.py`, `lead_route.py` | e | V23b routing offline: 0.5 mm z-column voxels of the e5b meshes (main board rev 2.1's front parts as courtyard × MAIN_env-height boxes instead of MAIN_front_env, the old sensor leads left out), distance field, minimum-cost path (cost 1 + 3 · max(0, 6 − distance), voxels nearer than 4.0 closed, a box in front of J10 reopened to 2.3), pulled into a polyline; runs in `board_zone/RUNS.md` | BME680 bo → (−43.25, −35.75, 96.75) → (−18.42, −50, 77.5); VEML6030 (0, −39.7, 165) → (−20.97, −50, 77.5), straight (the router's 1 mm dogleg at the end dropped) |
+| `v5f_e5c_lead_checks.py` | e | read-only: both routes as temporary Ø3 tubes (sensor ends as d12a and c2c / d8b, 13.4 straight stubs into J10) against every current body and the main board's front parts near J10 (boxes): intersection, and the tube grown by 1.0 / 2.0; the old leads as the control for the sensor-end contacts | see the e5 checkpoint |
+| `v5f_e5d_leads.py`, `v5f_e5e_save.py`, `v5f_e5f_verify.py` | e | the new leads added (old → `LEAD_BME680_e5`, `LEAD_VEML_e5`, hidden), each measured against every body within 10 mm; version 41 and f3d; version, bodies and file verified without activation. Loaded with a no-op `run()` after the exec (lesson 86) | LEAD_BME680 0.6381, LEAD_VEML 0.8101 cm³; version 41; f3d 93.4 MB |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -467,6 +473,17 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 84. Take a wall from the solid, not from the boss OD. The ring test (largest ring round the bore that lies in the part) gave
     the audit's 1.4 at the −x cradle post but 1.15 at the +x post, where the plate's edge (x_rel 10.5) runs 2.75 from the
     axis below the post's cylinder; the audit had taken Ø6 − Ø3.2 for both.
+85. A design-frame bounding box is not a world box. The model's axes are tilted 12° to the world, so the eight corners of
+    `boundingBox` mapped to the world overstate a body's extent: e5a read TOUCH_PCB's back face as y −6.25 instead of 2.70
+    and put V26's parts 9 mm off (all "outside" the keep-out). Take world extents from the vertices (planar bodies) or a
+    mesh, and check one known face first.
+86. The Fusion MCP now calls the script's `run(context)` itself and rolls the whole script back if that call fails. The
+    loader runs each script in its own namespace (the script calls `run(None)` itself), so the wrapper's call raised
+    `NameError` and e5d's new bodies were undone after the script had finished and written its status. Load with
+    `exec(…, {'__name__': …})` followed by `def run(context): pass`, and read a modifying step back from the model before
+    the next one.
+87. `measureMinimumDistance` takes no TemporaryBRep body (only planes and points as temporaries). Before adding a body,
+    grade its clearance with grown copies (Ø + 2 × 1.0, Ø + 2 × 2.0 against every body); measure exactly after adding it.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -1112,3 +1129,35 @@ DIN912 M2 × 5 (audit findings 28–29). 18:58, after the driver check: slot the
 - Exports: `~/Documents/HA_v5f_resp_carrier.step`, `HA_v5f_cradle_5807.step` (world frame; read back 10.1214 / 2.1898),
   `~/Documents/HA Panel v5 - tapered revF-e4.f3d` (98.9 MB). "HA Panel v5 - exploded prints (d19)" predates this.
 - Answer: `claude/report-m2-screws-for-plastic-2026-11-08.md`.
+
+## J10 sensor leads, touch board rev D, mic strip – e5 (2026-11-09)
+Architect 2026-11-09 (log 2026-11-08, D55): V23b, V26 and V27 in one step; no other model change.
+- Version 41 "rev F WIP 2026-11-09 e5 …"; `~/Documents/HA Panel v5 - tapered revF-e5.f3d` (93.4 MB). No STEP export: no
+  printed part changed.
+- **V23b, sensor leads to J10.** Ø3 tubes ending on the board's front face (y −63.4) at J10's columns, x_rel −18.42 (odd,
+  BME680) and −20.97 (even, VEML6030), z 77.5 (rows 73.69–81.31), after 13.4 straight out. Old leads hidden as
+  `LEAD_BME680_e5`, `LEAD_VEML_e5`.
+  - BME680: hd → bl → bo (−66.56, −36.21, 84.39) as d12a, then (−43.25, −35.75, 96.75) → (−18.42, −50.0, 77.5) → J10.
+    Routed 90.5, cut ≥ 145 (was 110 / 165).
+  - VEML6030: (0, −39.7, 175.75) → (0, −39.7, 165.0) as c2c / d8b, then straight to (−20.97, −50.0, 77.5) → J10. Routed
+    114.7, cut ≥ 165 (was 160 / 260).
+  - Exact minimum distances (e5d): BME680 2.53 to KO_K5_LR, 4.97 LEAD_RADAR, 5.13 SPKBOX_R, 11.10 the C7 vent keep-out,
+    ≥ 10.9 the rest; VEML6030 3.48 to the front shell at the cap exit (as before), 8.64 the C7 vent keep-out, ≥ 10.5 the
+    rest. Contacts only by design: the sensor ends as before (VEML_env 18.73 mm³ = the old lead's; the BME680's tray slot
+    0.25 from the front, 0.35 from the foam, 2.25 from the hood), MAIN_front_env (crossed to reach J10), MAIN_pcb (end on
+    its face) and each other in front of J10 (20.0 mm³: Ø3 stubs on the 2.54 pitch, crossing just before them).
+  - Main-board front parts near J10 (KiCad courtyards × MAIN_env heights; not bodies in the model): BME680 stub 0.87 from
+    the NID100's courtyard (27.5 tall), VEML6030 stub 1.53 from J5's mated plug and 1.94 from the NID.
+  - Gone with the old routes: both leads inside KO_touch_back (27.0 mm³ each) and the VEML × DSI crossing (22.27 mm³).
+  - J10's columns carry the same four nets row by row (3V3_SENS, GND, SDA, SCL from the top), so either lead fits either
+    column; the model keeps odd = BME680 as the electronics notes have it.
+- **V26, touch board rev D.** Back parts (U1 SOIC-14 1.75; R1–R4, C1, C2 0603 banded ≤ 1.0) at x_rel −5.23…7.93, z
+  28.02…39.70, inside KO_touch_back with ≥ 1.0 to spare on every side (U1 leaves 1.15 of the 2.9 depth); grown 1.0 they
+  touch no body. Clips at |x_rel| ≥ 40.5. LEAD_TOUCH lands on J1's pads (x_rel 5.75…18.25, z 44.3…47.3) as in rev F.
+  Pass: the touch clips can print.
+- **V27, mic strip port.** Cap (model): Ø1.5 ports at x_rel ±35.5, y −26.5; Ø1.8 pins at ±30.0 / ±11.5 on the same line.
+  Strip (board file): port Ø0.8 at (2.0, 3.0), holes Ø2.0 at (7.5, 3.0) / (26.0, 3.0), all on the centreline. On the
+  pins the strip's port lands at ±35.5, y −26.5: on the cap port's axis (0.00), both strips. Hole play moves it ≤ 0.16
+  (0.1 × (1 + 2 × 5.5 / 18.5)); the Ø0.8 stays inside the Ø1.5 up to 0.35. The model's strip envelope is 29 long, the
+  fab board 28 (1.0 short at the inner end). Pass.
+- Answer: `claude/brief-architect-update-2026-11-09.md`.
