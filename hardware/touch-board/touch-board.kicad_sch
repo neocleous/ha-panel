@@ -1819,6 +1819,33 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "CC0603KRX7R9BB104"
+			(at 76.2 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 76.2 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "311-1344-1-ND"
+			(at 76.2 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "23ac24d4-1e25-438f-8660-8b7fad990cc7")
 		)
@@ -2032,6 +2059,33 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "EMK107BBJ106MA-T"
+			(at 88.9 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Taiyo Yuden"
+			(at 88.9 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "587-3238-1-ND"
+			(at 88.9 63.5 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "33368bc6-258f-4857-8e82-297f9d443866")
 		)
@@ -2227,7 +2281,7 @@
 				(hide yes)
 			)
 		)
-		(property "MPN" "AT42QT1070-SSU"
+		(property "MPN" "AT42QT1070-SSUR"
 			(at 132.08 91.44 0)
 			(effects
 				(font
@@ -2236,7 +2290,7 @@
 				(hide yes)
 			)
 		)
-		(property "Manufacturer" "Microchip"
+		(property "Manufacturer" "Microchip Technology"
 			(at 132.08 91.44 0)
 			(effects
 				(font
@@ -2246,6 +2300,15 @@
 			)
 		)
 		(property "Note" "comms (I2C) mode: MODE tied to GND; I2C 0x1B; RESET, CHANGE, KEY4-6 open (datasheet table 1-1)"
+			(at 132.08 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "none - from Daniel's stock (D56)"
 			(at 132.08 91.44 0)
 			(effects
 				(font
@@ -2721,6 +2784,33 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "RC0603FR-074K7L"
+			(at 180.34 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 180.34 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "311-4.70KHRCT-ND"
+			(at 180.34 76.2 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "6801f96f-8a79-4cd9-9864-afde7ef26b25")
 		)
@@ -2921,6 +3011,33 @@
 			)
 		)
 		(property "Note" "key series R (datasheet 3.1: ESD/RFI), next to U1"
+			(at 180.34 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-074K7L"
+			(at 180.34 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 180.34 88.9 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "311-4.70KHRCT-ND"
 			(at 180.34 88.9 0)
 			(effects
 				(font
@@ -3137,6 +3254,33 @@
 				(hide yes)
 			)
 		)
+		(property "MPN" "RC0603FR-074K7L"
+			(at 180.34 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 180.34 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "311-4.70KHRCT-ND"
+			(at 180.34 101.6 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "3ab148d5-ca2a-4ed8-826b-cd2ec78ea0dd")
 		)
@@ -3337,6 +3481,33 @@
 			)
 		)
 		(property "Note" "key series R (datasheet 3.1: ESD/RFI), next to U1"
+			(at 180.34 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "MPN" "RC0603FR-074K7L"
+			(at 180.34 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 180.34 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "DigiKey" "311-4.70KHRCT-ND"
 			(at 180.34 114.3 0)
 			(effects
 				(font

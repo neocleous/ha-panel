@@ -5,7 +5,7 @@
 LINES = [
  # --- main board ---
  ('C_1u50_0805',  'C1, C10',                    '1 µF 50 V X7R 0805',                 2, 4,  ['GRM21BR71H105KA12L','C2012X7R1H105K125AB','C0805C105K5RACTU','UMK212B7105KG-T']),
- ('C_100n50_0603','C2, C4, C9, C100, C121; strip C2, C3 ×2', '100 nF 50 V X7R 0603', 9, 14, ['CC0603KRX7R9BB104']),
+ ('C_100n50_0603','C2, C4, C9, C100, C121; strip C2, C3 ×2; touch C1', '100 nF 50 V X7R 0603', 10, 14, ['CC0603KRX7R9BB104']),
  ('C_47n50_0603', 'C3',                         '47 nF 50 V X7R 0603',                1, 10,  ['CL10B473KB8NNNC']),
  ('C_120u63',     'C5, C6',                     '120 µF 63 V radial Ø10 (EEU-FR1J121B)', 2, 2, ['P15289CT-ND']),
  ('C_22u35_THT',  'C7',                         '22 µF 35 V radial Ø5 (860160572003)', 1, 2, ['732-9541-1-ND']),
@@ -38,13 +38,13 @@ LINES = [
  ('R_100k',       'R6, R13, R17, R18, R100, R102–R105; strip R2 ×2', '100 kΩ 1 % 0603', 11, 17, ['RC0603FR-07100KL']),
  ('R_0R',         'R7, R14–R16, R26; strip R5 ×2; options R20–R25, R27', '0 Ω 0603', 7, 20, ['RC0603JR-070RL']),
  ('R_2R2',        'R12',                        '2.2 Ω 1 % 0805',                     1, 2,  ['RC0805FR-072R2L']),
- ('R_4k7',        'R19',                        '4.7 kΩ 1 % 0603',                    1, 2,  ['RC0603FR-074K7L']),
+ ('R_4k7',        'R19; touch R1–R4',           '4.7 kΩ 1 % 0603',                    5, 10,  ['RC0603FR-074K7L']),
  ('R_150k',       'R101',                       '150 kΩ 1 % 0603',                    1, 2,  ['RC0603FR-07150KL']),
  ('U1',           'U1',                         'TI TPS16630PWPT eFuse',              1, 2,  ['296-TPS16630PWPTCT-ND']),
  ('U2',           'U2',                         'TI TPS70933DBVR LDO',                1, 2,  ['TPS70933DBVR']),
  ('U100',         'U100',                       'TI TAS5756MDCAR amplifier',          1, 2,  ['296-40565-1-ND']),
  # --- mic strip (×2) ---
- ('S_C10u',       'strip C1 ×2',                '10 µF 10 V X5R 0603',                2, 10,  ['CL10A106KP8NNNC','CC0603MRX5R6BB106','GRM188R61A106KAALD','C1608X5R1A106K080AC']),
+ ('S_C10u',       'strip C1 ×2; touch C2',      '10 µF 10 V X5R 0603',                3, 10,  ['CL10A106KP8NNNC','CC0603MRX5R6BB106','GRM188R61A106KAALD','C1608X5R1A106K080AC']),
  ('S_TPD',        'strip D1–D3 ×2',             'TI TPD1E05U06DYAR ESD, SOD-523',     6, 9,  ['TPD1E05U06DYAR']),
  ('S_MK1',        'strip MK1 ×2',               'Infineon IM69D120V01XTSA1',          2, 4,  ['IM69D120V01XTSA1CT-ND']),
  ('S_U1',         'strip U1 ×2',                'TI SN74LVC1G17DCKR',                 2, 10,  ['296-11934-1-ND']),

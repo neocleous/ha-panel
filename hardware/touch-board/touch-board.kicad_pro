@@ -222,13 +222,16 @@
     "viewports": []
   },
   "boards": [],
+  "cvpcb": {
+    "equivalence_files": []
+  },
   "libraries": {
     "pinned_footprint_libs": [],
     "pinned_symbol_libs": []
   },
   "meta": {
     "filename": "touch-board.kicad_pro",
-    "version": 1
+    "version": 3
   },
   "net_settings": {
     "classes": [

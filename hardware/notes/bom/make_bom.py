@@ -37,7 +37,9 @@ FOOTER = """
 - **LK1** (Pi-branch wire link): tinned copper wire ≤ 1.15 mm into the Ø1.3 holes, e.g. a 1.0 mm² solid core. Owned stock is assumed.
 - **R8, R9** (NID trim network): DNP. Values come from the bench only if the 5.1 V option is needed (V20).
 - **R20–R25, R27** (D4a and amplifier options): DNP. They are covered by the 25 × 0 Ω on the 0 Ω line.
-- **Test pads, J3, J4, J7, J10:** bare pads. Nothing to buy.
+- **Test pads, J3, J4, J7:** bare pads. Nothing to buy.
+- **Touch board rev D, U1 AT42QT1070:** from Daniel's stock (D56; 10 × AT42QT1070-SSUR bought 2026-03-13 and 2026-07-26). Its passives sit on the 100 nF, 4.7 kΩ and 10 µF 0603 lines above. Their needs are raised; their quantities are unchanged, because the basket is frozen (D51) and each line still meets the spares rule.
+- **J10 (D59, plugged):** one 2 × 4 male pin header (2.54) and two 1 × 4 Dupont female housings. They are not in the frozen basket; order prep (AliExpress) or Daniel's stock (`../harness.md`).
 
 ## Removed from order list rev 4 §2.2 (provisional lines)
 - **0402 parts, replaced by the 0603 parts above:**
@@ -89,7 +91,7 @@ def fmt_need(n):
 
 total = sum(round(r['ext'], 2) for r in rows if r['ext'] is not None)   # DigiKey rounds each line
 md = ['# DigiKey BOM — main board, mic strips, harness (block 3, %s)' % DATE, '',
-      'Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9.1 and 10.1). Prices are DigiKey CH, CHF excl. VAT, '
+      'Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9.1 and 10.1, touch board rev D). Prices are DigiKey CH, CHF excl. VAT, '
       'cut tape at the quantity bought, seen %s; stock as shown the same day. Build: one main board and two strips. '
       'Spares (Daniel, 2026-11-08): at least 3 for 0603 and smaller parts (SC-70 and SOD-523 included), at least 2 for 0805 and 1206 '
       'and for the MEMS mic, 1 for larger parts and ICs; the next price break is taken where it costs CHF 0.40 or less more. '

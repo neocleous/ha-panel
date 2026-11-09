@@ -1,6 +1,6 @@
 # DigiKey BOM — main board, mic strips, harness (block 3, 2026-11-08)
 
-Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9.1 and 10.1). Prices are DigiKey CH, CHF excl. VAT, cut tape at the quantity bought, seen 2026-11-08; stock as shown the same day. Build: one main board and two strips. Spares (Daniel, 2026-11-08): at least 3 for 0603 and smaller parts (SC-70 and SOD-523 included), at least 2 for 0805 and 1206 and for the MEMS mic, 1 for larger parts and ICs; the next price break is taken where it costs CHF 0.40 or less more. L1 and C5/C6 have no spare (large, robust).
+Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9.1 and 10.1, touch board rev D). Prices are DigiKey CH, CHF excl. VAT, cut tape at the quantity bought, seen 2026-11-08; stock as shown the same day. Build: one main board and two strips. Spares (Daniel, 2026-11-08): at least 3 for 0603 and smaller parts (SC-70 and SOD-523 included), at least 2 for 0805 and 1206 and for the MEMS mic, 1 for larger parts and ICs; the next price break is taken where it costs CHF 0.40 or less more. L1 and C5/C6 have no spare (large, robust).
 
 **Total: CHF 176.11 excl. VAT** (55 lines; CHF 190.37 incl. 8.1 % VAT). The DigiKey quick-add list is `digikey-bom.csv`.
 
@@ -10,7 +10,7 @@ Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9
 | Refs | Part | DigiKey | Need | Buy | Unit | Ext | Stock | Note |
 |---|---|---|---|---|---|---|---|---|
 | C1, C10 | KYOCERA AVX 08055C105KAT2A — 1UF 50V X7R 0805 | [478-KGM21AR71H105KUCT-ND](https://www.digikey.ch/en/products/result?keywords=478-KGM21AR71H105KUCT-ND) | 2 | 4 | 0.650 | 2.60 | 101'175 | Samsung, Yageo, TDK, Taiyo Yuden 1 µF 50 V 0805 at 0 stock |
-| C2, C4, C9, C100, C121; strip C2, C3 ×2 | Yageo CC0603KRX7R9BB104 — 0.1UF 50V X7R 0603 | [311-1344-1-ND](https://www.digikey.ch/en/products/detail/yageo/CC0603KRX7R9BB104/2103082) | 9 | 14 | 0.066 | 0.92 | 3'588'632 | Samsung CL10B104KB8NNNC at 0 stock (61 wk) |
+| C2, C4, C9, C100, C121; strip C2, C3 ×2; touch C1 | Yageo CC0603KRX7R9BB104 — 0.1UF 50V X7R 0603 | [311-1344-1-ND](https://www.digikey.ch/en/products/detail/yageo/CC0603KRX7R9BB104/2103082) | 10 | 14 | 0.066 | 0.92 | 3'588'632 | Samsung CL10B104KB8NNNC at 0 stock (61 wk) |
 | C3 | Samsung CL10B473KB8NNNC — 0.047UF 50V X7R 0603 | [1276-1063-1-ND](https://www.digikey.ch/en/products/result?keywords=1276-1063-1-ND) | 1 | 10 | 0.031 | 0.31 | 768'520 |  |
 | C5, C6 | Panasonic EEU-FR1J121B — CAP ALUM 120UF 20% 63V RADIAL TH | [P15289CT-ND](https://www.digikey.ch/en/products/detail/panasonic-industry/EEU-FR1J121B/3072306) | 2 | 2 | 0.960 | 1.92 | 146 |  |
 | C7 | Würth 860160572003 — CAP ALUM 22UF 20% 35V RADIAL TH | [732-9541-1-ND](https://www.digikey.ch/en/products/detail/w%C3%BCrth-elektronik/860160572003/5727771) | 1 | 2 | 0.120 | 0.24 | 19'381 |  |
@@ -43,7 +43,7 @@ Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9
 | R6, R13, R17, R18, R100, R102–R105; strip R2 ×2 | Stackpole RMCF0603FT100K — RES 100K OHM 1% 1/10W 0603 | [RMCF0603FT100KCT-ND](https://www.digikey.ch/en/products/result?keywords=RMCF0603FT100KCT-ND) | 11 | 25 | 0.013 | 0.33 | 802'912 | Yageo RC0603FR-07100KL at 0 stock |
 | R7, R14–R16, R26; strip R5 ×2; options R20–R25, R27 | Yageo RC0603JR-070RL — RES 0 OHM JUMPER 1/10W 0603 | [311-0.0GRCT-ND](https://www.digikey.ch/en/products/result?keywords=311-0.0GRCT-ND) | 7 | 25 | 0.009 | 0.23 | 7'930'327 | includes the 7 DNP option links |
 | R12 | Stackpole RMCF0805FT2R20 — RES 2.2 OHM 1% 1/8W 0805 | [RMCF0805FT2R20CT-ND](https://www.digikey.ch/en/products/result?keywords=RMCF0805FT2R20CT-ND) | 1 | 10 | 0.026 | 0.26 | 69'544 | Yageo RC0805FR-072R2L at 0 stock |
-| R19 | Yageo RC0603FR-074K7L — RES 4.7K OHM 1% 1/10W 0603 | [311-4.70KHRCT-ND](https://www.digikey.ch/en/products/result?keywords=311-4.70KHRCT-ND) | 1 | 10 | 0.023 | 0.23 | 3'300'117 |  |
+| R19; touch R1–R4 | Yageo RC0603FR-074K7L — RES 4.7K OHM 1% 1/10W 0603 | [311-4.70KHRCT-ND](https://www.digikey.ch/en/products/result?keywords=311-4.70KHRCT-ND) | 5 | 10 | 0.023 | 0.23 | 3'300'117 |  |
 | R101 | Yageo RC0603FR-07150KL — RES 150K OHM 1% 1/10W 0603 | [311-150KHRCT-ND](https://www.digikey.ch/en/products/result?keywords=311-150KHRCT-ND) | 1 | 10 | 0.023 | 0.23 | 123'027 |  |
 | U1 | TI TPS16630PWPT — IC ELECTRONIC FUSE 2% 20HTSSOP | [296-TPS16630PWPTCT-ND](https://www.digikey.ch/en/products/detail/texas-instruments/TPS16630PWPT/10715348) | 1 | 2 | 4.380 | 8.76 | 419 |  |
 | U2 | TI TPS70933QDBVRQ1 — IC REG LINEAR 3.3V 150MA SOT23-5 | [296-40931-1-ND](https://www.digikey.ch/en/products/result?keywords=296-40931-1-ND) | 1 | 2 | 1.730 | 3.46 | 14'034 | **substitute**: TPS70933DBVR at 0 stock (26 wk); the -Q1 version has the same DBV pinout and 2.7–30 V input (SLVSCE6D) |
@@ -53,7 +53,7 @@ Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9
 
 | Refs | Part | DigiKey | Need | Buy | Unit | Ext | Stock | Note |
 |---|---|---|---|---|---|---|---|---|
-| strip C1 ×2 | Taiyo Yuden EMK107BBJ106MA-T — 10UF 16V X5R 0603 | [587-3238-1-ND](https://www.digikey.ch/en/products/result?keywords=587-3238-1-ND) | 2 | 10 | 0.153 | 1.53 | 258'433 | 16 V instead of 10 V; every 10 µF 6.3–10 V 0603 checked is at 0 stock |
+| strip C1 ×2; touch C2 | Taiyo Yuden EMK107BBJ106MA-T — 10UF 16V X5R 0603 | [587-3238-1-ND](https://www.digikey.ch/en/products/result?keywords=587-3238-1-ND) | 3 | 10 | 0.153 | 1.53 | 258'433 | 16 V instead of 10 V; every 10 µF 6.3–10 V 0603 checked is at 0 stock |
 | strip D1–D3 ×2 | TI ESD321DYAR — TVS DIODE 3.6VWM 6.3VC SOT5X3 | [296-ESD321DYARCT-ND](https://www.digikey.ch/en/products/detail/texas-instruments/ESD321DYAR/17394968) | 6 | 10 | 0.391 | 3.91 | 238'921 | decision 10.1 (Daniel 2026-11-08): replaces TPD1E05U06DYAR (0 stock, 26 wk). 0.9 pF, 3.6 V VRWM; DYA pin 1 = GND, so the footprints are turned 180° |
 | strip MK1 ×2 | Infineon IM69D120V01XTSA1 — MIC MEMS DIGITAL PDM OMNI -26DB | [IM69D120V01XTSA1CT-ND](https://www.digikey.ch/en/products/result?keywords=IM69D120V01XTSA1CT-ND) | 2 | 4 | 2.150 | 8.60 | 4'464 |  |
 | strip U1 ×2 | TI SN74LVC1G17DCKR — IC BUFF 1.65V SC-70-5 | [296-11934-1-ND](https://www.digikey.ch/en/products/detail/texas-instruments/SN74LVC1G17DCKR/389053) | 2 | 10 | 0.147 | 1.47 | 166'385 |  |
@@ -89,7 +89,9 @@ Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9
 - **LK1** (Pi-branch wire link): tinned copper wire ≤ 1.15 mm into the Ø1.3 holes, e.g. a 1.0 mm² solid core. Owned stock is assumed.
 - **R8, R9** (NID trim network): DNP. Values come from the bench only if the 5.1 V option is needed (V20).
 - **R20–R25, R27** (D4a and amplifier options): DNP. They are covered by the 25 × 0 Ω on the 0 Ω line.
-- **Test pads, J3, J4, J7, J10:** bare pads. Nothing to buy.
+- **Test pads, J3, J4, J7:** bare pads. Nothing to buy.
+- **Touch board rev D, U1 AT42QT1070:** from Daniel's stock (D56; 10 × AT42QT1070-SSUR bought 2026-03-13 and 2026-07-26). Its passives sit on the 100 nF, 4.7 kΩ and 10 µF 0603 lines above. Their needs are raised; their quantities are unchanged, because the basket is frozen (D51) and each line still meets the spares rule.
+- **J10 (D59, plugged):** one 2 × 4 male pin header (2.54) and two 1 × 4 Dupont female housings. They are not in the frozen basket; order prep (AliExpress) or Daniel's stock (`../harness.md`).
 
 ## Removed from order list rev 4 §2.2 (provisional lines)
 - **0402 parts, replaced by the 0603 parts above:**

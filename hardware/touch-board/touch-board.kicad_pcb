@@ -96,7 +96,7 @@
 	(net 15 "unconnected-(U1-OUT2{slash}KEY6-Pad7)")
 	(net 16 "unconnected-(U1-~{CHANGE}{slash}OUT4-Pad5)")
 	(net 17 "unconnected-(U1-~{RESET}-Pad4)")
-	(footprint "TouchElectrode_16x16mm_R2"
+	(footprint "ha_panel:TouchElectrode_16x16mm_R2"
 		(layer "F.Cu")
 		(uuid "62980bfd-0fdf-435c-9d77-beaf80c346a2")
 		(at 81 31)
@@ -183,7 +183,7 @@
 		)
 		(embedded_fonts no)
 	)
-	(footprint "TouchElectrode_16x16mm_R2"
+	(footprint "ha_panel:TouchElectrode_16x16mm_R2"
 		(layer "F.Cu")
 		(uuid "632fd89d-ad4b-453a-a272-3ea72d3c68e9")
 		(at 57 31)
@@ -270,7 +270,7 @@
 		)
 		(embedded_fonts no)
 	)
-	(footprint "TouchElectrode_16x16mm_R2"
+	(footprint "ha_panel:TouchElectrode_16x16mm_R2"
 		(layer "F.Cu")
 		(uuid "c855c9fd-70df-4522-b247-e8f1a9aa2cdf")
 		(at 33 31)
@@ -357,7 +357,7 @@
 		)
 		(embedded_fonts no)
 	)
-	(footprint "TouchElectrode_16x16mm_R2"
+	(footprint "ha_panel:TouchElectrode_16x16mm_R2"
 		(layer "F.Cu")
 		(uuid "de484e1e-6eb6-491e-8914-687872956f16")
 		(at 9 31)
@@ -444,7 +444,7 @@
 		)
 		(embedded_fonts no)
 	)
-	(footprint "R_0603_1608Metric"
+	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "B.Cu")
 		(uuid "0db7c16c-a6c2-49dc-b851-08ef19bb67a5")
 		(at 39 20.5 -90)
@@ -585,7 +585,7 @@
 			)
 		)
 	)
-	(footprint "C_0603_1608Metric"
+	(footprint "Capacitor_SMD:C_0603_1608Metric"
 		(layer "B.Cu")
 		(uuid "1a6e442f-931e-4785-9679-06ef75584548")
 		(at 39.6 14 -90)
@@ -726,7 +726,7 @@
 			)
 		)
 	)
-	(footprint "R_0603_1608Metric"
+	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "B.Cu")
 		(uuid "1d18138b-3167-42d5-83d5-0971b97f480d")
 		(at 42.5 20.5 -90)
@@ -867,7 +867,7 @@
 			)
 		)
 	)
-	(footprint "R_0603_1608Metric"
+	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "B.Cu")
 		(uuid "49403619-02cc-4610-a1bb-0683fbdac5b1")
 		(at 46 20.5 -90)
@@ -1008,7 +1008,7 @@
 			)
 		)
 	)
-	(footprint "R_0603_1608Metric"
+	(footprint "Resistor_SMD:R_0603_1608Metric"
 		(layer "B.Cu")
 		(uuid "93a5279b-3215-43da-a775-c76b8b4228c8")
 		(at 49.5 20.5 -90)
@@ -1149,7 +1149,7 @@
 			)
 		)
 	)
-	(footprint "SOIC-14_3.9x8.7mm_P1.27mm"
+	(footprint "Package_SO:SOIC-14_3.9x8.7mm_P1.27mm"
 		(layer "B.Cu")
 		(uuid "b250ff60-191e-4f2c-96a4-0b7a0a22e989")
 		(at 45 14 -90)
@@ -1548,7 +1548,7 @@
 			)
 		)
 	)
-	(footprint "WirePads_1x04_P3.50mm_2.0x3.0mm"
+	(footprint "ha_panel:WirePads_1x04_P3.50mm_2.0x3.0mm"
 		(layer "B.Cu")
 		(uuid "c2f0326a-e1bc-4ec0-bfc1-4cb7401a6add")
 		(at 38.25 4.2 180)
@@ -1663,7 +1663,7 @@
 		)
 		(embedded_fonts no)
 	)
-	(footprint "C_0603_1608Metric"
+	(footprint "Capacitor_SMD:C_0603_1608Metric"
 		(layer "B.Cu")
 		(uuid "d7cb6cc4-d72c-4322-b8c1-c594e37d835d")
 		(at 37.8 14 -90)

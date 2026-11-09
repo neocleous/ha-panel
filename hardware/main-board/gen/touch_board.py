@@ -62,6 +62,8 @@ def design(prj):
 
 
 def build(out):
+    import json
+    kg.EXTRA_FIELDS = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'bom_fields_touch.json')))  # block 3 purchase fields
     lib_path = os.path.join(out, 'lib', 'ha_panel.kicad_sym')
     lib_ha_panel.build(lib_path, which=('electrode',))
     prj = kg.Project('touch-board', out, 'HA panel touch board rev D', DATE, 'D', 'HA panel (neocleous/ha-panel)',

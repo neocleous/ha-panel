@@ -1,0 +1,37 @@
+{
+ "U1": {
+  "MPN": "AT42QT1070-SSUR",
+  "Manufacturer": "Microchip Technology",
+  "DigiKey": "none - from Daniel's stock (D56)"
+ },
+ "C1": {
+  "MPN": "CC0603KRX7R9BB104",
+  "Manufacturer": "Yageo",
+  "DigiKey": "311-1344-1-ND"
+ },
+ "C2": {
+  "MPN": "EMK107BBJ106MA-T",
+  "Manufacturer": "Taiyo Yuden",
+  "DigiKey": "587-3238-1-ND"
+ },
+ "R1": {
+  "MPN": "RC0603FR-074K7L",
+  "Manufacturer": "Yageo",
+  "DigiKey": "311-4.70KHRCT-ND"
+ },
+ "R2": {
+  "MPN": "RC0603FR-074K7L",
+  "Manufacturer": "Yageo",
+  "DigiKey": "311-4.70KHRCT-ND"
+ },
+ "R3": {
+  "MPN": "RC0603FR-074K7L",
+  "Manufacturer": "Yageo",
+  "DigiKey": "311-4.70KHRCT-ND"
+ },
+ "R4": {
+  "MPN": "RC0603FR-074K7L",
+  "Manufacturer": "Yageo",
+  "DigiKey": "311-4.70KHRCT-ND"
+ }
+}
