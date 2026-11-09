@@ -256,6 +256,11 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `board_zone/offline/lead_vox.py`, `lead_route.py` | e | V23b routing offline: 0.5 mm z-column voxels of the e5b meshes (main board rev 2.1's front parts as courtyard × MAIN_env-height boxes instead of MAIN_front_env, the old sensor leads left out), distance field, minimum-cost path (cost 1 + 3 · max(0, 6 − distance), voxels nearer than 4.0 closed, a box in front of J10 reopened to 2.3), pulled into a polyline; runs in `board_zone/RUNS.md` | BME680 bo → (−43.25, −35.75, 96.75) → (−18.42, −50, 77.5); VEML6030 (0, −39.7, 165) → (−20.97, −50, 77.5), straight (the router's 1 mm dogleg at the end dropped) |
 | `v5f_e5c_lead_checks.py` | e | read-only: both routes as temporary Ø3 tubes (sensor ends as d12a and c2c / d8b, 13.4 straight stubs into J10) against every current body and the main board's front parts near J10 (boxes): intersection, and the tube grown by 1.0 / 2.0; the old leads as the control for the sensor-end contacts | see the e5 checkpoint |
 | `v5f_e5d_leads.py`, `v5f_e5e_save.py`, `v5f_e5f_verify.py` | e | the new leads added (old → `LEAD_BME680_e5`, `LEAD_VEML_e5`, hidden), each measured against every body within 10 mm; version 41 and f3d; version, bodies and file verified without activation. Loaded with a no-op `run()` after the exec (lesson 86) | LEAD_BME680 0.6381, LEAD_VEML 0.8101 cm³; version 41; f3d 93.4 MB |
+| `v5f_e6a_magnet_probe.py`, `v5f_e6a2_magnet_probe.py` | e | read-only, V24: per magnet station the door pocket's Ø8.3 axis and, along lines parallel to it (containment on local crops, bisected to 0.002), the door and front runs – floor, skin, lap gap, pad skin, lip pocket, rim heights at r 4.45. e6a passed x_rel to `Dw` and ran 2.55 off in x (void, lesson 88); e6a2 is the run | skin 0.90 (0.90–1.02 across the floor), lap 0.20, pad skin 0.50, faces 1.60 apart; door pockets 1.39–1.58 to the outer surface (a 1.5 magnet up to 0.11 proud); n_y −0.74…−0.94 |
+| `v5f_e6b_door_pockets.py` | e | the door's 10 pockets 0.45 deeper (Ø8.3 tool from 0.45 below each floor to 0.05 into the pocket) on a TemporaryBRep copy; gates: each tool removes exactly π · 4.15² · 0.45 = 24.35 mm³ of material, one lump, 7 probes per pocket; old door → `HOUSING_F_door_e6` (hidden) | door 47.2633 → 47.0198 cm³, removed 243.55 mm³ (243.48 analytic), 403 faces as before |
+| `v5f_e6c_magnet_checks.py` | e | read-only: per pocket the new skin (axis, r 2.0 / 3.5 / 4.0), the depth to the outer surface at r 4.45 × 8, lap gap, pad skin, lip pocket; magnets as solids (door Ø8 × 2 on the new floor, lip Ø8 × 1 on the lip floor) against every current body and grown 0.5; KO lanes and every body against the new and the old door | see the e6 checkpoint |
+| `v5f_e6_magnet_pull.py` | e | offline: disc-magnet pull, surface-charge model (R1's: reproduces 3.8 / 4.1 N at 1.4), and the door's pull-off force from the measured wall normals | the V24 table in the e6 checkpoint |
+| `v5f_e6d_save_export.py`, `v5f_e6e_verify.py` | e | version 42, f3d, the door STEP (d7d method) read back; version, bodies and files verified without activation | STEP read back 47.0138 cm³ (body 47.0198), one lump, 10 Ø8.3 pockets; version 42 |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -484,6 +489,9 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     the next one.
 87. `measureMinimumDistance` takes no TemporaryBRep body (only planes and points as temporaries). Before adding a body,
     grade its clearance with grown copies (Ø + 2 × 1.0, Ø + 2 × 2.0 against every body); measure exactly after adding it.
+88. `Dw()` and `Ctx.wbox()` take design x (x_rel + XC). A probe that builds world points from x_rel must add XC, or work
+    in design coordinates straight from the face geometry. e6a missed it: its lines ran 2.55 off in x and read the
+    magnet pockets as cut by the door's edge. The tell: lines inside the pocket's radius met the door above its floor.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -1161,3 +1169,37 @@ Architect 2026-11-09 (log 2026-11-08, D55): V23b, V26 and V27 in one step; no ot
   (0.1 × (1 + 2 × 5.5 / 18.5)); the Ø0.8 stays inside the Ø1.5 up to 0.35. The model's strip envelope is 29 long, the
   fab board 28 (1.0 short at the inner end). Pass.
 - Answer: `claude/brief-architect-update-2026-11-09.md`.
+
+## Lip magnets (V24) – e6 (2026-11-09)
+Daniel 2026-11-09 (order prep's brief `claude/brief-enclosure-magnets-2026-11-09.md`): the designed N52 Ø8 × 1.5 isn't
+stocked; change rev F to sizes AliExpress has (N52 Ø8 × 1 / × 2, NeoMag Store 1005012854525849) and decide.
+- Version 42 "rev F WIP 2026-11-09 e6 …"; `~/Documents/HA Panel v5 - tapered revF-e6.f3d` (93.9 MB); door STEP re-exported
+  (`~/Documents/HA_v5f_door.step`, read back 47.0138 cm³, one lump, 10 pockets). Old door hidden as `HOUSING_F_door_e6`.
+- **Choice: door N52 Ø8 × 2, lip N52 Ø8 × 1 (10 each).** Pull per pair (surface-charge model of R1, which reproduces R1's
+  3.8–4.1 N at 1.4; Br 1.42–1.48 T; ideal, real magnets lower), and the pull-off force of the door (Σ pull × |n_y|, the
+  wall normals point 0.74–0.94 back along the door's way off):
+
+  | Magnets (door + lip) | Faces apart | Per pair | vs designed | Door pull-off | Model change |
+  |---|---|---|---|---|---|
+  | 1.5 + 1.5 (designed) | 1.60 | 3.40–3.69 N | 100 % | 29–31 N | – |
+  | **2 + 1 (chosen)** | 1.15 | 3.94–4.28 N | 116 % | 33–36 N | door pockets 0.45 deeper |
+  | 2 + 2 (brief, option 1) | 1.15 | 6.24–6.77 N | 184 % | 52–57 N | door as above + lip pads 0.5 into the cavity, or the lip magnets 0.4 proud |
+  | 1 + 1 (brief, option 2) | 1.60 | 1.91–2.08 N | 56 % | 16–17 N | none, but a 0.4–0.6 hollow under the cloth at each door pocket |
+
+  The door pockets open on the cloth side, so a thicker door magnet can only go deeper toward the lap: 2 mm there closes
+  the gap to 1.15 whatever the lip carries. With 2 mm on both sides the door would need nearly twice today's pull to come
+  off; with 1 mm on both it keeps a hollow under the cloth and 56 %.
+- **Door (e6b):** the 10 pocket floors 0.45 deeper (s +0.2 → −0.25 from INNER_E). Skin to the lap 0.45 on the axis
+  (0.45–0.57 across the floor; was 0.90), pocket 1.84–2.03 to the outer surface, so the 2 mm magnet stands at most 0.17
+  proud under the cloth at the top stations (0.10 at z 25 / 60; the 1.5 one stood up to 0.11). Removed 243.55 mm³ =
+  10 × 24.35 analytic; door 47.2633 → 47.0198 cm³, one lump.
+- **Lip:** unchanged. Pockets Ø8.3, 1.60 deep behind a 0.50 skin, open to the cavity: the 1 mm magnet sits on the skin with
+  0.6 for the CA.
+- **Checks (e6c):** lap gap 0.20, faces 1.15 apart at all 10. Magnets as solids against every current body: 0 (lip floors
+  0.05 mm³ each, the seat); grown 0.5, only their own part. KO_K5_* and KO_capkey_* ∩ door unchanged (103.26 … 211.18 mm³,
+  the lanes used with the door off); every other body ∩ door unchanged. Only material came off the door, so its sweeps
+  stand.
+- Print: the door keeps its blockers in the 10 pockets (print audit F4).
+- Polarity (audit S.5): every door magnet with the same pole toward the cavity; each lip magnet checked against a spare door
+  magnet before the CA.
+- Answer: `claude/architect-log-2026-11-09.md` Part C (V24).
