@@ -277,6 +277,8 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `floor_plate/fusion/v5f_g2d_key_paths.py` | g | read-only, the audit's method (`aud_common.Aud.line`) with the 2.0 key (2.4 × 101 + swing Ø34.4), the 2.5 key and the screwdriver; `GROUP` = cap / box / under / clip / bench / inplace → `step1/g2d_<group>_status.json` |
 | `floor_plate/fusion/v5f_g2e_rim_probe.py`, `v5f_g2f0_appearances.py`, `v5f_g2f_rim_renders.py` | g | rim pictures (D74): the old cloth bodies cut at z 2.8 (0 mm³ against shell, cap, slab, plate, door), plate with and without the 0.7 skin; g2f builds temporary `RENDER_tmp_*` copies, takes 10 pictures from true eye points (zooms = narrow lens from the same eye), deletes the copies and restores visibility, style and camera (338 bodies before and after; nothing saved) → `~/Documents/HA_panel_renders/fp/rim/`, sheets in `step1/rim_*.png` |
 | `floor_plate/fusion/v5f_g3a_checks.py` | g | read-only, step 1 block 3: d17c's finger solid to the microSD (0 mm³), deflector zone of the right box against v42, intake field (475 holes, 1 483 mm²), chamber air by d14b's method (L 118.73 / 87.14, R 115.40 / 83.50 cm³; v42 control 117.68 / 86.08 and 118.05 / 86.16) |
+| `floor_plate/fusion/v5f_g4a_standard_screw.py` | g | block 4 (Daniel 2026-11-10 22:23: 1a, 2a, 3a), dry by default, `PART` small / shell: plate's two cradle posts to z 13.0 with Ø4.0 × 6.7 holes (old holes filled), cradle legs cut at z 13.0, eight driver pilots opened to Ø4.0 × 6.7 from the box face, inboard upper boss Ø7.0 → Ø7.5, four old Ø2.5 pilots in the shell filled; `APPLY` deletes the `AUD_*` templates and hides the old bodies as `<name>_v45` | plate 32 988.7 → 33 466.2 mm³, cradle 2 189.8 → 1 771.0, boxes 26 181.9 → 26 017.3 / 25 786.5 → 25 622.0, shell 201 703.2 → 201 762.1; each 1 lump |
+| `floor_plate/fusion/v5f_g4c_matrix.py`, `v5f_g4d_save_export.py` | g | read-only matrix of the five changed bodies against every current body, before and after (`TAG`), the shell as the boolean's tool; then the named version and the f3d | before = after: 11 non-zero pairs, all known; version 46, `revF-g1.f3d` 101.4 MB |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -543,6 +545,14 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
      a short cylinder behind the hole's end answers "blind?" (g2c).
 104. `measureMinimumDistance` cost is set by the bodies in range: 14 key lines against every body in the unit took 122 s,
      18 lines against the plate unit alone 8 s. Run in-place groups in their own call.
+105. In `booleanOperation(target, tool)` only the target is changed: keep one temporary copy of the big body as the tool and
+     copy the small one per pair. The shell against 84 bodies took 33 s (13 s per pair when the shell was copied each time).
+106. Raising a post: union one cylinder of the post's own radius over its full height (it also fills the old insert hole),
+     then cut the new hole. Coincident cylinder walls and the tangent line between two posts gave one clean lump. Filling a
+     blind hole in the shell: plug 0.1 larger in radius and 0.1 deeper, flush with the face (as e4b).
+107. Backups of this pass are `<name>_v45`; the backup pattern is now `(_v\d+|_[a-e]\d+[a-z0-9]*| \(\d+\))$` (g3a, g4c).
+108. A script that polls `dataFile.versionNumber` in a sleep loop right after `Document.save` did not return within the MCP
+     timeout and wrote nothing. A plain call three minutes later read the new version at once.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -1272,11 +1282,15 @@ and `…-block3-2026-11-10.md`; architect log 2026-11-10 (D71–D84). Scripts in
 - Superseded by `claude/brief-enclosure-step1-2026-11-10.md`: blocks 4–7 of the floor-plate brief.
 
 ## Step 1 – site, standard screw, rim, access (g, 2026-11-10)
-Brief `claude/brief-enclosure-step1-2026-11-10.md`. Read-only on version 45 so far (blocks 0–3); block 4 waits for Daniel's
-decisions. Project docs: `claude/main-board-site-2026-11-10.md`, `claude/report-enclosure-step1-block2-2026-11-10.md`,
+Brief `claude/brief-enclosure-step1-2026-11-10.md`. Blocks 0–3 read-only on version 45; block 4 applied Daniel's decisions
+(22:23: standard screw with the cradle and driver changes, touch clips without inserts, rim as built). Project docs: `claude/main-board-site-2026-11-10.md`, `claude/report-enclosure-step1-block2-2026-11-10.md`,
 `claude/report-enclosure-step1-block3-2026-11-10.md`. Data in `floor_plate/site/` (block 1) and `floor_plate/step1/`.
 - Screwed joints into printed parts (g2b): door 4, cap 4, box floors 4, box tops 2, touch clips 2, cradle 2, drivers 8 = 26.
   Proposed standard: ISO 7380-1 M3 × 8 button head, Ruthex M3 × 5.7, 2.0 mm ball-end key.
+- **Version 46 (g1), 2026-11-10:** "rev F WIP 2026-11-10 g1: one standard screw (M3 x 8 button head, Ruthex M3 x 5.7) …";
+  archive `~/Documents/HA Panel v5 - tapered revF-g1.f3d`. Changed: `FLOOR_PLATE`, `CRADLE_5807`, `SPKBOX_L`, `SPKBOX_R`,
+  `HOUSING_F_front` (old states hidden as `*_v45`); 336 bodies, no `AUD_*`. Cap, touch clips and the plate's rim unchanged.
+  Chambers after: L 118.70 / 87.11, R 115.37 / 83.47 cm³, sealed. Report `claude/report-enclosure-step1-2026-11-10.md`.
 - Found: the box-top screws cannot be driven straight (the lip beside the door opening is 0.7 inside the 2.0 key's path at
   52 mm); the ball end 6–14° inboard is free (+2.3). Unused Ø2.5 pilots of the old box screws remain in the shell at
   (±52.75, z 10.25 / 45.75), y 2.0–5.0, behind the head pockets.
