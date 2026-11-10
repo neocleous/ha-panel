@@ -281,6 +281,9 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `floor_plate/fusion/v5f_g4c_matrix.py`, `v5f_g4d_save_export.py` | g | read-only matrix of the five changed bodies against every current body, before and after (`TAG`), the shell as the boolean's tool; then the named version and the f3d | before = after: 11 non-zero pairs, all known; version 46, `revF-g1.f3d` 101.4 MB |
 | `floor_plate/fusion/v5f_g5a_post_zones.py` | g | read-only: where Ø8 posts for the main board (standard M3 screw, Daniel 2026-11-10 22:45) can stand between carrier and board, test cylinders on a grid; `WITH_LEADS` counts the leads behind the board as obstacles | bottom band v −25.25 ± 0.2, top band v +18.0…+25.5; site document issue 2 |
 | `floor_plate/fusion/v5f_g5b_roof_rim_probe.py`, `v5f_g5c_roof_free_space.py` | g | read-only, for two proposals: the version-42 raised roof of the right box against the box-top screw's key path (1.95 of 3.38 cm³ can come back) and the free column above the present roof (6.9 cm³ envelope); needle sections of plate, shell, cloth and door at the bottom edge, and what the plate carries under the shell's edge | `step1/roof_plan.png`, `step1/rim_section.png`; proposal `claude/proposal-enclosure-roof-cloth-edge-2026-11-10.md`; nothing built |
+| `floor_plate/fusion/v5f_g6a_roof.py` | g | right speaker box (Daniel 2026-11-10 23:07, option 1): new raised roof over the free area beside the box-top screw's key path – outer shape = the box's roof outline carried up to z 82, less every present body, less the shell in seven lift-in positions each with 0.3 play, less the key corridor (r 4.7) and the tab zone; walls 1.5 (shape moved 1.62 in eight directions and intersected), roof 1.5, old ceiling opened under it; dry by default | box 25 622.0 → 26 844.4 mm³, 1 lump; chamber 115.37 → 120.98 cm³ (lower bound 83.47 → 89.09), sealed; added material against every body and against the shell in ten lift-in positions 0 mm³ |
+| `floor_plate/fusion/v5f_g6b_plate_rim.py` | g | base plate ("the cloth wraps underneath"): rim's top lowered from z 2.5 to 1.8 in a band 3.0 wide inward from the outline (outline prism minus the prism moved 3.0 in 16 directions and intersected), chin rest pads shortened to y 1.9…3.3, the two rest pads near the back removed; dry by default; 110 s | plate 33 466.2 → 32 503.8 mm³, 1 lump; shell and door edges lowered 0.95 inside the cloth zone: 303.7 / 180.7 mm³ in the old plate, 0 in the new |
+| `floor_plate/fusion/v5f_g6d_save_export.py` | g | named version and f3d | version 47, `revF-g2.f3d` 162.5 MB |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -559,6 +562,13 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
      boxes; 280 needles through plate, cropped shell, door and cloth took 4 s (g5b).
 110. "Fusion unavailable" from the connector can be momentary (it came back within a minute after the save and export);
      check with a document query before re-running anything, and re-run only read-only scripts blind.
+111. A step script's module-level names share the namespace of the exec'd library: `H = (…)` for a point replaced the frame
+     constant H = 143.3 and `Wp` failed. Keep point names out of the library's (C, S, H, XC, FP, BT, P3, V3, K, W, Wp, Dp).
+112. Fixed-width walls and bands without an offset tool: move a copy of the solid by d in n directions and intersect the
+     copies (an erosion). The thinnest place is d·cos(π/n): 1.62 in 8 directions for a 1.5 wall, 3.0 in 16 for a 2.94 band.
+     Eroding the plate's outline prism in 16 directions took about 50 s; run it in the background and poll.
+113. Clearance without an offset tool: subtract the neighbour moved by the play (±x, ±y, ±z) as well as in place (g6a: the
+     shell in 7 positions × 7 plays, 49 differences in a few seconds on a cropped copy).
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -1298,6 +1308,11 @@ Brief `claude/brief-enclosure-step1-2026-11-10.md`. Blocks 0–3 read-only on ve
   archive `~/Documents/HA Panel v5 - tapered revF-g1.f3d`. Changed: `FLOOR_PLATE`, `CRADLE_5807`, `SPKBOX_L`, `SPKBOX_R`,
   `HOUSING_F_front` (old states hidden as `*_v45`); 336 bodies, no `AUD_*`. Cap, touch clips and the plate's rim unchanged.
   Chambers after: L 118.70 / 87.11, R 115.37 / 83.47 cm³, sealed. Report `claude/report-enclosure-step1-2026-11-10.md`.
+- **Version 47 (g2), 2026-11-10:** "rev F WIP 2026-11-10 g2: right speaker box roof raised beside the key path …; plate rim
+  lowered to z 1.8 …"; archive `~/Documents/HA Panel v5 - tapered revF-g2.f3d`. Changed: `SPKBOX_R` (roof to z 82 over
+  x_rel −93.5…−55.9, chamber 120.98 / 89.09 cm³) and `FLOOR_PLATE` (rim band, rest pads); old states hidden as `*_v46`;
+  338 bodies. Matrix of the five bodies against all: the same 11 pairs as in version 46. Key path to the right box-top screw
+  unchanged (+2.3 at 6–14° toward the middle). Report `claude/report-enclosure-roof-cloth-edge-2026-11-10.md`.
 - Found: the box-top screws cannot be driven straight (the lip beside the door opening is 0.7 inside the 2.0 key's path at
   52 mm); the ball end 6–14° inboard is free (+2.3). The unused Ø2.5 pilots of the old box screws in the shell at
   (±52.75, z 10.25 / 45.75), y 2.0–5.0, behind the head pockets, are filled in version 46.

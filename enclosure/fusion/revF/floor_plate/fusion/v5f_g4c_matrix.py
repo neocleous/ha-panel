@@ -8,7 +8,7 @@ LEGACY = ('DOOR_tray', 'HOUSING_E', 'HOUSING_shell', 'HOUSING_F_wip', 'AMP_env_2
           'HOUSING_F_front_d10_sliver', 'HOUSING_F_front_d12a_sliver1', 'LD2410C_env', 'MAIN_BRACKET_d1split_L', 'MAIN_BRACKET_d1split_R',
           'MAIN_BRACKET_d1split_plug', 'PD_trigger_env_20V', 'PI5_board', 'SPKBOX_L_r2', 'SPK_driver_D40', 'V11a_mx', 'V11a_px', 'V11a_up', 'V11b_mx',
           'V11b_px', 'V11b_up', 'V11c_straight', 'VOICEPE_back_env', 'VOICEPE_encoder_env', 'VOICEPE_pcb', 'BME680_env_revD', 'TOUCH_pcb_100x44')
-BACK = re.compile(r'(_v42|_v45|_[a-e]\d+[a-z0-9]*| \(\d+\))$')
+BACK = re.compile(r'(_v\d+|_[a-e]\d+[a-z0-9]*| \(\d+\))$')
 PRE = ('REF_', 'TOOL_', 'INNER', 'RENDER_', 'AUD_')
 TAG = globals().get('TAG', 'before'); PART = globals().get('PART', 'small')
 SMALL = ['FLOOR_PLATE', 'CRADLE_5807', 'SPKBOX_L', 'SPKBOX_R']
