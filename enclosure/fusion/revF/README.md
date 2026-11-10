@@ -272,6 +272,11 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `floor_plate/fusion/v5f_f2f_verify.py` | f | read-only: interference of changed bodies, lift-in sweep of the plate unit, floor remnants; version 43 |
 | `floor_plate/fusion/v5f_f3a_probe.py`, `v5f_f3b_notch_anchor.py`, `v5f_f3c_leads.py` | f | F3 notch beside the LCD opening, cable-tie anchor on the plate, all 15 leads as node lists; versions 44 / 45 |
 | `floor_plate/fusion/v5f_g1a_site_probe.py`, `v5f_g1b_reach.py` | g | read-only, step 1 block 1: key-path axes, depth maps to the door and the display side (rays, 5 mm grid), finger and pinch reach at 14 points; results in `floor_plate/site/` with the drawing `main_board_site.png` |
+| `floor_plate/fusion/v5f_g2a_names.py`, `v5f_g2b_holes.py` | g | read-only, step 1 block 2: document state and current body names; every hole r 0.7–3.4 of the printed parts grouped per axis (radius, axis, extent, coverage) → `floor_plate/step1/g2b_holes.json` – the list of screwed joints |
+| `floor_plate/fusion/v5f_g2c_joint_material.py`, `v5f_g2c2_clip_block.py` | g | read-only: solid fraction of a Ø4.0 insert hole's core, of a 1.6 / 2.0 wall round it and behind its end (touch-clip blocks, driver pilots); clip and block sections; cradle legs; feet's lowest point (z −2.9); button-head room under the cap pads |
+| `floor_plate/fusion/v5f_g2d_key_paths.py` | g | read-only, the audit's method (`aud_common.Aud.line`) with the 2.0 key (2.4 × 101 + swing Ø34.4), the 2.5 key and the screwdriver; `GROUP` = cap / box / under / clip / bench / inplace → `step1/g2d_<group>_status.json` |
+| `floor_plate/fusion/v5f_g2e_rim_probe.py`, `v5f_g2f0_appearances.py`, `v5f_g2f_rim_renders.py` | g | rim pictures (D74): the old cloth bodies cut at z 2.8 (0 mm³ against shell, cap, slab, plate, door), plate with and without the 0.7 skin; g2f builds temporary `RENDER_tmp_*` copies, takes 10 pictures from true eye points (zooms = narrow lens from the same eye), deletes the copies and restores visibility, style and camera (338 bodies before and after; nothing saved) → `~/Documents/HA_panel_renders/fp/rim/`, sheets in `step1/rim_*.png` |
+| `floor_plate/fusion/v5f_g3a_checks.py` | g | read-only, step 1 block 3: d17c's finger solid to the microSD (0 mm³), deflector zone of the right box against v42, intake field (475 holes, 1 483 mm²), chamber air by d14b's method (L 118.73 / 87.14, R 115.40 / 83.50 cm³; v42 control 117.68 / 86.08 and 118.05 / 86.16) |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -527,6 +532,17 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 99. `findBRepUsingRay` on this model costs up to 3.5 s per ray: the 414 × 2 rays of g1a took 981 s and blocked Fusion
     for 16 minutes. For maps use a coarse grid, or temporary-body booleans (a slab ∩ the body, read the bounding box),
     and split a ray scan over several calls.
+100. Pictures from a real eye point: `isFitView = False`, explicit `eye` / `target` / `upVector` (world z = design (0, S, C)) and
+     `perspectiveAngle`; a zoom is the same eye with a narrow angle (0.10 rad), not a nearer camera. Assign the camera twice
+     (lesson 54). Ten 1600 × 1200 pictures with 14 temporary bodies took 21 s (g2f).
+101. A texture-mapped appearance (cloth) shows the model's face boundaries as fine lines. Say so in the caption, or it reads
+     as a seam.
+102. `Aud.cur` (audit helper) lists hidden backups too: `LEAD_*_v42`, `LEAD_*_d12` answer as leads. Filter names with the
+     backup pattern before passing them to `present()` (g2d's first run reported old leads in a key path).
+103. "Is there a wall W round this hole?" = volume(tube r…r+W ∩ body) / volume(tube), one boolean per hole; the same with
+     a short cylinder behind the hole's end answers "blind?" (g2c).
+104. `measureMinimumDistance` cost is set by the bodies in range: 14 key lines against every body in the unit took 122 s,
+     18 lines against the plate unit alone 8 s. Run in-place groups in their own call.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -1254,3 +1270,13 @@ and `…-block3-2026-11-10.md`; architect log 2026-11-10 (D71–D84). Scripts in
 - Replaced bodies are hidden as `<name>_v42`. Known and to correct with the new board (D83): `MAIN_pcb` holes drawn Ø3.2
   (board Ø2.7, M2.5), carrier posts Ø7.0 against a Ø6.8 clear zone; the carrier's post holes are Ø4.0 × 6.5 (Ruthex M2.5).
 - Superseded by `claude/brief-enclosure-step1-2026-11-10.md`: blocks 4–7 of the floor-plate brief.
+
+## Step 1 – site, standard screw, rim, access (g, 2026-11-10)
+Brief `claude/brief-enclosure-step1-2026-11-10.md`. Read-only on version 45 so far (blocks 0–3); block 4 waits for Daniel's
+decisions. Project docs: `claude/main-board-site-2026-11-10.md`, `claude/report-enclosure-step1-block2-2026-11-10.md`,
+`claude/report-enclosure-step1-block3-2026-11-10.md`. Data in `floor_plate/site/` (block 1) and `floor_plate/step1/`.
+- Screwed joints into printed parts (g2b): door 4, cap 4, box floors 4, box tops 2, touch clips 2, cradle 2, drivers 8 = 26.
+  Proposed standard: ISO 7380-1 M3 × 8 button head, Ruthex M3 × 5.7, 2.0 mm ball-end key.
+- Found: the box-top screws cannot be driven straight (the lip beside the door opening is 0.7 inside the 2.0 key's path at
+  52 mm); the ball end 6–14° inboard is free (+2.3). Unused Ø2.5 pilots of the old box screws remain in the shell at
+  (±52.75, z 10.25 / 45.75), y 2.0–5.0, behind the head pockets.
