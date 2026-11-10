@@ -271,6 +271,7 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `floor_plate/fusion/v5f_f2e_mainboard_carrier.py` | f | main-board bodies in the new place, new carrier with posts, ReSpeaker 4 mm lower, bracket retired |
 | `floor_plate/fusion/v5f_f2f_verify.py` | f | read-only: interference of changed bodies, lift-in sweep of the plate unit, floor remnants; version 43 |
 | `floor_plate/fusion/v5f_f3a_probe.py`, `v5f_f3b_notch_anchor.py`, `v5f_f3c_leads.py` | f | F3 notch beside the LCD opening, cable-tie anchor on the plate, all 15 leads as node lists; versions 44 / 45 |
+| `floor_plate/fusion/v5f_g1a_site_probe.py`, `v5f_g1b_reach.py` | g | read-only, step 1 block 1: key-path axes, depth maps to the door and the display side (rays, 5 mm grid), finger and pinch reach at 14 points; results in `floor_plate/site/` with the drawing `main_board_site.png` |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -523,6 +524,9 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
     more than the probe.
 98. Build everything on temporary bodies, check, then swap (`retire` + `add`) at the end. A script that dies before its
     first model change leaves the model as it was (f2e's KeyError).
+99. `findBRepUsingRay` on this model costs up to 3.5 s per ray: the 414 × 2 rays of g1a took 981 s and blocked Fusion
+    for 16 minutes. For maps use a coarse grid, or temporary-body booleans (a slab ∩ the body, read the bounding box),
+    and split a ray scan over several calls.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
