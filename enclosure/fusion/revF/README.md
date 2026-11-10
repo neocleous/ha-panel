@@ -279,6 +279,8 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `floor_plate/fusion/v5f_g3a_checks.py` | g | read-only, step 1 block 3: d17c's finger solid to the microSD (0 mm³), deflector zone of the right box against v42, intake field (475 holes, 1 483 mm²), chamber air by d14b's method (L 118.73 / 87.14, R 115.40 / 83.50 cm³; v42 control 117.68 / 86.08 and 118.05 / 86.16) |
 | `floor_plate/fusion/v5f_g4a_standard_screw.py` | g | block 4 (Daniel 2026-11-10 22:23: 1a, 2a, 3a), dry by default, `PART` small / shell: plate's two cradle posts to z 13.0 with Ø4.0 × 6.7 holes (old holes filled), cradle legs cut at z 13.0, eight driver pilots opened to Ø4.0 × 6.7 from the box face, inboard upper boss Ø7.0 → Ø7.5, four old Ø2.5 pilots in the shell filled; `APPLY` deletes the `AUD_*` templates and hides the old bodies as `<name>_v45` | plate 32 988.7 → 33 466.2 mm³, cradle 2 189.8 → 1 771.0, boxes 26 181.9 → 26 017.3 / 25 786.5 → 25 622.0, shell 201 703.2 → 201 762.1; each 1 lump |
 | `floor_plate/fusion/v5f_g4c_matrix.py`, `v5f_g4d_save_export.py` | g | read-only matrix of the five changed bodies against every current body, before and after (`TAG`), the shell as the boolean's tool; then the named version and the f3d | before = after: 11 non-zero pairs, all known; version 46, `revF-g1.f3d` 101.4 MB |
+| `floor_plate/fusion/v5f_g5a_post_zones.py` | g | read-only: where Ø8 posts for the main board (standard M3 screw, Daniel 2026-11-10 22:45) can stand between carrier and board, test cylinders on a grid; `WITH_LEADS` counts the leads behind the board as obstacles | bottom band v −25.25 ± 0.2, top band v +18.0…+25.5; site document issue 2 |
+| `floor_plate/fusion/v5f_g5b_roof_rim_probe.py`, `v5f_g5c_roof_free_space.py` | g | read-only, for two proposals: the version-42 raised roof of the right box against the box-top screw's key path (1.95 of 3.38 cm³ can come back) and the free column above the present roof (6.9 cm³ envelope); needle sections of plate, shell, cloth and door at the bottom edge, and what the plate carries under the shell's edge | `step1/roof_plan.png`, `step1/rim_section.png`; proposal `claude/proposal-enclosure-roof-cloth-edge-2026-11-10.md`; nothing built |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -553,6 +555,10 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 107. Backups of this pass are `<name>_v45`; the backup pattern is now `(_v\d+|_[a-e]\d+[a-z0-9]*| \(\d+\))$` (g3a, g4c).
 108. A script that polls `dataFile.versionNumber` in a sleep loop right after `Document.save` did not return within the MCP
      timeout and wrote nothing. A plain call three minutes later read the new version at once.
+109. Sections without rays or point tests: intersect a 0.04 × 0.04 needle box with the body and read the lumps' vertex
+     boxes; 280 needles through plate, cropped shell, door and cloth took 4 s (g5b).
+110. "Fusion unavailable" from the connector can be momentary (it came back within a minute after the save and export);
+     check with a document query before re-running anything, and re-run only read-only scripts blind.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
