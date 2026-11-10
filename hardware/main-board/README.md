@@ -1,5 +1,9 @@
 # HA panel — main board
 
+> **Rev 3 in work (2026-11-11):** the board is being laid out again for its site behind the display. Change list and
+> floor plan: [`rev3/README.md`](rev3/README.md). Nothing is routed yet. Everything below is rev 2.1: the starting point,
+> and a draft like every other file here (architect log 2026-11-10, section 0).
+
 Status: **block 3 done (2026-11-09) — layout rev 2.1, single-sided SMD, routed, DRC clean; fab files, BOM, assembly notes and drawing issued.** Rev 2.1 moves C7 to the top strip so every front lead plugs after mounting (`MAIN_env.md`).
 
 - **KiCad 9.0.9.** Open `main-board.kicad_pro`. Project libraries: `lib/ha_panel.kicad_sym` (custom symbols: TAS5756M, TPS16630, NID100-5, TPS70933, +20V power symbol) and `lib/ha_panel.pretty` (custom footprints, created in block 2).
