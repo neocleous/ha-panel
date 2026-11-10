@@ -1286,11 +1286,12 @@ Brief `claude/brief-enclosure-step1-2026-11-10.md`. Blocks 0–3 read-only on ve
 (22:23: standard screw with the cradle and driver changes, touch clips without inserts, rim as built). Project docs: `claude/main-board-site-2026-11-10.md`, `claude/report-enclosure-step1-block2-2026-11-10.md`,
 `claude/report-enclosure-step1-block3-2026-11-10.md`. Data in `floor_plate/site/` (block 1) and `floor_plate/step1/`.
 - Screwed joints into printed parts (g2b): door 4, cap 4, box floors 4, box tops 2, touch clips 2, cradle 2, drivers 8 = 26.
-  Proposed standard: ISO 7380-1 M3 × 8 button head, Ruthex M3 × 5.7, 2.0 mm ball-end key.
+  Standard (approved 2026-11-10 22:23): ISO 7380-1 M3 × 8 button head, Ruthex M3 × 5.7 (24; the touch clips keep their
+  Ø2.5 pilots), 2.0 mm ball-end key. The 2.5 key remains for the four display screws only.
 - **Version 46 (g1), 2026-11-10:** "rev F WIP 2026-11-10 g1: one standard screw (M3 x 8 button head, Ruthex M3 x 5.7) …";
   archive `~/Documents/HA Panel v5 - tapered revF-g1.f3d`. Changed: `FLOOR_PLATE`, `CRADLE_5807`, `SPKBOX_L`, `SPKBOX_R`,
   `HOUSING_F_front` (old states hidden as `*_v45`); 336 bodies, no `AUD_*`. Cap, touch clips and the plate's rim unchanged.
   Chambers after: L 118.70 / 87.11, R 115.37 / 83.47 cm³, sealed. Report `claude/report-enclosure-step1-2026-11-10.md`.
 - Found: the box-top screws cannot be driven straight (the lip beside the door opening is 0.7 inside the 2.0 key's path at
-  52 mm); the ball end 6–14° inboard is free (+2.3). Unused Ø2.5 pilots of the old box screws remain in the shell at
-  (±52.75, z 10.25 / 45.75), y 2.0–5.0, behind the head pockets.
+  52 mm); the ball end 6–14° inboard is free (+2.3). The unused Ø2.5 pilots of the old box screws in the shell at
+  (±52.75, z 10.25 / 45.75), y 2.0–5.0, behind the head pockets, are filled in version 46.
