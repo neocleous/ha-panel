@@ -261,6 +261,16 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 | `v5f_e6c_magnet_checks.py` | e | read-only: per pocket the new skin (axis, r 2.0 / 3.5 / 4.0), the depth to the outer surface at r 4.45 × 8, lap gap, pad skin, lip pocket; magnets as solids (door Ø8 × 2 on the new floor, lip Ø8 × 1 on the lip floor) against every current body and grown 0.5; KO lanes and every body against the new and the old door | see the e6 checkpoint |
 | `v5f_e6_magnet_pull.py` | e | offline: disc-magnet pull, surface-charge model (R1's: reproduces 3.8 / 4.1 N at 1.4), and the door's pull-off force from the measured wall normals | the V24 table in the e6 checkpoint |
 | `v5f_e6d_save_export.py`, `v5f_e6e_verify.py` | e | version 42, f3d, the door STEP (d7d method) read back; version, bodies and files verified without activation | STEP read back 47.0138 cm³ (body 47.0198), one lump, 10 Ø8.3 pockets; version 42 |
+| `floor_plate/fusion/v5f_fp_lib.py` | f | helpers for the floor plate pass: world and slab frames, temporary boxes and cylinders, booleans, `clash`, `lumps`, `add` / `retire`, compact status files |
+| `floor_plate/fusion/v5f_f0a…f0c`, `f1a…f1d` | f | read-only: preflight, the tool templates (`AUD_*`), floor sections, stack and lean probes, first main-board fit |
+| `floor_plate/fusion/v5f_f2a_inventory.py`, `v5f_f2x_mainboard_confirm.py` | f | read-only: floor features to carry over; the main board behind the display (rev 2.1 parts from KiCad × MAIN_env) against every body |
+| `floor_plate/fusion/v5f_f2b_plate_shell.py`, `v5f_f2b1_cove_probe.py` | f | base plate; front shell without its floor (cut at z 2.8, side coves removed to z 5.6, lips for the tongues); the cove-cut variants |
+| `floor_plate/fusion/v5f_f2c0…f2c4` | f | read-only: box faces, baffle map, how far back a box can sit (1.5) |
+| `floor_plate/fusion/v5f_f2c_boxes_plate.py` | f | both speaker boxes reworked (driver pilots, floor inserts, roof tab, −x hump removed), plate rebuilt with round box-screw holes |
+| `floor_plate/fusion/v5f_f2d_shell_speaker.py` | f | shell: stop bars, head channels and pockets, box-top bosses; `DRV_screw_heads_env` |
+| `floor_plate/fusion/v5f_f2e_mainboard_carrier.py` | f | main-board bodies in the new place, new carrier with posts, ReSpeaker 4 mm lower, bracket retired |
+| `floor_plate/fusion/v5f_f2f_verify.py` | f | read-only: interference of changed bodies, lift-in sweep of the plate unit, floor remnants; version 43 |
+| `floor_plate/fusion/v5f_f3a_probe.py`, `v5f_f3b_notch_anchor.py`, `v5f_f3c_leads.py` | f | F3 notch beside the LCD opening, cable-tie anchor on the plate, all 15 leads as node lists; versions 44 / 45 |
 
 ## Lessons (new in rev F)
 1. `importManager.importToNewDocument(createSTEPImportOptions(path))` on the 7.4 MB Waveshare STEP takes ≈ 11 s and returns
@@ -492,6 +502,27 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
 88. `Dw()` and `Ctx.wbox()` take design x (x_rel + XC). A probe that builds world points from x_rel must add XC, or work
     in design coordinates straight from the face geometry. e6a missed it: its lines ran 2.55 off in x and read the
     magnet pockets as cut by the door's edge. The tell: lines inside the pocket's radius met the door above its floor.
+89. `findBRepUsingRay` answers with every body on the line, hidden ones included: 25 hidden backups of the front shell
+    answer each ray. Filter by exact body name in the script and never write the raw hit list to a status file.
+90. `TemporaryBRepManager.transform` with a mirror matrix returns an inside-out body: its volume reads almost right, but
+    booleans against it are wrong (a difference larger than the minuend, f2c0). Do not mirror temporary bodies.
+91. A difference whose tool face runs out tangent to a fillet, or lies within ~0.02 of a wall face, fails
+    (`ASM_INCONS_FACE`, `ASM_BAD_CONTAINMENT`). The cove tool (INNER_E − skin) had to stop at z 5.6: the cove is tangent to
+    the wall at 6.0 and above 6.5 the wall stands 0.02 proud of the tool face. Try the variants on copies first (f2b1).
+92. Costs on this model: `tbm.copy` of the front shell 13 s; vertex-based world boxes of its lumps 60 s. Copy once, cut a
+    local piece with a box and reuse it; take vertex boxes only for small lumps (`lumps(maxv=400)`).
+93. `Document.save(description)` returns True before `dataFile.versionNumber` changes. Read the version back in a later call.
+94. Visibility does not mean "current". Many current parts are hidden, and legacy bodies without a backup suffix answer
+    every bounding-box test: `DOOR_tray`, `VOICEPE_*`, `MAIN_BRACKET_d1split_*`, `SPKBOX_L_r2`, `V11*`, `PI5_board`,
+    `LD2410C_env`, `BME680_env_revD`, `TOUCH_pcb_100x44`, `AMP_env_…`, `BUCK_…`, `PD_trigger_env_20V`, `DOOR_plate_revE`,
+    `GROMMET_usbc`, `HOUSING_E`, `HOUSING_shell`, `HOUSING_F_wip`. Matrices need the explicit list (`LEGACY` in
+    `v5f_f3c_leads.py`) as well as the suffix filter.
+95. A sphere with a cylinder's radius at the cylinder's end is tangent to it. Lead chains use r + 0.05 at the joints.
+96. A v42 lead's routed length is its volume / (π r²) to within 1 mm — a baseline without its node list.
+97. Write status files as compact JSON and compute in the script. A pretty-printed 80 KB result or a raw ray dump costs
+    more than the probe.
+98. Build everything on temporary bodies, check, then swap (`retire` + `add`) at the end. A script that dies before its
+    first model change leaves the model as it was (f2e's KeyError).
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -1203,3 +1234,19 @@ stocked; change rev F to sizes AliExpress has (N52 Ø8 × 1 / × 2, NeoMag Store
 - Polarity (audit S.5): every door magnet with the same pole toward the cavity; each lip magnet checked against a spare door
   magnet before the CA.
 - Answer: `claude/architect-log-2026-11-09.md` Part C (V24).
+
+## Floor plate pass – f0 to f3 (2026-11-10)
+Brief `claude/brief-enclosure-floor-plate-2026-11-09.md`; reports `claude/report-enclosure-floor-plate-block2-2026-11-10.md`
+and `…-block3-2026-11-10.md`; architect log 2026-11-10 (D71–D84). Scripts in `floor_plate/fusion/`, each dry by default
+(`APPLY=True` writes); status files in `~/Documents/HA_panel_renders/fp/`.
+- **Version 43 (f2):** `FLOOR_PLATE` = the body's underside z 0–2.5 (32.9 cm³) with the floor's features; `HOUSING_F_front`
+  without a floor; `SPKBOX_L` / `SPKBOX_R` screwed to the plate (2 inserts each from below) and to the shell (roof tab,
+  insert in a boss at (±58, z 79.5)); drivers on 4 × M3 × 10 button heads into Ø2.5 pilots; `RESP_CARRIER` with four posts
+  for the main board behind the display (board rev 2.1 as it is: centre x 2.55, Zd −28.5, back face d 31.1); bracket retired.
+  The plate unit rises 1.3 behind its place (window 1.05–1.5) and slides forward: 0 mm³ at every step.
+- **Version 45 (f3):** notch x 55.55…79.0, Zd −29.3…−11.2 through the wall beside the LCD opening (audit F3); cable-tie
+  anchor on the plate at (58.5, −56.5); 15 leads rebuilt. The display module with carrier, ReSpeaker, plug and main board
+  moves out along the slab normal to 60 mm with 0 mm³.
+- Replaced bodies are hidden as `<name>_v42`. Known and to correct with the new board (D83): `MAIN_pcb` holes drawn Ø3.2
+  (board Ø2.7, M2.5), carrier posts Ø7.0 against a Ø6.8 clear zone; the carrier's post holes are Ø4.0 × 6.5 (Ruthex M2.5).
+- Superseded by `claude/brief-enclosure-step1-2026-11-10.md`: blocks 4–7 of the floor-plate brief.
