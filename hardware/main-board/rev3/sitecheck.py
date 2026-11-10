@@ -64,8 +64,9 @@ LABEL = {
 
 
 NOTE = {   # why a span is not met, and what it costs
-    ('J5', 'the '): '. Pins are 5.6 lower than the span: at v -12...-2 the plug would stand 0.2 mm beside the end of the '
-                    'supply module (27.5 tall, length +/- 1). Inside zone D; the lead grows by about 6 mm',
+    ('J5', 'the '): '. Pins are 5.6 lower than the span: at v -12...-2 the plug would run into the end of the supply '
+                    'module (27.5 tall; the two outlines overlap by 0.1 along u, and its length is +/- 1). Inside zone D; '
+                    'the lead grows by about 6 mm',
     ('J11', 'E, a'): ". The supply module stands on E's probed point (it has to be below v +8 and is 50.8 long). The header "
                      'is 11.5 lower, in the middle of the board between E and A; reach to be probed again in step 3',
 }
@@ -461,9 +462,13 @@ def tables(data, holes):
     for r, (name, env) in PLUGGED.items():
         c = P[r]['crt']; lim, why = S.door_allowed_rect(c)
         h, src = height_of(P[r])
-        mated = {'JST': '9.8 mated (JST)', 'Pin': 'about 16.5 with the housing (estimate)', 'USB': '3.46; the plug hangs below the edge'}[P[r]['footprint'][:3]]
-        out.append('| %s | %s socket | %+.1f...%+.1f | %+.1f...%+.1f | %.2f bare; %s; %s with the lead bend | %.1f | %s | %s |' %
-                   (r, name, c[0], c[2], c[1], c[3], h, mated, ('%.0f' % env) if r != 'J2' else 'n/a', lim, why, src))
+        if r == 'J2':
+            ht = '3.46; the plug hangs below the edge'
+        else:
+            mated = {'JST': '9.8 mated (JST)', 'Pin': 'about 16.5 with the housing (estimate)'}[P[r]['footprint'][:3]]
+            ht = '%.2f bare; %s; %.0f with the lead bend' % (h, mated, env)
+        out.append('| %s | %s socket | %+.1f...%+.1f | %+.1f...%+.1f | %s | %.1f | %s | %s |' %
+                   (r, name, c[0], c[2], c[1], c[3], ht, lim, why, src))
 
     out.append('\n### Through-hole pin ends on the back face\n| Part | Pin ends at u | at v | Beyond the back face | Allowed there | Zone | Basis |\n|---|---|---|---|---|---|---|')
     for r in sorted(P, key=lambda x: (x[0], len(x), x)):

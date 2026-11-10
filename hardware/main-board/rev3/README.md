@@ -39,7 +39,7 @@ u to the right (toward the left speaker), v up, w out of the door-side face, mm.
 
 ## 3. Changes this site needs (block 0)
 **In the schematic**
-1. **Mounting holes H1-H4:** dia 2.7 for M2.5 becomes **dia 3.2 for the unit's standard M3 x 8**, at new positions (section 5).
+1. **Mounting holes H1-H4:** dia 2.7 for M2.5 becomes **dia 3.2 for the unit's standard M3 x 8**, at new positions (section 4).
 2. **Sensor header split:** the shared 2 x 4 header J10 becomes **J10 (BME680, 1 x 4)** and **J11 (VEML6030, 1 x 4)**.
    Same four nets on each: 3.3 V, ground, SDA, SCL.
 3. **Pi signal pads J3:** the nine leads are put in the order of the housings at the Pi, once the housing set is
@@ -148,7 +148,7 @@ Pin 1 is the red dot in the picture. "Box" is the part's outline on the board pl
 | J5 | radar socket | -43.2...-36.4 | -20.6...-7.1 | 7.00 bare; 9.8 mated (JST); 20 with the lead bend | 40.0 | door | JST XH top-entry header, KiCad model (plug mated 9.8, JST catalogue) |
 | J10 | BME680 socket | -36.1...-32.5 | -19.7...-8.5 | 8.65 bare; about 16.5 with the housing (estimate); 25 with the lead bend | 41.9 | cap side-screw key path | pin header, KiCad model (with a Dupont housing about 16.5, estimate) |
 | J11 | VEML6030 socket | -6.3...+4.9 | -13.8...-10.2 | 8.65 bare; about 16.5 with the housing (estimate); 25 with the lead bend | 47.0 | door | pin header, KiCad model (with a Dupont housing about 16.5, estimate) |
-| J2 | Pi power socket | +16.3...+26.9 | -29.5...-19.2 | 3.46 bare; 3.46; the plug hangs below the edge; n/a with the lead bend | 48.0 | door | GCT drawing USB4085 rev B |
+| J2 | Pi power socket | +16.3...+26.9 | -29.5...-19.2 | 3.46; the plug hangs below the edge | 48.0 | door | GCT drawing USB4085 rev B |
 
 **Back face.** No parts. Pin ends of the through-hole parts:
 
@@ -213,7 +213,7 @@ Pin 1 is the red dot in the picture. "Box" is the part's outline on the board pl
 | 19 | J8 (speaker left) in C, u +30...+43 | 5 | met | pins u +37.50...+40.00, v -25.00...-25.00 |
 | 20 | J9 (speaker right) in B, u -43...-36 | 5 | met | pins u -40.25...-37.75, v -25.00...-25.00 |
 | 21 | J5 (radar) in zone D, v -18...-2 | 5 | met | pins u -40.30...-40.30, v -17.60...-10.10 |
-| 22 | J5 (radar) in the lead's own span inside D, v -12...-2 | 5 | **NOT MET** | pins u -40.30...-40.30, v -17.60...-10.10. Pins are 5.6 lower than the span: at v -12...-2 the plug would stand 0.2 mm beside the end of the supply module (27.5 tall, length +/- 1). Inside zone D; the lead grows by about 6 mm |
+| 22 | J5 (radar) in the lead's own span inside D, v -12...-2 | 5 | **NOT MET** | pins u -40.30...-40.30, v -17.60...-10.10. Pins are 5.6 lower than the span: at v -12...-2 the plug would run into the end of the supply module (27.5 tall; the two outlines overlap by 0.1 along u, and its length is +/- 1). Inside zone D; the lead grows by about 6 mm |
 | 23 | J6 (touch board) in A, u +5...+14 | 5 | met | pins u +12.30...+12.30, v -25.94...-18.44 |
 | 24 | J10 (BME680) in D, v -18...-8 | 5 | met | pins u -34.30...-34.30, v -17.92...-10.30 |
 | 25 | J11 (VEML6030) in E, as drawn (u -10...+10, v -6...+6; probed at u -0.5, v -0.5) | 5 | **NOT MET** | pins u -4.50...+3.12, v -12.00...-12.00. The supply module stands on E's probed point (it has to be below v +8 and is 50.8 long). The header is 11.5 lower, in the middle of the board between E and A; reach to be probed again in step 3 |
@@ -226,8 +226,9 @@ Pin 1 is the red dot in the picture. "Box" is the part's outline on the board pl
 | 32 | Everything of rev 2.1 has a place on the door-side face | brief | met | 120 parts placed; courtyards fill 3298 of 5037 mm2 (65 %); rev 2.1: 66 % over both faces |
 
 **The two that are not met**
-1. **Radar socket J5 (rule 22).** The span v -12...-2 would put the plug 0.2 mm beside the end of the supply module,
-   whose length has a tolerance of 1 mm. The socket is 5.6 lower, inside zone D. The lead grows by about 6 mm.
+1. **Radar socket J5 (rule 22).** At the span v -12...-2 the plug would run into the end of the supply module (their
+   outlines overlap by 0.1 along u, and the module's length has a tolerance of 1 mm). The socket is 5.6 lower, inside
+   zone D, 3.3 below the module. The lead grows by about 6 mm.
 2. **VEML6030 header J11 (rule 25).** Zone E was probed at u -0.5, v -0.5. The supply module has to stand below v +8
    and is 50.8 long, so it covers that point wherever it goes. The header is at u -4.5...+3.1, v -12.0: the middle of
    the board, 5.6 below the module and 8.3 above the 20 V socket.
@@ -281,7 +282,7 @@ Neither needs a dimension from the site. Both need the fingertip probe repeated 
       allows 12 mm (bottom edge) or 4 mm. **Recommended.**
    2. Side entry on the bottom edge for 20 V and the speakers (plug pushed up along the board, lead hangs straight
       down). Each socket then takes 11.5 of board height instead of 5.75, its pins come out over the ReSpeaker, and the
-      left speaker's pins end about 1 mm from the zone over the ReSpeaker's jack. Three new part numbers. Not drawn.
+      left speaker's pins end about 1 mm from the zone over the ReSpeaker's jack. One new part (JST S2B-XH-A, three pieces). Not drawn.
 2. **Housings at the Pi** (the display's power lead keeps its own 1 x 3 on pins 2-4-6)
    1. Three housings: 1 x 3 on pins 1-3-5 (3.3 V, SDA, SCL), 2 x 5 on pins 7 to 16 (TXD, ground, RXD, bit clock, ground,
       mute; four places empty), 2 x 3 on pins 35 to 40 as before. **Recommended.** Needs one 1 x 3, one 2 x 5 and one

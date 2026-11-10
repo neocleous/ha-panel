@@ -21,7 +21,7 @@
 | 19 | J8 (speaker left) in C, u +30...+43 | 5 | met | pins u +37.50...+40.00, v -25.00...-25.00 |
 | 20 | J9 (speaker right) in B, u -43...-36 | 5 | met | pins u -40.25...-37.75, v -25.00...-25.00 |
 | 21 | J5 (radar) in zone D, v -18...-2 | 5 | met | pins u -40.30...-40.30, v -17.60...-10.10 |
-| 22 | J5 (radar) in the lead's own span inside D, v -12...-2 | 5 | **NOT MET** | pins u -40.30...-40.30, v -17.60...-10.10. Pins are 5.6 lower than the span: at v -12...-2 the plug would stand 0.2 mm beside the end of the supply module (27.5 tall, length +/- 1). Inside zone D; the lead grows by about 6 mm |
+| 22 | J5 (radar) in the lead's own span inside D, v -12...-2 | 5 | **NOT MET** | pins u -40.30...-40.30, v -17.60...-10.10. Pins are 5.6 lower than the span: at v -12...-2 the plug would run into the end of the supply module (27.5 tall; the two outlines overlap by 0.1 along u, and its length is +/- 1). Inside zone D; the lead grows by about 6 mm |
 | 23 | J6 (touch board) in A, u +5...+14 | 5 | met | pins u +12.30...+12.30, v -25.94...-18.44 |
 | 24 | J10 (BME680) in D, v -18...-8 | 5 | met | pins u -34.30...-34.30, v -17.92...-10.30 |
 | 25 | J11 (VEML6030) in E, as drawn (u -10...+10, v -6...+6; probed at u -0.5, v -0.5) | 5 | **NOT MET** | pins u -4.50...+3.12, v -12.00...-12.00. The supply module stands on E's probed point (it has to be below v +8 and is 50.8 long). The header is 11.5 lower, in the middle of the board between E and A; reach to be probed again in step 3 |

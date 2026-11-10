@@ -40,7 +40,7 @@
 | J5 | radar socket | -43.2...-36.4 | -20.6...-7.1 | 7.00 bare; 9.8 mated (JST); 20 with the lead bend | 40.0 | door | JST XH top-entry header, KiCad model (plug mated 9.8, JST catalogue) |
 | J10 | BME680 socket | -36.1...-32.5 | -19.7...-8.5 | 8.65 bare; about 16.5 with the housing (estimate); 25 with the lead bend | 41.9 | cap side-screw key path | pin header, KiCad model (with a Dupont housing about 16.5, estimate) |
 | J11 | VEML6030 socket | -6.3...+4.9 | -13.8...-10.2 | 8.65 bare; about 16.5 with the housing (estimate); 25 with the lead bend | 47.0 | door | pin header, KiCad model (with a Dupont housing about 16.5, estimate) |
-| J2 | Pi power socket | +16.3...+26.9 | -29.5...-19.2 | 3.46 bare; 3.46; the plug hangs below the edge; n/a with the lead bend | 48.0 | door | GCT drawing USB4085 rev B |
+| J2 | Pi power socket | +16.3...+26.9 | -29.5...-19.2 | 3.46; the plug hangs below the edge | 48.0 | door | GCT drawing USB4085 rev B |
 
 ### Through-hole pin ends on the back face
 | Part | Pin ends at u | at v | Beyond the back face | Allowed there | Zone | Basis |
