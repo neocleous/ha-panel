@@ -1,0 +1,37 @@
+parts: rev 3 120, rev 3.1 120
+   C10   u  -31.01 v  -15.61 rot  90  ->  u  -34.24 v  -16.10 rot   0   1u 50V
+   C11   u  -27.68 v   -7.25 rot  90  ->  u  -27.32 v   -7.25 rot  90   10u 25V
+   F3    u  -27.00 v  -19.50 rot   0  ->  u  -34.24 v  -11.20 rot 270   1 A 0453001.MR
+   F4    u  -27.19 v  -14.45 rot   0  ->  u  -26.09 v  -14.45 rot   0   0.2 A 0ZCJ0020FF2E
+   H2    u  +30.00 v  +25.00 rot   0  ->  u  +19.20 v  +25.00 rot   0   M3 x 8
+   J10   u  -34.30 v  -10.30 rot   0  ->  u  -30.40 v  -10.30 rot   0   1x04 header BME680
+   J11   u   -4.50 v  -12.00 rot  90  ->  u   -4.50 v  -13.00 rot  90   1x04 header VEML6030
+   R26   u  +20.00 v  +23.50 rot   0  ->  u  +21.90 v  +20.20 rot 180   0R
+   R27   u  +20.00 v  +25.50 rot   0  ->  u  +18.20 v  +20.20 rot   0   0R DNP
+   TP3   u   -3.22 v  -15.77 rot   0  ->  u   -3.22 v  -16.27 rot   0   IMON
+   TP12  u  -30.75 v  -11.65 rot   0  ->  u  -34.24 v  -18.60 rot   0   RADAR
+tracks by net: taken out mm / new mm
+   I2C_SDA          52.9   63.2
+   3V3_SENS         37.0   33.6
+   PI_3V3           27.8   27.6
+   I2C_SCL          26.6   23.0
+   I2S_BCLK         23.9   18.8
+   AMP_MUTE_N       19.4   22.3
+   PI_TXD           16.7   18.0
+   PI_RXD           13.5   14.0
+   5V_RADAR         13.8    5.0
+   PI_DIN            8.3    8.6
+   +3V3              6.8    9.6
+   +5V              11.1    5.1
+   3V3_AMP           7.2    4.8
+   EF_IMON           2.9    2.9
+   LDO_IN            2.2    1.9
+   GND               0.1    0.4
+   total: 270 mm taken out, 259 mm new, of 2137 mm on rev 3 (87 % of rev 3 unchanged); rev 3.1 has 2126 mm
+same track, new width: {'5V_PI_F': [(1.5, 2.2)], 'VBUS_PI': [(0.4, 0.7), (0.6, 0.7)], 'VIN_PIGTAIL': [(1.0, 2.0)]}
+vias: rev 3 198, rev 3.1 245; ground vias 49 -> 92; removed 12, added 59 (of them ground 44)
+amplifier nets with a changed track: none
+ground pour, door side, rev 3: 0 mm2 (0 % of the board)
+ground pour, door side, rev 3.1: 3019 mm2 (60 % of the board)
+ground pour, back, rev 3: 0 mm2 (0 % of the board)
+ground pour, back, rev 3.1: 3347 mm2 (66 % of the board)

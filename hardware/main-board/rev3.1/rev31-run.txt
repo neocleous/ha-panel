@@ -1,0 +1,40 @@
+1 move
+tracks and vias taken out at the parts that move: 53 | bit-clock detour round the old hole: 15
+  R26   u  +21.90 v  +20.20 rot 180   pads: 1(+22.72,+20.20) 2(+21.08,+20.20)
+  R27   u  +18.20 v  +20.20 rot 0   pads: 1(+17.38,+20.20) 2(+19.02,+20.20)
+  F3    u  -34.24 v  -11.20 rot -90   pads: 1(-34.24,-8.75) 2(-34.24,-13.65)
+  C10   u  -34.24 v  -16.10 rot 0   pads: 1(-35.19,-16.10) 2(-33.29,-16.10)
+  TP12  u  -34.24 v  -18.60 rot 0   pads: 1(-34.24,-18.60)
+  J10   u  -30.40 v  -10.30 rot 0   pads: 1(-30.40,-10.30) 2(-30.40,-12.84) 3(-30.40,-15.38) 4(-30.40,-17.92)
+  J11   u   -4.50 v  -13.00 rot 90   pads: 1(-4.50,-13.00) 2(-1.96,-13.00) 3(+0.58,-13.00) 4(+3.12,-13.00)
+  F4    u  -26.09 v  -14.45 rot 0   pads: 1(-27.49,-14.45) 2(-24.69,-14.45)
+  C11   u  -27.32 v   -7.25 rot 90   pads: 1(-27.32,-8.72) 2(-27.32,-5.77)
+  TP3   u   -3.22 v  -16.27 rot 0   pads: 1(-3.22,-16.27)
+  H2    u  +19.20 v  +25.00 rot 0   pads: 
+2 rip
+taken out against the new places: 33
+3 route
+vias into the planes added: 3 | not placed: ['F3.1 +5V (nearest via spot is outside the +5V area)']
+  I2S_BCLK           made room by taking out ['3V3_AMP']
+connections: {'routed': 34, 'taken out': 1} | still open: 0
+pieces of no length removed: 0
+   check: {('warning', 'silk_overlap'): 4, ('warning', 'silk_over_copper'): 4, ('warning', 'lib_footprint_mismatch'): 2, ('warning', 'track_dangling'): 4, ('warning', 'via_dangling'): 2} | open connections: 0 | schematic differences: 0
+4 loose ends
+   pass 1: removed 6
+   pass 2: removed 2
+   pass 3: removed 1
+   pass 4: removed 1
+   pass 5: removed 1
+   pass 6: removed 0
+5 copper
+widened: {'vbus': 2, 'link': 2, 'f2': 3, 'j1': 2} | areas added: 2
+   check: {('warning', 'silk_overlap'): 4, ('warning', 'silk_over_copper'): 4, ('warning', 'lib_footprint_mismatch'): 2, ('warning', 'track_dangling'): 4} | open connections: 0 | schematic differences: 0
+6 finish
+stitch vias 42
+   check: {('warning', 'silk_overlap'): 4, ('warning', 'silk_over_copper'): 4, ('warning', 'lib_footprint_mismatch'): 2, ('warning', 'track_dangling'): 4, ('warning', 'via_dangling'): 1} | open connections: 1 | schematic differences: 0
+   loose ends after the pours, pass 1: removed 1
+   loose ends after the pours, pass 2: removed 0
+7 text
+part names hidden: ['F3', 'C120', 'R26', 'C114', 'R8']
+pieces of no length removed: 4
+   check: {('warning', 'lib_footprint_mismatch'): 2} | open connections: 0 | schematic differences: 0

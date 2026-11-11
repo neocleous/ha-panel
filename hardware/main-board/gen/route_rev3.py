@@ -745,11 +745,25 @@ def clean_loose(path, drc_json):
 
 # ------------------------------------------------------------------ 4 finish
 def stage_finish(b):
-    rm.outer_pours(b)
-    for _ in range(2):
+    """Corrected 2026-11-11 (rev 3.1): rev 3 was issued without these pours. Two faults: main() did not save the board
+    after this stage, and rm.outer_pours() draws the pour over rev 2.1's outline (it stops 7 mm short of this board's
+    bottom edge). gen/rev31.py holds the stage that made the pours of rev 3.1; this one now does the same."""
+    zs = []
+    for lay in (pcbnew.F_Cu, pcbnew.B_Cu):
+        z = rm.zone(b, 'GND', lay, pb.FULL, prio=0, thermal=True, clearance=0.3)
+        z.SetIslandRemovalMode(pcbnew.ISLAND_REMOVAL_MODE_NEVER)
+        zs.append(z)
+    pcbnew.ZONE_FILLER(b).Fill(b.Zones())
+    for _ in range(3):
         mroute.RES = 0.05
-        print('stitch vias', len(mroute.stitch(b, CLASSES)))
+        k = len(mroute.stitch(b, CLASSES))
+        print('stitch vias', k)
         pcbnew.ZONE_FILLER(b).Fill(b.Zones())
+        if not k:
+            break
+    for z in zs:
+        z.SetIslandRemovalMode(pcbnew.ISLAND_REMOVAL_MODE_ALWAYS)
+    pcbnew.ZONE_FILLER(b).Fill(b.Zones())
 
 
 # ------------------------------------------------------------------ 5 silkscreen
@@ -846,6 +860,7 @@ def main(src, dst, stages):
         pcbnew.SaveBoard(dst, b)
     if 'finish' in stages:
         stage_finish(b)
+        pcbnew.SaveBoard(dst, b)
     if 'silk' in stages:
         shown, hidden, out = stage_silk(b)
         print('silk: part names shown', shown, 'hidden', hidden)

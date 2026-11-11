@@ -1,0 +1,13 @@
+120 parts; moved against the old plan: 11
+  C10   u  -31.01 v  -15.61 rot  90  ->  u  -34.24 v  -16.10 rot   0
+  C11   u  -27.68 v   -7.25 rot  90  ->  u  -27.32 v   -7.25 rot  90
+  F3    u  -27.00 v  -19.50 rot   0  ->  u  -34.24 v  -11.20 rot 270
+  F4    u  -27.19 v  -14.45 rot   0  ->  u  -26.09 v  -14.45 rot   0
+  H2    u  +30.00 v  +25.00 rot   0  ->  u  +19.20 v  +25.00 rot   0
+  J10   u  -34.30 v  -10.30 rot   0  ->  u  -30.40 v  -10.30 rot   0
+  J11   u   -4.50 v  -12.00 rot  90  ->  u   -4.50 v  -13.00 rot  90
+  R26   u  +20.00 v  +23.50 rot   0  ->  u  +21.90 v  +20.20 rot 180
+  R27   u  +20.00 v  +25.50 rot   0  ->  u  +18.20 v  +20.20 rot   0
+  TP3   u   -3.22 v  -15.77 rot   0  ->  u   -3.22 v  -16.27 rot   0
+  TP12  u  -30.75 v  -11.65 rot   0  ->  u  -34.24 v  -18.60 rot   0
+parts that did not move: largest difference between the two courtyard boxes 0.001
