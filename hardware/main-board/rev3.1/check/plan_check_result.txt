@@ -1,0 +1,30 @@
+R26   crt u  +14.27.. +15.73 v  +21.42.. +24.38   (was u  +18.52.. +21.48 v  +22.77.. +24.23)
+R27   crt u  +14.27.. +15.73 v  +24.72.. +27.68   (was u  +18.52.. +21.48 v  +24.77.. +26.23)
+J10   crt u  -32.07.. -28.53 v  -19.69..  -8.53   (was u  -36.07.. -32.53 v  -19.69..  -8.53)
+F3    crt u  -36.07.. -32.41 v  -20.49.. -13.11   (was u  -30.69.. -23.31 v  -21.33.. -17.67)
+C10   crt u  -35.94.. -32.54 v  -12.88.. -10.92   (was u  -31.99.. -30.03 v  -17.31.. -13.91)
+TP12  crt u  -35.49.. -32.99 v  -10.65..  -8.15   (was u  -32.00.. -29.50 v  -12.90.. -10.40)
+F4    crt u  -28.27.. -23.71 v  -15.58.. -13.32   (was u  -29.47.. -24.91 v  -15.58.. -13.32)
+C11   crt u  -28.43.. -26.13 v   -9.55..  -4.95   (was u  -28.83.. -26.53 v   -9.55..  -4.95)
+J11   crt u   -6.27..  +4.89 v  -14.77.. -11.23   (was u   -6.27..  +4.89 v  -13.77.. -10.23)
+TP3   crt u   -4.47..  -1.97 v  -17.52.. -15.02   (was u   -4.47..  -1.97 v  -17.02.. -14.52)
+nearest neighbour of each moved part (courtyard to courtyard; negative = overlap):
+  R26   [(0.34, 'R27'), (1.67, 'F5'), (2.38, 'C114')] | to the nearest dia 7 hole zone: (0.32, 'H2')
+  R27   [(0.34, 'R26'), (1.67, 'F5'), (5.68, 'C114')] | to the nearest dia 7 hole zone: (0.27, 'H2')
+  J10   [(0.1, 'C11'), (0.26, 'F4'), (0.34, 'F3')] | to the nearest dia 7 hole zone: (2.06, 'H3')
+  F3    [(0.23, 'C10'), (0.33, 'J5'), (0.34, 'J10')] | to the nearest dia 7 hole zone: (1.46, 'H3')
+  C10   [(0.23, 'F3'), (0.27, 'TP12'), (0.46, 'J5')] | to the nearest dia 7 hole zone: (8.97, 'H3')
+  TP12  [(0.27, 'C10'), (0.91, 'J5'), (0.92, 'J10')] | to the nearest dia 7 hole zone: (11.78, 'H3')
+  F4    [(0.26, 'J10'), (0.33, 'TP17'), (0.41, 'R13')] | to the nearest dia 7 hole zone: (6.55, 'H3')
+  C11   [(0.08, 'U2'), (0.1, 'J10'), (0.4, 'PS1')] | to the nearest dia 7 hole zone: (12.41, 'H3')
+  J11   [(0.18, 'R3'), (0.25, 'TP3'), (0.39, 'R4')] | to the nearest dia 7 hole zone: (23.36, 'H3')
+  TP3   [(0.25, 'J11'), (0.36, 'R3'), (0.77, 'C3')] | to the nearest dia 7 hole zone: (24.69, 'H3')
+all parts against the new hole zone (dia 7), inside: []
+edge: any moved part outside the outline: []
+at the new BME680 pins: [('B track', '+5V'), ('B track', '3V3_SENS'), ('B track', 'I2C_SDA'), ('B track', 'PI_RXD'), ('B track', 'PI_TXD'), ('F track', '+5V'), ('F track', '5V_RADAR'), ('F track', 'GND'), ('F track', 'PI_RXD'), ('pad', 'C10.1'), ('pad', 'C10.2'), ('pad', 'F3.1'), ('pad', 'TP12.1'), ('via', '+5V'), ('via', 'GND'), ('via', 'PI_RXD')]
+at the new VEML6030 pins: [('B track', '3V3_SENS'), ('B track', 'AMP_MUTE_N'), ('B track', 'I2C_SCL'), ('B track', 'I2C_SDA'), ('F track', '3V3_SENS'), ('F track', 'I2C_SCL'), ('F track', 'I2C_SDA'), ('F track', 'PI_DIN')]
+area GND In1.Cu u -44.5..+44.5 v -29.9..+29.9
+area PVDD In2.Cu u +9.6..+26.0 v +21.2..+27.6
+area +5V In2.Cu u +3.0..+14.2 v -9.6..+20.5
+area PVDD In2.Cu u +15.3..+44.9 v -20.0..+22.2
+area +20V In2.Cu u -21.2..+6.6 v -21.5..+28.4
