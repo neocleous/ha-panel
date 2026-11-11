@@ -385,6 +385,10 @@ runs: correct, but not pretty.
    the screw head is 3.3 radius there instead of 3.5. A pan-head M3 (head up to 6.6 diameter) clears it; a 7 mm
    washer would not.
 
+**Answered by Daniel 2026-11-11:** point 1: the enclosure chat is asked to make the H2 post face no larger than 5.5
+across (the nearest amplifier track starts 2.9 from the hole centre; the request goes into the block 3 reply).
+Point 2: M3 pan head, no washer, at all four posts.
+
 ### 14.6 Not done in this block
 - Fab files, stencil, assembly drawing, bill of materials: not in this step.
 - Height zones for both faces, connector table with plug envelopes, STEP export: block 3.
