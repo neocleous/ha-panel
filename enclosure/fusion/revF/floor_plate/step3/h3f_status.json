@@ -1,0 +1,1 @@
+{"n":16,"len_from_volume":{"MIC_L":69.7,"USB_RESP":129.4,"PIGTAIL_20V":74.0,"RADAR":60.1,"GPIO_A1":58.1,"GPIO_A2":58.0,"GPIO_B":57.7,"MIC_R":66.0,"PI_POWER":64.6,"VEML":100.8,"LCD_5V":190.2,"DSI":141.8,"BME680":66.3,"TOUCH":71.6,"SPK_L":76.1,"SPK_R":74.8},"pairs":{"GPIO_A1~LCD_5V":20.8},"t_end":0.2}

@@ -569,6 +569,33 @@ and `claude/enclosure-v5-revE-handover-2026-11-01.md` §2–3.
      Eroding the plate's outline prism in 16 directions took about 50 s; run it in the background and poll.
 113. Clearance without an offset tool: subtract the neighbour moved by the play (±x, ±y, ±z) as well as in place (g6a: the
      shell in 7 positions × 7 plays, 49 differences in a few seconds on a cropped copy).
+114. The connector went to "failed" ("Version negotiation failed …") after its first call of the day timed out with Fusion
+     idle. Closing and reopening Fusion cleared it; the Claude app was not restarted. Fusion then had only "Untitled"
+     open: open the panel document through the connector (document search, then open by id) and re-check the version.
+115. One MCP call must stay well under 80 s. Booleans of detailed many-lump bodies (the board's STEP parts, 68 lumps; the
+     USB-C socket's 34 solids) against the full front shell took about 200 s for eight bodies. Crop the shell to the region
+     once, keep the crop, and stop a script on a time budget (25–30 s) so that the next call continues.
+116. Temporary bodies and result tables survive between MCP calls in a module kept in `sys.modules` (`cache()` in
+     `v5f_h_lib.py`): the 13 s shell copy and its crops are made once a session. A cached copy is keyed by name and volume.
+117. `measureMinimumDistance` on model bodies takes about 0.1 s a pair even against the shell; a boolean of a lead's
+     temporary body against shell, door and plate took about 15 s a lead. For leads: add the bodies (hidden), measure, and
+     run a boolean only where the distance is 0 (h3b, h3c).
+118. KiCad's STEP of a populated board: `importToNewDocument`, copy every solid through its occurrence's proxy
+     (`TemporaryBRepManager.copy` of a proxy body is in assembly space; checked against the file read with a second
+     kernel), union by group (140 solids → five bodies), close the document without saving, re-activate the panel (h1a, h1b).
+119. A frame parallel to the design frame (the board's u, v, w) makes `body.boundingBox` the exact box in that frame.
+120. Without a connected folder: files to the Mac by Fusion's own Python (download from the repo's raw URL, sha256 checked;
+     small text by the Filesystem connector); files from the Mac as one zip written by a read-only script and read with the
+     Filesystem connector's media read, which lands as a file in the session (pictures likewise).
+121. Routes as data: one JSON of nodes per lead (`floor_plate/step3/h3_routes.json`), three node frames (board, slab,
+     world). Moving a node is a data change; the script deletes and replaces this pass's body and keeps the `_v49` backup.
+122. A post-zone probe has to include what stands under the carrier plate and every plug that cannot move. The site
+     document's zone (g5a) tested only the post above the plate and allowed a post on the display's power header.
+123. Reach: put the tool's tip on the mated plug's real top, add the neighbours' mated plugs as blocks, and give the tool a
+     rounded end. A flat Ø24 × 60 cylinder tilted 25° dips 5 mm below the plug's top; on the populated board it fails at
+     8 of 12 connectors. Daniel set the rounded Ø16 fingertip as the standard (2026-11-11).
+124. One status file per script: the render script's `<prefix>f` name overwrote another script's result (now `_renders`).
+     Save and f3d export took 10 s at 346 bodies and 48 s at 361: keep the save in a call of its own.
 
 ## Checkpoint 2 open items (2026-11-03)
 Daniel 23:41: check that the unit can be assembled; a removable back would make assembly and service easier; print the
@@ -1316,3 +1343,29 @@ Brief `claude/brief-enclosure-step1-2026-11-10.md`. Blocks 0–3 read-only on ve
 - Found: the box-top screws cannot be driven straight (the lip beside the door opening is 0.7 inside the 2.0 key's path at
   52 mm); the ball end 6–14° inboard is free (+2.3). The unused Ø2.5 pilots of the old box screws in the shell at
   (±52.75, z 10.25 / 45.75), y 2.0–5.0, behind the head pockets, are filled in version 46.
+
+## Step 3 – main board rev 3 placed, carrier, leads (h, 2026-11-11)
+Brief: Daniel's step-3 message of 2026-11-11 (blocks 0–4). Inputs: `claude/main-board-rev3-reply-2026-11-11.md`, the board's
+STEP files of `docs` `03ad1f9`. Scripts `floor_plate/fusion/v5f_h*.py` (library `v5f_h_lib.py`), data and pictures in
+`floor_plate/step3/`. Reports: `claude/report-enclosure-step3-2026-11-11.md` (closing report) and
+`claude/main-board-rev3-enclosure-findings-2026-11-11.md` (for the electronics session; copy in `floor_plate/step3/`).
+- **Version 48 (g3):** main board rev 3 at its site (board frame of the site document; STEP Z 0 = back face). Bodies
+  `MAIN_pcb`, `MAIN_PS1`, `MAIN_conn`, `MAIN_tall`, `MAIN_low`, `MAIN_plug_env` (hidden), `MAIN_PS1_tol` (hidden, the supply
+  module's top millimetre of tolerance), `MAIN_J2_plug_env`; the rev 2.1 bodies hidden as `*_v47`. 346 bodies.
+  Overlap with every body that stays 0 mm³; display-screw key paths 0.45 / 0.55 from the board's edge; cap side-screw key
+  path 2.0 from the supply module (1.2 at 28.5 tall); ride-in on the display module free (outline hull to 21 tall, supply
+  module at 28.5 with 8 to spare).
+- **Version 49 (g4):** `RESP_CARRIER` rebuilt: plate, notch, ReSpeaker bosses and tie slots as before; posts Ø8 × 13.9 with
+  holes Ø4.0 × 6.7 at (−37.0, +22.0), (−31.0, −25.25), (+31.0, −25.25); holes on all four display mounting points; no ears.
+  11 969.4 mm³, one lump; the old carrier hidden as `RESP_CARRIER_v48`. 347 bodies. **No post at the board's top right hole
+  (+30.0, +25.0):** it stands 0.35 from the centre of the display's 4-pin power header, in the plate's notch.
+- **Version 50 (g5):** every lead re-routed (`h3_routes.json`); the nine Pi signal wires at J3 are two bundles
+  (`LEAD_GPIO_A1`, `LEAD_GPIO_A2`); the Pi signal wires leave the board from its back face; the display's power lead runs
+  inside the board's outline and clear of the lower right display-screw key path (it lay in it before). Old leads hidden as
+  `*_v49`. 361 bodies, no `AUD_*`. Archive `~/Documents/HA Panel v5 - tapered revF-g5.f3d`.
+- Reach (h3e), every other plug in, free directions flat Ø24 / rounded Ø24 / rounded Ø16: VEML6030 0/2/2, radar 0/0/0,
+  BME680 0/2/5, touch 1/4/6, 20 V 0/5/5, speaker left 0/0/2, speaker right 0/0/2, Pi power plug 2/2/3 (of 6); Pi housings
+  1 × 3 0/2/3, display's 1 × 3 0/1/3, 2 × 5 1/3/4, 2 × 3 1/3/4 (of 5). Standard: rounded Ø16 (Daniel 2026-11-11).
+- To the electronics session: the top right hole to u −12.0…+22.7, v +21.6…+25.5; the BME680 header at least 3.7 further
+  from the radar socket; the VEML6030 header 0.5 lower.
+
