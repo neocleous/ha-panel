@@ -5,7 +5,10 @@ Parts without one get an envelope block (their outline on the fabrication layer,
 rev3/sitecheck.py says), written here with OpenCascade and attached to a copy of the board. The checked board file is
 not touched.
 
-    python3 gen/step_rev3.py main-board.kicad_pcb main-board-rev3.step [work dir]
+    python3 gen/step_rev3.py main-board.kicad_pcb main-board-rev3.step [work dir] [site dir]
+
+The plug envelopes go to <output name>-plug-envelopes.step. The site dir is the folder whose sitecheck.py holds the height
+tables (default rev3; rev 3.1: rev3.1, the tables are the same).
 
 Frame of the STEP file: X = u, Y = v (origin in the middle of the board), Z up out of the door-side face.
 """
@@ -23,7 +26,7 @@ from OCP.STEPControl import STEPControl_AsIs, STEPControl_Reader, STEPControl_Wr
 from OCP.TopoDS import TopoDS_Compound
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, os.path.join(HERE, '..', 'rev3'))
+sys.path.insert(0, os.path.abspath(sys.argv[4]) if len(sys.argv) > 4 else os.path.join(HERE, '..', 'rev3'))
 import sitecheck as SC                                   # noqa: E402  (height table)
 
 TO = pcbnew.ToMM

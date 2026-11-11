@@ -4,9 +4,12 @@ Electronics session, step 2 repeated (`claude/brief-electronics-step2-repeat-202
 Block 0 (the change list shown at the checkpoint): `block0.md`. Positions are in the site's board frame, seen from the
 door: **u** to the right, **v** up, mm.
 
-**Checkpoint. The board is changed, routed and checked. It is a draft like everything else until the whole unit is shown
+**The board is changed, routed and checked. It is a draft like everything else until the whole unit is shown
 to be buildable. No fab files, no stencil, no basket or order list touched, nothing on `main`.**
-Not done yet (block 2): the reply to the enclosure, `MAIN_env.md`, `gpio-leads.md`, the STEP files.
+Block 2 followed on the same day (Daniel's go-ahead, 22:16): the reply to the enclosure is
+`../main-board-rev3-1-reply-2026-11-11.md`, with `../MAIN_env.md`, `../gpio-leads.md` and the two STEP files
+`../main-board-rev3.1.step` and `../main-board-rev3.1-plug-envelopes.step`. Block 2 changed nothing on the board. It
+corrected three figures in the tables of the site check (section 8, note under the table).
 
 ![rev 3.1 seen from the door](floorplan.png)
 
@@ -112,12 +115,16 @@ The budget of 2026-11-02 assumed 4 mΩ; the board is 0.8 above it.
 | Site rules | 36 checked, 34 met, 2 not met (accepted) | `site-rules.md` |
 | H2 in the new zone | u +19.20, v +25.00 in u −12.0…+22.7, v +21.6…+25.5; nearest display mounting point 19.9 | `site-rules.md` rule 5 |
 | Clear zones at the four holes | nearest part outline 0.01 outside the 7 mm circle; nearest through-hole pad 0.10 outside the 9 mm circle | rules 8, 9 |
-| Back-face pin ends over the display's power lead | J5 and J9 1.9, C5 and C6 1.5; 4.0 allowed | rule 33 |
+| Back-face pin ends over the display's power lead | J5 and J9 1.8, C5 and C6 1.5; 4.0 allowed | rule 33 |
 | BME680 header | 3.90 further from the radar socket; 3.89 to the supply module as before | rule 34 |
 | VEML6030 header | 1.00 lower | rule 35 |
 | What had to stay | 11 of 120 parts moved, none of the fixed ones | rule 36 |
 | Hand assembly | all on the door side; nothing under 0603; connectors through-hole | `check/hand_assembly_rev3.1_result.txt` |
 | Repeatable | two runs of the script give the same copper | `gen/rev31.sh` |
+
+Corrected in block 2: the pin ends of the JST sockets are 1.8 (this table said 1.9 at the block 1 checkpoint) and those
+of the pin headers 1.4 (1.5); the bare pin header is 8.54 tall (8.65). The enclosure found the differences between the
+rev 3 tables and the STEP file; the file was right (reply, section 8). No rule's result changes.
 
 ## 9. Deviations from the brief
 1. The three of section 3.
@@ -153,3 +160,4 @@ The budget of 2026-11-02 assumed 4 mΩ; the board is 0.8 above it.
 | `plan_from_board.py`, `sitecheck.py`, `sitedata.py` | how they are made (the site data carries the new hole zone) |
 | `check/` | the calculations of block 0 and block 1 with their output |
 | `block0.md`, `block0-planned-changes.png` | the change list as shown at the checkpoint |
+| `check/step_check.py`, `check/reply_data.py` and their results | block 2: the STEP files read back against the board files; the numbers of the reply |

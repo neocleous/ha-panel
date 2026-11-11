@@ -1,11 +1,22 @@
 # HA panel — main board
 
-> **Rev 3 (2026-11-11): schematic and routed board for the site behind the display are in this folder.**
+> **Rev 3.1 (2026-11-11): the board in this folder.** Rev 3 with three changes asked for by the enclosure (top right
+> hole at u +19.20, v +25.00; BME680 header 3.90 further from the radar socket; VEML6030 header 1.00 lower), wider
+> copper for the Pi's 5 V and the 20 V inlet, and ground pours on both outer layers. Same circuit, same parts.
+> ERC 0 errors 0 warnings; DRC 0 errors, 0 open connections, schematic comparison clean, 2 warnings.
+> Report: [`rev3.1/README.md`](rev3.1/README.md). For the enclosure model:
+> [`main-board-rev3-1-reply-2026-11-11.md`](main-board-rev3-1-reply-2026-11-11.md), [`MAIN_env.md`](MAIN_env.md),
+> `main-board-rev3.1.step`, `main-board-rev3.1-plug-envelopes.step`. Pi lead table: [`gpio-leads.md`](gpio-leads.md).
+> The rev 3 files are kept (`rev3/`, `main-board-rev3.step`, `main-board-rev3-plug-envelopes.step`,
+> `main-board-rev3-reply-2026-11-11.md`). No fab files for rev 3 or rev 3.1.
+>
+> **Rev 3 (2026-11-11): schematic and routed board for the site behind the display.**
 > 87.0 x 57.9, four layers, every part on the door side. ERC 0 errors 0 warnings; DRC 0 errors, 0 open connections,
 > schematic comparison clean, 2 warnings. Report: [`rev3/README.md`](rev3/README.md) (floor plan: sections 1 to 13, routed
-> board: section 14). Pi lead table: [`gpio-leads.md`](gpio-leads.md). For the enclosure model:
-> [`main-board-rev3-reply-2026-11-11.md`](main-board-rev3-reply-2026-11-11.md), [`MAIN_env.md`](MAIN_env.md),
-> `main-board-rev3.step`, `main-board-rev3-plug-envelopes.step`. No fab files for rev 3.
+> board: section 14). Pi lead table: [`rev3/gpio-leads.md`](rev3/gpio-leads.md). For the enclosure model:
+> [`main-board-rev3-reply-2026-11-11.md`](main-board-rev3-reply-2026-11-11.md), [`rev3/MAIN_env.md`](rev3/MAIN_env.md),
+> `main-board-rev3.step`, `main-board-rev3-plug-envelopes.step`. The board file of rev 3 is
+> `rev3/main-board-rev3.kicad_pcb`.
 > **Everything below this note describes rev 2.1**, whose files are now in [`rev2.1/`](rev2.1/). All of it is a draft
 > until the whole unit is shown to be buildable (architect log 2026-11-10, section 0).
 

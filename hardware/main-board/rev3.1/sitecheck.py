@@ -27,7 +27,7 @@ HEIGHT = [   # (footprint starts with, height, source)
     ('L_Codaca_CSBA0850', 5.4, 'MAIN_env rev 2.1 (CODACA: body 5.1)'),
     ('JST_XH_B', 7.0, 'JST XH top-entry header, KiCad model (plug mated 9.8, JST catalogue)'),
     ('USB_C_Receptacle_GCT_USB4085', 3.46, 'GCT drawing USB4085 rev B'),
-    ('PinHeader_1x04', 8.65, 'pin header, KiCad model (with a Dupont housing about 16.5, estimate)'),
+    ('PinHeader_1x04', 8.54, 'pin header, KiCad model 8.54 (generic part, chosen with the parts list: not verified; with a Dupont housing about 16.5, estimate)'),
     ('WirePads_', 3.0, 'wire pads: solder joints and wire ends (estimate)'),
     ('PinHeader_2x', 3.0, 'wire pads: solder joints and wire ends (estimate)'),
     ('PinHeader_1x08', 3.0, 'wire pads: solder joints and wire ends (estimate)'),
@@ -43,13 +43,13 @@ HEIGHT = [   # (footprint starts with, height, source)
 # ---- through-hole pin ends beyond the back face of a 1.6 board (mm) ----
 PROTRUSION = [
     ('MeanWell_NID100', 2.9, 'pins 4.5 long (NID100-SPEC) - 1.6'),
-    ('JST_XH_B', 1.9, 'post 3.48 below the seating plane (KiCad model of JST XH) - 1.6'),
-    ('PinHeader_1x04', 1.5, 'pin 3.11 below the seating plane (KiCad model) - 1.6'),
+    ('JST_XH_B', 1.8, 'post 3.4 below the seating plane (JST XH catalogue; the KiCad model agrees) - 1.6'),
+    ('PinHeader_1x04', 1.4, 'pin 3.0 below the seating plane (KiCad model; generic part, not verified) - 1.6'),
     ('USB_C_Receptacle_GCT_USB4085', 0.5, 'shell stakes 2.10, signal tails 1.60 (GCT drawing) - 1.6'),
     ('CP_Radial', 1.5, 'leads cut after soldering (assumed, to be kept to on the bench)'),
     ('WireLink', 1.5, 'wire cut after soldering (assumed)'),
     ('WirePads_1x08', 1.5, 'wire pads (second echo-reference option only)'),
-    ('WirePads_', 1.5, 'wire pads: wire end or solder cone (assumed); the lead itself may leave this face'),
+    ('WirePads_', 1.5, 'wire pads: the Pi signal wires enter from this face and are soldered on the door side (step 3). No joint here; the wire itself leaves the face on the route of the enclosure. 1.5 kept as an allowance (assumed)'),
     ('PinHeader_2x', 1.5, 'wire pads: wire end or solder cone (assumed); the lead itself may leave this face'),
     ('PinHeader_1x08', 1.5, 'wire pads (second echo-reference option only)'),
 ]
@@ -579,8 +579,8 @@ def main(d):
         '  everything else                 3.0 or less\n'
         '\nBACK FACE: no parts. Pin ends beyond it:\n'
         '  supply module                   2.9\n'
-        '  XH sockets                      1.9\n'
-        '  pin headers                     1.5\n'
+        '  XH sockets                      1.8\n'
+        '  pin headers                     1.4\n'
         '  C5, C6, C7, LK1 (cut)           1.5 or less\n'
         '  USB-C socket stakes             0.5\n'
         '  none in the hatched zones or the post zones\n'

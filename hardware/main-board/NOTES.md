@@ -4,6 +4,10 @@
 > the sensor header is two 1 x 4 headers (J10 BME680, J11 VEML6030, same nets as the 2 x 4); J3's pads are in housing
 > order (`gpio-leads.md`); J3, J4 and J7 use the project's wire-pad footprints; all test pads are on the door side.
 > Section 7 (layout) describes rev 2.1; the rev 3 layout is in `rev3/README.md`, section 14.
+>
+> **Rev 3.1 (2026-11-11):** the circuit is rev 3's; only the layout changed (`rev3.1/README.md`). For the values in
+> sections 1 and 2: the Pi's 5 V board copper is 4.8 mOhm (rev 3: 7.2, rev 2.1: 26.7), calculated in
+> `rev3.1/check/`; test pads TP3 (IMON) and TP12 (RADAR) moved (`rev3.1/README.md`, section 2).
 
 KiCad **9.0.9**. Every value below is traced to a datasheet section or a project decision; sources and retrieval dates are at the end. "E" = engineering estimate, "not verified" = no source found.
 

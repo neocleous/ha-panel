@@ -1,0 +1,7 @@
+rows of "Everything that moved" checked: 11
+holes checked: 4
+connector rows checked: 11 (the boxes of the wire pads J3, J4, J7 are pads plus 0.3 and are not compared)
+probe point J10 (-30.4, -14.11): agrees
+probe point J11 (-0.69, -13.0): agrees
+probe point J5 (-40.3, -13.85): agrees
+ALL AGREE

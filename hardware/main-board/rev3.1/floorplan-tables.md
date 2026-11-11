@@ -38,8 +38,8 @@
 | J9 | speaker right socket | -43.2...-34.8 | -28.9...-22.1 | 7.00 bare; 9.8 mated (JST); 20 with the lead bend | 46.0 | door | JST XH top-entry header, KiCad model (plug mated 9.8, JST catalogue) |
 | J6 | touch board socket | +9.4...+16.2 | -28.9...-15.4 | 7.00 bare; 9.8 mated (JST); 20 with the lead bend | 48.0 | door | JST XH top-entry header, KiCad model (plug mated 9.8, JST catalogue) |
 | J5 | radar socket | -43.2...-36.4 | -20.6...-7.1 | 7.00 bare; 9.8 mated (JST); 20 with the lead bend | 40.0 | door | JST XH top-entry header, KiCad model (plug mated 9.8, JST catalogue) |
-| J10 | BME680 socket | -32.2...-28.6 | -19.7...-8.5 | 8.65 bare; about 16.5 with the housing (estimate); 25 with the lead bend | 41.9 | cap side-screw key path | pin header, KiCad model (with a Dupont housing about 16.5, estimate) |
-| J11 | VEML6030 socket | -6.3...+4.9 | -14.8...-11.2 | 8.65 bare; about 16.5 with the housing (estimate); 25 with the lead bend | 47.0 | door | pin header, KiCad model (with a Dupont housing about 16.5, estimate) |
+| J10 | BME680 socket | -32.2...-28.6 | -19.7...-8.5 | 8.54 bare; about 16.5 with the housing (estimate); 25 with the lead bend | 41.9 | cap side-screw key path | pin header, KiCad model 8.54 (generic part, chosen with the parts list: not verified; with a Dupont housing about 16.5, estimate) |
+| J11 | VEML6030 socket | -6.3...+4.9 | -14.8...-11.2 | 8.54 bare; about 16.5 with the housing (estimate); 25 with the lead bend | 47.0 | door | pin header, KiCad model 8.54 (generic part, chosen with the parts list: not verified; with a Dupont housing about 16.5, estimate) |
 | J2 | Pi power socket | +16.3...+26.9 | -29.5...-19.2 | 3.46; the plug hangs below the edge | 48.0 | door | GCT drawing USB4085 rev B |
 
 ### Through-hole pin ends on the back face
@@ -48,17 +48,17 @@
 | C5 | -5.5...-0.5 | +13.9...+13.9 | 1.5 | 4.0 | over the ReSpeaker | leads cut after soldering (assumed, to be kept to on the bench) |
 | C6 | -29.5...-24.5 | +13.9...+13.9 | 1.5 | 4.0 | over the ReSpeaker | leads cut after soldering (assumed, to be kept to on the bench) |
 | C7 | +7.5...+9.5 | +11.4...+11.4 | 1.5 | 4.0 | over the ReSpeaker | leads cut after soldering (assumed, to be kept to on the bench) |
-| J1 | -1.2...+1.2 | -25.0...-25.0 | 1.9 | 12.0 | bottom band | post 3.48 below the seating plane (KiCad model of JST XH) - 1.6 |
+| J1 | -1.2...+1.2 | -25.0...-25.0 | 1.8 | 12.0 | bottom band | post 3.4 below the seating plane (JST XH catalogue; the KiCad model agrees) - 1.6 |
 | J2 | +17.3...+25.9 | -24.7...-20.3 | 0.5 | 4.0 | over the ReSpeaker | shell stakes 2.10, signal tails 1.60 (GCT drawing) - 1.6 |
-| J3 | -25.3...-15.1 | -27.0...-24.5 | 1.5 | 12.0 | bottom band | wire pads: wire end or solder cone (assumed); the lead itself may leave this face |
-| J4 | +5.7...+8.2 | -27.0...-24.5 | 1.5 | 12.0 | bottom band | wire pads: wire end or solder cone (assumed); the lead itself may leave this face |
-| J5 | -40.3...-40.3 | -17.6...-10.1 | 1.9 | 4.0 | over the ReSpeaker | post 3.48 below the seating plane (KiCad model of JST XH) - 1.6 |
-| J6 | +12.3...+12.3 | -25.9...-18.4 | 1.9 | 4.0 | over the ReSpeaker | post 3.48 below the seating plane (KiCad model of JST XH) - 1.6 |
+| J3 | -25.3...-15.1 | -27.0...-24.5 | 1.5 | 12.0 | bottom band | wire pads: the Pi signal wires enter from this face and are soldered on the door side (step 3). No joint here; the wire itself leaves the face on the route of the enclosure. 1.5 kept as an allowance (assumed) |
+| J4 | +5.7...+8.2 | -27.0...-24.5 | 1.5 | 12.0 | bottom band | wire pads: the Pi signal wires enter from this face and are soldered on the door side (step 3). No joint here; the wire itself leaves the face on the route of the enclosure. 1.5 kept as an allowance (assumed) |
+| J5 | -40.3...-40.3 | -17.6...-10.1 | 1.8 | 4.0 | over the ReSpeaker | post 3.4 below the seating plane (JST XH catalogue; the KiCad model agrees) - 1.6 |
+| J6 | +12.3...+12.3 | -25.9...-18.4 | 1.8 | 4.0 | over the ReSpeaker | post 3.4 below the seating plane (JST XH catalogue; the KiCad model agrees) - 1.6 |
 | J7 | -29.5...-11.7 | +24.2...+24.2 | 1.5 | 5.0 | top band | wire pads (second echo-reference option only) |
-| J8 | +37.5...+40.0 | -25.0...-25.0 | 1.9 | 12.0 | bottom band | post 3.48 below the seating plane (KiCad model of JST XH) - 1.6 |
-| J9 | -40.2...-37.8 | -25.0...-25.0 | 1.9 | 12.0 | bottom band | post 3.48 below the seating plane (KiCad model of JST XH) - 1.6 |
-| J10 | -30.4...-30.4 | -17.9...-10.3 | 1.5 | 4.0 | over the ReSpeaker | pin 3.11 below the seating plane (KiCad model) - 1.6 |
-| J11 | -4.5...+3.1 | -13.0...-13.0 | 1.5 | 4.0 | over the ReSpeaker | pin 3.11 below the seating plane (KiCad model) - 1.6 |
+| J8 | +37.5...+40.0 | -25.0...-25.0 | 1.8 | 12.0 | bottom band | post 3.4 below the seating plane (JST XH catalogue; the KiCad model agrees) - 1.6 |
+| J9 | -40.2...-37.8 | -25.0...-25.0 | 1.8 | 12.0 | bottom band | post 3.4 below the seating plane (JST XH catalogue; the KiCad model agrees) - 1.6 |
+| J10 | -30.4...-30.4 | -17.9...-10.3 | 1.4 | 4.0 | over the ReSpeaker | pin 3.0 below the seating plane (KiCad model; generic part, not verified) - 1.6 |
+| J11 | -4.5...+3.1 | -13.0...-13.0 | 1.4 | 4.0 | over the ReSpeaker | pin 3.0 below the seating plane (KiCad model; generic part, not verified) - 1.6 |
 | LK1 | +6.9...+14.5 | -11.2...-11.2 | 1.5 | 4.0 | over the ReSpeaker | wire cut after soldering (assumed) |
 | PS1 | -35.8...+12.5 | -0.3...-0.3 | 2.9 | 4.0 | over the ReSpeaker | pins 4.5 long (NID100-SPEC) - 1.6 |
 

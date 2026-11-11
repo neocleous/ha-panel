@@ -1,7 +1,13 @@
 # GPIO leads — pin assignment and plug maps (main board ↔ Pi 5 header)
 
-Rev 3, 2026-11-11 (main board laid out for the site behind the display). KiCad 9.0.9 schematic sheet "3.3 V, Pi link, XH, D4a"
-(`io.kicad_sch`), wire pads J3/J4. The rev 2.1 version of this file is in `rev2.1/gpio-leads.md`.
+Rev 3.1, 2026-11-11 (main board laid out for the site behind the display). KiCad 9.0.9 schematic sheet "3.3 V, Pi link, XH, D4a"
+(`io.kicad_sch`), wire pads J3/J4. Earlier versions of this file: `rev3/gpio-leads.md`, `rev2.1/gpio-leads.md`.
+
+**Rev 3.1 against rev 3:** one thing is new, the face the wires enter from (next line and the section "Entry face").
+Pads, nets, Pi pins, housings and colours are unchanged; J3 and J4 have not moved.
+
+- **The 13 wires enter from the back face and are soldered on the door-side face.** Settled in step 3
+  (`claude/main-board-rev3-enclosure-findings-2026-11-11.md`, section 5; brief of 2026-11-11, "What must stay", point 5).
 
 - **13 leads**, pre-crimped F-F Dupont leads (YBM 26 AWG UL1007: black = GND, red = 3V3, yellow = signal). Cut length: set in
   the harness step, not here.
@@ -9,7 +15,8 @@ Rev 3, 2026-11-11 (main board laid out for the site behind the display). KiCad 9
   **housing 1, 1 × 3 on header pins 1-3-5**; **housing 2, 2 × 5 on pins 7–16**; **housing 3, 2 × 3 on pins 35–40**.
   The LCD's own lead keeps its own 1 × 3 housing on pins 2-4-6 and is not part of this set.
 - **Main-board end: wire pads, not headers.** J3 (2 × 5) and J4 (2 × 2), 2.54 mm pitch, Ø1.0 mm plated holes, at the bottom
-  edge of the board; the lead's main-board terminal is cut off and the wire soldered in.
+  edge of the board; the lead's main-board terminal is cut off, the wire is pushed in from the back face and soldered on
+  the door side.
 - **What changed against rev 2.1:** the pads of J3 are in the order of the housings (housing 1 on pads 1–3, housing 2 on
   pads 4–9); J4 is unchanged. Nets and Pi pins are the same as before.
 
@@ -72,6 +79,30 @@ edge, the even pads the row above it. Positions in the board frame of the site d
 
 Silkscreen: the board is too full on the door side for a name at every pad. The back carries "PI 1-15" at J3 and
 "PI 35-40" at J4; the pad-by-pad assignment is this table.
+
+## Entry face (rev 3.1)
+
+- **Back face = the face without parts, toward the display.** The wire goes in there. The joint, with the wire's end, is
+  on the door side among the parts: 3.0 or less above that face (estimate, as in `MAIN_env.md`).
+- **Why:** nothing then lies across the sockets on the bottom edge; the joints can be reworked with the board mounted;
+  the three bundles drop behind the bottom edge to the Pi's header (the enclosure's route).
+- **On the bench:** the wires are soldered before the board is mounted, as before. The back is the face you look at
+  while pushing them in, and it carries the names "PI 1-15" and "PI 35-40". Seen from there the board is mirrored left
+  to right:
+
+| J3 seen from the back, upper row (v −24.46) | .10 spare | .8 A8 GND | .6 A6 RXD | .4 A4 TXD | .2 A2 SDA |
+|---|---|---|---|---|---|
+| **J3, edge row (v −27.00)** | **.9 A9 MUTE** | **.7 A7 BCLK** | **.5 A5 GND** | **.3 A3 SCL** | **.1 A1 3V3** |
+| u | −15.14 | −17.68 | −20.22 | −22.76 | −25.30 |
+
+| J4 seen from the back, upper row (v −24.46) | .4 B4 DOUT | .2 B2 DIN |
+|---|---|---|
+| **J4, edge row (v −27.00)** | **.3 B3 GND** | **.1 B1 LRCLK** |
+| u | +8.19 | +5.65 |
+
+- **Not here:** cut lengths and the route of the bundles. The enclosure routed them at 58 mm each from the back face to
+  the Pi (findings, section 5); the lengths are set in the harness step.
+- No layout change came from this: the pads are plain plated holes and take a wire from either face.
 
 ## What the stock overlay expects (`dtoverlay=rpi-digiampplus`)
 From `arch/arm/boot/dts/overlays/rpi-digiampplus-overlay.dts` and the `iqaudio-dacplus-overlay.dts` it includes (raspberrypi/linux, read 2026-11-07):

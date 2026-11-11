@@ -14,7 +14,7 @@
 | 12 | Supply module upright below v +8 | 4 | met | module v -4.34...7.75 at its 12.0 maximum thickness, u -37.10...13.79 |
 | 13 | Nothing that is plugged in place in the top third (above v +9.65) | brief, 5 | met | highest plugged connector: J5, top at v -7.11 |
 | 14 | 20 mm plug-plus-bend only below v +18 | 4 | met | all plugged connectors end at v -7.11 or lower |
-| 15 | Back face: through-hole pin ends within the allowed heights | 1 | met | smallest margins: PS1 2.9 of 4.0 (over the ReSpeaker); J5 1.9 of 4.0 (over the ReSpeaker); J6 1.9 of 4.0 (over the ReSpeaker); C5 1.5 of 4.0 (over the ReSpeaker) |
+| 15 | Back face: through-hole pin ends within the allowed heights | 1 | met | smallest margins: PS1 2.9 of 4.0 (over the ReSpeaker); J5 1.8 of 4.0 (over the ReSpeaker); J6 1.8 of 4.0 (over the ReSpeaker); C5 1.5 of 4.0 (over the ReSpeaker) |
 | 16 | No through-hole joint over the ReSpeaker's header, its jack, or beside its USB plug | 1 | met | joints in those zones: none |
 | 17 | No part on the back face | standing decision | met | parts on the back face: none |
 | 18 | J1 (20 V in) in A, u -5...+5 | 5 | met | pins u -1.25...+1.25, v -25.00...-25.00 |
@@ -32,7 +32,7 @@
 | 30 | Plugs at the lower corners inside u +/-47 | 3 | met | speaker sockets end at u +/-43.24; their plugs stand on the board, nothing hangs past the corner |
 | 31 | No two parts overlap (courtyards) | hand assembly | met | overlaps: none |
 | 32 | Everything of rev 2.1 has a place on the door-side face | brief | met | 120 parts placed; courtyards fill 3304 of 5037 mm2 (66 %); rev 2.1: 66 % over both faces |
-| 33 | Back face: pin ends 4.0 or less where the display's power lead runs (v +14.0...+17.1 to u -42.1, then the -u edge) | findings 5 | met | pin ends in the strips: J9 1.9; J5 1.9; C6 1.5; C5 1.5 |
+| 33 | Back face: pin ends 4.0 or less where the display's power lead runs (v +14.0...+17.1 to u -42.1, then the -u edge) | findings 5 | met | pin ends in the strips: J9 1.8; J5 1.8; C6 1.5; C5 1.5 |
 | 34 | J10 (BME680): at least 3.7 further from the radar socket than on rev 3, and no closer to the supply module | findings 4 | met | between the boxes of J5 and J10: 4.14 (rev 3: 0.24), 3.90 more; to the supply module 3.89 (rev 3: 3.89) |
 | 35 | J11 (VEML6030): 0.5 to 2.0 lower than on rev 3 | findings 4 | met | pins at v -13.00 (rev 3: -12.00): 1.00 lower |
 | 36 | What had to stay has stayed: the outline, three holes, the sockets J1, J2, J5, J6, J8, J9, the wire pads J3, J4, J7, the large parts | brief | met | 11 of 120 parts moved: C10, C11, F3, F4, H2, J10, J11, R26, R27, TP12, TP3 |
