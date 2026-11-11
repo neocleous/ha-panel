@@ -9,7 +9,7 @@
 | 7 | H4: hole dia 3.2 on an allowed post position | 2 | met | u +31.00, v -25.25 (bottom band v -25.25 +/- 0.2); nearest display mounting point 8.1 away (7.0 needed) |
 | 8 | Door side: dia 7 clear round each hole (screw head) | 2 | met | nearest part courtyard 0.01 outside the dia 7 zone; inside: none |
 | 9 | Back face: dia 9 clear round each hole (post): no through-hole joint | 2 | met | nearest through-hole pad 0.10 outside the dia 9 zone; inside: none |
-| 10 | Door-side part heights within the table and under the cap-screw key paths | 1, 3 | met | smallest margins: PS1 27.5 tall, 28.9 allowed (cap side-screw key path); C6 16.0 tall, 24.0 allowed (cap back-screw key path); H2 1.6 tall, 12.7 allowed (cap side-screw key path); H1 1.6 tall, 15.1 allowed (cap side-screw key path) |
+| 10 | Door-side part heights within the table and under the cap-screw key paths | 1, 3 | met | smallest margins: PS1 27.5 tall, 28.9 allowed (cap side-screw key path); C6 16.0 tall, 24.0 allowed (cap back-screw key path); H2 1.6 tall, 12.6 allowed (cap side-screw key path); H1 1.6 tall, 15.0 allowed (cap side-screw key path) |
 | 11 | Plug with its lead bend (20; Dupont housing 25) inside the allowed height | 1, 4 | met | J1 20 of 51; J8 20 of 44; J9 20 of 46; J6 20 of 48; J5 20 of 40; J10 25 of 42; J11 25 of 47 |
 | 12 | Supply module upright below v +8 | 4 | met | module v -4.34...7.75 at its 12.0 maximum thickness, u -37.10...13.79 |
 | 13 | Nothing that is plugged in place in the top third (above v +9.65) | brief, 5 | met | highest plugged connector: J5, top at v -7.11 |
@@ -31,4 +31,4 @@
 | 29 | Order along the bottom edge from -u to +u | 5 | met | J9 -39.0 . J3 -20.2 . J1 +0.0 . J4 +6.9 . J6 +12.8 . J2 +21.6 . J8 +38.8  (posts at u -31.0 and +31.0) |
 | 30 | Plugs at the lower corners inside u +/-47 | 3 | met | speaker sockets end at u +/-43.24; their plugs stand on the board, nothing hangs past the corner |
 | 31 | No two parts overlap (courtyards) | hand assembly | met | overlaps: none |
-| 32 | Everything of rev 2.1 has a place on the door-side face | brief | met | 120 parts placed; courtyards fill 3298 of 5037 mm2 (65 %); rev 2.1: 66 % over both faces |
+| 32 | Everything of rev 2.1 has a place on the door-side face | brief | met | 120 parts placed; courtyards fill 3304 of 5037 mm2 (66 %); rev 2.1: 66 % over both faces |

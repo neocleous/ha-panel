@@ -230,7 +230,7 @@
     "pinned_symbol_libs": []
   },
   "meta": {
-    "filename": "main-board.kicad_pro",
+    "filename": "s0.kicad_pro",
     "version": 3
   },
   "net_settings": {
@@ -534,27 +534,6 @@
     "legacy_lib_dir": "",
     "legacy_lib_list": []
   },
-  "sheets": [
-    [
-      "980c05f3-9758-589b-aec7-76070199c466",
-      "Root"
-    ],
-    [
-      "5bf930bc-2287-57d6-8858-31a8a6eb72e7",
-      "20 V inlet and eFuse"
-    ],
-    [
-      "c8a233c1-b1c0-5bcb-9117-6ee40b8186d0",
-      "5 V supply and outputs"
-    ],
-    [
-      "b875bca7-cda7-5865-a23d-6cb26342f78b",
-      "3.3 V, Pi link, sensors, radar, echo-ref"
-    ],
-    [
-      "affcba31-8771-5611-8ada-b5e93211aebb",
-      "Amplifier"
-    ]
-  ],
+  "sheets": [],
   "text_variables": {}
 }

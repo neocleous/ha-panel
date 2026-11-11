@@ -1544,23 +1544,23 @@
    ]
   },
   "H1": {
-   "value": "M3 x 8, hole 3.2",
-   "footprint": "MountingHole_3.2mm_M3",
-   "u": -37.001,
+   "value": "M3 x 8",
+   "footprint": "MountingHole_3.2mm_M3_Post",
+   "u": -36.999,
    "v": 22.0,
    "rot": 0.0,
    "crt": [
-    -40.494,
-    18.502,
-    -33.506,
-    25.498
+    -40.546,
+    18.454,
+    -33.454,
+    25.546
    ],
    "placed": "fixed",
    "from_anchor": null,
    "pads": [
     {
      "n": "",
-     "u": -37.001,
+     "u": -36.999,
      "v": 22.0,
      "tht": true,
      "sx": 3.2,
@@ -1570,23 +1570,23 @@
    ]
   },
   "H2": {
-   "value": "M3 x 8, hole 3.2",
-   "footprint": "MountingHole_3.2mm_M3",
-   "u": 29.999,
+   "value": "M3 x 8",
+   "footprint": "MountingHole_3.2mm_M3_Post",
+   "u": 30.001,
    "v": 25.0,
    "rot": 0.0,
    "crt": [
-    26.506,
-    21.502,
-    33.494,
-    28.498
+    26.454,
+    21.454,
+    33.546,
+    28.546
    ],
    "placed": "fixed",
    "from_anchor": null,
    "pads": [
     {
      "n": "",
-     "u": 29.999,
+     "u": 30.001,
      "v": 25.0,
      "tht": true,
      "sx": 3.2,
@@ -1596,23 +1596,23 @@
    ]
   },
   "H3": {
-   "value": "M3 x 8, hole 3.2",
-   "footprint": "MountingHole_3.2mm_M3",
-   "u": -31.001,
+   "value": "M3 x 8",
+   "footprint": "MountingHole_3.2mm_M3_Post",
+   "u": -30.999,
    "v": -25.25,
    "rot": 0.0,
    "crt": [
-    -34.494,
-    -28.748,
-    -27.506,
-    -21.752
+    -34.546,
+    -28.796,
+    -27.454,
+    -21.704
    ],
    "placed": "fixed",
    "from_anchor": null,
    "pads": [
     {
      "n": "",
-     "u": -31.001,
+     "u": -30.999,
      "v": -25.25,
      "tht": true,
      "sx": 3.2,
@@ -1622,23 +1622,23 @@
    ]
   },
   "H4": {
-   "value": "M3 x 8, hole 3.2",
-   "footprint": "MountingHole_3.2mm_M3",
-   "u": 30.999,
+   "value": "M3 x 8",
+   "footprint": "MountingHole_3.2mm_M3_Post",
+   "u": 31.001,
    "v": -25.25,
    "rot": 0.0,
    "crt": [
-    27.506,
-    -28.748,
-    34.494,
-    -21.752
+    27.454,
+    -28.796,
+    34.546,
+    -21.704
    ],
    "placed": "fixed",
    "from_anchor": null,
    "pads": [
     {
      "n": "",
-     "u": 30.999,
+     "u": 31.001,
      "v": -25.25,
      "tht": true,
      "sx": 3.2,
@@ -1683,7 +1683,7 @@
    ]
   },
   "J10": {
-   "value": "1x04 male header 2.54, BME680",
+   "value": "1x04 header BME680",
    "footprint": "PinHeader_1x04_P2.54mm_Vertical",
    "u": -34.3,
    "v": -10.3,
@@ -1736,7 +1736,7 @@
    ]
   },
   "J11": {
-   "value": "1x04 male header 2.54, VEML6030",
+   "value": "1x04 header VEML6030",
    "footprint": "PinHeader_1x04_P2.54mm_Vertical",
    "u": -4.5,
    "v": -12.0,
@@ -1986,8 +1986,8 @@
    ]
   },
   "J3": {
-   "value": "GPIO landing A (wire pads)",
-   "footprint": "PinHeader_2x05_P2.54mm_Vertical",
+   "value": "Pi signal leads, 9 (wire pads)",
+   "footprint": "WirePads_2x05_P2.54mm_D1.0mm",
    "u": -25.3,
    "v": -27.0,
    "rot": 90.0,
@@ -2016,7 +2016,7 @@
      "tht": true,
      "sx": 1.7,
      "sy": 1.7,
-     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_TXD"
+     "net": "I2C_SDA"
     },
     {
      "n": "3",
@@ -2025,7 +2025,7 @@
      "tht": true,
      "sx": 1.7,
      "sy": 1.7,
-     "net": "I2C_SDA"
+     "net": "I2C_SCL"
     },
     {
      "n": "4",
@@ -2034,7 +2034,7 @@
      "tht": true,
      "sx": 1.7,
      "sy": 1.7,
-     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_RXD"
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_TXD"
     },
     {
      "n": "5",
@@ -2043,7 +2043,7 @@
      "tht": true,
      "sx": 1.7,
      "sy": 1.7,
-     "net": "I2C_SCL"
+     "net": "GND"
     },
     {
      "n": "6",
@@ -2052,7 +2052,7 @@
      "tht": true,
      "sx": 1.7,
      "sy": 1.7,
-     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_BCLK"
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_RXD"
     },
     {
      "n": "7",
@@ -2061,7 +2061,7 @@
      "tht": true,
      "sx": 1.7,
      "sy": 1.7,
-     "net": "GND"
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_BCLK"
     },
     {
      "n": "8",
@@ -2093,8 +2093,8 @@
    ]
   },
   "J4": {
-   "value": "GPIO landing B (wire pads)",
-   "footprint": "PinHeader_2x02_P2.54mm_Vertical",
+   "value": "Pi signal leads, 4 (wire pads)",
+   "footprint": "WirePads_2x02_P2.54mm_D1.0mm",
    "u": 5.65,
    "v": -27.0,
    "rot": 90.0,
@@ -2253,7 +2253,7 @@
   },
   "J7": {
    "value": "D4a ReSpeaker tap",
-   "footprint": "PinHeader_1x08_P2.54mm_Vertical",
+   "footprint": "WirePads_1x08_P2.54mm_D1.0mm",
    "u": -29.5,
    "v": 24.2,
    "rot": 90.0,
@@ -3037,22 +3037,22 @@
   "R11": {
    "value": "10k 1%",
    "footprint": "R_0603_1608Metric",
-   "u": 28.816,
-   "v": -20.689,
+   "u": 28.769,
+   "v": -20.443,
    "rot": 0.0,
    "crt": [
-    27.291,
-    -21.464,
-    30.341,
-    -19.914
+    27.244,
+    -21.218,
+    30.294,
+    -19.668
    ],
    "placed": "auto",
    "from_anchor": 6.0,
    "pads": [
     {
      "n": "1",
-     "u": 27.991,
-     "v": -20.689,
+     "u": 27.944,
+     "v": -20.443,
      "tht": false,
      "sx": 0.8,
      "sy": 0.95,
@@ -3060,8 +3060,8 @@
     },
     {
      "n": "2",
-     "u": 29.641,
-     "v": -20.689,
+     "u": 29.594,
+     "v": -20.443,
      "tht": false,
      "sx": 0.8,
      "sy": 0.95,
@@ -3142,22 +3142,22 @@
   "R14": {
    "value": "0R",
    "footprint": "R_0603_1608Metric",
-   "u": -19.719,
-   "v": -22.266,
+   "u": -17.242,
+   "v": -22.27,
    "rot": 0.0,
    "crt": [
-    -21.244,
-    -23.041,
-    -18.194,
-    -21.491
+    -18.767,
+    -23.045,
+    -15.717,
+    -21.495
    ],
    "placed": "auto",
-   "from_anchor": 2.25,
+   "from_anchor": 4.75,
    "pads": [
     {
      "n": "1",
-     "u": -20.544,
-     "v": -22.266,
+     "u": -18.067,
+     "v": -22.27,
      "tht": false,
      "sx": 0.8,
      "sy": 0.95,
@@ -3165,8 +3165,8 @@
     },
     {
      "n": "2",
-     "u": -18.894,
-     "v": -22.266,
+     "u": -16.417,
+     "v": -22.27,
      "tht": false,
      "sx": 0.8,
      "sy": 0.95,
@@ -3247,22 +3247,22 @@
   "R17": {
    "value": "100k",
    "footprint": "R_0603_1608Metric",
-   "u": -15.703,
-   "v": -22.283,
+   "u": -17.943,
+   "v": -20.314,
    "rot": 0.0,
    "crt": [
-    -17.228,
-    -23.058,
-    -14.178,
-    -21.508
+    -19.468,
+    -21.089,
+    -16.418,
+    -19.539
    ],
    "placed": "auto",
-   "from_anchor": 4.75,
+   "from_anchor": 7.25,
    "pads": [
     {
      "n": "1",
-     "u": -16.528,
-     "v": -22.283,
+     "u": -18.768,
+     "v": -20.314,
      "tht": false,
      "sx": 0.8,
      "sy": 0.95,
@@ -3270,8 +3270,8 @@
     },
     {
      "n": "2",
-     "u": -14.878,
-     "v": -22.283,
+     "u": -17.118,
+     "v": -20.314,
      "tht": false,
      "sx": 0.8,
      "sy": 0.95,
@@ -3912,22 +3912,22 @@
   "TP1": {
    "value": "VIN",
    "footprint": "TestPoint_Pad_D1.5mm",
-   "u": -17.675,
-   "v": -18.402,
+   "u": -21.045,
+   "v": -18.641,
    "rot": 0.0,
    "crt": [
-    -18.972,
-    -19.699,
-    -16.38,
-    -17.106
+    -22.342,
+    -19.937,
+    -19.75,
+    -17.345
    ],
    "placed": "auto",
-   "from_anchor": 4.75,
+   "from_anchor": 8.0,
    "pads": [
     {
      "n": "1",
-     "u": -17.675,
-     "v": -18.402,
+     "u": -21.045,
+     "v": -18.641,
      "tht": false,
      "sx": 1.5,
      "sy": 1.5,

@@ -1,0 +1,17 @@
+** Drc report for main-board.kicad_pcb **
+** Created on 2026-11-09T09:42:33+0100 **
+** Report includes: Errors, Warnings, Exclusions **
+
+** Found 2 DRC violations **
+[lib_footprint_mismatch]: Footprint 'PinHeader_2x02_P2.54mm_Vertical' does not match copy in library 'Connector_PinHeader_2.54mm'.
+    Local override; warning
+    @(45.0250 mm, 34.9950 mm): Footprint J4
+[lib_footprint_mismatch]: Footprint 'USB_C_Receptacle_GCT_USB4085' does not match copy in library 'Connector_USB'.
+    Local override; warning
+    @(22.9750 mm, 41.3900 mm): Footprint J2
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** End of Report **

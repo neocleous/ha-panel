@@ -1,5 +1,10 @@
 # Main board — schematic notes (checkpoint 1, 2026-11-07; updated for decisions 1–5, 2026-11-07 20:45) — layout rev 2 (single-sided) 2026-11-08: §7
 
+> **Rev 3 (2026-11-11):** sections 1 to 6 hold for rev 3 with these differences: H1 to H4 are 3.2 mm holes for M3 x 8;
+> the sensor header is two 1 x 4 headers (J10 BME680, J11 VEML6030, same nets as the 2 x 4); J3's pads are in housing
+> order (`gpio-leads.md`); J3, J4 and J7 use the project's wire-pad footprints; all test pads are on the door side.
+> Section 7 (layout) describes rev 2.1; the rev 3 layout is in `rev3/README.md`, section 14.
+
 KiCad **9.0.9**. Every value below is traced to a datasheet section or a project decision; sources and retrieval dates are at the end. "E" = engineering estimate, "not verified" = no source found.
 
 ## 1. 20 V inlet and eFuse (`inlet.kicad_sch`)

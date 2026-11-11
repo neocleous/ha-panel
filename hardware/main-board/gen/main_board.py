@@ -9,7 +9,8 @@ import footprints
 import symlib
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else '/home/claude/work/out/main-board'
-DATE = '2026-11-07'
+DATE = '2026-11-11'
+REV = '3'            # rev 3: re-laid for the site behind the display (claude/main-board-site-2026-11-10.md issue 2)
 
 R0603 = 'Resistor_SMD:R_0603_1608Metric'
 R0805 = 'Resistor_SMD:R_0805_2012Metric'
@@ -40,7 +41,7 @@ def design(prj):
 
     def tp(sh, ref, net, x, y, label, note=''):
         sh.comp(ref, 'Connector:TestPoint', label, (x, y), nets={'1': net}, footprint=TP_BACK,
-                fields=F(note=note or 'bare test pad on the back (door side): probe with the door off'), in_bom=False)
+                fields=F(note=note or 'bare test pad on the door-side face: probe with the door off'), in_bom=False)
 
     # =================================================================== 20 V INLET
     s = s_in
@@ -142,8 +143,8 @@ def design(prj):
            footprint='Connector_USB:USB_C_Receptacle_GCT_USB4085',
            fields=F('USB4085-GF-A', 'GCT', spec='USB 2.0 Type-C, THT dip / PCB top mount, 5.00 A VBUS, 6.25 A GND, 48 V; '
                     '3.46 above the board, axis 1.88 (GCT USB4085 rev B 2023-02-28)',
-                    note='source port to the Pi: VBUS + Rp only, no data. Door side (B), soldered from the Pi side; '
-                         'mouth flush with the bottom edge (decision 3A)'))
+                    note='source port to the Pi: VBUS + Rp only, no data. Door-side face, soldered from the back; '
+                         'mouth flush with the bottom edge, opening downward (rev 3)'))
     s.comp('R10', 'Device:R', '10k 1%', (317.5, 111.76), nets={'1': 'VBUS_PI', '2': 'PI_CC1'}, footprint=R0603,
            fields=F(spec='10 kOhm 1% 0603', note='Rp to 5 V = 3.0 A advertisement (USB Type-C)'))
     s.comp('R11', 'Device:R', '10k 1%', (330.2, 111.76), nets={'1': 'VBUS_PI', '2': 'PI_CC2'}, footprint=R0603,
@@ -171,7 +172,7 @@ def design(prj):
         'L1 is a single winding in +Vin: the input return is the common board ground (non-isolated NID, amp on the same ground).',
         'External C on +5V: C7 22 uF + C8 10 uF (X7R 1206, ~70 % at 5 V) + C9 + C10 + LDO input path (behind 2.2 Ohm)  ~ 35 uF << 100 uF.',
         'Pi output: 0453010.MR -> LK1 (wire link) -> J2 USB4085 VBUS; CC1/CC2 Rp 10 k to 5 V (3 A); Pi uses PSU_MAX_CURRENT=5000.',
-        'J2 USB4085-GF-A (THT, decision 3A) sits on the door side, mouth down at the bottom edge; all other parts on the Pi side.',
+        'J2 USB4085-GF-A (THT, decision 3A) sits on the door-side face like every other part, mouth down at the bottom edge (rev 3).',
         'Bench 2.7 test pads: 5V (NID out) | 5V_F (after fuse) | EXT5V (at J2) ; LK1 opened for the series current.',
         'Trim network DNP (D23/V20): R8 Trim->Com raises Vout, R9 Trim->+Vout lowers it (FB-divider convention, not published',
         '  by Mean Well). Spec lists pin 12 as "Trim (optional)" with no formula; on arrival measure R(pin 12-Com) unpowered and',
@@ -205,17 +206,18 @@ def design(prj):
                                                    'drivers, SLAS988B 7.3 note 2); fit only with R26 removed'))
     s.pwr_flag('3V3_AMP', (195.58, 99.06))
 
-    s.text('Pi GPIO landing (wire pads, 2.54 mm; leads from Pi plug A and plug B)', 25.4, 106.68, size=2.0, bold=True)
-    s.comp('J3', 'Connector_Generic:Conn_02x05_Odd_Even', 'GPIO landing A (wire pads)', (63.5, 132.08),
-           nets={'1': 'PI_3V3', '3': 'I2C_SDA', '5': 'I2C_SCL', '7': 'GND', '9': 'AMP_MUTE_N',
-                 '2': 'PI_TXD', '4': 'PI_RXD', '6': 'PI_BCLK', '8': 'GND', '10': None},
-           footprint='Connector_PinHeader_2.54mm:PinHeader_2x05_P2.54mm_Vertical', in_bom=False,
-           fields=F(note='wire pads only: J3.1=Pi1 3V3, .3=Pi3 SDA, .5=Pi5 SCL, .7=Pi9 GND, .9=Pi15 GPIO22, '
-                         '.2=Pi8 TXD, .4=Pi10 RXD, .6=Pi12 BCLK, .8=Pi14 GND, .10 spare'))
-    s.comp('J4', 'Connector_Generic:Conn_02x02_Odd_Even', 'GPIO landing B (wire pads)', (63.5, 165.1),
+    s.text('Pi signal leads (wire pads, 2.54 mm; 13 leads to three housings at the Pi, gpio-leads.md)', 25.4, 106.68, size=2.0, bold=True)
+    s.comp('J3', 'Connector_Generic:Conn_02x05_Odd_Even', 'Pi signal leads, 9 (wire pads)', (63.5, 132.08),
+           nets={'1': 'PI_3V3', '2': 'I2C_SDA', '3': 'I2C_SCL', '4': 'PI_TXD', '5': 'GND', '6': 'PI_RXD',
+                 '7': 'PI_BCLK', '8': 'GND', '9': 'AMP_MUTE_N', '10': None},
+           footprint='ha_panel:WirePads_2x05_P2.54mm_D1.0mm', in_bom=False,
+           fields=F(note='wire pads only, in the order of the housings at the Pi (rev 3): 1x3 on Pi 1-3-5: J3.1=Pi1 3V3, '
+                         '.2=Pi3 SDA, .3=Pi5 SCL; 2x5 on Pi 7-16: .4=Pi8 TXD, .5=Pi9 GND, .6=Pi10 RXD, .7=Pi12 BCLK, '
+                         '.8=Pi14 GND, .9=Pi15 GPIO22; .10 spare'))
+    s.comp('J4', 'Connector_Generic:Conn_02x02_Odd_Even', 'Pi signal leads, 4 (wire pads)', (63.5, 165.1),
            nets={'1': 'PI_LRCLK', '3': 'GND', '2': 'PI_DIN', '4': 'PI_DOUT'},
-           footprint='Connector_PinHeader_2.54mm:PinHeader_2x02_P2.54mm_Vertical', in_bom=False,
-           fields=F(note='wire pads only: J4.1=Pi35 LRCLK, .3=Pi39 GND, .2=Pi38 DIN, .4=Pi40 DOUT'))
+           footprint='ha_panel:WirePads_2x02_P2.54mm_D1.0mm', in_bom=False,
+           fields=F(note='wire pads only, 2x3 housing on Pi 35-40: J4.1=Pi35 LRCLK, .2=Pi38 DIN, .3=Pi39 GND, .4=Pi40 DOUT'))
     s.comp('R14', 'Device:R', '0R', (124.46, 121.92), rot=90, nets={'1': 'PI_BCLK', '2': 'I2S_BCLK'}, footprint=R0603,
            fields=F(spec='0 Ohm 0603', note='I2S series position (spin-1 lever: 22-47 Ohm if edges ring)'))
     s.comp('R15', 'Device:R', '0R', (124.46, 134.62), rot=90, nets={'1': 'PI_LRCLK', '2': 'I2S_LRCLK'}, footprint=R0603,
@@ -238,17 +240,17 @@ def design(prj):
            nets={'1': '3V3_SENS', '2': 'GND', '3': 'I2C_SDA', '4': 'I2C_SCL'},
            footprint='Connector_JST:JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical',
            fields=F('B4B-XH-A', 'JST', '455-B4B-XH-A-ND', note='touch board (hardware/touch-board) HOST pads: VCC GND SDA SCL'))
-    s.comp('J10', 'Connector_Generic:Conn_02x04_Odd_Even', 'sensor landing (wire pads)', (330.2, 88.9),
-           nets={'1': '3V3_SENS', '3': 'GND', '5': 'I2C_SDA', '7': 'I2C_SCL',
-                 '2': '3V3_SENS', '4': 'GND', '6': 'I2C_SDA', '8': 'I2C_SCL'},
-           footprint='Connector_PinHeader_2.54mm:PinHeader_2x04_P2.54mm_Vertical', in_bom=False,
-           fields=F(note='wire pads (decision 5A): odd column BME680 (CJMCU-680 VCC GND SDA SCL), even column VEML6030 '
-                         '(3.3V GND SDA SCL); Dupont lead cut ends through the holes, soldered on the door side'))
+    hdr = 'Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical'
+    for ref, what, y in (('J10', 'BME680', 76.2), ('J11', 'VEML6030', 101.6)):
+        s.comp(ref, 'Connector_Generic:Conn_01x04', '1x04 header ' + what, (330.2, y),
+               nets={'1': '3V3_SENS', '2': 'GND', '3': 'I2C_SDA', '4': 'I2C_SCL'}, footprint=hdr,
+               fields=F(spec='1 x 4 male pin header, 2.54 mm, straight', note=what + ' lead: 1 x 4 Dupont housing, pin 1 = 3V3 '
+                        '(rev 3: the shared 2 x 4 header of rev 2.1 split, one header where each lead arrives)'))
 
     s.text('Echo-reference (D4a) - default topology A: all links OPEN', 208.28, 116.84, size=2.0, bold=True)
     s.comp('J7', 'Connector_Generic:Conn_01x08', 'D4a ReSpeaker tap', (238.76, 147.32),
            nets={'1': 'GND', '2': 'RS_BCLK', '3': 'RS_LRCLK', '4': 'RS_REF', '5': 'RS_OUT', '6': 'GND', '7': 'RS_SDA', '8': 'RS_SCL'},
-           footprint='Connector_PinHeader_2.54mm:PinHeader_1x08_P2.54mm_Vertical', in_bom=False,
+           footprint='ha_panel:WirePads_1x08_P2.54mm_D1.0mm', in_bom=False,
            fields=F(note='wire pads (leads soldered, topology B only) to ReSpeaker XIAO footprint: 2=I2S_BCLK 3=I2S_LRCLK 4=I2S_DIN_SEC(dout) 5=I2S_DIN_XIAO(din) 7=SDA 8=SCL'))
     links = [('R20', 'I2S_BCLK', 'RS_BCLK'), ('R21', 'I2S_LRCLK', 'RS_LRCLK'), ('R22', 'I2S_DOUT', 'RS_REF'),
              ('R23', 'PI_DIN', 'RS_OUT'), ('R24', 'I2C_SDA', 'RS_SDA'), ('R25', 'I2C_SCL', 'RS_SCL')]
@@ -257,8 +259,9 @@ def design(prj):
                fields=F(spec='0 Ohm 0603', note='D4a link: fit for topology B (I2S reference, XU316 master)'))
     tp(s, 'TP17', 'GND', 152.4, 38.1, 'GND')
     for i, ref in enumerate(('H1', 'H2', 'H3', 'H4')):
-        s.comp(ref, 'Mechanical:MountingHole', 'M2.5', (330.2 + i * 12.7, 38.1), footprint='MountingHole:MountingHole_2.7mm_M2.5',
-               in_bom=False, fields=F(note='Ø2.7 NPTH into ruthex M2.5 (bracket boss Ø8 front, screw head Ø6 back)'))
+        s.comp(ref, 'Mechanical:MountingHole', 'M3 x 8', (330.2 + i * 12.7, 38.1), footprint='ha_panel:MountingHole_3.2mm_M3_Post',
+               in_bom=False, fields=F(note='dia 3.2 NPTH for the unit standard M3 x 8 button head into a Ruthex M3 in the carrier '
+                                           'post; clear dia 7 on the door side (head), dia 9 on the back face (post) - site section 2'))
     s.text('\n'.join([
         'V17: Raspberry Pi publishes no current rating for the Pi 5 header 3V3 pins -> 3.3 V LDO on this board (brief item 4).',
         '  U2 TPS70933: 2.7-30 V in (survives the NID OVP 6.4-7.5 V), 150 mA, EN follows the Pi 3V3 (pin 1 lead, ~33 uA).',
@@ -269,7 +272,7 @@ def design(prj):
         'Pi pins: 3/5 SDA/SCL (GPIO2/3, 1.8 k pull-ups on the Pi); 8/10 TXD/RXD (GPIO14/15, uart0);',
         '  12/35/38/40 = GPIO18/19/20/21 I2S BCLK/LRCLK/DIN/DOUT; 15 = GPIO22 amp mute (rpi-digiampplus).',
         'I2C map: AT42QT1070 0x1B, VEML6030 0x48, TAS5756M 0x4C, BME680 0x76/0x77 (ReSpeaker 0x42/0x18 only if R24/R25 fitted).',
-        'Sensor branch 3V3_SENS (F4 0.2 A PTC): J6 touch board, J10 BME680 + VEML6030 (leads moved from the touch board, 5A).',
+        'Sensor branch 3V3_SENS (F4 0.2 A PTC): J6 touch board, J10 BME680, J11 VEML6030 (one 1 x 4 header each, rev 3).',
         'Topology B (bench 2.2): fit R20-R23 (+R24/R25 for XU316 I2C), jumper J7 to the ReSpeaker XIAO footprint, I2S firmware.']),
         25.4, 190.5)
 
@@ -281,7 +284,7 @@ def design(prj):
            footprint='Fuse:Fuse_2920_7451Metric',
            fields=F('2920L260/33DR', 'Littelfuse', '18-2920L260/33DRCT-ND', 'PTC 2.6 A hold (1.81 A at 60 C), 33 V, R1max 75 mOhm'))
     s.pwr_flag('PVDD', (66.04, 60.96))
-    s.text('PVDD probe point: F5 pin 2 (back, 2920 land). No TP18: no free back spot on the PVDD side (layout 2026-11-07).',
+    s.text('PVDD probe point: F5 pin 2 (2920 land, door-side face). No TP18.',
            88.9, 38.1, size=1.27)
     # PVDD decoupling (left side pins 6/7 and right side 41-43)
     for i, (ref, val, fp, spec) in enumerate([('C100', '0.1u 50V', C0603, '0.1 uF 50 V X7R 0603'),
@@ -380,23 +383,23 @@ def build(out):
     # pass 1: discover nets per sheet
     lib_path = os.path.join(out, 'lib', 'ha_panel.kicad_sym')
     lib_ha_panel.build(lib_path, which=('tas', 'tps1663', 'nid', 'tps709', '+20V'))
-    p1 = kg.Project('main-board', '/tmp/mb_pass1', 'HA panel main board', DATE, '1', 'HA panel (neocleous/ha-panel)')
+    p1 = kg.Project('main-board', '/tmp/mb_pass1', 'HA panel main board', DATE, REV, 'HA panel (neocleous/ha-panel)')
     design(p1)
     seen = {}
     for sh in p1.sheets:
         for n in sh.nets_used:
             seen.setdefault(n, set()).add(sh.filename)
     glob = {n for n, v in seen.items() if len(v) > 1}
-    prj = kg.Project('main-board', out, 'HA panel main board', DATE, '1', 'HA panel (neocleous/ha-panel)',
-                     comments=['KiCad 9.0.9 - generated by hardware/main-board/gen (checkpoint 1)',
-                               'Brief claude/brief-electronics-design-2026-11-07.md',
-                               'Board 90 x 50 x 1.6, 4 x Ø2.7 on 83 x 43'])
+    prj = kg.Project('main-board', out, 'HA panel main board', DATE, REV, 'HA panel (neocleous/ha-panel)',
+                     comments=['KiCad 9.0.9 - generated by hardware/main-board/gen',
+                               'Rev 3: brief claude/brief-electronics-step2-2026-11-10.md, site claude/main-board-site-2026-11-10.md issue 2',
+                               'Board 87.0 x 57.9 x 1.6, 4 x dia 3.2 for M3 x 8, every part on the door-side face'])
     prj.global_nets = glob
     design(prj)
     prj.root.text('HA panel main board - schematic index\n'
                   'Sheet 2: 20 V inlet, fuse, TPS16630 eFuse, bus TVS\n'
                   'Sheet 3: NID100-5 5 V supply, Pi USB-C output, radar 5 V\n'
-                  'Sheet 4: 3.3 V LDO, Pi GPIO landing, radar/touch XH, sensor landing, D4a echo-reference links\n'
+                  'Sheet 4: 3.3 V LDO, Pi signal leads, radar/touch XH, BME680 and VEML6030 headers, D4a echo-reference links\n'
                   'Sheet 5: TAS5756M amplifier and speaker outputs', 25.4, 20.32, size=1.8)
     prj.write()
     prj.write_project_files(
@@ -404,12 +407,14 @@ def build(out):
         fp_libs=[('ha_panel', 'lib/ha_panel.pretty', 'HA panel custom footprints (block 2)')])
     pretty = os.path.join(out, 'lib', 'ha_panel.pretty')
     os.makedirs(pretty, exist_ok=True)
-    for k in ('tas', 'nid', 'csba', 'wirelink'):
+    for k in ('tas', 'nid', 'csba', 'wirelink', 'wp2x5', 'wp2x2', 'wp1x8', 'm3post'):
         footprints.ALL[k](pretty)
     with open(os.path.join(pretty, 'README.md'), 'w') as f:
         f.write('# ha_panel footprints\n\nDrawn in block 2 from the datasheets (gen/footprints.py): '
                 'TI_DCA0048A_HTSSOP-48-1EP (TAS5756M, SLAS988B package addendum + via array + paste windows), '
-                'MeanWell_NID100_SIP-13 (NID100-SPEC 2024-10-30), L_Codaca_CSBA0850 (CODACA 2026-03-16).\n')
+                'MeanWell_NID100_SIP-13 (NID100-SPEC 2024-10-30), L_Codaca_CSBA0850 (CODACA 2026-03-16).\n\n'
+                'Rev 3 (2026-11-11): WirePads_2x05 / 2x02 / 1x08_P2.54mm_D1.0mm (wire landings, pads only, same pad numbering '
+                'as the KiCad pin headers) and MountingHole_3.2mm_M3_Post (dia 3.2 NPTH, courtyard dia 7 = screw-head zone).\n')
     return prj, seen
 
 

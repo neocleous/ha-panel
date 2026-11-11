@@ -266,9 +266,15 @@
   "Value": "TPS70933QDBVRQ1"
  },
  "J10": {
-  "Value": "2x04 male header 2.54 (D59)",
-  "MPN": "generic 2 x 4 male pin header, 2.54 mm pitch, THT, vertical",
+  "Value": "1x04 header BME680",
+  "MPN": "generic 1 x 4 male pin header, 2.54 mm pitch, THT, vertical",
   "Manufacturer": "generic",
-  "DigiKey": "none - DigiKey basket frozen (D51, D56); order prep or own stock"
+  "DigiKey": "none - not in any basket; chosen with the parts list in step 5 (rev 3: one 1 x 4 header per sensor lead)"
+ },
+ "J11": {
+  "Value": "1x04 header VEML6030",
+  "MPN": "generic 1 x 4 male pin header, 2.54 mm pitch, THT, vertical",
+  "Manufacturer": "generic",
+  "DigiKey": "none - not in any basket; chosen with the parts list in step 5 (rev 3: one 1 x 4 header per sensor lead)"
  }
 }

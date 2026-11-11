@@ -4,7 +4,8 @@ Electronics session, step 2 of the agreed order of work (`claude/brief-electroni
 Site: `claude/main-board-site-2026-11-10.md`, issue 2. All positions are in the site's board frame, seen from the door:
 u to the right (toward the left speaker), v up, w out of the door-side face, mm.
 
-**Checkpoint. Nothing is routed. No fab files, no stencil, no basket or order list touched, nothing on `main`.**
+**Blocks 0 and 1 (sections 1 to 13) were the floor-plan checkpoint. Block 2, the routed board, is section 14.
+No fab files, no stencil, no basket or order list touched, nothing on `main`.**
 
 ## 1. Answer
 - **The board fits the site.** Outline 87.0 x 57.9 (the largest allowed), 1.6 thick, 4 layers. All 120 parts of rev 2.1
@@ -277,6 +278,9 @@ Neither needs a dimension from the site. Both need the fingertip probe repeated 
 - The amplifier block's copper from rev 2.1 can probably be carried over turned; that is for block 2 to show.
 
 ## 11. Decisions needed from Daniel
+**Answered 2026-11-11:** 1 = top-entry sockets as drawn; 2 = three housings (1 x 3, 2 x 5, 2 x 3), he has them;
+3 = go-ahead to route. The questions as they were put:
+
 1. **Sockets for 20 V, speakers, touch and radar**
    1. Top entry, plug pushed toward the board: as drawn. Same JST parts as rev 2.1; their pin ends fall where the site
       allows 12 mm (bottom edge) or 4 mm. **Recommended.**
@@ -318,3 +322,77 @@ Checks run on 2026-11-11:
 - Read back from the KiCad file, independent of the two scripts: outline 87.0 x 57.9; 120 footprints, none on the back;
   four holes dia 3.2 at the positions of section 4; no through-hole pad in a no-pin zone or post zone; amplifier pins
   1 to 5 (left channel) on the +u side.
+
+## 14. Block 2: schematic, routed board, checks (2026-11-11)
+
+**Checkpoint. The board is routed and passes KiCad's checks. No fab files, no stencil, no basket or order list touched.**
+
+### 14.1 Answer
+- **Routed on the approved floor plan; no part moved** (all 120 positions compared with `floorplan.json`).
+- **Schematic check (ERC): 0 errors, 0 warnings.** **Board check (DRC) with schematic comparison: 0 errors, 0 open
+  connections, 0 differences from the schematic, 2 warnings** (J2 and J6: their silkscreen outline is trimmed where it
+  would cross the board edge, so they no longer match the library copy; the same kind of warning as on rev 2.1).
+- **Hand-assembly rules kept:** every part on the door-side face; through-hole are the connectors, the supply module,
+  the three electrolytic capacitors and the wire link; smallest surface-mount part 0603.
+- **The 32 site rules stand as at the floor plan** (30 met; radar socket and VEML6030 header still to be re-probed by
+  the enclosure chat), because no part moved. Two new points for the enclosure chat came out of routing: section 14.5.
+
+### 14.2 Schematic, rev 3 (`main-board.kicad_sch` and four sheets, `main-board-schematic.pdf`)
+| Change | Rev 2.1 | Rev 3 |
+|---|---|---|
+| Mounting holes H1 to H4 | M2.5 | 3.2 mm unplated holes for M3 x 8 into the posts |
+| Sensor header | J10, 2 x 4, BME680 and VEML6030 together | J10 1 x 4 (BME680) and J11 1 x 4 (VEML6030) |
+| Pi wire pads J3 | pads in header order | pads in the order of the three housings (`../gpio-leads.md`) |
+| Wire pads J3, J4, J7 | pin-header footprints | own footprints: 1.0 mm plated holes, 1.7 mm pads, 2.54 pitch |
+Nothing else changed: same nets, same values, same part numbers.
+
+### 14.3 The board (`main-board.kicad_pcb`)
+- 87.0 x 57.9 x 1.6, four layers: door side (parts and signals), ground plane, supply plane (+5 V, +20 V, amplifier
+  supply), back (signals and ground). 1114 track pieces, 198 vias.
+- **Amplifier block:** the rev 2.1 copper round the chip, the output filters and the decoupling is carried over
+  unchanged, turned with the block (412 track pieces, 66 vias). One short hop of one amplifier output (before its
+  filter coil) is on the back, as it was on rev 2.1; the rest of the four outputs is on the door side.
+- **Right speaker:** the amplifier sits on the left-speaker side, so the right speaker's two conductors cross the board
+  to J9. They run side by side on the back, 1.0 wide, under the supply module's pin row and down between the radar and
+  BME680 connectors: 91 and 81 mm, one via each, about 0.09 ohm for the pair (0.4 wide for the last 3 to 4 mm at the
+  filter, as on rev 2.1). Everything that crosses them is on the door side. Left speaker: 13 and 26 mm, 0.8 wide
+  (0.4 for 4 mm).
+- **Supply paths:** 20 V in 1.0 wide to the fuse, 0.6 to 0.8 into the protection chip (0.3 for a few mm at its
+  pins), 0.8 to 1.8 into the supply module; 5 V for the Pi 1.5 to the wire link, then 2.0 and 1.4 on the back to the USB-C
+  socket with a 0.6 neck into each supply pin pair. +5 V, +20 V and the amplifier supply are areas on the supply plane.
+- **Mounting holes:** no track, via or poured copper within 3.5 of a hole centre on the door side (under the screw
+  head) or within 4.1 on the back (under the post face). Exception H2: section 14.5.
+- **Silkscreen:** part names for 72 of 120 parts on the door side (the rest have no free space next to them; the
+  assembly drawing will carry them). On the door side also: RADAR, the + of the left-speaker socket and the board name.
+  On the back, because the door side has no room beside those connectors: SPK L, SPK R, 20V IN, PI USB-C, PI 1-15,
+  PI 35-40, TOUCH, ECHO, BME680, VEML6030, LINK, the + of the 20 V and right-speaker sockets, revision and date.
+
+### 14.4 How it was routed
+An autorouter outside the repository was not used. `gen/pcb_rev3.py` builds the board from the netlist and
+`floorplan.json` and carries the amplifier copper over. `gen/route_rev3.py` lays the supply paths and the right
+speaker pair as planned tracks, then routes every other connection with the repository's grid router
+(`gen/mroute.py`, search core replaced by a compiled one in `gen/fastgrid.py`), takes out and re-routes nets that
+block others, removes unused stubs, pours ground on both outer layers and adds stitching vias. `gen/rev3_route.sh`
+runs it end to end. The result is checked by KiCad, not by the scripts. Tracks are any-angle, not tidy 45 degree
+runs: correct, but not pretty.
+
+### 14.5 New for the enclosure chat (to go into the block 3 reply)
+1. **H2 (u +30.0, v +25.0), back face:** the amplifier block's own tracks and two vias lie under the outer part of the
+   post face, 2.9 to 3.7 from the hole centre (post face radius 4.0). They are under solder mask and the post is
+   plastic. Options: 1. leave it (recommended); 2. relieve the H2 post face to 5.5 diameter; 3. re-route that corner
+   of the amplifier block.
+2. **H2, door side:** two of the amplifier's vias start 3.39 from the hole centre, so the copper-free circle under
+   the screw head is 3.3 radius there instead of 3.5. A pan-head M3 (head up to 6.6 diameter) clears it; a 7 mm
+   washer would not.
+
+### 14.6 Not done in this block
+- Fab files, stencil, assembly drawing, bill of materials: not in this step.
+- Height zones for both faces, connector table with plug envelopes, STEP export: block 3.
+- `NOTES.md` sections 1 to 6 (values and their sources) are unchanged and still valid; its layout section 7 describes
+  rev 2.1.
+
+### 14.7 Files
+`../main-board.kicad_pro`, `.kicad_sch` (five), `.kicad_pcb`; `../erc-report.txt`, `../drc-report.txt`;
+`../main-board-schematic.pdf`; `../main-board-copper-F-B.png`, `../main-board-3d-door-side.png`,
+`../main-board-3d-back.png`; `../gpio-leads.md`; `../gen/` (generators); `../rev2.1/` (the rev 2.1 files as issued).
+

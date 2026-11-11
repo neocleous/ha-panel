@@ -1,8 +1,11 @@
 # HA panel — main board
 
-> **Rev 3 in work (2026-11-11):** the board is being laid out again for its site behind the display. Change list and
-> floor plan: [`rev3/README.md`](rev3/README.md). Nothing is routed yet. Everything below is rev 2.1: the starting point,
-> and a draft like every other file here (architect log 2026-11-10, section 0).
+> **Rev 3 (2026-11-11): schematic and routed board for the site behind the display are in this folder.**
+> 87.0 x 57.9, four layers, every part on the door side. ERC 0 errors 0 warnings; DRC 0 errors, 0 open connections,
+> schematic comparison clean, 2 warnings. Report: [`rev3/README.md`](rev3/README.md) (floor plan: sections 1 to 13, routed
+> board: section 14). Pi lead table: [`gpio-leads.md`](gpio-leads.md). No fab files for rev 3.
+> **Everything below this note describes rev 2.1**, whose files are now in [`rev2.1/`](rev2.1/). All of it is a draft
+> until the whole unit is shown to be buildable (architect log 2026-11-10, section 0).
 
 Status: **block 3 done (2026-11-09) — layout rev 2.1, single-sided SMD, routed, DRC clean; fab files, BOM, assembly notes and drawing issued.** Rev 2.1 moves C7 to the top strip so every front lead plugs after mounting (`MAIN_env.md`).
 

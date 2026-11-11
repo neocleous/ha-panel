@@ -231,8 +231,57 @@ def im69d120(d):
     return 'Infineon_IM69D120_PG-LLGA-5-1'
 
 
+def _wire_grid(d, cols, rows, name_cols):
+    """Wire landing: plated holes dia 1.0 on 1.7 pads at 2.54, numbered like KiCad's PinHeader_<cols>x<rows> (pad 1 at the
+    origin, numbers run along x first). No header body: the courtyard is the pads + 0.3."""
+    name = 'WirePads_%s_P2.54mm_D1.0mm' % name_cols
+    f = FP(name, 'Wire landing %s, 2.54 pitch, hole 1.0 for 22-28 AWG stranded wire, pad 1.7; wires soldered on the bench '
+           '(main board rev 3)' % name_cols.replace('x', ' x '), 'wire pad solder lead', attr='through_hole')
+    n = 0
+    for r in range(rows):
+        for c in range(cols):
+            n += 1
+            f.pad(str(n), 'thru_hole', 'roundrect' if n == 1 else 'circle', c * 2.54, r * 2.54, 1.7, 1.7, ['*.Cu', '*.Mask'],
+                  drill=1.0, rratio=0.2 if n == 1 else None)
+    x1, y1 = (cols - 1) * 2.54, (rows - 1) * 2.54
+    f.rect(-1.15, -1.15, x1 + 1.15, y1 + 1.15, 'F.CrtYd', 0.05)
+    f.rect(-0.95, -0.95, x1 + 0.95, y1 + 0.95, 'F.Fab', 0.1)
+    f.text('${REFERENCE}', x1 / 2, y1 / 2, 'F.Fab', 0.8)
+    f.write(d, -2.2, y1 + 2.2)
+    return f.name
+
+
+def wirepads_2x05(d):
+    return _wire_grid(d, 2, 5, '2x05')
+
+
+def wirepads_2x02(d):
+    return _wire_grid(d, 2, 2, '2x02')
+
+
+def wirepads_1x08(d):
+    return _wire_grid(d, 1, 8, '1x08')
+
+
+def m3_post_hole(d):
+    """Board hole for the unit's standard M3 x 8 button head (site document section 2, issue 2)."""
+    f = FP('MountingHole_3.2mm_M3_Post', 'Mounting hole dia 3.2 NPTH for M3 x 8 ISO 7380-1 into a carrier post dia 8; '
+           'keep clear dia 7 on the door side (head dia 5.7), dia 9 on the back face (post)', 'mounting hole M3 post',
+           attr='exclude_from_pos_files exclude_from_bom')
+    f.pad('', 'np_thru_hole', 'circle', 0, 0, 3.2, 3.2, ['*.Cu', '*.Mask'], drill=3.2)
+    f.circle(0, 0, 3.5, 'F.CrtYd', 0.05)
+    f.circle(0, 0, 4.5, 'B.CrtYd', 0.05)
+    f.circle(0, 0, 2.85, 'F.Fab', 0.1)           # screw head dia 5.7
+    f.circle(0, 0, 4.0, 'B.Fab', 0.1)            # post dia 8
+    f.circle(0, 0, 4.5, 'Cmts.User', 0.1)
+    f.text('${REFERENCE}', 0, 0, 'F.Fab', 0.8)
+    f.write(d, -4.2, 4.2)
+    return f.name
+
+
 ALL = {'tas': tas5756m_dca, 'nid': nid100, 'csba': csba0850, 'electrode': electrode, 'wirepads': wirepads,
-       'wirelink': wirelink, 'im69': im69d120, 'wirecol': wirepads_col, 'stake': heatstake}
+       'wirelink': wirelink, 'im69': im69d120, 'wirecol': wirepads_col, 'stake': heatstake,
+       'wp2x5': wirepads_2x05, 'wp2x2': wirepads_2x02, 'wp1x8': wirepads_1x08, 'm3post': m3_post_hole}
 
 if __name__ == '__main__':
     d = sys.argv[1]

@@ -7,7 +7,8 @@ Big parts and connectors are placed by hand (FIXED). The amplifier block is rev 
 clockwise as one piece. Small parts are dropped next to the pin they serve by a spiral search; they are provisional
 and move in block 2.
 
-Run: python3 floorplan.py <rev 2.1 netlist> <out dir>      (KiCad 9 pcbnew)
+Run: python3 floorplan.py <netlist> <out dir>      (KiCad 9 pcbnew; block 1 used rev 2.1's netlist, block 2 on uses rev 3's:
+     kicad-cli sch export netlist --format kicadsexpr -o rev3.net ../main-board.kicad_sch)
 """
 import json
 import math
@@ -66,6 +67,8 @@ HOLE = 'MountingHole:MountingHole_3.2mm_M3'
 def rev3_parts(comps, nets):
     """Rev 2.1 parts with the changes this site needs (change list, block 0)."""
     comps = dict(comps)
+    if 'J11' in comps:                 # already the rev 3 netlist (block 2 on): nothing to change
+        return comps, nets
     for h in ('H1', 'H2', 'H3', 'H4'):
         comps[h] = {'value': 'M3 x 8, hole 3.2', 'footprint': HOLE}
     comps['J10'] = {'value': '1x04 male header 2.54, BME680', 'footprint': HDR4}
@@ -184,7 +187,7 @@ ANCHOR = [
     ('U2', (-24.0, -11.0)), ('R12', (-24.0, -8.5)), ('C11', (-24.0, -6.5)), ('C12', (-21.0, -11.0)),
     ('R13', (-27.0, -11.0)), ('F4', (-27.5, -13.5)),
     # Pi signal leads: series positions and pull-downs at the pads
-    ('R14', ('J3', '6')), ('R17', ('J3', '9')), ('R15', ('J4', '1')), ('R16', ('J4', '4')), ('R18', ('J4', '2')),
+    ('R14', ('J3', '7')), ('R17', ('J3', '9')), ('R15', ('J4', '1')), ('R16', ('J4', '4')), ('R18', ('J4', '2')),
     # supply module: enable link and the unpopulated trim network
     ('R7', ('PS1', '13')), ('R8', ('PS1', '12')), ('R9', ('PS1', '12')),
     # echo-reference links (unpopulated)
@@ -290,7 +293,7 @@ def build(netlist, outdir):
         fps[ref] = fp
 
     # rev 2.1 positions of the amplifier block
-    old = pcbnew.LoadBoard(os.path.join(HERE, '..', 'main-board.kicad_pcb'))
+    old = pcbnew.LoadBoard(os.path.join(HERE, '..', 'rev2.1', 'main-board.kicad_pcb'))
     for ref in AMP:
         o = old.FindFootprintByReference(ref)
         du, dv = rot_cw(TOMM(o.GetPosition().x), TOMM(o.GetPosition().y))
