@@ -158,7 +158,7 @@ afterwards. Nodes: `h3_routes.json`.
   own plane (w −3). The bundles drop behind the bottom edge. Nearest part: the H3 post, 1.1 from the 3-wire bundle.
 - **Display power lead, new route behind the board:** from the header down to v +15.5, then along v +14.0…+17.1 to
   u −42.1, then down the −u edge inside the outline (u −43.6…−40.6), 5.6 to 8.6 behind the back face. It is 0.5 from
-  the ReSpeaker and 0.3 from the lower right display screw's key path (in version 49 it lay inside that path). Back-face
+  the ReSpeaker and 0.3 from the key path of the lower display screw at −u (in version 49 it lay inside that path). Back-face
   pin ends in that strip today: J5 1.9, J10 1.5. Keep them at 4.0 or less, the site's limit.
 - **BME680 lead** passes over the radar plug at w 24…29; **VEML6030 lead** passes over the supply module at w 31…34
   (2.6 above it, 1.6 at 28.5 tall).
@@ -167,7 +167,7 @@ afterwards. Nodes: `h3_routes.json`.
   depth 20.0), 11.1 centre to centre and 9.6 between surfaces, with the ReSpeaker's board between them. Only its first
   11 mm are within 15 of the tracks; it then runs up, away from them. The left lead: 22.4 centre to centre. The reply's
   "1.6 beside it for 19 mm" holds only in plan view.
-- **Unchanged from version 49, for the record:** the DSI ribbon lies in the lower left display screw's key path
+- **Unchanged from version 49, for the record:** the DSI ribbon lies in the key path of the lower display screw at +u
   (54.7 mm³) and has to be pushed aside to drive that screw; the BME680 lead is 0.03 from the shell at the sensor.
 
 ## 6. Fasteners that changed
