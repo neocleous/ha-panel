@@ -5,7 +5,7 @@ from matplotlib.path import Path
 P = ROOT
 NV = '/5 V supply and outputs/VBUS_PI'
 VB = [('pin', 'J2.A4'), ('pin', 'J2.B9'), ('pin', 'J2.A9'), ('pin', 'J2.B4')]
-b = pcb.load(P + 'main-board.kicad_pcb')
+b = pcb.load(P + 'rev3/main-board-rev3.kicad_pcb')
 POLY = [(56.9, 39.0), (60.0, 39.0), (60.0, 45.0), (61.6, 46.7), (68.0, 46.7), (68.0, 48.7), (59.3, 48.7), (56.9, 45.6)]
 def extra(n):
     m = Path(np.array(POLY)).contains_points(np.column_stack([n.X.ravel(), n.Y.ravel()])).reshape(n.X.shape)

@@ -5,7 +5,7 @@ import pcb
 import matplotlib; matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Circle, FancyArrowPatch, Polygon
-b = pcb.load(ROOT + 'main-board.kicad_pcb')
+b = pcb.load(ROOT + 'rev3/main-board-rev3.kicad_pcb')
 U0, V0 = 43.5, 28.95
 def bx(r):
     c = b['fps'][r]['crt']; return [c[0] - U0, V0 - c[3], c[2] - U0, V0 - c[1]]

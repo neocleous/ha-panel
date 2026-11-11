@@ -18,7 +18,7 @@ if __name__ == '__main__':
                        (1.9, 3.51, 'planned inlet 1.9')):
         print('   %.1f wide, %.2f A: %5.1f K   (%s)' % (w, I, ipc2221(I, w), what))
     print('   inner 15.2 um, 11 wide +5V area at 5 A: %.1f K' % ipc2221(5.0, 11.0, 15.2, False))
-    b = pcb.load(P + 'main-board.kicad_pcb')
+    b = pcb.load(P + 'rev3/main-board-rev3.kicad_pcb')
     VE = '/20 V inlet and eFuse/VIN_EF'; VP = '/20 V inlet and eFuse/VIN_PIGTAIL'; NI = '/5 V supply and outputs/NID_VIN'
     n = rnet.Net(b, [VP], (30, 50, 46, 57.5), 0.05); print('rev 3  J1.1 -> F1.1: %.2f mohm' % (1e3 * n.solve([('pin', 'J1.1')], [('pad', 'F1', '1', 'F.Cu')])[0]))
     n = rnet.Net(b, [VE], (20, 44, 36, 57.5), 0.025)

@@ -211,3 +211,5 @@ No change. Only the revision text in the title block becomes 3.1.
 | `check/block0_picture.py` | draws the picture |
 
 Run from `check/`: `python3 pi5v.py` (about 40 s). Needs numpy, scipy, matplotlib; no KiCad.
+Since block 1 these scripts read the kept rev 3 board, `../rev3/main-board-rev3.kicad_pcb` (the same file as the board
+of `29f2f31`); run again on 2026-11-11 they give the stored results.

@@ -1,7 +1,7 @@
 import os
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')) + os.sep
 import pcb, math, sys
-b = pcb.load(ROOT + 'main-board.kicad_pcb')
+b = pcb.load(ROOT + 'rev3/main-board-rev3.kicad_pcb')
 U0, V0 = 43.5, 28.95
 def segdist(px, py, sg):
     x1, y1, x2, y2 = sg['x1'], sg['y1'], sg['x2'], sg['y2']

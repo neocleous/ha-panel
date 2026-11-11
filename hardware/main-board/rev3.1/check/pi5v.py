@@ -23,6 +23,6 @@ def run(name, path, boxes):
     for k, v in out.items():
         print('   %-18s' % k, ('%.3f mohm' % (v * 1e3)) if not isinstance(v, list) else ['%.3f' % (x * 1e3) for x in v])
     return out
-r3 = run('rev 3', P + 'main-board.kicad_pcb', dict(s1=((45, 8, 59, 40), 0.05), s2=((46, 33, 54, 45), 0.05), s3=((49, 35, 73, 52), 0.05), s4=((10, 20, 80, 58), 0.1)))
+r3 = run('rev 3', P + 'rev3/main-board-rev3.kicad_pcb', dict(s1=((45, 8, 59, 40), 0.05), s2=((46, 33, 54, 45), 0.05), s3=((49, 35, 73, 52), 0.05), s4=((10, 20, 80, 58), 0.1)))
 r21 = run('rev 2.1', P + 'rev2.1/main-board.kicad_pcb', dict(s1=((0, -5, 75, 42), 0.1), s2=((12, 30, 40, 49), 0.05), s3=((14, 36, 30, 51), 0.05), s4=((0, -5, 75, 50), 0.1)))
 json.dump(dict(rev3=r3, rev21=r21), open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pi5v_solve.json'), 'w'), indent=1)

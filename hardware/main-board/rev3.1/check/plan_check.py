@@ -1,7 +1,7 @@
 import os
 ROOT = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..')) + os.sep
 import pcb, math
-b = pcb.load(ROOT + 'main-board.kicad_pcb')
+b = pcb.load(ROOT + 'rev3/main-board-rev3.kicad_pcb')
 U0, V0 = 43.5, 28.95
 def uvbox(f):
     c = f['crt']; return [c[0] - U0, V0 - c[3], c[2] - U0, V0 - c[1]]
