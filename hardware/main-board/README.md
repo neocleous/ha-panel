@@ -3,7 +3,9 @@
 > **Rev 3 (2026-11-11): schematic and routed board for the site behind the display are in this folder.**
 > 87.0 x 57.9, four layers, every part on the door side. ERC 0 errors 0 warnings; DRC 0 errors, 0 open connections,
 > schematic comparison clean, 2 warnings. Report: [`rev3/README.md`](rev3/README.md) (floor plan: sections 1 to 13, routed
-> board: section 14). Pi lead table: [`gpio-leads.md`](gpio-leads.md). No fab files for rev 3.
+> board: section 14). Pi lead table: [`gpio-leads.md`](gpio-leads.md). For the enclosure model:
+> [`main-board-rev3-reply-2026-11-11.md`](main-board-rev3-reply-2026-11-11.md), [`MAIN_env.md`](MAIN_env.md),
+> `main-board-rev3.step`, `main-board-rev3-plug-envelopes.step`. No fab files for rev 3.
 > **Everything below this note describes rev 2.1**, whose files are now in [`rev2.1/`](rev2.1/). All of it is a draft
 > until the whole unit is shown to be buildable (architect log 2026-11-10, section 0).
 

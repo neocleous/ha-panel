@@ -382,12 +382,20 @@ runs: correct, but not pretty.
    plastic. Options: 1. leave it (recommended); 2. relieve the H2 post face to 5.5 diameter; 3. re-route that corner
    of the amplifier block.
 2. **H2, door side:** two of the amplifier's vias start 3.39 from the hole centre, so the copper-free circle under
-   the screw head is 3.3 radius there instead of 3.5. A pan-head M3 (head up to 6.6 diameter) clears it; a 7 mm
-   washer would not.
+   the screw head is 3.3 radius there instead of 3.5. The unit's standard screw, M3 x 8 button head (head 5.7 across,
+   site document section 2), clears it; a 7 mm washer would not.
 
 **Answered by Daniel 2026-11-11:** point 1: the enclosure chat is asked to make the H2 post face no larger than 5.5
 across (the nearest amplifier track starts 2.9 from the hole centre; the request goes into the block 3 reply).
-Point 2: M3 pan head, no washer, at all four posts.
+Point 2: no washer. The screw itself was already fixed in the site document (section 2: M3 x 8 button head, head
+5.7 across, 1.65 high); the question to Daniel called it a pan head and said the head was not documented. Both were
+wrong, and the board is unaffected.
+
+### 14.8 Block 3 (2026-11-11)
+Reply to the enclosure chat: `../main-board-rev3-reply-2026-11-11.md` (project: `claude/main-board-rev3-reply-2026-11-11.md`).
+Outline, holes and heights for the model: `../MAIN_env.md`. STEP files: `../main-board-rev3.step` (populated board) and
+`../main-board-rev3-plug-envelopes.step`, made by `../gen/step_rev3.py`. `sitecheck.py` now knows the wire-pad
+footprints by their new names, so `floorplan-tables.md` again lists the wire pads' joints on the back face.
 
 ### 14.6 Not done in this block
 - Fab files, stencil, assembly drawing, bill of materials: not in this step.

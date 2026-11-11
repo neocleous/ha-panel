@@ -27,6 +27,7 @@ HEIGHT = [   # (footprint starts with, height, source)
     ('JST_XH_B', 7.0, 'JST XH top-entry header, KiCad model (plug mated 9.8, JST catalogue)'),
     ('USB_C_Receptacle_GCT_USB4085', 3.46, 'GCT drawing USB4085 rev B'),
     ('PinHeader_1x04', 8.65, 'pin header, KiCad model (with a Dupont housing about 16.5, estimate)'),
+    ('WirePads_', 3.0, 'wire pads: solder joints and wire ends (estimate)'),
     ('PinHeader_2x', 3.0, 'wire pads: solder joints and wire ends (estimate)'),
     ('PinHeader_1x08', 3.0, 'wire pads: solder joints and wire ends (estimate)'),
     ('Fuse_Littelfuse-NANO2', 2.94, 'Littelfuse 451/453 (MAIN_env rev 2.1)'),
@@ -46,6 +47,8 @@ PROTRUSION = [
     ('USB_C_Receptacle_GCT_USB4085', 0.5, 'shell stakes 2.10, signal tails 1.60 (GCT drawing) - 1.6'),
     ('CP_Radial', 1.5, 'leads cut after soldering (assumed, to be kept to on the bench)'),
     ('WireLink', 1.5, 'wire cut after soldering (assumed)'),
+    ('WirePads_1x08', 1.5, 'wire pads (second echo-reference option only)'),
+    ('WirePads_', 1.5, 'wire pads: wire end or solder cone (assumed); the lead itself may leave this face'),
     ('PinHeader_2x', 1.5, 'wire pads: wire end or solder cone (assumed); the lead itself may leave this face'),
     ('PinHeader_1x08', 1.5, 'wire pads (second echo-reference option only)'),
 ]
@@ -519,7 +522,7 @@ def tables(data, holes):
         ('20 V to the amplifier', [('C5', '1'), ('F5', '1')], [('F5', '2'), ('U100', '6')]),
         ('Speaker left, filter to socket', [('L100', '2'), ('J8', '1')]),
         ('Speaker right, filter to socket', [('L103', '2'), ('J9', '1')]),
-        ('Bit clock, Pi pad to amplifier', [('J3', '6'), ('U100', '23')]),
+        ('Bit clock, Pi pad to amplifier', [('J3', '7'), ('U100', '23')]),
         ('Radar supply', [('F3', '2'), ('J5', '1')]),
     ]
     for name, *segs in runs:
