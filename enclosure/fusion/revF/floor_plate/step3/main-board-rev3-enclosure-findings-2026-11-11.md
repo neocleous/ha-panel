@@ -16,7 +16,7 @@ Everything here is a draft until the whole unit is shown to be buildable.
   1. **Top right hole (H2): move it.** A post cannot stand at (+30.0, +25.0). New zone for its centre:
      **u −12.0…+22.7, v +21.6…+25.5.** Section 2.
   2. **BME680 header (J10): at least 3.7 further from the radar socket (J5).** Section 4.
-  3. **VEML6030 header (J11): 0.5 lower.** Section 4.
+  3. **VEML6030 header (J11): 0.5 to 2.0 lower; aim for 1.0.** Section 4.
 - **Your three requests to the enclosure chat:**
   1. Post face at H2 no larger than 5.5 across: falls away with the hole's move (section 2).
   2. Fingertip probe: done for every connector (section 4).
@@ -115,15 +115,25 @@ Probed with the header moved toward +u:
 - With the rounded 24 the radar socket stays at 0 of 6 at either distance (supply module's corner 10.0 from its centre,
   right speaker box, shell). That is accepted with the standard.
 
-**Request 3: VEML6030 header (J11).** Probed with the header lower:
+**Request 3: VEML6030 header (J11).** Probed with the header and its plug lower. Free directions of six, rounded 16 /
+rounded 24:
 
-| J11 lower by | J11, rounded 16 | J1 20 V, rounded 16 |
-|---|---|---|
-| 0 (today) | 2 of 6 | 5 of 6 |
-| 0.5 | **5 of 6** | 5 of 6 (not re-probed; the header is still 10.7 from J1's centre, 7.9 needed) |
-| 4.4 | 5 of 6 (and 4 of 6 with the flat 24) | 2 of 6 |
+| J11 lower by | J11 itself | J1 20 V | J6 touch |
+|---|---|---|---|
+| 0 (today) | 2 / 2 | 5 / 5 | 6 / 4 |
+| 0.5 | **5** / 2 | not probed | not probed |
+| 1.0 | **5** / 2 | 5 / 2 | 6 / 4 |
+| 2.0 | **5** / 2 | 5 / 2 | 6 / 4 |
+| 3.0 | 5 / 2 | 5 / 2 | 5 / 3 |
+| 4.4 | 5 / 5 | 2 / 2 | not probed |
 
-- 0.5 lower is what is asked. Not 4.4: it takes three directions from the 20 V plug.
+- **Asked: 0.5 to 2.0 lower; aim for 1.0.** With the standard fingertip the header then has five directions, the 20 V
+  plug keeps its five and the touch plug its six.
+- At 0.5 the header passes with little to spare: the three directions it gains are blocked today by only 4 to 6 mm³ of
+  the supply module.
+- From 1.0 on, the 20 V plug loses three directions for a rounded 24 fingertip (by 1 to 4 mm³ at 1.0, by 12 to 20 at
+  2.0). With the standard it keeps five up to 3.0.
+- Not 3.0 or more: the touch plug loses a direction at 3.0, and at 4.4 the 20 V plug drops to two.
 
 **Not asked:** the speaker sockets. The boxes set their limit; they pass with the rounded 16. Do not move J8 toward
 +u or lower: the DSI ribbon passes 0.1 from its plug envelope (0.9 from the socket).

@@ -1367,5 +1367,6 @@ STEP files of `docs` `03ad1f9`. Scripts `floor_plate/fusion/v5f_h*.py` (library 
   BME680 0/2/5, touch 1/4/6, 20 V 0/5/5, speaker left 0/0/2, speaker right 0/0/2, Pi power plug 2/2/3 (of 6); Pi housings
   1 × 3 0/2/3, display's 1 × 3 0/1/3, 2 × 5 1/3/4, 2 × 3 1/3/4 (of 5). Standard: rounded Ø16 (Daniel 2026-11-11).
 - To the electronics session: the top right hole to u −12.0…+22.7, v +21.6…+25.5; the BME680 header at least 3.7 further
-  from the radar socket; the VEML6030 header 0.5 lower.
+  from the radar socket; the VEML6030 header 0.5 to 2.0 lower, aim 1.0 (probed at 0.5, 1.0, 2.0, 3.0 and 4.4:
+  `h3e_whatif_c`, `_d` and `h3e_whatif_j11_digest.json`).
 

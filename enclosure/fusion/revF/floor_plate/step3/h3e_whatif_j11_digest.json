@@ -1,0 +1,241 @@
+{
+ "note": "Digest of h3e_whatif_j11_10/_20/_30_status.json (Mac: ~/Documents/HA_panel_renders/fp/step3/), 2026-11-11 after 19:31: reach probe with the VEML6030 header (J11) and its plug moved 1.0, 2.0 and 3.0 lower (-v). Free directions and blocked volumes (mm3) per tool; leads left out.",
+ "1.0": {
+  "VEML6030 header": {
+   "round24": {
+    "free": [
+     "down25",
+     "down45"
+    ],
+    "blocked": {
+     "straight": "PS1 153",
+     "up25": "PS1 1078",
+     "to-x25": "PS1 198",
+     "to+x25": "PS1 198"
+    }
+   },
+   "round16": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "to-x25",
+     "to+x25"
+    ],
+    "blocked": {
+     "up25": "PS1 256"
+    }
+   }
+  },
+  "20 V": {
+   "round24": {
+    "free": [
+     "down25",
+     "down45"
+    ],
+    "blocked": {
+     "straight": "plug J11 1",
+     "up25": "PS1 3; plug J11 201",
+     "to-x25": "plug J11 4",
+     "to+x25": "plug J11 3"
+    }
+   },
+   "round16": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "to-x25",
+     "to+x25"
+    ],
+    "blocked": {
+     "up25": "plug J11 17"
+    }
+   }
+  },
+  "touch": {
+   "round24": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "to+x25"
+    ],
+    "blocked": {
+     "up25": "PS1 86; plug J11 28",
+     "to-x25": "plug J1 1; plug J11 31"
+    }
+   },
+   "round16": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "up25",
+     "to-x25",
+     "to+x25"
+    ],
+    "blocked": {}
+   }
+  }
+ },
+ "2.0": {
+  "VEML6030 header": {
+   "round24": {
+    "free": [
+     "down25",
+     "down45"
+    ],
+    "blocked": {
+     "straight": "PS1 74",
+     "up25": "PS1 875",
+     "to-x25": "PS1 101",
+     "to+x25": "PS1 101"
+    }
+   },
+   "round16": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "to-x25",
+     "to+x25"
+    ],
+    "blocked": {
+     "up25": "PS1 157"
+    }
+   }
+  },
+  "20 V": {
+   "round24": {
+    "free": [
+     "down25",
+     "down45"
+    ],
+    "blocked": {
+     "straight": "plug J11 12",
+     "up25": "PS1 3; plug J11 230",
+     "to-x25": "plug J11 20",
+     "to+x25": "plug J11 14"
+    }
+   },
+   "round16": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "to-x25",
+     "to+x25"
+    ],
+    "blocked": {
+     "up25": "plug J11 50"
+    }
+   }
+  },
+  "touch": {
+   "round24": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "to+x25"
+    ],
+    "blocked": {
+     "up25": "PS1 86; plug J11 34",
+     "to-x25": "plug J1 1; plug J11 54"
+    }
+   },
+   "round16": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "up25",
+     "to-x25",
+     "to+x25"
+    ],
+    "blocked": {}
+   }
+  }
+ },
+ "3.0": {
+  "VEML6030 header": {
+   "round24": {
+    "free": [
+     "down25",
+     "down45"
+    ],
+    "blocked": {
+     "straight": "PS1 23",
+     "up25": "PS1 686",
+     "to-x25": "PS1 34",
+     "to+x25": "PS1 34"
+    }
+   },
+   "round16": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "to-x25",
+     "to+x25"
+    ],
+    "blocked": {
+     "up25": "PS1 82"
+    }
+   }
+  },
+  "20 V": {
+   "round24": {
+    "free": [
+     "down25",
+     "down45"
+    ],
+    "blocked": {
+     "straight": "plug J11 38",
+     "up25": "PS1 3; plug J11 252",
+     "to-x25": "plug J11 45",
+     "to+x25": "plug J11 34"
+    }
+   },
+   "round16": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "to-x25",
+     "to+x25"
+    ],
+    "blocked": {
+     "up25": "plug J11 98"
+    }
+   }
+  },
+  "touch": {
+   "round24": {
+    "free": [
+     "down25",
+     "down45",
+     "to+x25"
+    ],
+    "blocked": {
+     "straight": "plug J11 2",
+     "up25": "PS1 86; plug J11 39",
+     "to-x25": "plug J1 1; plug J11 76"
+    }
+   },
+   "round16": {
+    "free": [
+     "straight",
+     "down25",
+     "down45",
+     "up25",
+     "to+x25"
+    ],
+    "blocked": {
+     "to-x25": "plug J11 3"
+    }
+   }
+  }
+ }
+}
