@@ -148,13 +148,14 @@ class Strip:
 BIGBOX = (-12.0, 112.0, -100.0, 30.0, -6.0, 190.0)   # world crop of the big bodies: the left-speaker half and the middle
 
 
-def crops(X, name, budget=True):                     # cached crop of a big body to BIGBOX: list of temporary pieces, or None if out of time
-    q = ('mcrop', name, round(X.body(name).volume, 6))
-    if q not in c:
-        if budget and k.late():
-            return None
-        c[q] = k.region(X, name, 'm_big', BIGBOX)
-    return c[q]
+def crops(X, name, budget=True):                     # cached crop of a big body to BIGBOX: list of temporary pieces, or None if out of time.
+    for q in c:                                      # Keyed by name only: reading a big body's volume costs up to 12 s a call, and no
+        if isinstance(q, tuple) and q[0] == 'mcrop' and q[1] == name:      # printed part changes in this pass (block 3 compares the volumes)
+            return c[q]
+    if budget and k.late():
+        return None
+    c[('mcrop', name)] = k.region(X, name, 'm_big', BIGBOX)
+    return c[('mcrop', name)]
 
 
 def obstacles(X, skip=(), leads=True):               # [(name, [bodies])]: model bodies, big ones as cached crops; None if a crop is still to be made
