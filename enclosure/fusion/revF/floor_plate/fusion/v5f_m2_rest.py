@@ -11,7 +11,9 @@ import math
 P2 = {
     # --- ribbon ---
     'zlev': 28.5,       # height of the level run above the Pi: 5.2 above the cooler's envelope, 3.8 below the Pi power cable's lap
-    'R4': 3.0,          # radius of the two bends at the Pi; assumed
+    'R4': 3.0,          # radius of the bends beside the left box and at the Pi; assumed
+    'Ra': 2.0,          # radius of the half turn of the arch over the Pi's connector; assumed (with 3 the arch stands 0.5 from the Pi power cable's lap)
+    'rside': -1,        # crease 3 folds the ribbon's drop to this side: -1 as in block 1 (drop at x 39.3), +1 one layer nearer the middle (x 37.7)
     'xpi': 11.8,        # x of the ribbon in the Pi's connector: the middle of the connector's body (x 10.3 .. 13.3); assumed
     'zpi': 13.5,        # top of the Pi's connector, read from the model
     'rin': 3.0,         # ribbon inside the connector; assumed
@@ -38,7 +40,7 @@ def ribbon(X, pv=None, p2=P2, a=None):               # a = the height of the arc
     R = p2['R4']
     s = s1['ribbon'](X, pv, full=False)              # ... to the start of crease 3
     s.log.pop()                                      # its 'end' mark
-    s.F(s1['DOWN'], -1, -1, pv['rgap'], 'crease 3')
+    s.F(s1['DOWN'], -1, p2['rside'], pv['rgap'], 'crease 3')
     s.S(s.P[2] - (p2['zlev'] + R), 'drop')
     s.B(-90, R, 'bend toward the middle 2')
     zin = p2['zpi'] - p2['rin']
@@ -46,10 +48,10 @@ def ribbon(X, pv=None, p2=P2, a=None):               # a = the height of the arc
         s.S(s.P[0] - (p2['xpi'] + R), 'level above the Pi')
         s.B(90, R, 'bend down')
     else:
-        s.S(s.P[0] - (p2['xpi'] + 3 * R), 'level above the Pi')
+        s.S(s.P[0] - (p2['xpi'] + 2 * p2['Ra'] + R), 'level above the Pi')
         s.B(-90, R, 'bend up')
         s.S(a, 'arch, up')
-        s.B(180, R, 'arch, over')
+        s.B(180, p2['Ra'], 'arch, over')
     s.S(s.P[2] - zin - p2['Lpi'], 'down to the Pi')
     s.width(p2['Wpi'])
     s.S(s.P[2] - zin, 'into the Pi')
@@ -125,8 +127,8 @@ def usba(X, p2=P2):
 
 
 # ---------- the left speaker lead, moved clear of the two new leads (nodes as in k3_routes.json) ----------
-SPK = [1.6, [['B', 38.75, -25, 9.8], ['B', 38.75, -25.5, 17.5], ['B', 39, -31, 18.5], ['W', 43.5, -49.0, 58.0], ['W', 43.6, -53.5, 55.0],
-             ['W', 47.5, -61.0, 50.0], ['W', 54.0, -61.5, 42.0], ['W', 62.0, -61.5, 33.0], ['W', 62, -54, 30]]]
+SPK = [1.6, [['B', 38.75, -25, 9.8], ['B', 38.75, -25.5, 17.5], ['B', 39, -31, 18.5], ['W', 43.5, -49.0, 58.0], ['W', 43.5, -49.5, 48.0],
+             ['W', 45.5, -57.0, 44.5], ['W', 49.0, -61.5, 42.0], ['W', 55.0, -61.5, 39.0], ['W', 62.0, -61.5, 33.0], ['W', 62, -54, 30]]]
 
 
 def rope(X, r, nodes):                               # as v5f_k3a_leads.py
