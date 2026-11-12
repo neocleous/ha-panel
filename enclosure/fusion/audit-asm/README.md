@@ -1,18 +1,24 @@
 # Assembly audit, second pass (2026-11-12) - probe library
 
 Brief `claude/brief-assembly-audit-pass2-2026-11-12.md`; report `claude/report-assembly-audit-pass2-2026-11-12.md`;
-draft instructions `claude/assembly-instructions-draft-2026-11-12.md` (claude.ai project). Model "HA Panel v5 - tapered"
-version 55. **The audit changed nothing in the model and created no `AUD_*` body.**
+draft instructions `claude/assembly-instructions-draft-2026-11-12.md`; hand-over `claude/handover-assembly-audit-pass2-2026-11-12.md`
+(claude.ai project). Model "HA Panel v5 - tapered" version 55. **The audit changed nothing in the model and created no `AUD_*` body.**
 
 ## How it ran
 - Every call through the Fusion connector with `readOnly: true` (enforced). No file on the Mac was read or written:
   the session had no folder access, so the first pass's `~/Documents/ha_asm_audit/` scripts were not used.
-- `aud2_lib.py` is the library as it was built up during the session. It was exec'd into a module kept in
-  `sys.modules['aud2']` (results and temporary bodies in its dict `c`), and each probe was a short `run()` that called it.
-  The module was removed from `sys.modules` at the end.
+- The library was exec'd into a module kept in `sys.modules['aud2']` (results and temporary bodies in its dict `c`), and each
+  probe was a short `run()` that called it. The module was removed from `sys.modules` at the end (88 cached items dropped).
 - Big bodies (front shell, door, plate, slab frame) are probed through the eight slabs per body that the enclosure chat
   left in `sys.modules['v5f_h_cache']` (`('tile', name, volume, i)`), after checking their volumes against the live bodies.
   Without that cache `parts()` raises: cut the slabs first (lesson 133 of `../revF/floor_plate/close/README.md`).
+
+## What `aud2_lib.py` is and is not
+- It is a **consolidated copy of the core functions**, typed out at the end of the session: frames, states, hole list, the tool
+  line, the reach probe, needles, crops, the cap bar. The source was never stored on disk or in Fusion.
+- **It has not been run in this form.** Expect small fixes on first use.
+- Not in it: the one-off helpers (the cloth hem's construction, the plate rim, the lift and ride checks, the printing helpers)
+  and the individual probe calls. Their parameters and results are in the report's tables.
 
 ## Method
 - Tool access: `line()` samples the tool's axis every 5 mm from 2 mm behind the working end; margin = point-to-body
@@ -20,7 +26,7 @@ version 55. **The audit changed nothing in the model and created no `AUD_*` body
   first 7 mm, 'beyond' = the rest. States (bodies present at a step) are the `ST` lists.
 - Reach: `reach()` = the rounded fingertip of 2026-11-11 (cylinder + ball, tip on the mated plug's top, 60 long), blocked
   above 1.0 mm3, neighbours' mated plugs as blocks (`PLUGB`), supply module at 28.5.
-- Paths of parts: temporary copies moved (`mcopy`, `xmoved`) and intersected with crops of the fixed bodies (`region`).
+- Paths of parts: temporary copies moved (`mcopy`) and intersected with crops of the fixed bodies (`region`).
 - Sections: `needle()` = a 0.04 x 0.04 bar intersected with a body; returns the solid stretches along it.
 
 ## Probes run (parameters in the report's tables)
