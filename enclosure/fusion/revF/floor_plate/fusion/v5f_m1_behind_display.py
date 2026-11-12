@@ -13,7 +13,8 @@ PV = {
     'cfold': 28.1,      # w of the centre of the cable's fold down: its drop then lies at y -52.6 .. -57.9, behind the left box
     'cgap': 1.0,        # air between the two layers of a fold in the cable; assumed
     'rW': 16.0, 'rt': 0.4,      # ribbon section along its run; assumed by the usual rule
-    'rw0': -24.35,      # w at which the ribbon leaves the display's connector: mid-height of the connector's envelope; assumed
+    'rw0': -23.6,       # w at which the ribbon leaves the display's connector: 0.1 above the display's component envelope (depth 8.8),
+                        # its upper face level with the connector's top (depth 9.3); assumed
     'rin': 3.0,         # ribbon inside the connector
     'rs0': 1.45,        # straight out of the connector before the first bend
     'R1': 2.5,          # radius of the bend toward the door; assumed
@@ -72,3 +73,20 @@ def report(s):                                       # the stations of a strip i
     for lab, op, L, P, d, w in s.log:
         out.append('%-24s %-3s L %6.1f  B %s  W %s' % (lab, op, L, m.r2(k.W2B(*P)), P))
     return '\n'.join(out)
+
+
+def solids(X, pv=PV):                                # the three bodies of block 1 as temporary solids: plug envelope, cable, ribbon
+    pl = plug(X, pv); cb = cable(X, pv); rb = ribbon(X, pv)
+    return {'RESP_usbc_plug_env': m.join(X, pl), 'LEAD_USB_RESP': cb.solid(), 'LEAD_DSI': rb.solid()}, pl, cb, rb
+
+
+def commit(X, pv=PV):                                # model change: the three bodies replace the present ones (kept hidden as <name>_v60)
+    sol, pl, cb, rb = solids(X, pv)
+    out = {}
+    for name, tb in sol.items():
+        if tb.lumps.count != 1:
+            raise RuntimeError('%s has %d lumps' % (name, tb.lumps.count))
+    for name, tb in sol.items():
+        b = m.lead(X, name, tb)
+        out[name] = round(b.volume * 1000.0, 1)
+    return out
