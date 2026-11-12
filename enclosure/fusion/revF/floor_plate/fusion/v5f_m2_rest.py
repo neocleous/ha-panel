@@ -13,7 +13,8 @@ P2 = {
     'zlev': 28.5,       # height of the level run above the Pi: 5.2 above the cooler's envelope, 3.8 below the Pi power cable's lap
     'R4': 3.0,          # radius of the bends beside the left box and at the Pi; assumed
     'Ra': 2.0,          # radius of the half turn of the arch over the Pi's connector; assumed (with 3 the arch stands 0.5 from the Pi power cable's lap)
-    'rside': -1,        # crease 3 folds the ribbon's drop to this side: -1 as in block 1 (drop at x 39.3), +1 one layer nearer the middle (x 37.7)
+    'rside': 1,         # crease 3 folds the ribbon's drop to this side: -1 as in block 1 (drop at x 39.3), +1 one layer nearer the middle (x 37.7:
+                        # 2.6 instead of 1.0 from the left speaker lead)
     'xpi': 11.8,        # x of the ribbon in the Pi's connector: the middle of the connector's body (x 10.3 .. 13.3); assumed
     'zpi': 13.5,        # top of the Pi's connector, read from the model
     'rin': 3.0,         # ribbon inside the connector; assumed
@@ -127,8 +128,8 @@ def usba(X, p2=P2):
 
 
 # ---------- the left speaker lead, moved clear of the two new leads (nodes as in k3_routes.json) ----------
-SPK = [1.6, [['B', 38.75, -25, 9.8], ['B', 38.75, -25.5, 17.5], ['B', 39, -31, 18.5], ['W', 43.5, -49.0, 58.0], ['W', 43.5, -49.5, 48.0],
-             ['W', 45.5, -57.0, 44.5], ['W', 49.0, -61.5, 42.0], ['W', 55.0, -61.5, 39.0], ['W', 62.0, -61.5, 33.0], ['W', 62, -54, 30]]]
+SPK = [1.6, [['B', 38.75, -25, 9.8], ['B', 38.75, -25.5, 17.5], ['B', 39, -31, 18.5], ['W', 43.5, -49.0, 58.0], ['W', 43.0, -50.0, 48.0], ['W', 43.2, -54.5, 45.5],
+             ['W', 46.0, -59.5, 43.5], ['W', 49.5, -61.5, 42.0], ['W', 55.0, -61.5, 39.0], ['W', 62.0, -61.5, 33.0], ['W', 62, -54, 30]]]
 
 
 def rope(X, r, nodes):                               # as v5f_k3a_leads.py
