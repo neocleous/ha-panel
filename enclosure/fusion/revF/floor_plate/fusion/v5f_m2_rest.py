@@ -20,8 +20,8 @@ P2 = {
     'Lr': 200.0,        # the ribbon's stock length, taken as its whole length, ends included; the shorter of the two stock lengths
     # --- cable ---
     'Lc': 300.0,        # length between the plugs' bodies that is drawn (the sheet: 288 to 300)
-    'zr': 55.0,         # height of the row that takes the cable outward over the roll
-    'Rq': 5.5,          # radius of the row's two quarter bends; assumed
+    'Rq': 5.5,          # radius of the bend from the drop into the row over the roll; assumed
+    'sg': 0.5,          # drawn gap between two strands that lie beside each other in the roll (in the real roll they touch)
     'Ri': 3.0,          # radius of the roll's two innermost half turns; assumed (the room is 21.5 wide: with 4 the roll is 4 too wide)
     'zb': 17.5,         # height of the centres of the roll's lower turns (the outer one passes 1.6 above the plate's anchor)
     'zport': 13.93, 'yport': -28.95, 'xface': 45.1,   # the lower blue port: middle of its opening, face of the stack; read from the model
@@ -64,9 +64,9 @@ class Dry:                                           # no solids: a strip built 
 
 
 def lanes(pv, p2=P2):                                # the roll's five lanes (x of their centre lines) and its two radii
-    p = pv['ct'] + pv['cgap']                        # centre to centre of two strands that lie beside each other
+    p = pv['ct'] + p2['sg']                          # centre to centre of two strands that lie beside each other
     xc = p2['xface'] + 14.6 - p2['DA'] - pv['ct'] / 2.0      # the cable at the plug
-    xF = xc + p                                      # the last lane: one layer beside it, away from the Ethernet jack
+    xF = xc + pv['ct'] + pv['cgap']                  # the last lane: one layer beside it, away from the Ethernet jack
     L1 = xF + p; C = L1 + 2 * p2['Ri']; R1 = C + 2 * p2['Ri']; R2 = R1 + p
     return {'p': p, 'xc': xc, 'F': xF, 'L1': L1, 'C': C, 'R1': R1, 'R2': R2, 'Ro': 2 * p2['Ri'] + p / 2.0}
 
@@ -86,11 +86,11 @@ def cable(X, pv=None, p2=P2, h=None, direct=False):
         s.S(s.P[2] - 100.0, 'drop').B(a, R, 'step out').B(-a, R, 'step back')
         s.S(s.P[2] - p2['zport'], 'lane F')
     else:
-        zt = p2['zb'] + h
-        s.S(s.P[2] - (p2['zr'] + p2['Rq']), 'drop')
+        zt = p2['zb'] + h; Re = q['Ro'] + q['p']          # the way in lies round the roll's upper end, one strand outside its outer turn
+        s.S(s.P[2] - (zt + Re + p2['Rq']), 'drop')
         s.B(90, p2['Rq'], 'bend outward')
-        s.S((q['R2'] - p2['Rq']) - s.P[0], 'row')
-        s.B(-90, p2['Rq'], 'bend down')
+        s.S((q['R2'] - Re) - s.P[0], 'row')
+        s.B(-90, Re, 'round the roll')
         s.S(s.P[2] - p2['zb'], 'lane 1 down')
         s.B(-180, q['Ro'], 'outer turn below')
         s.S(h, 'lane 2 up')
