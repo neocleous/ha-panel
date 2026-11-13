@@ -76,3 +76,15 @@ def jaws(X, obs, th=2.5, wd=3.0, L=70.0, shift=0.0, w0=5.0):     # two jaws th t
             tool = j if tool is None else X.uni(tool, j)
         out[dn] = hits(X, tool, obs)
     return out
+
+
+# Results on version 62 (2026-11-13, read-only; hard bodies only, key paths left out; mm3 of the tool inside a body):
+#   sweep: the plug leaves the socket freely: its own socket only up to 6.0 out, nothing from 7.2 to 10.0 out.
+#   straight behind the plug's door-side end the shell's door frame begins 20.9 away (a lip 1.5 thick): the plug sits behind the frame's left edge.
+#   fingers, plate unit in place: on the face toward the middle free of hard bodies from 'down25' and 'to-x25' (the ribbon is touched, 2 to 47);
+#     on the face toward the side wall the shell blocks all six directions (196 to 557). No pinch with two fingertips.
+#   jaws on the rigid part of the plug (the sleeve over its board: 7.4 across, w -2.5 .. 4.3, 3.3 of it above the main board's face), plate unit in place:
+#     plug seated: free from 'to-x25' only. Plug 3.6 out: shell 2.6 (pliers 2.5 x 3.0), 0.1 (tweezers 1.5 x 2.0). 7.2 out: shell 13.8 / 5.6.
+#     'down45' meets the left speaker box (24.7 / 8.0). A stick 6 across cannot reach the side-wall face from any of the six directions (shell 43 to 85).
+#   jaws with the plate unit's bodies and the leads unplugged before it moves left out (the unit lowered out of the tool's way; not run with the box at
+#     exactly 30 lower): 'down45' seated: ribbon only (9.9 / 2.4); 3.6 and 7.2 out: free, pliers and tweezers.
