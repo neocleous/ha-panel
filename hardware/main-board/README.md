@@ -1,11 +1,21 @@
 # HA panel — main board
 
-> **Rev 3.1 (2026-11-11): the board in this folder.** Rev 3 with three changes asked for by the enclosure (top right
+> **Rev 3.2 (2026-11-14): the board in this folder.** Rev 3.1 with a relief in the side edge on the left-speaker side
+> (floor at u +42.0 over v +1.5 ... +13.0, 1.5 deep, inner corners r 1.0) for the ReSpeaker's USB-C plug and the pliers
+> that pull it. No part moved; the amplifier's GPIO2 via and the I2C pair's loop on the back face were laid inside the
+> new edge, and the pours follow it (Daniel's decision of 2026-11-14). ERC 0 errors 0 warnings; DRC 0 errors, 0 open
+> connections, schematic comparison clean, 2 warnings. Report: [`rev3.2/README.md`](rev3.2/README.md). For the enclosure
+> model: [`main-board-rev3-2-reply-2026-11-14.md`](main-board-rev3-2-reply-2026-11-14.md), [`MAIN_env.md`](MAIN_env.md),
+> `main-board-rev3.2.step`; the plug envelopes of rev 3.1 stand (`main-board-rev3.1-plug-envelopes.step`). Rev 3.1's
+> files are kept (`rev3.1/`, `main-board-rev3.1.step`, `main-board-rev3.1-plug-envelopes.step`,
+> `main-board-rev3-1-reply-2026-11-11.md`). No fab files for rev 3, 3.1 or 3.2.
+>
+> **Rev 3.1 (2026-11-11): its board file is now `rev3.1/main-board-rev3.1.kicad_pcb`.** Rev 3 with three changes asked for by the enclosure (top right
 > hole at u +19.20, v +25.00; BME680 header 3.90 further from the radar socket; VEML6030 header 1.00 lower), wider
 > copper for the Pi's 5 V and the 20 V inlet, and ground pours on both outer layers. Same circuit, same parts.
 > ERC 0 errors 0 warnings; DRC 0 errors, 0 open connections, schematic comparison clean, 2 warnings.
 > Report: [`rev3.1/README.md`](rev3.1/README.md). For the enclosure model:
-> [`main-board-rev3-1-reply-2026-11-11.md`](main-board-rev3-1-reply-2026-11-11.md), [`MAIN_env.md`](MAIN_env.md),
+> [`main-board-rev3-1-reply-2026-11-11.md`](main-board-rev3-1-reply-2026-11-11.md), [`rev3.1/MAIN_env.md`](rev3.1/MAIN_env.md),
 > `main-board-rev3.1.step`, `main-board-rev3.1-plug-envelopes.step`. Pi lead table: [`gpio-leads.md`](gpio-leads.md).
 > The rev 3 files are kept (`rev3/`, `main-board-rev3.step`, `main-board-rev3-plug-envelopes.step`,
 > `main-board-rev3-reply-2026-11-11.md`). No fab files for rev 3 or rev 3.1.

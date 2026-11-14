@@ -1,21 +1,26 @@
-# MAIN_env: main board rev 3.1, outline, holes and heights (2026-11-11)
+# MAIN_env: main board rev 3.2, outline, holes and heights (2026-11-14)
 
-For the enclosure model. These are sections 3 to 5 of the reply to the enclosure chat
-(`main-board-rev3-1-reply-2026-11-11.md`, also `claude/main-board-rev3-1-reply-2026-11-11.md` in the project); what
-moved, the connector table, the STEP files and the open points are in that document. Earlier files:
-`rev3/MAIN_env.md` (rev 3), `rev2.1/MAIN_env.md`.
+For the enclosure model. Sections 3 to 5 of the rev 3.1 reply (`main-board-rev3-1-reply-2026-11-11.md`) with the
+outline of rev 3.2; what changed on rev 3.2 is in `main-board-rev3-2-reply-2026-11-14.md` (also
+`claude/main-board-rev3-2-reply-2026-11-14.md` in the project). The connector table, the plug envelopes and the open
+points of rev 3.1 stand. Earlier files: `rev3.1/MAIN_env.md` (rev 3.1), `rev3/MAIN_env.md` (rev 3), `rev2.1/MAIN_env.md`.
 Frame: the site document's board frame, seen from the door: u to the right, v up, w out of the door-side face, origin
 in the middle of the board, mm.
 Section numbers in the text are those of the reply.
 
-**Changed against rev 3:** hole H2 at u +19.20, v +25.00 (was +30.00, +25.00); the same bare circles at all four
-holes; the boxes and pin ends of the BME680 header J10 (pins at u -30.40) and the VEML6030 header J11 (pins at
-v -13.00); three corrected figures: pin headers 8.54 bare (was 8.65), JST pin ends 1.8 (was 1.9), pin header pin ends
-1.4 (was 1.5).
+**Changed against rev 3.1:** only the outline: a relief in the +u side edge (section 3). Holes, heights, pin ends,
+connectors and plug envelopes are rev 3.1's; no part moved. (Rev 3.1 against rev 3: `rev3.1/MAIN_env.md`.)
 
 ## 3. Outline, holes, mounting
-- **Outline:** rectangle, u -43.5...+43.5, v -28.95...+28.95, square corners, 1.6 thick. Unchanged. Nothing overhangs
-  the top or side edges. At the bottom edge only the Pi power plug passes (it leaves downward).
+- **Outline:** rectangle, u -43.5...+43.5, v -28.95...+28.95, square corners, 1.6 thick, **with a relief in the +u side
+  edge** (rev 3.2):
+  - floor at **u +42.0 from v +1.5 to +13.0: 1.5 deep** over the whole span;
+  - side walls at **v +0.5 and v +14.0**, from u +43.0 to the old edge at u +43.5; the corners there are square;
+  - the two inner corners rounded at **r 1.0**, centres (+43.0, +1.5) and (+43.0, +13.0), so the full depth holds
+    from v +1.5 to +13.0 (19.82 mm2 cut away);
+  - copper keeps 0.30 from the new edge (the board's copper-to-edge rule).
+  Nothing overhangs the top or side edges or stands in the relief (nearest part outline, R105's courtyard, 0.36 from
+  the floor). At the bottom edge only the Pi power plug passes (it leaves downward).
 - **Holes:** four, 3.2 across, not plated, for the unit's standard M3 x 8 button-head screw (head 5.7 across, 1.65 high,
   site section 2).
 
@@ -67,8 +72,8 @@ Everything not listed is 3.0 or lower. Screw heads at the four holes: 1.65.
 | J2 | Pi power socket | +16.3...+26.9 | -29.5...-19.2 | 3.46; the plug hangs below the edge | 48.0 | door | GCT drawing USB4085 rev B |
 
 - "Allowed there" is the lowest allowed height over the part's box, from the site document's height grid and key paths.
-- **Changed against rev 3:** the boxes of J10 and J11 (section 2), and the bare height of the two pin headers, 8.54
-  (the rev 3 table said 8.65; section 8). No height limit is touched by either.
+- **Rev 3.2:** unchanged against rev 3.1 (no part moved; the parts nearest the relief are two 0603 resistors, R105
+  and R100, 0.7 tall or less; their bodies end 0.73 and 0.92 from its floor).
 - **Plugs:** the JST sockets are 7.0 bare, 9.8 with the plug in (JST catalogue), and I allow 20 for plug plus the bend of
   the lead (the site's figure). The two sensor headers are 8.54 bare, about 16.5 with a Dupont housing on (estimate),
   and I allow 25 with the bend (my estimate). The Pi power plug hangs below the bottom edge; its size is that of the
@@ -112,8 +117,10 @@ the ends of the through-hole pins:
 | LK1 | +6.9...+14.5 | -11.2...-11.2 | 1.5 | 4.0 | over the ReSpeaker | wire cut after soldering (assumed) |
 | PS1 | -35.8...+12.5 | -0.3...-0.3 | 2.9 | 4.0 | over the ReSpeaker | pins 4.5 long (NID100-SPEC) - 1.6 |
 
-- **Changed against rev 3:** the pin ends of J10 (now at u -30.4) and J11 (now at v -13.0), and two figures: JST
-  sockets 1.8 (the rev 3 table said 1.9), pin headers 1.4 (1.5). Section 8.
+- **Rev 3.2:** unchanged against rev 3.1. Beside the ReSpeaker's USB plug (u > +42.8, v +1.0...+13.4, 1.4 allowed)
+  the board now ends at u +42.0 over v +0.5...+14.0; no joint stood there before either.
+- **The display's power lead's strip of the fix pass** (u -15...-9, v -21...+14): no through-hole joint in it; the
+  nearest are C5's lead (2.50 outside) and J3's pads (2.61).
 - Pin protrusion: JST sockets 1.8, pin headers 1.4, supply module 2.9, USB-C socket 0.5. The leads of C5, C6, C7 and the
   wire link are cut to 1.5 or less after soldering (an assembly instruction).
 - **Where the display's power lead runs** (v +14.0...+17.1 to u -42.1, then the -u edge u -43.6...-40.6): radar socket

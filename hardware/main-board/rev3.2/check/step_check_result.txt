@@ -1,0 +1,56 @@
+== 1. The board solid, the holes and the relief
+rev 3.1  parts in the file: 86, of them on the board file: 85, others: ['=>[0:1:1:24]']
+         solid: X -43.500...43.500  Y -28.950...28.950  Z 0.000...1.510  (thickness 1.510); volume 7463.47 mm3
+         holes of 3.2 in the solid: [(-36.999, 22.0), (-30.999, -25.25), (19.2, 25.0), (31.001, -25.25)]  board file: [(-36.999, 22.0), (-30.999, -25.25), (19.2, 25.0), (31.001, -25.25)]  agree
+rev 3.2  parts in the file: 86, of them on the board file: 85, others: ['=>[0:1:1:24]']
+         solid: X -43.500...43.500  Y -28.950...28.950  Z 0.000...1.510  (thickness 1.510); volume 7433.54 mm3
+         holes of 3.2 in the solid: [(-36.999, 22.0), (-30.999, -25.25), (19.2, 25.0), (31.001, -25.25)]  board file: [(-36.999, 22.0), (-30.999, -25.25), (19.2, 25.0), (31.001, -25.25)]  agree
+         (u +42.75, v +7.25): cut away   middle of the relief
+         (u +42.05, v +2.00): cut away   just past the floor, near the lower end of the full depth
+         (u +42.05, v +12.50): cut away   just past the floor, near the upper end
+         (u +42.05, v +1.50): cut away   past the floor at v +1.5 (full depth holds there)
+         (u +42.05, v +13.00): cut away   past the floor at v +13.0
+         (u +43.40, v +0.60): cut away   inside the lower side wall
+         (u +43.40, v +13.90): cut away   inside the upper side wall
+         (u +42.50, v +1.00): cut away   lower inner corner, inside its arc
+         (u +41.95, v +7.25): board      just inside the floor
+         (u +43.40, v +0.40): board      just below the lower side wall
+         (u +43.40, v +14.10): board      just above the upper side wall
+         (u +42.20, v +0.70): board      lower inner corner, outside its arc (material the cutter leaves)
+         (u +42.20, v +13.80): board      upper inner corner, outside its arc
+         (u +43.40, v -10.00): board      the edge below the relief
+         (u +43.40, v +20.00): board      the edge above the relief
+         volume taken away: 29.93 mm3 = 19.82 mm2 of outline x 1.510 thickness (the relief, rule 38 of the site check: 19.82 mm2)
+
+== 2. Every part: the same box as in rev 3.1 (no part moved)
+parts compared: 85; largest difference of a part box 0.0000; different: none; in rev 3.1 only: none
+on the board, not in the file (no body, or not fitted): 35  H1 H2 H3 H4 J3 J4 J7 R20 R21 R22 R23 R24 R25 R27 R8 R9 TP1 TP10 TP11 TP12 TP13 TP14 TP15 TP16 TP17 TP19 TP2 TP20 TP3 TP4 TP5 TP6 TP7 TP8 TP9
+
+== 3. Heights and pin ends in the rev 3.2 file
+  chip parts stand on Z 1.595 (door-side face); back face at Z -0.005
+  part   model                                        u                 v                top w   table   pin end   table
+  PS1    MeanWell_NID100_SIP-13_envelope            -37.11...13.79      -4.35...7.75      27.50   27.50     2.90     2.9
+  C5     CP_Radial_D10.0mm_P5.00mm_envelope          -8.00...2.00        8.90...18.90     16.00   16.00     1.50     1.5
+  C6     CP_Radial_D10.0mm_P5.00mm_envelope         -32.00...-22.00      8.90...18.90     16.00   16.00     1.50     1.5
+  C7     CP_Radial_D5.0mm_P2.00mm_envelope            6.00...11.00       8.90...13.90     12.50   12.50     1.50     1.5
+  L1     L_Bourns_SRR1260_envelope                  -21.30...-8.70       8.85...21.45      6.50    6.50        -       -
+  L100   L_Codaca_CSBA0850_envelope                  31.30...40.10     -18.50...-9.90      5.40    5.40        -       -
+  J1     JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical       -3.70...3.70      -28.40...-22.65     7.00    7.00     1.80     1.8
+  J5     JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical      -42.65...-36.90    -20.05...-7.65      7.00    7.00     1.80     1.8
+  J6     JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical        9.95...15.70     -28.39...-15.99     7.00    7.00     1.80     1.8
+  J8     JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical       35.05...42.45     -28.40...-22.65     7.00    7.00     1.80     1.8
+  J9     JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical      -42.70...-35.30    -28.40...-22.65     7.00    7.00     1.80     1.8
+  J10    PinHeader_1x04_P2.54mm_Vertical            -31.67...-29.13    -19.19...-9.03      8.54    8.54     1.40     1.4
+  J11    PinHeader_1x04_P2.54mm_Vertical             -5.77...4.39      -14.27...-11.73     8.54    8.54     1.40     1.4
+  J2     USB_C_Receptacle_GCT_USB4085                17.15...26.09     -28.95...-19.78     3.45    3.46     0.51     0.5
+  LK1    WireLink_P7.62mm_D1.3mm_envelope             5.55...15.87     -11.85...-10.55     3.00    3.00     1.50     1.5
+  F3     Fuse_Littelfuse-NANO2-451_453_envelope     -35.64...-32.85    -14.30...-8.10      2.94    2.94        -       -
+  F5     Fuse_2920_7451Metric_envelope                4.27...11.73      21.69...26.91      1.80    1.80        -       -
+  R105   R_0603_1608Metric                           40.47...41.27       2.25...3.84       0.45    0.70        -       -
+  R100   R_0603_1608Metric                           40.28...41.08       5.67...7.26       0.45    0.70        -       -
+  part bodies nearest the relief's floor (u +42.0) over v +0.5...+14.0: R105 0.73, R100 0.92, C102 2.91
+
+== 4. Plug envelopes
+  rev 3.1 file: 7 blocks; written with rev 3.2: 7 blocks; the same blocks: rev 3.1's file stands for rev 3.2
+
+ALL AGREE

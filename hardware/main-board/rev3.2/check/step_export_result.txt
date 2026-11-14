@@ -1,0 +1,24 @@
+Export time 4.553 s
+library model                             79  C1 C10 C100 C101 C102 C103 C104 C105 C106 C107 C108 C109 C11 C110 ...
+envelope block 16.00 tall                  2  C5 C6
+envelope block 12.50 tall                  1  C7
+envelope block 2.94 tall                   3  F1 F2 F3
+envelope block 1.80 tall                   1  F5
+no body                                   26  H1 H2 H3 H4 J3 J4 J7 TP1 TP10 TP11 TP12 TP13 TP14 TP15 ...
+envelope block 6.50 tall                   1  L1
+envelope block 5.40 tall                   4  L100 L101 L102 L103
+envelope block 3.00 tall                   1  LK1
+envelope block 27.50 tall                  1  PS1
+library model of the same package          1  U1
+not fitted (left out): 9 R20 R21 R22 R23 R24 R25 R27 R8 R9
+library model lower than the part, block used instead: CP_Radial_D10.0mm_P5.00mm  model 10.00, part 16.00
+library model lower than the part, block used instead: CP_Radial_D5.0mm_P2.00mm  model 5.00, part 12.50
+library model lower than the part, block used instead: L_Bourns_SRR1260  model 6.00, part 6.50
+plug envelopes: main-board-rev3.2-plug-envelopes.step
+  J1 20 V in: u -4.24...4.24, v -28.95...-22.11, w 0...20.0
+  J10 BME680: u -32.22...-28.59, v -19.74...-8.49, w 0...25.0
+  J11 VEML6030: u -6.31...4.94, v -14.82...-11.18, w 0...25.0
+  J5 radar: u -43.20...-36.36, v -20.60...-7.11, w 0...20.0
+  J6 touch board: u 9.41...16.24, v -28.93...-15.45, w 0...20.0
+  J8 speaker left: u 34.50...43.00, v -28.95...-22.11, w 0...20.0
+  J9 speaker right: u -43.24...-34.76, v -28.95...-22.11, w 0...20.0

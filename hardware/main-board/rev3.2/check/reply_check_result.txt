@@ -1,0 +1,36 @@
+relief corner point                                            written (43.5, 14.0)           files (43.5, 14.0)               agree
+relief corner point                                            written (43.0, 14.0)           files (43.0, 14.0)               agree
+relief corner point                                            written (42.0, 13.0)           files (42.0, 13.0)               agree
+relief corner point                                            written (42.0, 1.5)            files (42.0, 1.5)                agree
+relief corner point                                            written (43.0, 0.5)            files (43.0, 0.5)                agree
+relief corner point                                            written (43.5, 0.5)            files (43.5, 0.5)                agree
+inner corner: centre                                           written (43.0, 1.5)            files (43.0, 1.5)                agree
+inner corner: radius                                           written 1.0                    files 1.0                        agree
+inner corner: centre                                           written (43.0, 13.0)           files (43.0, 13.0)               agree
+inner corner: radius                                           written 1.0                    files 1.0                        agree
+board area rev 3.1 (mm2)                                       written 5037.3                 files 5037.3                     agree
+board area rev 3.2 (mm2)                                       written 5017.48                files 5017.4812                  agree
+cut away (mm2)                                                 written 19.82                  files 19.8188                    agree
+GPIO2 via rev 3.1                                              written (41.585, 4.589)        files (41.5849, 4.5886)          agree
+GPIO2 via rev 3.2                                              written (40.5, 4.75)           files (40.5, 4.75)               agree
+AMP_GPIO2 F.Cu piece (40.867, 3.87) -> (40.867, 4.383) present written 1.0                    files 1.0                        agree
+AMP_GPIO2 F.Cu piece (40.867, 4.383) -> (40.5, 4.75) present   written 1.0                    files 1.0                        agree
+AMP_GPIO2 B.Cu piece (40.5, 4.75) -> (40.339, 4.589) present   written 1.0                    files 1.0                        agree
+AMP_GPIO2 B.Cu piece (40.339, 4.589) -> (37.862, 4.589) present written 1.0                    files 1.0                        agree
+I2C_SCL B.Cu piece (41.52, 1.0243) -> (41.52, 6.0743) present  written 1.0                    files 1.0                        agree
+I2C_SCL B.Cu piece (41.52, 6.0743) -> (41.47, 6.1243) present  written 1.0                    files 1.0                        agree
+I2C_SDA B.Cu piece (41.15, 2.8811) -> (41.15, 5.7277) present  written 1.0                    files 1.0                        agree
+I2C_SDA B.Cu piece (41.15, 5.7277) -> (38.875, 6.725) present  written 1.0                    files 1.0                        agree
+amplifier supply plane rev 3.1 (mm2)                           written 814.09                 files 814.0939                   agree
+amplifier supply plane rev 3.2 (mm2)                           written 804.81                 files 804.8117                   agree
+plane: lost at its corner (mm2)                                written 8.81                   files 8.812                      agree
+ground pour F.Cu (mm2), rev 3.1 / rev 3.2                      written (3018.91, 2996.41)     files (3018.9088, 2996.4094)     agree
+ground pour In1.Cu (mm2), rev 3.1 / rev 3.2                    written (4489.33, 4468.89)     files (4489.3318, 4468.893)      agree
+ground pour B.Cu (mm2), rev 3.1 / rev 3.2                      written (3347.36, 3331.06)     files (3347.3582, 3331.0616)     agree
+pours to the floor, along the floor                            written 0.3                    files 0.3005                     agree
+nearest track to the new edge (I2C clock)                      written 0.38                   files 0.38                       agree
+nearest data track to the new edge                             written 0.75                   files 0.75                       agree
+nearest pads to the new edge (R105)                            written 0.66                   files 0.658                      agree
+track length rev 3.1 / rev 3.2 (mm)                            written (2126.1, 2122.6)       files (2126.1306, 2122.5979)     agree
+
+ALL AGREE
