@@ -1,0 +1,1 @@
+{"job": "A_door", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "opts": {"enable-support": "0", "brim-type": "outer_only", "brim-width": "5", "brim-object-gap": "0.1"}, "plates": [{"name": "A_door", "objects": [{"stl": "door_plan.stl"}]}]}
