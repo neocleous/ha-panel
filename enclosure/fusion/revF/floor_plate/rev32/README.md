@@ -27,7 +27,7 @@ ride-in), each by its git blob hash. The STEP file is `hardware/main-board/main-
   with the relief 0.2 smaller all round 1.50 and 0.58.
 - **Pliers' line of D135** (the audit's jaws, 30 to 35 deg below, handle 10 to 15 deg toward the middle, tips at the board's face): the board
   is 0.19 to 0.31 away, 0.07 to 0.14 with the jaws 0.5 nearer; nearest is the board's square corner at the relief's lower end (u +43.5,
-  v +0.5), the floor is 1.64 or more away. R105's body 1.98 or more. With the outline 0.2 larger all round the jaws touch that corner if
+  v +0.5), the floor is 1.63 or more away. R105's body 1.98 or more. With the outline 0.2 larger all round the jaws touch that corner if
   their tips go down to the board's face (0.0047 mm3 at most, 0.5 nearer); 0.25 above the face they clear by 0.05 or more.
 - **Flat leads:** ribbon 2.90 (its nearest point is at v -16, below the relief), USB cable 11.87.
 - **Ride-in** at 23 positions out to 60: 0 mm3; the board passes the LCD opening with 1.03.
