@@ -24,7 +24,8 @@ Each call is `rc_common.py` + one `rcN_*.py`, joined by `build.py` into `calls/<
 ## slicer/ — Bambu Studio jobs (built in the cloud, run on the Mac)
 - `flatten.py` — resolves Bambu's system presets (inherits chain + `include` templates; own keys win) into flat JSON.
 - `orient.py` — world STL → build orientation (first audit's `pa_geom.ORIENT`), with the world→bed matrix.
-- `blockers.py` — support-blocker boxes given in world mm, written in a print's bed frame.
+- `blockers.py` — support-blocker boxes given in world mm, written in a print's bed frame; `front_plan_blk.cmd` — the front
+  shell's boxes as run.
 - `mkjob.py <spec.json>` — assemble list + argument list for one job (every option as `--key=value`). Set `RC_MAC_DIR` to the Mac
   folder; `{RC}` in a spec stands for it. `mkbatch.py start|poll jobs…` — the Fusion call text for `rc6`.
 - `spec_*.json` — every job of this run (A_* = scope A singles, P* = plan plates, T_ring12 = the foot ring).
@@ -37,7 +38,12 @@ Each call is `rc_common.py` + one `rcN_*.py`, joined by `build.py` into `calls/<
 - `ride010.py` — the ride-in's 0.08 (lead parts as `aud4_lib.LEADPART` crops them, moved along the screen's normal).
 - `insert_walls.py` — wall round each insert hole by rays from the hole's surface; `holes_summ*.py` — hole schedule by print axis.
 - `pa_geom.py` — the first audit's, with this run's upload path and orientations (carrier, plate).
-- `data/` — the small results quoted in the report.
+- `xsec.py`, `boss_probe.py`, `boss_sec.py` — sections and rays round the box-top bosses; `rc_query.py` — the layer analysis's
+  regions inside a world box; `rc_render.py` — quick shaded views; `rc_load_check.py` — the mesh check of the 13 exports.
+
+## Results
+The results quoted in the report (`data/`, `img/`) and every export stay on the Mac in
+`~/Documents/HA_panel_renders/print_audit_recheck/`, as in the first audit; none of them is a print file and none is in git.
 
 ## Lessons
 - A Bambu Studio child of Fusion's process is a zombie until reaped: `os.waitpid(pid, os.WNOHANG)` before `os.kill(pid, 0)`.
