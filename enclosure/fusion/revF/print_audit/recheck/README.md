@@ -40,6 +40,9 @@ Each call is `rc_common.py` + one `rcN_*.py`, joined by `build.py` into `calls/<
 - `pa_geom.py` — the first audit's, with this run's upload path and orientations (carrier, plate).
 - `xsec.py`, `boss_probe.py`, `boss_sec.py` — sections and rays round the box-top bosses; `rc_query.py` — the layer analysis's
   regions inside a world box; `rc_render.py` — quick shaded views; `rc_load_check.py` — the mesh check of the 13 exports.
+- `split_study.py` — follow-up of 2026-11-14 (Project doc `claude/finding-front-shell-split-2026-11-14.md`): Daniel's split of
+  the front shell into a screen plate and the rest of the shell; the chin against the screen plane, orientations compared on
+  the exported mesh, the box-top bosses against the screen wall.
 
 ## Results
 The results quoted in the report (`data/`, `img/`) and every export stay on the Mac in
