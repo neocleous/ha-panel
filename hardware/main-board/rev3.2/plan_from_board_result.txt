@@ -1,0 +1,5 @@
+outline: box u -43.50 ... +43.50, v -28.95 ... +28.95; polygon of 26 points
+relief: {'floor_u': 42.0, 'floor_v': [1.5, 13.0], 'depth': 1.5, 'side_walls_v': [0.5, 14.0], 'corner_radius': [1.0], 'corner_centres': [(43.0, 1.5), (43.0, 13.0)]}
+120 parts; moved against the old plan: 0
+parts that did not move: largest difference between the two courtyard boxes 0.000
+pads: largest difference of position or size against the old plan 0.000

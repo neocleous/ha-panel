@@ -1,0 +1,14 @@
+ERC report (2026-11-11T21:15:54+0100, Encoding UTF8)
+Report includes: Errors, Warnings, Exclusions
+
+***** Sheet /
+
+***** Sheet /20 V inlet and eFuse/
+
+***** Sheet /5 V supply and outputs/
+
+***** Sheet /3.3 V, Pi link, sensors, radar, echo-ref/
+
+***** Sheet /Amplifier/
+
+ ** ERC messages: 0  Errors 0  Warnings 0

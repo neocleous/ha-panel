@@ -27,9 +27,12 @@ def main(path, out, win=None, drc=None):
     lays = (('F.Cu (door side)', pcbnew.F_Cu, '#c0392b'), ('B.Cu (back, seen through the board)', pcbnew.B_Cu, '#2a6fba'))
     ptpx = 72.0 * k / 25.4 * 25.4     # points per mm at this scale
     ptpx = 72.0 * k
+    edge = pcbnew.SHAPE_POLY_SET()                   # the board's own outline (rev 3.2: with the relief in the +u edge)
+    b.GetBoardPolygonOutlines(edge)
+    outline = [uv(edge.Outline(0).CPoint(j)) for j in range(edge.Outline(0).PointCount())]
     for ax, (name, lid, col) in zip(axs, lays):
         ax.set_aspect('equal'); ax.set_xlim(win[0], win[2]); ax.set_ylim(win[1], win[3])
-        ax.add_patch(Rectangle((-U0, -V0), 2 * U0, 2 * V0, fc='#fbfbf6', ec='black', lw=0.8))
+        ax.add_patch(Polygon(outline, closed=True, fc='#fbfbf6', ec='black', lw=0.8))
         for z in b.Zones():
             if z.GetIsRuleArea() or not z.IsOnLayer(lid) or z.GetNetname() == 'GND':
                 continue

@@ -1,0 +1,110 @@
+Region: u +41.0 ... +43.5, v 0 ... +14.5. Relief drawn with inner corners at radius 1.00, span v 0.50 ... 14.00 at the side walls.
+dN = smallest distance from the whole item to the relief of depth N (0 = it overlaps the removed area).
+Copper must keep 0.30 from the new edge.
+kind            ref        layer        net                            u (in region)   v (in region)    d1.5  d1.25   d1.0  note
+pour (filled)   (no name)  B.Cu         GND                           +41.00..+43.20   +0.00..+14.50    0.00   0.00   0.00  priority 0 <-- copper inside 0.30 of the 1.5 relief
+pour outline    (no name)  B.Cu         GND                           +41.00..+43.50   +0.00..+14.50    0.00   0.00   0.00  priority 0
+track                      B.Cu         I2C_SCL                       +42.87..+43.07   +4.78.. +5.42    0.00   0.00   0.00  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SCL                       +42.67..+43.07   +4.28.. +4.97    0.00   0.00   0.00  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SCL                       +42.62..+43.07   +5.23.. +5.67    0.00   0.00   0.00  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SCL                       +42.32..+42.87   +3.38.. +4.47    0.00   0.00   0.00  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SCL                       +42.47..+42.82   +5.48.. +5.72    0.00   0.00   0.00  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SCL                       +42.07..+42.67   +5.53.. +5.92    0.00   0.00   0.00  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SDA                       +41.00..+42.62   +5.03.. +5.90    0.00   0.00   0.00  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SDA                       +41.78..+42.62   +3.38.. +5.22    0.00   0.00   0.00  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SCL                       +42.22..+42.52   +3.18.. +3.57    0.00   0.00   0.00  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SCL                       +41.42..+42.42   +0.93.. +3.37    0.00   0.00   0.08  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SCL                       +41.72..+42.27   +5.73.. +6.07    0.00   0.00   0.23  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SDA                       +41.00..+41.97   +2.63.. +3.57    0.03   0.28   0.53  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         I2C_SCL                       +41.37..+41.92   +5.88.. +6.22    0.08   0.33   0.58  width 0.20 <-- copper inside 0.30 of the 1.5 relief
+track                      B.Cu         /Amplifier/AMP_GPIO2          +41.00..+41.68   +4.49.. +4.69    0.32   0.57   0.82  width 0.20
+track                      B.Cu         I2C_SCL                       +41.07..+41.62   +0.58.. +1.12    0.46   0.69   0.94  width 0.20
+track                      B.Cu         I2C_SCL                       +41.22..+41.57   +6.03.. +6.27    0.43   0.68   0.93  width 0.20
+track                      B.Cu         I2C_SCL                       +41.00..+41.42   +6.08.. +6.42    0.58   0.83   1.08  width 0.20
+track                      B.Cu         I2C_SCL                       +41.00..+41.27   +0.42.. +0.77    0.91   1.14   1.37  width 0.20
+track                      B.Cu         I2C_SCL                       +41.00..+41.12   +6.23.. +6.44    0.88   1.13   1.38  width 0.20
+board shape                Edge.Cuts                                  +43.45..+43.50   +0.00..+14.50    0.00   0.00   0.00  
+courtyard       R100       F.Courtyard                                +41.00..+41.40   +4.99.. +7.94    0.60   0.85   1.10  
+courtyard       R105       F.Courtyard                                +41.00..+41.59   +1.57.. +4.52    0.41   0.66   0.91  
+footprint shape R100       F.Courtyard                                +41.00..+41.43   +4.96.. +7.97    0.57   0.82   1.07  
+footprint shape R105       F.Courtyard                                +41.00..+41.62   +1.54.. +4.55    0.38   0.63   0.88  
+pad             R100.1     F.Cu         /Amplifier/SPK_GAIN           +41.00..+41.15   +6.90.. +7.68    0.85   1.10   1.35  SMD
+pad             R100.2     F.Cu         GND                           +41.00..+41.15   +5.25.. +6.03    0.85   1.10   1.35  SMD
+pad             R105.1     F.Cu         /Amplifier/AMP_GPIO2          +41.00..+41.34   +3.47.. +4.27    0.66   0.91   1.16  SMD
+pad             R105.2     F.Cu         GND                           +41.00..+41.34   +1.82.. +2.62    0.66   0.91   1.16  SMD
+pour (filled)   (no name)  F.Cu         GND                           +41.00..+43.20   +0.00..+14.50    0.00   0.00   0.00  priority 0 <-- copper inside 0.30 of the 1.5 relief
+pour outline    (no name)  F.Cu         GND                           +41.00..+43.50   +0.00..+14.50    0.00   0.00   0.00  priority 0
+track                      F.Cu         /Amplifier/AMP_GPIO2          +41.00..+41.68   +3.86.. +4.69    0.32   0.57   0.82  width 0.20
+track                      F.Cu         GND                           +41.00..+41.02   +1.20.. +2.29    0.98   1.23   1.48  width 0.30
+footprint shape R100       F.Fab                                      +41.00..+41.14   +5.61.. +7.31    0.86   1.11   1.36  
+footprint shape R105       F.Fab                                      +41.00..+41.33   +2.20.. +3.89    0.67   0.92   1.17  
+footprint text  R105       F.Fab                                      +41.00..+41.08   +2.34.. +3.77    0.92   1.17   1.42  
+pad             R100.1     F.Mask       /Amplifier/SPK_GAIN           +41.00..+41.15   +6.90.. +7.68    0.85   1.10   1.35  SMD
+pad             R100.2     F.Mask       GND                           +41.00..+41.15   +5.25.. +6.03    0.85   1.10   1.35  SMD
+pad             R105.1     F.Mask       /Amplifier/AMP_GPIO2          +41.00..+41.34   +3.47.. +4.27    0.66   0.91   1.16  SMD
+pad             R105.2     F.Mask       GND                           +41.00..+41.34   +1.82.. +2.62    0.66   0.91   1.16  SMD
+pad             R100.1     F.Paste      /Amplifier/SPK_GAIN           +41.00..+41.15   +6.90.. +7.68    0.85   1.10   1.35  SMD
+pad             R100.2     F.Paste      GND                           +41.00..+41.15   +5.25.. +6.03    0.85   1.10   1.35  SMD
+pad             R105.1     F.Paste      /Amplifier/AMP_GPIO2          +41.00..+41.34   +3.47.. +4.27    0.66   0.91   1.16  SMD
+pad             R105.2     F.Paste      GND                           +41.00..+41.34   +1.82.. +2.62    0.66   0.91   1.16  SMD
+footprint shape R100       F.Silkscreen                               +41.14..+41.26   +6.17.. +6.76    0.74   0.99   1.24  
+footprint shape R105       F.Silkscreen                               +41.33..+41.45   +2.75.. +3.34    0.55   0.80   1.05  
+pour (filled)   (no name)  In1.Cu       GND                           +41.00..+43.20   +0.00..+14.50    0.00   0.00   0.00  priority 0 <-- copper inside 0.30 of the 1.5 relief
+pour outline    (no name)  In1.Cu       GND                           +41.00..+43.50   +0.00..+14.50    0.00   0.00   0.00  priority 0
+pour (filled)   (no name)  In2.Cu       /Amplifier/PVDD               +41.00..+43.20   +0.00.. +6.60    0.00   0.00   0.00  priority 1 <-- copper inside 0.30 of the 1.5 relief
+pour outline    (no name)  In2.Cu       /Amplifier/PVDD               +41.00..+43.50   +0.00.. +6.60    0.00   0.00   0.00  priority 1
+via                        all copper (through) /Amplifier/AMP_GPIO2          +41.29..+41.88   +4.29.. +4.89    0.12   0.37   0.62  dia 0.60 drill 0.30 <-- copper inside 0.30 of the 1.5 relief
+via                        all copper (through) GND                           +41.00..+41.17   +1.00.. +1.54    0.85   1.09   1.34  dia 0.60 drill 0.30
+
+depth 1.50: copper closer than 0.30 to the new edge: 18 items (14 tracks/vias/pads, 4 pour fills)
+   pour (filled)   (no name)  B.Cu     GND                            nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SDA                        nearest 0.00
+   track                      B.Cu     I2C_SDA                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SDA                        nearest 0.03
+   track                      B.Cu     I2C_SCL                        nearest 0.08
+   pour (filled)   (no name)  F.Cu     GND                            nearest 0.00
+   pour (filled)   (no name)  In1.Cu   GND                            nearest 0.00
+   pour (filled)   (no name)  In2.Cu   /Amplifier/PVDD                nearest 0.00
+   via                        all copper (through) /Amplifier/AMP_GPIO2           nearest 0.12
+depth 1.25: copper closer than 0.30 to the new edge: 16 items (12 tracks/vias/pads, 4 pour fills)
+   pour (filled)   (no name)  B.Cu     GND                            nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SDA                        nearest 0.00
+   track                      B.Cu     I2C_SDA                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SDA                        nearest 0.28
+   pour (filled)   (no name)  F.Cu     GND                            nearest 0.00
+   pour (filled)   (no name)  In1.Cu   GND                            nearest 0.00
+   pour (filled)   (no name)  In2.Cu   /Amplifier/PVDD                nearest 0.00
+depth 1.00: copper closer than 0.30 to the new edge: 15 items (11 tracks/vias/pads, 4 pour fills)
+   pour (filled)   (no name)  B.Cu     GND                            nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SDA                        nearest 0.00
+   track                      B.Cu     I2C_SDA                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.00
+   track                      B.Cu     I2C_SCL                        nearest 0.08
+   track                      B.Cu     I2C_SCL                        nearest 0.23
+   pour (filled)   (no name)  F.Cu     GND                            nearest 0.00
+   pour (filled)   (no name)  In1.Cu   GND                            nearest 0.00
+   pour (filled)   (no name)  In2.Cu   /Amplifier/PVDD                nearest 0.00

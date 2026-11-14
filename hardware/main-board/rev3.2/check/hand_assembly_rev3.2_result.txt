@@ -1,0 +1,5 @@
+parts: 120; on the back face: none
+surface-mount pads on the back face: none (U1 has a bare copper pad there for its heat, nothing is soldered to it)
+chip sizes used: 0603, 0805, 1206, 2920; smaller than 0603: none
+connectors: J1, J10, J11, J2, J3, J4, J5, J6, J7, J8, J9; not through-hole: none
+through-hole parts (16): C5, C6, C7, J1, J2, J3, J4, J5, J6, J7, J8, J9, J10, J11, LK1, PS1

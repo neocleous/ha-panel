@@ -1,0 +1,59 @@
+parts: 120 and 120; moved: none
+tracks: 2126.1 mm and 2122.6 mm; vias 245 and 245
+   /Amplifier/AMP_GPIO2     taken out   4.74 mm, laid   3.74 mm; vias out 1, in 1
+   I2C_SCL                  taken out   6.29 mm, laid   5.12 mm; vias out 0, in 0
+   I2C_SDA                  taken out  36.85 mm, laid  35.48 mm; vias out 0, in 0
+   pieces taken out:
+      track /Amplifier/AMP_GPIO2 B.Cu (37.8619, 4.5886) (41.5849, 4.5886) 0.2
+      track /Amplifier/AMP_GPIO2 F.Cu (40.8666, 3.8703) (41.5849, 4.5886) 0.2
+      track I2C_SCL B.Cu (41.47, 6.1243) (41.82, 5.9743) 0.2
+      track I2C_SCL B.Cu (41.52, 1.0243) (42.32, 3.2743) 0.2
+      track I2C_SCL B.Cu (41.82, 5.9743) (42.17, 5.8243) 0.2
+      track I2C_SCL B.Cu (42.17, 5.8243) (42.57, 5.6243) 0.2
+      track I2C_SCL B.Cu (42.32, 3.2743) (42.42, 3.4743) 0.2
+      track I2C_SCL B.Cu (42.42, 3.4743) (42.77, 4.3743) 0.2
+      track I2C_SCL B.Cu (42.57, 5.6243) (42.72, 5.5743) 0.2
+      track I2C_SCL B.Cu (42.72, 5.5743) (42.97, 5.3243) 0.2
+      track I2C_SCL B.Cu (42.77, 4.3743) (42.97, 4.8743) 0.2
+      track I2C_SCL B.Cu (42.97, 4.8743) (42.97, 5.3243) 0.2
+      track I2C_SDA B.Cu (17.825, -16.225) (41.875, 3.475) 0.2
+      track I2C_SDA B.Cu (38.875, 6.725) (42.525, 5.125) 0.2
+      track I2C_SDA B.Cu (41.875, 3.475) (42.525, 5.125) 0.2
+      via /Amplifier/AMP_GPIO2 (41.5849, 4.5886) 0.6
+   pieces laid:
+      track /Amplifier/AMP_GPIO2 B.Cu (37.8619, 4.5886) (40.3386, 4.5886) 0.2
+      track /Amplifier/AMP_GPIO2 B.Cu (40.3386, 4.5886) (40.5, 4.75) 0.2
+      track /Amplifier/AMP_GPIO2 F.Cu (40.5, 4.75) (40.867, 4.383) 0.2
+      track /Amplifier/AMP_GPIO2 F.Cu (40.867, 3.87) (40.867, 4.383) 0.2
+      track I2C_SCL B.Cu (41.47, 6.1243) (41.52, 6.0743) 0.2
+      track I2C_SCL B.Cu (41.52, 1.0243) (41.52, 6.0743) 0.2
+      track I2C_SDA B.Cu (17.825, -16.225) (41.15, 2.8811) 0.2
+      track I2C_SDA B.Cu (38.875, 6.725) (41.15, 5.7277) 0.2
+      track I2C_SDA B.Cu (41.15, 2.8811) (41.15, 5.7277) 0.2
+      via /Amplifier/AMP_GPIO2 (40.5, 4.75) 0.6
+pours:
+   +20V                             In2.Cu   1009.11 ->  1009.11 mm2  gained   0.00 lost   0.00  where None
+   +5V                              In2.Cu    322.88 ->   322.88 mm2  gained   0.00 lost   0.00  where None
+   /Amplifier/PVDD                  In2.Cu    814.09 ->   804.81 mm2  gained   0.67 lost   9.95  where (39.77, 0.08, 43.2, 6.6)
+   /Amplifier/PVDD                  In2.Cu     90.45 ->    90.45 mm2  gained   0.00 lost   0.00  where None
+   20 V, fuse to protection chip    F.Cu        9.68 ->     9.68 mm2  gained   0.00 lost   0.00  where None
+   GND                              B.Cu     3347.36 ->  3331.06 mm2  gained   0.00 lost  16.30  where (39.87, 0.08, 43.2, 14.42)
+   GND                              F.Cu     3018.91 ->  2996.41 mm2  gained   0.00 lost  22.50  where (39.82, 0.08, 43.2, 14.42)
+   GND                              In1.Cu   4489.33 ->  4468.89 mm2  gained   0.67 lost  21.11  where (39.9, 0.08, 43.2, 14.42)
+   Pi 5 V, wire link to socket      B.Cu       46.77 ->    46.77 mm2  gained   0.00 lost   0.00  where None
+outline: board area 5037.30 -> 5017.48 mm2; removed 19.819 mm2 within u 42.000..43.500 v 0.500..14.000; added 0.0000 mm2
+copper nearest the edge between v -0.5 and +15.0 (new outline):
+   0.298  pour In1.Cu            GND
+   0.298  pour In2.Cu            /Amplifier/PVDD
+   0.298  pour B.Cu              GND
+   0.298  pour F.Cu              GND
+   0.380  track B.Cu             I2C_SCL
+   0.382  track B.Cu             I2C_SCL
+   0.431  track B.Cu             I2C_SCL
+   0.454  track B.Cu             I2C_SCL
+   0.581  track B.Cu             I2C_SCL
+   0.658  pad R105.1 F.Cu        /Amplifier/AMP_GPIO2
+   0.658  pad R105.2 F.Cu        GND
+   0.750  track B.Cu             I2C_SDA
+   0.750  track B.Cu             I2C_SDA
+   0.752  track B.Cu             I2C_SDA

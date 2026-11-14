@@ -1,0 +1,2 @@
+rev3.1/main-board-rev3.1.kicad_pcb: PVDD, fuse F5 -> chip pins (tied) 7.564 mohm; fuse F5 -> C100-C102 (tied) 8.855 mohm  (3 s)
+main-board.kicad_pcb: PVDD, fuse F5 -> chip pins (tied) 7.564 mohm; fuse F5 -> C100-C102 (tied) 8.875 mohm  (3 s)

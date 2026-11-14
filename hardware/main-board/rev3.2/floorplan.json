@@ -1,0 +1,6028 @@
+{
+ "outline": [
+  -43.5,
+  -28.95,
+  43.5,
+  28.95
+ ],
+ "outline_polygon": [
+  [
+   43.5,
+   14.0
+  ],
+  [
+   43.0,
+   14.0
+  ],
+  [
+   42.9017,
+   13.9976
+  ],
+  [
+   42.709,
+   13.9593
+  ],
+  [
+   42.5275,
+   13.8841
+  ],
+  [
+   42.3641,
+   13.7749
+  ],
+  [
+   42.2251,
+   13.6359
+  ],
+  [
+   42.1159,
+   13.4725
+  ],
+  [
+   42.0407,
+   13.291
+  ],
+  [
+   42.0024,
+   13.0983
+  ],
+  [
+   42.0,
+   13.0
+  ],
+  [
+   42.0,
+   1.5
+  ],
+  [
+   42.0024,
+   1.4017
+  ],
+  [
+   42.0407,
+   1.209
+  ],
+  [
+   42.1159,
+   1.0275
+  ],
+  [
+   42.2251,
+   0.8641
+  ],
+  [
+   42.3641,
+   0.7251
+  ],
+  [
+   42.5275,
+   0.6159
+  ],
+  [
+   42.709,
+   0.5407
+  ],
+  [
+   42.9017,
+   0.5024
+  ],
+  [
+   43.0,
+   0.5
+  ],
+  [
+   43.5,
+   0.5
+  ],
+  [
+   43.5,
+   -28.95
+  ],
+  [
+   -43.5,
+   -28.95
+  ],
+  [
+   -43.5,
+   28.95
+  ],
+  [
+   43.5,
+   28.95
+  ]
+ ],
+ "edge_cuts": [
+  {
+   "line": [
+    [
+     -43.5,
+     28.95
+    ],
+    [
+     43.5,
+     28.95
+    ]
+   ]
+  },
+  {
+   "line": [
+    [
+     -43.5,
+     -28.95
+    ],
+    [
+     -43.5,
+     28.95
+    ]
+   ]
+  },
+  {
+   "line": [
+    [
+     42.0,
+     13.0
+    ],
+    [
+     42.0,
+     1.5
+    ]
+   ]
+  },
+  {
+   "arc": [
+    [
+     42.0,
+     13.0
+    ],
+    [
+     42.2929,
+     13.7071
+    ],
+    [
+     43.0,
+     14.0
+    ]
+   ],
+   "centre": [
+    43.0,
+    13.0
+   ],
+   "r": 1.0
+  },
+  {
+   "arc": [
+    [
+     43.0,
+     0.5
+    ],
+    [
+     42.2929,
+     0.7929
+    ],
+    [
+     42.0,
+     1.5
+    ]
+   ],
+   "centre": [
+    43.0,
+    1.5
+   ],
+   "r": 1.0
+  },
+  {
+   "line": [
+    [
+     43.0,
+     0.5
+    ],
+    [
+     43.5,
+     0.5
+    ]
+   ]
+  },
+  {
+   "line": [
+    [
+     43.5,
+     28.95
+    ],
+    [
+     43.5,
+     14.0
+    ]
+   ]
+  },
+  {
+   "line": [
+    [
+     43.5,
+     14.0
+    ],
+    [
+     43.0,
+     14.0
+    ]
+   ]
+  },
+  {
+   "line": [
+    [
+     43.5,
+     0.5
+    ],
+    [
+     43.5,
+     -28.95
+    ]
+   ]
+  },
+  {
+   "line": [
+    [
+     43.5,
+     -28.95
+    ],
+    [
+     -43.5,
+     -28.95
+    ]
+   ]
+  }
+ ],
+ "relief": {
+  "floor_u": 42.0,
+  "floor_v": [
+   1.5,
+   13.0
+  ],
+  "depth": 1.5,
+  "side_walls_v": [
+   0.5,
+   14.0
+  ],
+  "corner_radius": [
+   1.0
+  ],
+  "corner_centres": [
+   [
+    43.0,
+    1.5
+   ],
+   [
+    43.0,
+    13.0
+   ]
+  ]
+ },
+ "amp_keep": [
+  [
+   33.3,
+   5.9,
+   35.0,
+   15.799999999999999
+  ],
+  [
+   22.6,
+   5.9,
+   24.3,
+   15.799999999999999
+  ],
+  [
+   34.900000000000006,
+   -11.6,
+   37.0,
+   4.999999999999995
+  ],
+  [
+   20.7,
+   -0.5999999999999996,
+   22.7,
+   4.999999999999995
+  ],
+  [
+   20.7,
+   -11.1,
+   28.3,
+   0.40000000000000036
+  ]
+ ],
+ "parts": {
+  "R3": {
+   "value": "22.1k 1%",
+   "footprint": "R_0603_1608Metric",
+   "u": -5.552,
+   "v": -16.43,
+   "rot": 90.0,
+   "crt": [
+    -6.327,
+    -17.955,
+    -4.777,
+    -14.905
+   ],
+   "placed": "auto",
+   "from_anchor": 4.5,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -5.552,
+     "v": -17.255,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "/20 V inlet and eFuse/EF_OVP"
+    },
+    {
+     "n": "2",
+     "u": -5.552,
+     "v": -15.605,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "GND"
+    }
+   ]
+  },
+  "TP11": {
+   "value": "EXT5V",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": 7.636,
+   "v": -17.377,
+   "rot": 0.0,
+   "crt": [
+    6.338,
+    -18.673,
+    8.931,
+    -16.081
+   ],
+   "placed": "auto",
+   "from_anchor": 9.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 7.636,
+     "v": -17.377,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "/5 V supply and outputs/VBUS_PI"
+    }
+   ]
+  },
+  "TP9": {
+   "value": "5V",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": 4.111,
+   "v": 12.275,
+   "rot": 0.0,
+   "crt": [
+    2.813,
+    10.979,
+    5.406,
+    13.571
+   ],
+   "placed": "auto",
+   "from_anchor": 3.5,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 4.111,
+     "v": 12.275,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "+5V"
+    }
+   ]
+  },
+  "C119": {
+   "value": "1u 25V",
+   "footprint": "C_0603_1608Metric",
+   "u": 22.197,
+   "v": 17.908,
+   "rot": 0.0,
+   "crt": [
+    20.672,
+    17.133,
+    23.722,
+    18.683
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 21.422,
+     "v": 17.908,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "3V3_AMP"
+    },
+    {
+     "n": "2",
+     "u": 22.972,
+     "v": 17.908,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "GND"
+    }
+   ]
+  },
+  "R25": {
+   "value": "0R DNP",
+   "footprint": "R_0603_1608Metric",
+   "u": -9.47,
+   "v": 24.2,
+   "rot": 90.0,
+   "crt": [
+    -10.245,
+    22.675,
+    -8.695,
+    25.725
+   ],
+   "placed": "auto",
+   "from_anchor": 2.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -9.47,
+     "v": 23.375,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "I2C_SCL"
+    },
+    {
+     "n": "2",
+     "u": -9.47,
+     "v": 25.025,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_SCL"
+    }
+   ]
+  },
+  "C114": {
+   "value": "2.2u 25V",
+   "footprint": "C_0603_1608Metric",
+   "u": 15.299,
+   "v": 18.306,
+   "rot": 0.0,
+   "crt": [
+    13.774,
+    17.531,
+    16.824,
+    19.081
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 14.524,
+     "v": 18.306,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/INB_N"
+    },
+    {
+     "n": "2",
+     "u": 16.074,
+     "v": 18.306,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "GND"
+    }
+   ]
+  },
+  "TP6": {
+   "value": "SHDN",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -2.721,
+   "v": -8.583,
+   "rot": 0.0,
+   "crt": [
+    -4.019,
+    -9.879,
+    -1.426,
+    -7.287
+   ],
+   "placed": "auto",
+   "from_anchor": 8.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -2.721,
+     "v": -8.583,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "/20 V inlet and eFuse/EF_SHDN"
+    }
+   ]
+  },
+  "C112": {
+   "value": "1u 25V",
+   "footprint": "C_0603_1608Metric",
+   "u": 31.3,
+   "v": 18.337,
+   "rot": 0.0,
+   "crt": [
+    29.775,
+    17.562,
+    32.825,
+    19.112
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 30.525,
+     "v": 18.337,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/CP"
+    },
+    {
+     "n": "2",
+     "u": 32.075,
+     "v": 18.337,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/CN"
+    }
+   ]
+  },
+  "C100": {
+   "value": "0.1u 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": 36.106,
+   "v": 8.419,
+   "rot": 270.0,
+   "crt": [
+    35.331,
+    6.894,
+    36.881,
+    9.944
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 36.106,
+     "v": 9.194,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "2",
+     "u": 36.106,
+     "v": 7.644,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "GND"
+    }
+   ]
+  },
+  "R17": {
+   "value": "100k",
+   "footprint": "R_0603_1608Metric",
+   "u": -17.943,
+   "v": -20.314,
+   "rot": 0.0,
+   "crt": [
+    -19.468,
+    -21.089,
+    -16.418,
+    -19.539
+   ],
+   "placed": "auto",
+   "from_anchor": 7.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -18.768,
+     "v": -20.314,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "AMP_MUTE_N"
+    },
+    {
+     "n": "2",
+     "u": -17.118,
+     "v": -20.314,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "GND"
+    }
+   ]
+  },
+  "C108": {
+   "value": "0.22u 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": 33.7,
+   "v": 2.1,
+   "rot": 0.0,
+   "crt": [
+    32.175,
+    1.325,
+    35.225,
+    2.875
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 32.925,
+     "v": 2.1,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/BST_AN"
+    },
+    {
+     "n": "2",
+     "u": 34.475,
+     "v": 2.1,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/OUT_AN"
+    }
+   ]
+  },
+  "C7": {
+   "value": "22u 35V",
+   "footprint": "CP_Radial_D5.0mm_P2.00mm",
+   "u": 7.499,
+   "v": 11.4,
+   "rot": 0.0,
+   "crt": [
+    5.707,
+    8.608,
+    11.294,
+    14.192
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 7.499,
+     "v": 11.4,
+     "tht": true,
+     "sx": 1.6,
+     "sy": 1.6,
+     "net": "+5V"
+    },
+    {
+     "n": "2",
+     "u": 9.499,
+     "v": 11.4,
+     "tht": true,
+     "sx": 1.6,
+     "sy": 1.6,
+     "net": "GND"
+    }
+   ]
+  },
+  "TP7": {
+   "value": "GND",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -1.174,
+   "v": -19.763,
+   "rot": 0.0,
+   "crt": [
+    -2.472,
+    -21.059,
+    0.121,
+    -18.467
+   ],
+   "placed": "auto",
+   "from_anchor": 6.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -1.174,
+     "v": -19.763,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "GND"
+    }
+   ]
+  },
+  "J7": {
+   "value": "D4a ReSpeaker tap",
+   "footprint": "WirePads_1x08_P2.54mm_D1.0mm",
+   "u": -29.5,
+   "v": 24.2,
+   "rot": 90.0,
+   "crt": [
+    -30.65,
+    23.05,
+    -10.57,
+    25.35
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -29.5,
+     "v": 24.2,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "GND"
+    },
+    {
+     "n": "2",
+     "u": -26.96,
+     "v": 24.2,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_BCLK"
+    },
+    {
+     "n": "3",
+     "u": -24.42,
+     "v": 24.2,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_LRCLK"
+    },
+    {
+     "n": "4",
+     "u": -21.88,
+     "v": 24.2,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_REF"
+    },
+    {
+     "n": "5",
+     "u": -19.34,
+     "v": 24.2,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_OUT"
+    },
+    {
+     "n": "6",
+     "u": -16.8,
+     "v": 24.2,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "GND"
+    },
+    {
+     "n": "7",
+     "u": -14.26,
+     "v": 24.2,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_SDA"
+    },
+    {
+     "n": "8",
+     "u": -11.72,
+     "v": 24.2,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_SCL"
+    }
+   ]
+  },
+  "C121": {
+   "value": "0.1u 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": 19.278,
+   "v": 1.15,
+   "rot": 270.0,
+   "crt": [
+    18.503,
+    -0.375,
+    20.053,
+    2.675
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 19.278,
+     "v": 1.925,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "2",
+     "u": 19.278,
+     "v": 0.375,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "GND"
+    }
+   ]
+  },
+  "R2": {
+   "value": "9.09k 1%",
+   "footprint": "R_0603_1608Metric",
+   "u": -5.475,
+   "v": -19.762,
+   "rot": 90.0,
+   "crt": [
+    -6.25,
+    -21.287,
+    -4.7,
+    -18.237
+   ],
+   "placed": "auto",
+   "from_anchor": 3.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -5.475,
+     "v": -20.587,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "/20 V inlet and eFuse/EF_UVLO"
+    },
+    {
+     "n": "2",
+     "u": -5.475,
+     "v": -18.937,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "/20 V inlet and eFuse/EF_OVP"
+    }
+   ]
+  },
+  "R8": {
+   "value": "DNP (bench)",
+   "footprint": "R_0805_2012Metric",
+   "u": -34.708,
+   "v": -5.854,
+   "rot": 0.0,
+   "crt": [
+    -36.433,
+    -6.849,
+    -32.983,
+    -4.859
+   ],
+   "placed": "auto",
+   "from_anchor": 5.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -35.62,
+     "v": -5.854,
+     "tht": false,
+     "sx": 1.025,
+     "sy": 1.4,
+     "net": "/5 V supply and outputs/NID_TRIM"
+    },
+    {
+     "n": "2",
+     "u": -33.796,
+     "v": -5.854,
+     "tht": false,
+     "sx": 1.025,
+     "sy": 1.4,
+     "net": "GND"
+    }
+   ]
+  },
+  "TP1": {
+   "value": "VIN",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -21.045,
+   "v": -18.641,
+   "rot": 0.0,
+   "crt": [
+    -22.343,
+    -19.937,
+    -19.75,
+    -17.345
+   ],
+   "placed": "auto",
+   "from_anchor": 8.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -21.045,
+     "v": -18.641,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "/20 V inlet and eFuse/VIN_EF"
+    }
+   ]
+  },
+  "L102": {
+   "value": "10u",
+   "footprint": "L_Codaca_CSBA0850",
+   "u": 25.5,
+   "v": -4.6,
+   "rot": 180.0,
+   "crt": [
+    20.405,
+    -9.395,
+    30.595,
+    0.195
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 28.8,
+     "v": -4.6,
+     "tht": false,
+     "sx": 3.0,
+     "sy": 3.0,
+     "net": "/Amplifier/OUT_BN"
+    },
+    {
+     "n": "2",
+     "u": 22.2,
+     "v": -4.6,
+     "tht": false,
+     "sx": 3.0,
+     "sy": 3.0,
+     "net": "/Amplifier/SPK_R_N"
+    }
+   ]
+  },
+  "TP16": {
+   "value": "3V3",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -16.308,
+   "v": -7.751,
+   "rot": 0.0,
+   "crt": [
+    -17.606,
+    -9.047,
+    -15.013,
+    -6.455
+   ],
+   "placed": "auto",
+   "from_anchor": 4.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -16.308,
+     "v": -7.751,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "+3V3"
+    }
+   ]
+  },
+  "R100": {
+   "value": "100k 1%",
+   "footprint": "R_0603_1608Metric",
+   "u": 40.677,
+   "v": 6.465,
+   "rot": 270.0,
+   "crt": [
+    39.902,
+    4.94,
+    41.452,
+    7.99
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 40.677,
+     "v": 7.29,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "/Amplifier/SPK_GAIN"
+    },
+    {
+     "n": "2",
+     "u": 40.677,
+     "v": 5.64,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "GND"
+    }
+   ]
+  },
+  "TP3": {
+   "value": "IMON",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -3.217,
+   "v": -16.266,
+   "rot": 0.0,
+   "crt": [
+    -4.515,
+    -17.562,
+    -1.922,
+    -14.97
+   ],
+   "placed": "auto",
+   "from_anchor": 6.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -3.217,
+     "v": -16.266,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "/20 V inlet and eFuse/EF_IMON"
+    }
+   ]
+  },
+  "TP20": {
+   "value": "GND",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": 24.251,
+   "v": 26.433,
+   "rot": 0.0,
+   "crt": [
+    22.953,
+    25.137,
+    25.546,
+    27.729
+   ],
+   "placed": "auto",
+   "from_anchor": 0.5,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 24.251,
+     "v": 26.433,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "GND"
+    }
+   ]
+  },
+  "J3": {
+   "value": "Pi signal leads, 9 (wire pads)",
+   "footprint": "WirePads_2x05_P2.54mm_D1.0mm",
+   "u": -25.3,
+   "v": -27.0,
+   "rot": 90.0,
+   "crt": [
+    -26.45,
+    -28.15,
+    -13.99,
+    -23.31
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -25.3,
+     "v": -27.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_3V3"
+    },
+    {
+     "n": "2",
+     "u": -25.3,
+     "v": -24.46,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "I2C_SDA"
+    },
+    {
+     "n": "3",
+     "u": -22.76,
+     "v": -27.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "I2C_SCL"
+    },
+    {
+     "n": "4",
+     "u": -22.76,
+     "v": -24.46,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_TXD"
+    },
+    {
+     "n": "5",
+     "u": -20.22,
+     "v": -27.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "GND"
+    },
+    {
+     "n": "6",
+     "u": -20.22,
+     "v": -24.46,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_RXD"
+    },
+    {
+     "n": "7",
+     "u": -17.68,
+     "v": -27.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_BCLK"
+    },
+    {
+     "n": "8",
+     "u": -17.68,
+     "v": -24.46,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "GND"
+    },
+    {
+     "n": "9",
+     "u": -15.14,
+     "v": -27.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "AMP_MUTE_N"
+    },
+    {
+     "n": "10",
+     "u": -15.14,
+     "v": -24.46,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "unconnected-(J3-Pin_10-Pad10)"
+    }
+   ]
+  },
+  "C115": {
+   "value": "0.22u 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": 22.65,
+   "v": 4.88,
+   "rot": 270.0,
+   "crt": [
+    21.875,
+    3.355,
+    23.425,
+    6.405
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 22.65,
+     "v": 5.655,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "/Amplifier/BST_BP"
+    },
+    {
+     "n": "2",
+     "u": 22.65,
+     "v": 4.105,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "/Amplifier/OUT_BP"
+    }
+   ]
+  },
+  "L103": {
+   "value": "10u",
+   "footprint": "L_Codaca_CSBA0850",
+   "u": 25.5,
+   "v": -14.2,
+   "rot": 180.0,
+   "crt": [
+    20.405,
+    -18.995,
+    30.595,
+    -9.405
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 28.8,
+     "v": -14.2,
+     "tht": false,
+     "sx": 3.0,
+     "sy": 3.0,
+     "net": "/Amplifier/OUT_BP"
+    },
+    {
+     "n": "2",
+     "u": 22.2,
+     "v": -14.2,
+     "tht": false,
+     "sx": 3.0,
+     "sy": 3.0,
+     "net": "/Amplifier/SPK_R_P"
+    }
+   ]
+  },
+  "TP15": {
+   "value": "GND",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": 4.791,
+   "v": -17.595,
+   "rot": 0.0,
+   "crt": [
+    3.493,
+    -18.891,
+    6.086,
+    -16.299
+   ],
+   "placed": "auto",
+   "from_anchor": 20.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 4.791,
+     "v": -17.595,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "GND"
+    }
+   ]
+  },
+  "C101": {
+   "value": "22u 35V",
+   "footprint": "C_0805_2012Metric",
+   "u": 38.213,
+   "v": 7.401,
+   "rot": 270.0,
+   "crt": [
+    37.188,
+    5.656,
+    39.238,
+    9.146
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 38.213,
+     "v": 8.351,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "2",
+     "u": 38.213,
+     "v": 6.451,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "LK1": {
+   "value": "wire link",
+   "footprint": "WireLink_P7.62mm_D1.3mm",
+   "u": 6.9,
+   "v": -11.2,
+   "rot": 0.0,
+   "crt": [
+    5.305,
+    -12.795,
+    16.115,
+    -9.605
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 6.9,
+     "v": -11.2,
+     "tht": true,
+     "sx": 2.6,
+     "sy": 2.6,
+     "net": "/5 V supply and outputs/5V_PI_F"
+    },
+    {
+     "n": "2",
+     "u": 14.52,
+     "v": -11.2,
+     "tht": true,
+     "sx": 2.6,
+     "sy": 2.6,
+     "net": "/5 V supply and outputs/VBUS_PI"
+    }
+   ]
+  },
+  "R13": {
+   "value": "100k",
+   "footprint": "R_0603_1608Metric",
+   "u": -27.25,
+   "v": -11.433,
+   "rot": 90.0,
+   "crt": [
+    -28.025,
+    -12.958,
+    -26.475,
+    -9.908
+   ],
+   "placed": "auto",
+   "from_anchor": 0.5,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -27.25,
+     "v": -12.258,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_3V3"
+    },
+    {
+     "n": "2",
+     "u": -27.25,
+     "v": -10.608,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "GND"
+    }
+   ]
+  },
+  "J1": {
+   "value": "B2B-XH-A",
+   "footprint": "JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical",
+   "u": -1.25,
+   "v": -25.0,
+   "rot": 0.0,
+   "crt": [
+    -4.245,
+    -28.945,
+    4.245,
+    -22.105
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -1.25,
+     "v": -25.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 2.0,
+     "net": "/20 V inlet and eFuse/VIN_PIGTAIL"
+    },
+    {
+     "n": "2",
+     "u": 1.25,
+     "v": -25.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 2.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "H1": {
+   "value": "M3 x 8",
+   "footprint": "MountingHole_3.2mm_M3_Post",
+   "u": -36.999,
+   "v": 22.0,
+   "rot": 0.0,
+   "crt": [
+    -40.546,
+    18.454,
+    -33.454,
+    25.546
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "",
+     "u": -36.999,
+     "v": 22.0,
+     "tht": true,
+     "sx": 3.2,
+     "sy": 3.2,
+     "net": ""
+    }
+   ]
+  },
+  "R19": {
+   "value": "4.7k",
+   "footprint": "R_0603_1608Metric",
+   "u": -38.746,
+   "v": -6.031,
+   "rot": 0.0,
+   "crt": [
+    -40.271,
+    -6.806,
+    -37.221,
+    -5.256
+   ],
+   "placed": "auto",
+   "from_anchor": 6.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -39.571,
+     "v": -6.031,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/LD_TX"
+    },
+    {
+     "n": "2",
+     "u": -37.921,
+     "v": -6.031,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_RXD"
+    }
+   ]
+  },
+  "TP12": {
+   "value": "RADAR",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -34.24,
+   "v": -18.6,
+   "rot": 0.0,
+   "crt": [
+    -35.538,
+    -19.896,
+    -32.945,
+    -17.304
+   ],
+   "placed": "auto",
+   "from_anchor": 11.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -34.24,
+     "v": -18.6,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "5V_RADAR"
+    }
+   ]
+  },
+  "R4": {
+   "value": "5.49k 1%",
+   "footprint": "R_0603_1608Metric",
+   "u": -8.143,
+   "v": -11.693,
+   "rot": 0.0,
+   "crt": [
+    -9.668,
+    -12.468,
+    -6.618,
+    -10.918
+   ],
+   "placed": "auto",
+   "from_anchor": 2.5,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -8.968,
+     "v": -11.693,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/20 V inlet and eFuse/EF_ILIM"
+    },
+    {
+     "n": "2",
+     "u": -7.318,
+     "v": -11.693,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "GND"
+    }
+   ]
+  },
+  "R15": {
+   "value": "0R",
+   "footprint": "R_0603_1608Metric",
+   "u": 6.088,
+   "v": -22.27,
+   "rot": 0.0,
+   "crt": [
+    4.563,
+    -23.045,
+    7.613,
+    -21.495
+   ],
+   "placed": "auto",
+   "from_anchor": 4.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 5.263,
+     "v": -22.27,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_LRCLK"
+    },
+    {
+     "n": "2",
+     "u": 6.913,
+     "v": -22.27,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "I2S_LRCLK"
+    }
+   ]
+  },
+  "C105": {
+   "value": "1u 25V",
+   "footprint": "C_0603_1608Metric",
+   "u": 38.126,
+   "v": 11.395,
+   "rot": 270.0,
+   "crt": [
+    37.351,
+    9.87,
+    38.901,
+    12.92
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 38.126,
+     "v": 12.17,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "3V3_AMP"
+    },
+    {
+     "n": "2",
+     "u": 38.126,
+     "v": 10.62,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "GND"
+    }
+   ]
+  },
+  "C116": {
+   "value": "0.68u 50V",
+   "footprint": "C_0805_2012Metric",
+   "u": 18.964,
+   "v": -6.951,
+   "rot": 270.0,
+   "crt": [
+    17.939,
+    -8.696,
+    19.989,
+    -5.206
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 18.964,
+     "v": -6.001,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "/Amplifier/SPK_R_N"
+    },
+    {
+     "n": "2",
+     "u": 18.964,
+     "v": -7.901,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "F5": {
+   "value": "2.6 A 2920L260/33DR",
+   "footprint": "Fuse_2920_7451Metric",
+   "u": 8.0,
+   "v": 24.3,
+   "rot": 0.0,
+   "crt": [
+    3.355,
+    21.275,
+    12.645,
+    27.325
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 4.612,
+     "v": 24.3,
+     "tht": false,
+     "sx": 1.925,
+     "sy": 5.45,
+     "net": "+20V"
+    },
+    {
+     "n": "2",
+     "u": 11.388,
+     "v": 24.3,
+     "tht": false,
+     "sx": 1.925,
+     "sy": 5.45,
+     "net": "/Amplifier/PVDD"
+    }
+   ]
+  },
+  "F4": {
+   "value": "0.2 A 0ZCJ0020FF2E",
+   "footprint": "Fuse_1206_3216Metric",
+   "u": -26.091,
+   "v": -14.451,
+   "rot": 0.0,
+   "crt": [
+    -28.416,
+    -15.626,
+    -23.766,
+    -13.276
+   ],
+   "placed": "auto",
+   "from_anchor": 1.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -27.491,
+     "v": -14.451,
+     "tht": false,
+     "sx": 1.25,
+     "sy": 1.75,
+     "net": "+3V3"
+    },
+    {
+     "n": "2",
+     "u": -24.691,
+     "v": -14.451,
+     "tht": false,
+     "sx": 1.25,
+     "sy": 1.75,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/3V3_SENS"
+    }
+   ]
+  },
+  "R21": {
+   "value": "0R DNP",
+   "footprint": "R_0603_1608Metric",
+   "u": -24.921,
+   "v": 22.006,
+   "rot": 0.0,
+   "crt": [
+    -26.446,
+    21.231,
+    -23.396,
+    22.781
+   ],
+   "placed": "auto",
+   "from_anchor": 2.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -25.746,
+     "v": 22.006,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "I2S_LRCLK"
+    },
+    {
+     "n": "2",
+     "u": -24.096,
+     "v": 22.006,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_LRCLK"
+    }
+   ]
+  },
+  "TP17": {
+   "value": "GND",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -22.13,
+   "v": -14.372,
+   "rot": 0.0,
+   "crt": [
+    -23.428,
+    -15.668,
+    -20.835,
+    -13.076
+   ],
+   "placed": "auto",
+   "from_anchor": 3.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -22.13,
+     "v": -14.372,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "GND"
+    }
+   ]
+  },
+  "R14": {
+   "value": "0R",
+   "footprint": "R_0603_1608Metric",
+   "u": -17.242,
+   "v": -22.27,
+   "rot": 0.0,
+   "crt": [
+    -18.767,
+    -23.045,
+    -15.717,
+    -21.495
+   ],
+   "placed": "auto",
+   "from_anchor": 4.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -18.067,
+     "v": -22.27,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_BCLK"
+    },
+    {
+     "n": "2",
+     "u": -16.417,
+     "v": -22.27,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "I2S_BCLK"
+    }
+   ]
+  },
+  "C4": {
+   "value": "100n 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": -14.772,
+   "v": -13.052,
+   "rot": 90.0,
+   "crt": [
+    -15.547,
+    -14.577,
+    -13.997,
+    -11.527
+   ],
+   "placed": "auto",
+   "from_anchor": 2.5,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -14.772,
+     "v": -13.827,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "+20V"
+    },
+    {
+     "n": "2",
+     "u": -14.772,
+     "v": -12.277,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "GND"
+    }
+   ]
+  },
+  "C106": {
+   "value": "2.2u 25V",
+   "footprint": "C_0603_1608Metric",
+   "u": 35.559,
+   "v": 17.047,
+   "rot": 0.0,
+   "crt": [
+    34.034,
+    16.272,
+    37.084,
+    17.822
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 34.784,
+     "v": 17.047,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/DAC_A"
+    },
+    {
+     "n": "2",
+     "u": 36.334,
+     "v": 17.047,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/INA_P"
+    }
+   ]
+  },
+  "R11": {
+   "value": "10k 1%",
+   "footprint": "R_0603_1608Metric",
+   "u": 28.769,
+   "v": -20.443,
+   "rot": 0.0,
+   "crt": [
+    27.244,
+    -21.218,
+    30.294,
+    -19.668
+   ],
+   "placed": "auto",
+   "from_anchor": 6.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 27.944,
+     "v": -20.443,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/5 V supply and outputs/VBUS_PI"
+    },
+    {
+     "n": "2",
+     "u": 29.594,
+     "v": -20.443,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/5 V supply and outputs/PI_CC2"
+    }
+   ]
+  },
+  "R102": {
+   "value": "100k",
+   "footprint": "R_0603_1608Metric",
+   "u": 16.733,
+   "v": -2.955,
+   "rot": 270.0,
+   "crt": [
+    15.958,
+    -4.48,
+    17.508,
+    -1.43
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 16.733,
+     "v": -2.13,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "3V3_AMP"
+    },
+    {
+     "n": "2",
+     "u": 16.733,
+     "v": -3.78,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "/Amplifier/AMP_FAULT_N"
+    }
+   ]
+  },
+  "C117": {
+   "value": "0.68u 50V",
+   "footprint": "C_0805_2012Metric",
+   "u": 19.053,
+   "v": -15.011,
+   "rot": 270.0,
+   "crt": [
+    18.028,
+    -16.756,
+    20.078,
+    -13.266
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 19.053,
+     "v": -14.061,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "/Amplifier/SPK_R_P"
+    },
+    {
+     "n": "2",
+     "u": 19.053,
+     "v": -15.961,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "R16": {
+   "value": "0R",
+   "footprint": "R_0603_1608Metric",
+   "u": 7.563,
+   "v": -20.257,
+   "rot": 0.0,
+   "crt": [
+    6.038,
+    -21.032,
+    9.088,
+    -19.482
+   ],
+   "placed": "auto",
+   "from_anchor": 4.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 6.738,
+     "v": -20.257,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_DOUT"
+    },
+    {
+     "n": "2",
+     "u": 8.388,
+     "v": -20.257,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "I2S_DOUT"
+    }
+   ]
+  },
+  "R6": {
+   "value": "100k",
+   "footprint": "R_0603_1608Metric",
+   "u": -9.248,
+   "v": -9.834,
+   "rot": 0.0,
+   "crt": [
+    -10.773,
+    -10.609,
+    -7.723,
+    -9.059
+   ],
+   "placed": "auto",
+   "from_anchor": 4.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -10.073,
+     "v": -9.834,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "+3V3"
+    },
+    {
+     "n": "2",
+     "u": -8.423,
+     "v": -9.834,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/20 V inlet and eFuse/EF_FLT_N"
+    }
+   ]
+  },
+  "TP2": {
+   "value": "20V",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -12.387,
+   "v": -9.321,
+   "rot": 0.0,
+   "crt": [
+    -13.685,
+    -10.617,
+    -11.092,
+    -8.025
+   ],
+   "placed": "auto",
+   "from_anchor": 4.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -12.387,
+     "v": -9.321,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "+20V"
+    }
+   ]
+  },
+  "C118": {
+   "value": "1u 25V",
+   "footprint": "C_0603_1608Metric",
+   "u": 28.534,
+   "v": 19.161,
+   "rot": 270.0,
+   "crt": [
+    27.759,
+    17.636,
+    29.309,
+    20.686
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 28.534,
+     "v": 19.936,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "/Amplifier/DVDD_REG"
+    },
+    {
+     "n": "2",
+     "u": 28.534,
+     "v": 18.386,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "GND"
+    }
+   ]
+  },
+  "R24": {
+   "value": "0R DNP",
+   "footprint": "R_0603_1608Metric",
+   "u": -13.759,
+   "v": 26.394,
+   "rot": 0.0,
+   "crt": [
+    -15.284,
+    25.619,
+    -12.234,
+    27.169
+   ],
+   "placed": "auto",
+   "from_anchor": 2.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -14.584,
+     "v": 26.394,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "I2C_SDA"
+    },
+    {
+     "n": "2",
+     "u": -12.934,
+     "v": 26.394,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_SDA"
+    }
+   ]
+  },
+  "R7": {
+   "value": "0R",
+   "footprint": "R_0603_1608Metric",
+   "u": -38.439,
+   "v": 0.321,
+   "rot": 90.0,
+   "crt": [
+    -39.214,
+    -1.204,
+    -37.664,
+    1.846
+   ],
+   "placed": "auto",
+   "from_anchor": 2.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -38.439,
+     "v": -0.504,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "EF_PGOOD"
+    },
+    {
+     "n": "2",
+     "u": -38.439,
+     "v": 1.146,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "/5 V supply and outputs/NID_RC"
+    }
+   ]
+  },
+  "R12": {
+   "value": "2.2R",
+   "footprint": "R_0805_2012Metric",
+   "u": -24.0,
+   "v": -8.0,
+   "rot": 0.0,
+   "crt": [
+    -25.725,
+    -8.995,
+    -22.275,
+    -7.005
+   ],
+   "placed": "auto",
+   "from_anchor": 0.5,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -24.913,
+     "v": -8.0,
+     "tht": false,
+     "sx": 1.025,
+     "sy": 1.4,
+     "net": "+5V"
+    },
+    {
+     "n": "2",
+     "u": -23.087,
+     "v": -8.0,
+     "tht": false,
+     "sx": 1.025,
+     "sy": 1.4,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/LDO_IN"
+    }
+   ]
+  },
+  "C10": {
+   "value": "1u 50V",
+   "footprint": "C_0805_2012Metric",
+   "u": -34.24,
+   "v": -16.1,
+   "rot": 0.0,
+   "crt": [
+    -35.985,
+    -17.125,
+    -32.495,
+    -15.075
+   ],
+   "placed": "auto",
+   "from_anchor": 9.5,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -35.19,
+     "v": -16.1,
+     "tht": false,
+     "sx": 1.0,
+     "sy": 1.45,
+     "net": "5V_RADAR"
+    },
+    {
+     "n": "2",
+     "u": -33.29,
+     "v": -16.1,
+     "tht": false,
+     "sx": 1.0,
+     "sy": 1.45,
+     "net": "GND"
+    }
+   ]
+  },
+  "R9": {
+   "value": "DNP (bench)",
+   "footprint": "R_0805_2012Metric",
+   "u": -30.959,
+   "v": -6.127,
+   "rot": 0.0,
+   "crt": [
+    -32.684,
+    -7.122,
+    -29.234,
+    -5.132
+   ],
+   "placed": "auto",
+   "from_anchor": 6.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -31.871,
+     "v": -6.127,
+     "tht": false,
+     "sx": 1.025,
+     "sy": 1.4,
+     "net": "/5 V supply and outputs/NID_TRIM"
+    },
+    {
+     "n": "2",
+     "u": -30.047,
+     "v": -6.127,
+     "tht": false,
+     "sx": 1.025,
+     "sy": 1.4,
+     "net": "+5V"
+    }
+   ]
+  },
+  "TP19": {
+   "value": "FAULT",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": 24.001,
+   "v": 23.5,
+   "rot": 0.0,
+   "crt": [
+    22.703,
+    22.204,
+    25.296,
+    24.796
+   ],
+   "placed": "auto",
+   "from_anchor": 0.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 24.001,
+     "v": 23.5,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "/Amplifier/AMP_FAULT_N"
+    }
+   ]
+  },
+  "R10": {
+   "value": "10k 1%",
+   "footprint": "R_0603_1608Metric",
+   "u": 18.438,
+   "v": -18.028,
+   "rot": 0.0,
+   "crt": [
+    16.913,
+    -18.803,
+    19.963,
+    -17.253
+   ],
+   "placed": "auto",
+   "from_anchor": 3.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 17.613,
+     "v": -18.028,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/5 V supply and outputs/VBUS_PI"
+    },
+    {
+     "n": "2",
+     "u": 19.263,
+     "v": -18.028,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/5 V supply and outputs/PI_CC1"
+    }
+   ]
+  },
+  "J8": {
+   "value": "B2B-XH-A speaker L",
+   "footprint": "JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical",
+   "u": 37.5,
+   "v": -25.0,
+   "rot": 0.0,
+   "crt": [
+    34.505,
+    -28.945,
+    42.995,
+    -22.105
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 37.5,
+     "v": -25.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 2.0,
+     "net": "/Amplifier/SPK_L_P"
+    },
+    {
+     "n": "2",
+     "u": 40.0,
+     "v": -25.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 2.0,
+     "net": "/Amplifier/SPK_L_N"
+    }
+   ]
+  },
+  "C107": {
+   "value": "2.2u 25V",
+   "footprint": "C_0603_1608Metric",
+   "u": 39.617,
+   "v": 14.957,
+   "rot": 270.0,
+   "crt": [
+    38.842,
+    13.432,
+    40.392,
+    16.482
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 39.617,
+     "v": 15.732,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "/Amplifier/INA_N"
+    },
+    {
+     "n": "2",
+     "u": 39.617,
+     "v": 14.182,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "GND"
+    }
+   ]
+  },
+  "R26": {
+   "value": "0R",
+   "footprint": "R_0603_1608Metric",
+   "u": 21.9,
+   "v": 20.2,
+   "rot": 180.0,
+   "crt": [
+    20.375,
+    19.425,
+    23.425,
+    20.975
+   ],
+   "placed": "auto",
+   "from_anchor": 0.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 22.725,
+     "v": 20.2,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "+3V3"
+    },
+    {
+     "n": "2",
+     "u": 21.075,
+     "v": 20.2,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "3V3_AMP"
+    }
+   ]
+  },
+  "C109": {
+   "value": "0.68u 50V",
+   "footprint": "C_0805_2012Metric",
+   "u": 42.176,
+   "v": -13.512,
+   "rot": 270.0,
+   "crt": [
+    41.151,
+    -15.257,
+    43.201,
+    -11.767
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 42.176,
+     "v": -12.562,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "/Amplifier/SPK_L_P"
+    },
+    {
+     "n": "2",
+     "u": 42.176,
+     "v": -14.462,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "L1": {
+   "value": "15u SRR1260",
+   "footprint": "L_Bourns_SRR1260",
+   "u": -15.0,
+   "v": 15.15,
+   "rot": 180.0,
+   "crt": [
+    -21.545,
+    8.605,
+    -8.455,
+    21.695
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -10.15,
+     "v": 15.15,
+     "tht": false,
+     "sx": 2.9,
+     "sy": 5.4,
+     "net": "+20V"
+    },
+    {
+     "n": "2",
+     "u": -19.85,
+     "v": 15.15,
+     "tht": false,
+     "sx": 2.9,
+     "sy": 5.4,
+     "net": "/5 V supply and outputs/NID_VIN"
+    }
+   ]
+  },
+  "J10": {
+   "value": "1x04 header BME680",
+   "footprint": "PinHeader_1x04_P2.54mm_Vertical",
+   "u": -30.4,
+   "v": -10.3,
+   "rot": 0.0,
+   "crt": [
+    -32.215,
+    -19.735,
+    -28.585,
+    -8.485
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -30.4,
+     "v": -10.3,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/3V3_SENS"
+    },
+    {
+     "n": "2",
+     "u": -30.4,
+     "v": -12.84,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "GND"
+    },
+    {
+     "n": "3",
+     "u": -30.4,
+     "v": -15.38,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "I2C_SDA"
+    },
+    {
+     "n": "4",
+     "u": -30.4,
+     "v": -17.92,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "I2C_SCL"
+    }
+   ]
+  },
+  "L100": {
+   "value": "10u",
+   "footprint": "L_Codaca_CSBA0850",
+   "u": 35.7,
+   "v": -14.2,
+   "rot": 0.0,
+   "crt": [
+    30.605,
+    -18.995,
+    40.795,
+    -9.405
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 32.4,
+     "v": -14.2,
+     "tht": false,
+     "sx": 3.0,
+     "sy": 3.0,
+     "net": "/Amplifier/OUT_AP"
+    },
+    {
+     "n": "2",
+     "u": 39.0,
+     "v": -14.2,
+     "tht": false,
+     "sx": 3.0,
+     "sy": 3.0,
+     "net": "/Amplifier/SPK_L_P"
+    }
+   ]
+  },
+  "J6": {
+   "value": "B4B-XH-A touch",
+   "footprint": "JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical",
+   "u": 12.3,
+   "v": -25.94,
+   "rot": 90.0,
+   "crt": [
+    9.405,
+    -28.935,
+    16.245,
+    -15.445
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 12.3,
+     "v": -25.94,
+     "tht": true,
+     "sx": 1.95,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/3V3_SENS"
+    },
+    {
+     "n": "2",
+     "u": 12.3,
+     "v": -23.44,
+     "tht": true,
+     "sx": 1.95,
+     "sy": 1.7,
+     "net": "GND"
+    },
+    {
+     "n": "3",
+     "u": 12.3,
+     "v": -20.94,
+     "tht": true,
+     "sx": 1.95,
+     "sy": 1.7,
+     "net": "I2C_SDA"
+    },
+    {
+     "n": "4",
+     "u": 12.3,
+     "v": -18.44,
+     "tht": true,
+     "sx": 1.95,
+     "sy": 1.7,
+     "net": "I2C_SCL"
+    }
+   ]
+  },
+  "TP13": {
+   "value": "TRIM",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -38.925,
+   "v": -2.85,
+   "rot": 0.0,
+   "crt": [
+    -40.223,
+    -4.146,
+    -37.63,
+    -1.554
+   ],
+   "placed": "auto",
+   "from_anchor": 6.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -38.925,
+     "v": -2.85,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "/5 V supply and outputs/NID_TRIM"
+    }
+   ]
+  },
+  "TP4": {
+   "value": "FLT",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -5.835,
+   "v": -8.629,
+   "rot": 0.0,
+   "crt": [
+    -7.133,
+    -9.925,
+    -4.54,
+    -7.333
+   ],
+   "placed": "auto",
+   "from_anchor": 6.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -5.835,
+     "v": -8.629,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "/20 V inlet and eFuse/EF_FLT_N"
+    }
+   ]
+  },
+  "TP14": {
+   "value": "RC",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -38.946,
+   "v": 3.553,
+   "rot": 0.0,
+   "crt": [
+    -40.244,
+    2.257,
+    -37.651,
+    4.849
+   ],
+   "placed": "auto",
+   "from_anchor": 5.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -38.946,
+     "v": 3.553,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "/5 V supply and outputs/NID_RC"
+    }
+   ]
+  },
+  "F1": {
+   "value": "5 A 0453005.MR",
+   "footprint": "Fuse_Littelfuse-NANO2-451_453",
+   "u": -9.3,
+   "v": -25.5,
+   "rot": 180.0,
+   "crt": [
+    -13.035,
+    -27.375,
+    -5.565,
+    -23.625
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -6.845,
+     "v": -25.5,
+     "tht": false,
+     "sx": 1.96,
+     "sy": 3.15,
+     "net": "/20 V inlet and eFuse/VIN_PIGTAIL"
+    },
+    {
+     "n": "2",
+     "u": -11.755,
+     "v": -25.5,
+     "tht": false,
+     "sx": 1.96,
+     "sy": 3.15,
+     "net": "/20 V inlet and eFuse/VIN_EF"
+    }
+   ]
+  },
+  "PS1": {
+   "value": "NID100-5",
+   "footprint": "MeanWell_NID100_SIP-13",
+   "u": 12.5,
+   "v": -0.3,
+   "rot": 180.0,
+   "crt": [
+    -37.355,
+    -4.595,
+    14.035,
+    7.995
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 12.5,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "+5V"
+    },
+    {
+     "n": "2",
+     "u": 9.96,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "+5V"
+    },
+    {
+     "n": "3",
+     "u": 7.42,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "+5V"
+    },
+    {
+     "n": "4",
+     "u": 4.88,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "+5V"
+    },
+    {
+     "n": "5",
+     "u": 2.34,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "GND"
+    },
+    {
+     "n": "6",
+     "u": -0.2,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "GND"
+    },
+    {
+     "n": "7",
+     "u": -20.52,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "GND"
+    },
+    {
+     "n": "8",
+     "u": -23.06,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "GND"
+    },
+    {
+     "n": "9",
+     "u": -25.6,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "/5 V supply and outputs/NID_VIN"
+    },
+    {
+     "n": "10",
+     "u": -28.14,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "/5 V supply and outputs/NID_VIN"
+    },
+    {
+     "n": "11",
+     "u": -30.68,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "unconnected-(PS1-NC-Pad11)"
+    },
+    {
+     "n": "12",
+     "u": -33.22,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "/5 V supply and outputs/NID_TRIM"
+    },
+    {
+     "n": "13",
+     "u": -35.76,
+     "v": -0.3,
+     "tht": true,
+     "sx": 2.1,
+     "sy": 2.1,
+     "net": "/5 V supply and outputs/NID_RC"
+    }
+   ]
+  },
+  "J9": {
+   "value": "B2B-XH-A speaker R",
+   "footprint": "JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical",
+   "u": -40.25,
+   "v": -25.0,
+   "rot": 0.0,
+   "crt": [
+    -43.245,
+    -28.945,
+    -34.755,
+    -22.105
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -40.25,
+     "v": -25.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 2.0,
+     "net": "/Amplifier/SPK_R_P"
+    },
+    {
+     "n": "2",
+     "u": -37.75,
+     "v": -25.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 2.0,
+     "net": "/Amplifier/SPK_R_N"
+    }
+   ]
+  },
+  "J11": {
+   "value": "1x04 header VEML6030",
+   "footprint": "PinHeader_1x04_P2.54mm_Vertical",
+   "u": -4.5,
+   "v": -13.0,
+   "rot": 90.0,
+   "crt": [
+    -6.315,
+    -14.815,
+    4.935,
+    -11.185
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -4.5,
+     "v": -13.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/3V3_SENS"
+    },
+    {
+     "n": "2",
+     "u": -1.96,
+     "v": -13.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "GND"
+    },
+    {
+     "n": "3",
+     "u": 0.58,
+     "v": -13.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "I2C_SDA"
+    },
+    {
+     "n": "4",
+     "u": 3.12,
+     "v": -13.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "I2C_SCL"
+    }
+   ]
+  },
+  "C113": {
+   "value": "2.2u 25V",
+   "footprint": "C_0603_1608Metric",
+   "u": 31.194,
+   "v": 20.269,
+   "rot": 0.0,
+   "crt": [
+    29.669,
+    19.494,
+    32.719,
+    21.044
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 30.419,
+     "v": 20.269,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/DAC_B"
+    },
+    {
+     "n": "2",
+     "u": 31.969,
+     "v": 20.269,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/INB_P"
+    }
+   ]
+  },
+  "C5": {
+   "value": "120u 63V",
+   "footprint": "CP_Radial_D10.0mm_P5.00mm",
+   "u": -0.501,
+   "v": 13.9,
+   "rot": 180.0,
+   "crt": [
+    -8.294,
+    8.607,
+    2.294,
+    19.193
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -0.501,
+     "v": 13.9,
+     "tht": true,
+     "sx": 2.0,
+     "sy": 2.0,
+     "net": "+20V"
+    },
+    {
+     "n": "2",
+     "u": -5.501,
+     "v": 13.9,
+     "tht": true,
+     "sx": 2.0,
+     "sy": 2.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "R105": {
+   "value": "100k",
+   "footprint": "R_0603_1608Metric",
+   "u": 40.867,
+   "v": 3.045,
+   "rot": 270.0,
+   "crt": [
+    40.092,
+    1.52,
+    41.642,
+    4.57
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 40.867,
+     "v": 3.87,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "/Amplifier/AMP_GPIO2"
+    },
+    {
+     "n": "2",
+     "u": 40.867,
+     "v": 2.22,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "GND"
+    }
+   ]
+  },
+  "U1": {
+   "value": "TPS16630PWPT",
+   "footprint": "HTSSOP-20-1EP_4.4x6.5mm_P0.65mm_EP3.4x6.5mm_Mask2.96x2.96mm_ThermalVias",
+   "u": -10.2,
+   "v": -16.9,
+   "rot": 90.0,
+   "crt": [
+    -13.745,
+    -20.845,
+    -6.655,
+    -12.955
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -13.125,
+     "v": -19.762,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/VIN_EF"
+    },
+    {
+     "n": "2",
+     "u": -12.475,
+     "v": -19.762,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/VIN_EF"
+    },
+    {
+     "n": "3",
+     "u": -11.825,
+     "v": -19.762,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/VIN_EF"
+    },
+    {
+     "n": "4",
+     "u": -11.175,
+     "v": -19.762,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "unconnected-(U1-NC-Pad4)"
+    },
+    {
+     "n": "5",
+     "u": -10.525,
+     "v": -19.762,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "unconnected-(U1-NC-Pad5)"
+    },
+    {
+     "n": "6",
+     "u": -9.875,
+     "v": -19.762,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/VIN_EF"
+    },
+    {
+     "n": "7",
+     "u": -9.225,
+     "v": -19.762,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/EF_UVLO"
+    },
+    {
+     "n": "8",
+     "u": -8.575,
+     "v": -19.762,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/EF_OVP"
+    },
+    {
+     "n": "9",
+     "u": -7.925,
+     "v": -19.762,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "GND"
+    },
+    {
+     "n": "10",
+     "u": -7.275,
+     "v": -19.762,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/EF_DVDT"
+    },
+    {
+     "n": "11",
+     "u": -7.275,
+     "v": -14.037,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/EF_ILIM"
+    },
+    {
+     "n": "12",
+     "u": -7.925,
+     "v": -14.037,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "GND"
+    },
+    {
+     "n": "13",
+     "u": -8.575,
+     "v": -14.037,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/EF_SHDN"
+    },
+    {
+     "n": "14",
+     "u": -9.225,
+     "v": -14.037,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/EF_IMON"
+    },
+    {
+     "n": "15",
+     "u": -9.875,
+     "v": -14.037,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "/20 V inlet and eFuse/EF_FLT_N"
+    },
+    {
+     "n": "16",
+     "u": -10.525,
+     "v": -14.037,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "EF_PGOOD"
+    },
+    {
+     "n": "17",
+     "u": -11.175,
+     "v": -14.037,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "unconnected-(U1-NC-Pad17)"
+    },
+    {
+     "n": "18",
+     "u": -11.825,
+     "v": -14.037,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "+20V"
+    },
+    {
+     "n": "19",
+     "u": -12.475,
+     "v": -14.037,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "+20V"
+    },
+    {
+     "n": "20",
+     "u": -13.125,
+     "v": -14.037,
+     "tht": false,
+     "sx": 0.4,
+     "sy": 1.575,
+     "net": "+20V"
+    },
+    {
+     "n": "21",
+     "u": -12.8,
+     "v": -18.2,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -11.5,
+     "v": -18.2,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -10.2,
+     "v": -18.2,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -8.9,
+     "v": -18.2,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -7.6,
+     "v": -18.2,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -12.8,
+     "v": -16.9,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -11.5,
+     "v": -16.9,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -10.2,
+     "v": -16.9,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -10.2,
+     "v": -16.9,
+     "tht": false,
+     "sx": 5.8,
+     "sy": 3.2,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -10.2,
+     "v": -16.9,
+     "tht": false,
+     "sx": 6.5,
+     "sy": 3.4,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -8.9,
+     "v": -16.9,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -7.6,
+     "v": -16.9,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -12.8,
+     "v": -15.6,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -11.5,
+     "v": -15.6,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -10.2,
+     "v": -15.6,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -8.9,
+     "v": -15.6,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": -7.6,
+     "v": -15.6,
+     "tht": true,
+     "sx": 0.6,
+     "sy": 0.6,
+     "net": "GND"
+    }
+   ]
+  },
+  "C8": {
+   "value": "10u 25V",
+   "footprint": "C_1206_3216Metric",
+   "u": 15.235,
+   "v": -8.038,
+   "rot": 0.0,
+   "crt": [
+    12.89,
+    -9.233,
+    17.58,
+    -6.843
+   ],
+   "placed": "auto",
+   "from_anchor": 9.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 13.76,
+     "v": -8.038,
+     "tht": false,
+     "sx": 1.15,
+     "sy": 1.8,
+     "net": "/5 V supply and outputs/VBUS_PI"
+    },
+    {
+     "n": "2",
+     "u": 16.71,
+     "v": -8.038,
+     "tht": false,
+     "sx": 1.15,
+     "sy": 1.8,
+     "net": "GND"
+    }
+   ]
+  },
+  "C102": {
+   "value": "22u 35V",
+   "footprint": "C_0805_2012Metric",
+   "u": 38.462,
+   "v": 3.533,
+   "rot": 270.0,
+   "crt": [
+    37.437,
+    1.788,
+    39.487,
+    5.278
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 38.462,
+     "v": 4.483,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "2",
+     "u": 38.462,
+     "v": 2.583,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "C111": {
+   "value": "0.22u 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": 23.9,
+   "v": 2.1,
+   "rot": 180.0,
+   "crt": [
+    22.375,
+    1.325,
+    25.425,
+    2.875
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 24.675,
+     "v": 2.1,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/BST_BN"
+    },
+    {
+     "n": "2",
+     "u": 23.125,
+     "v": 2.1,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/OUT_BN"
+    }
+   ]
+  },
+  "C122": {
+   "value": "22u 35V",
+   "footprint": "C_0805_2012Metric",
+   "u": 17.029,
+   "v": 0.815,
+   "rot": 270.0,
+   "crt": [
+    16.004,
+    -0.93,
+    18.054,
+    2.56
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 17.029,
+     "v": 1.765,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "2",
+     "u": 17.029,
+     "v": -0.135,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "R27": {
+   "value": "0R DNP",
+   "footprint": "R_0603_1608Metric",
+   "u": 18.2,
+   "v": 20.2,
+   "rot": 0.0,
+   "crt": [
+    16.675,
+    19.425,
+    19.725,
+    20.975
+   ],
+   "placed": "auto",
+   "from_anchor": 0.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 17.375,
+     "v": 20.2,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_3V3"
+    },
+    {
+     "n": "2",
+     "u": 19.025,
+     "v": 20.2,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "3V3_AMP"
+    }
+   ]
+  },
+  "C11": {
+   "value": "10u 25V",
+   "footprint": "C_1206_3216Metric",
+   "u": -27.325,
+   "v": -7.247,
+   "rot": 90.0,
+   "crt": [
+    -28.52,
+    -9.592,
+    -26.13,
+    -4.902
+   ],
+   "placed": "auto",
+   "from_anchor": 3.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -27.325,
+     "v": -8.722,
+     "tht": false,
+     "sx": 1.8,
+     "sy": 1.15,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/LDO_IN"
+    },
+    {
+     "n": "2",
+     "u": -27.325,
+     "v": -5.772,
+     "tht": false,
+     "sx": 1.8,
+     "sy": 1.15,
+     "net": "GND"
+    }
+   ]
+  },
+  "H4": {
+   "value": "M3 x 8",
+   "footprint": "MountingHole_3.2mm_M3_Post",
+   "u": 31.001,
+   "v": -25.25,
+   "rot": 0.0,
+   "crt": [
+    27.454,
+    -28.796,
+    34.546,
+    -21.704
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "",
+     "u": 31.001,
+     "v": -25.25,
+     "tht": true,
+     "sx": 3.2,
+     "sy": 3.2,
+     "net": ""
+    }
+   ]
+  },
+  "R22": {
+   "value": "0R DNP",
+   "footprint": "R_0603_1608Metric",
+   "u": -21.379,
+   "v": 26.394,
+   "rot": 0.0,
+   "crt": [
+    -22.904,
+    25.619,
+    -19.854,
+    27.169
+   ],
+   "placed": "auto",
+   "from_anchor": 2.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -22.204,
+     "v": 26.394,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "I2S_DOUT"
+    },
+    {
+     "n": "2",
+     "u": -20.554,
+     "v": 26.394,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_REF"
+    }
+   ]
+  },
+  "C1": {
+   "value": "1u 50V",
+   "footprint": "C_0805_2012Metric",
+   "u": -15.062,
+   "v": -19.265,
+   "rot": 90.0,
+   "crt": [
+    -16.087,
+    -21.01,
+    -14.037,
+    -17.52
+   ],
+   "placed": "auto",
+   "from_anchor": 2.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -15.062,
+     "v": -20.215,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "/20 V inlet and eFuse/VIN_EF"
+    },
+    {
+     "n": "2",
+     "u": -15.062,
+     "v": -18.315,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "J2": {
+   "value": "USB4085-GF-A",
+   "footprint": "USB_C_Receptacle_GCT_USB4085",
+   "u": 18.65,
+   "v": -20.34,
+   "rot": 0.0,
+   "crt": [
+    16.305,
+    -29.495,
+    26.945,
+    -19.235
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "A1",
+     "u": 18.65,
+     "v": -20.34,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "GND"
+    },
+    {
+     "n": "A4",
+     "u": 19.5,
+     "v": -20.34,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "/5 V supply and outputs/VBUS_PI"
+    },
+    {
+     "n": "A5",
+     "u": 20.35,
+     "v": -20.34,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "/5 V supply and outputs/PI_CC1"
+    },
+    {
+     "n": "A6",
+     "u": 21.2,
+     "v": -20.34,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "unconnected-(J2-D+-PadA6)"
+    },
+    {
+     "n": "A7",
+     "u": 22.05,
+     "v": -20.34,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "unconnected-(J2-D--PadA7)"
+    },
+    {
+     "n": "A8",
+     "u": 22.9,
+     "v": -20.34,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "unconnected-(J2-SBU1-PadA8)"
+    },
+    {
+     "n": "A9",
+     "u": 23.75,
+     "v": -20.34,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "/5 V supply and outputs/VBUS_PI"
+    },
+    {
+     "n": "A12",
+     "u": 24.6,
+     "v": -20.34,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "GND"
+    },
+    {
+     "n": "B1",
+     "u": 24.6,
+     "v": -21.69,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "GND"
+    },
+    {
+     "n": "B4",
+     "u": 23.75,
+     "v": -21.69,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "/5 V supply and outputs/VBUS_PI"
+    },
+    {
+     "n": "B5",
+     "u": 22.9,
+     "v": -21.69,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "/5 V supply and outputs/PI_CC2"
+    },
+    {
+     "n": "B6",
+     "u": 22.05,
+     "v": -21.69,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "unconnected-(J2-D+-PadB6)"
+    },
+    {
+     "n": "B7",
+     "u": 21.2,
+     "v": -21.69,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "unconnected-(J2-D--PadB7)"
+    },
+    {
+     "n": "B8",
+     "u": 20.35,
+     "v": -21.69,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "unconnected-(J2-SBU2-PadB8)"
+    },
+    {
+     "n": "B9",
+     "u": 19.5,
+     "v": -21.69,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "/5 V supply and outputs/VBUS_PI"
+    },
+    {
+     "n": "B12",
+     "u": 18.65,
+     "v": -21.69,
+     "tht": true,
+     "sx": 0.7,
+     "sy": 0.7,
+     "net": "GND"
+    },
+    {
+     "n": "S1",
+     "u": 17.3,
+     "v": -21.32,
+     "tht": true,
+     "sx": 0.9,
+     "sy": 2.4,
+     "net": "GND"
+    },
+    {
+     "n": "S1",
+     "u": 17.3,
+     "v": -24.7,
+     "tht": true,
+     "sx": 0.9,
+     "sy": 1.7,
+     "net": "GND"
+    },
+    {
+     "n": "S1",
+     "u": 25.95,
+     "v": -21.32,
+     "tht": true,
+     "sx": 0.9,
+     "sy": 2.4,
+     "net": "GND"
+    },
+    {
+     "n": "S1",
+     "u": 25.95,
+     "v": -24.7,
+     "tht": true,
+     "sx": 0.9,
+     "sy": 1.7,
+     "net": "GND"
+    }
+   ]
+  },
+  "J5": {
+   "value": "B4B-XH-A radar",
+   "footprint": "JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical",
+   "u": -40.3,
+   "v": -17.6,
+   "rot": 90.0,
+   "crt": [
+    -43.195,
+    -20.595,
+    -36.355,
+    -7.105
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -40.3,
+     "v": -17.6,
+     "tht": true,
+     "sx": 1.95,
+     "sy": 1.7,
+     "net": "5V_RADAR"
+    },
+    {
+     "n": "2",
+     "u": -40.3,
+     "v": -15.1,
+     "tht": true,
+     "sx": 1.95,
+     "sy": 1.7,
+     "net": "GND"
+    },
+    {
+     "n": "3",
+     "u": -40.3,
+     "v": -12.6,
+     "tht": true,
+     "sx": 1.95,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/LD_TX"
+    },
+    {
+     "n": "4",
+     "u": -40.3,
+     "v": -10.1,
+     "tht": true,
+     "sx": 1.95,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_TXD"
+    }
+   ]
+  },
+  "C120": {
+   "value": "1u 25V",
+   "footprint": "C_0603_1608Metric",
+   "u": 18.734,
+   "v": 17.873,
+   "rot": 0.0,
+   "crt": [
+    17.209,
+    17.098,
+    20.259,
+    18.648
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 17.959,
+     "v": 17.873,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/Amplifier/CPVSS"
+    },
+    {
+     "n": "2",
+     "u": 19.509,
+     "v": 17.873,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "GND"
+    }
+   ]
+  },
+  "TP5": {
+   "value": "PG",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -8.969,
+   "v": -7.469,
+   "rot": 0.0,
+   "crt": [
+    -10.267,
+    -8.765,
+    -7.674,
+    -6.173
+   ],
+   "placed": "auto",
+   "from_anchor": 6.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -8.969,
+     "v": -7.469,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "EF_PGOOD"
+    }
+   ]
+  },
+  "H2": {
+   "value": "M3 x 8",
+   "footprint": "MountingHole_3.2mm_M3_Post",
+   "u": 19.2,
+   "v": 25.0,
+   "rot": 0.0,
+   "crt": [
+    15.653,
+    21.454,
+    22.745,
+    28.546
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "",
+     "u": 19.2,
+     "v": 25.0,
+     "tht": true,
+     "sx": 3.2,
+     "sy": 3.2,
+     "net": ""
+    }
+   ]
+  },
+  "U100": {
+   "value": "TAS5756MDCAR",
+   "footprint": "TI_DCA0048A_HTSSOP-48-1EP",
+   "u": 28.8,
+   "v": 9.4,
+   "rot": 180.0,
+   "crt": [
+    24.055,
+    1.555,
+    33.545,
+    17.245
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 32.513,
+     "v": 3.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/BST_AN"
+    },
+    {
+     "n": "2",
+     "u": 32.513,
+     "v": 4.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/OUT_AN"
+    },
+    {
+     "n": "3",
+     "u": 32.513,
+     "v": 4.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "GND"
+    },
+    {
+     "n": "4",
+     "u": 32.513,
+     "v": 5.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/OUT_AP"
+    },
+    {
+     "n": "5",
+     "u": 32.513,
+     "v": 5.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/BST_AP"
+    },
+    {
+     "n": "6",
+     "u": 32.513,
+     "v": 6.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "7",
+     "u": 32.513,
+     "v": 6.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "8",
+     "u": 32.513,
+     "v": 7.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/GVDD"
+    },
+    {
+     "n": "9",
+     "u": 32.513,
+     "v": 7.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/SPK_GAIN"
+    },
+    {
+     "n": "10",
+     "u": 32.513,
+     "v": 8.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "GND"
+    },
+    {
+     "n": "11",
+     "u": 32.513,
+     "v": 8.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/INA_N"
+    },
+    {
+     "n": "12",
+     "u": 32.513,
+     "v": 9.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/INA_P"
+    },
+    {
+     "n": "13",
+     "u": 32.513,
+     "v": 9.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/DAC_A"
+    },
+    {
+     "n": "14",
+     "u": 32.513,
+     "v": 10.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "3V3_AMP"
+    },
+    {
+     "n": "15",
+     "u": 32.513,
+     "v": 10.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "GND"
+    },
+    {
+     "n": "16",
+     "u": 32.513,
+     "v": 11.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "I2C_SDA"
+    },
+    {
+     "n": "17",
+     "u": 32.513,
+     "v": 11.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "I2C_SCL"
+    },
+    {
+     "n": "18",
+     "u": 32.513,
+     "v": 12.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/AMP_GPIO0"
+    },
+    {
+     "n": "19",
+     "u": 32.513,
+     "v": 12.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/AMP_GPIO1"
+    },
+    {
+     "n": "20",
+     "u": 32.513,
+     "v": 13.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "GND"
+    },
+    {
+     "n": "21",
+     "u": 32.513,
+     "v": 13.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/AMP_GPIO2"
+    },
+    {
+     "n": "22",
+     "u": 32.513,
+     "v": 14.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "GND"
+    },
+    {
+     "n": "23",
+     "u": 32.513,
+     "v": 14.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "I2S_BCLK"
+    },
+    {
+     "n": "24",
+     "u": 32.513,
+     "v": 15.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "I2S_DOUT"
+    },
+    {
+     "n": "25",
+     "u": 25.088,
+     "v": 15.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "I2S_LRCLK"
+    },
+    {
+     "n": "26",
+     "u": 25.088,
+     "v": 14.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "GND"
+    },
+    {
+     "n": "27",
+     "u": 25.088,
+     "v": 14.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "AMP_MUTE_N"
+    },
+    {
+     "n": "28",
+     "u": 25.088,
+     "v": 13.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/DVDD_REG"
+    },
+    {
+     "n": "29",
+     "u": 25.088,
+     "v": 13.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "GND"
+    },
+    {
+     "n": "30",
+     "u": 25.088,
+     "v": 12.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "3V3_AMP"
+    },
+    {
+     "n": "31",
+     "u": 25.088,
+     "v": 12.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "3V3_AMP"
+    },
+    {
+     "n": "32",
+     "u": 25.088,
+     "v": 11.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/CP"
+    },
+    {
+     "n": "33",
+     "u": 25.088,
+     "v": 11.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "GND"
+    },
+    {
+     "n": "34",
+     "u": 25.088,
+     "v": 10.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/CN"
+    },
+    {
+     "n": "35",
+     "u": 25.088,
+     "v": 10.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/CPVSS"
+    },
+    {
+     "n": "36",
+     "u": 25.088,
+     "v": 9.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/DAC_B"
+    },
+    {
+     "n": "37",
+     "u": 25.088,
+     "v": 9.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/INB_P"
+    },
+    {
+     "n": "38",
+     "u": 25.088,
+     "v": 8.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/INB_N"
+    },
+    {
+     "n": "39",
+     "u": 25.088,
+     "v": 8.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "GND"
+    },
+    {
+     "n": "40",
+     "u": 25.088,
+     "v": 7.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/AMP_FAULT_N"
+    },
+    {
+     "n": "41",
+     "u": 25.088,
+     "v": 7.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "42",
+     "u": 25.088,
+     "v": 6.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "43",
+     "u": 25.088,
+     "v": 6.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "44",
+     "u": 25.088,
+     "v": 5.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/BST_BP"
+    },
+    {
+     "n": "45",
+     "u": 25.088,
+     "v": 5.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/OUT_BP"
+    },
+    {
+     "n": "46",
+     "u": 25.088,
+     "v": 4.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "GND"
+    },
+    {
+     "n": "47",
+     "u": 25.088,
+     "v": 4.15,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/OUT_BN"
+    },
+    {
+     "n": "48",
+     "u": 25.088,
+     "v": 3.65,
+     "tht": false,
+     "sx": 1.475,
+     "sy": 0.3,
+     "net": "/Amplifier/BST_BN"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 3.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 4.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 5.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 6.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 7.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 8.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 9.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 10.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 11.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 12.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 13.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 14.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.95,
+     "v": 15.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.4,
+     "v": 2.45,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 30.4,
+     "v": 16.35,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 29.6,
+     "v": 2.45,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 29.6,
+     "v": 16.35,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 28.8,
+     "v": 2.45,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 28.8,
+     "v": 7.15,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 28.8,
+     "v": 9.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 28.8,
+     "v": 9.4,
+     "tht": false,
+     "sx": 3.7,
+     "sy": 8.8,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 28.8,
+     "v": 9.4,
+     "tht": false,
+     "sx": 5.0,
+     "sy": 15.0,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 28.8,
+     "v": 11.65,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 28.8,
+     "v": 16.35,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 28.0,
+     "v": 2.45,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 28.0,
+     "v": 16.35,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 27.2,
+     "v": 2.45,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 27.2,
+     "v": 16.35,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 3.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 4.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 5.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 6.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 7.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 8.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 9.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 10.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 11.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 12.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 13.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 14.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    },
+    {
+     "n": "49",
+     "u": 26.65,
+     "v": 15.4,
+     "tht": true,
+     "sx": 0.45,
+     "sy": 0.45,
+     "net": "GND"
+    }
+   ]
+  },
+  "L101": {
+   "value": "10u",
+   "footprint": "L_Codaca_CSBA0850",
+   "u": 35.7,
+   "v": -4.6,
+   "rot": 0.0,
+   "crt": [
+    30.605,
+    -9.395,
+    40.795,
+    0.195
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 32.4,
+     "v": -4.6,
+     "tht": false,
+     "sx": 3.0,
+     "sy": 3.0,
+     "net": "/Amplifier/OUT_AN"
+    },
+    {
+     "n": "2",
+     "u": 39.0,
+     "v": -4.6,
+     "tht": false,
+     "sx": 3.0,
+     "sy": 3.0,
+     "net": "/Amplifier/SPK_L_N"
+    }
+   ]
+  },
+  "TP8": {
+   "value": "NID_IN",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": -28.007,
+   "v": 20.811,
+   "rot": 0.0,
+   "crt": [
+    -29.305,
+    19.515,
+    -26.712,
+    22.107
+   ],
+   "placed": "auto",
+   "from_anchor": 7.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -28.007,
+     "v": 20.811,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "/5 V supply and outputs/NID_VIN"
+    }
+   ]
+  },
+  "J4": {
+   "value": "Pi signal leads, 4 (wire pads)",
+   "footprint": "WirePads_2x02_P2.54mm_D1.0mm",
+   "u": 5.65,
+   "v": -27.0,
+   "rot": 90.0,
+   "crt": [
+    4.5,
+    -28.15,
+    9.34,
+    -23.31
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 5.65,
+     "v": -27.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_LRCLK"
+    },
+    {
+     "n": "2",
+     "u": 5.65,
+     "v": -24.46,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_DIN"
+    },
+    {
+     "n": "3",
+     "u": 8.19,
+     "v": -27.0,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "GND"
+    },
+    {
+     "n": "4",
+     "u": 8.19,
+     "v": -24.46,
+     "tht": true,
+     "sx": 1.7,
+     "sy": 1.7,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_DOUT"
+    }
+   ]
+  },
+  "F2": {
+   "value": "10 A 0453010.MR",
+   "footprint": "Fuse_Littelfuse-NANO2-451_453",
+   "u": 8.0,
+   "v": -7.0,
+   "rot": 180.0,
+   "crt": [
+    4.265,
+    -8.875,
+    11.735,
+    -5.125
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 10.455,
+     "v": -7.0,
+     "tht": false,
+     "sx": 1.96,
+     "sy": 3.15,
+     "net": "+5V"
+    },
+    {
+     "n": "2",
+     "u": 5.545,
+     "v": -7.0,
+     "tht": false,
+     "sx": 1.96,
+     "sy": 3.15,
+     "net": "/5 V supply and outputs/5V_PI_F"
+    }
+   ]
+  },
+  "R5": {
+   "value": "10k 1%",
+   "footprint": "R_0603_1608Metric",
+   "u": -11.455,
+   "v": -11.674,
+   "rot": 0.0,
+   "crt": [
+    -12.98,
+    -12.449,
+    -9.93,
+    -10.899
+   ],
+   "placed": "auto",
+   "from_anchor": 3.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -12.28,
+     "v": -11.674,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/20 V inlet and eFuse/EF_IMON"
+    },
+    {
+     "n": "2",
+     "u": -10.63,
+     "v": -11.674,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "GND"
+    }
+   ]
+  },
+  "C6": {
+   "value": "120u 63V",
+   "footprint": "CP_Radial_D10.0mm_P5.00mm",
+   "u": -24.501,
+   "v": 13.9,
+   "rot": 180.0,
+   "crt": [
+    -32.294,
+    8.607,
+    -21.706,
+    19.193
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -24.501,
+     "v": 13.9,
+     "tht": true,
+     "sx": 2.0,
+     "sy": 2.0,
+     "net": "/5 V supply and outputs/NID_VIN"
+    },
+    {
+     "n": "2",
+     "u": -29.501,
+     "v": 13.9,
+     "tht": true,
+     "sx": 2.0,
+     "sy": 2.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "TP10": {
+   "value": "5V_F",
+   "footprint": "TestPoint_Pad_D1.5mm",
+   "u": 6.712,
+   "v": -14.445,
+   "rot": 0.0,
+   "crt": [
+    5.414,
+    -15.741,
+    8.007,
+    -13.149
+   ],
+   "placed": "auto",
+   "from_anchor": 3.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 6.712,
+     "v": -14.445,
+     "tht": false,
+     "sx": 1.5,
+     "sy": 1.5,
+     "net": "/5 V supply and outputs/5V_PI_F"
+    }
+   ]
+  },
+  "C123": {
+   "value": "22u 35V",
+   "footprint": "C_0805_2012Metric",
+   "u": 18.95,
+   "v": -2.979,
+   "rot": 270.0,
+   "crt": [
+    17.925,
+    -4.724,
+    19.975,
+    -1.234
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 18.95,
+     "v": -2.029,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "/Amplifier/PVDD"
+    },
+    {
+     "n": "2",
+     "u": 18.95,
+     "v": -3.929,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "R103": {
+   "value": "100k",
+   "footprint": "R_0603_1608Metric",
+   "u": 34.729,
+   "v": 19.053,
+   "rot": 0.0,
+   "crt": [
+    33.204,
+    18.278,
+    36.254,
+    19.828
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 33.904,
+     "v": 19.053,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/Amplifier/AMP_GPIO0"
+    },
+    {
+     "n": "2",
+     "u": 35.554,
+     "v": 19.053,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "GND"
+    }
+   ]
+  },
+  "R20": {
+   "value": "0R DNP",
+   "footprint": "R_0603_1608Metric",
+   "u": -26.459,
+   "v": 26.394,
+   "rot": 0.0,
+   "crt": [
+    -27.984,
+    25.619,
+    -24.934,
+    27.169
+   ],
+   "placed": "auto",
+   "from_anchor": 2.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -27.284,
+     "v": 26.394,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "I2S_BCLK"
+    },
+    {
+     "n": "2",
+     "u": -25.634,
+     "v": 26.394,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_BCLK"
+    }
+   ]
+  },
+  "C9": {
+   "value": "100n 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": 18.609,
+   "v": -12.049,
+   "rot": 0.0,
+   "crt": [
+    17.084,
+    -12.824,
+    20.134,
+    -11.274
+   ],
+   "placed": "auto",
+   "from_anchor": 1.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 17.834,
+     "v": -12.049,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/5 V supply and outputs/VBUS_PI"
+    },
+    {
+     "n": "2",
+     "u": 19.384,
+     "v": -12.049,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "GND"
+    }
+   ]
+  },
+  "C3": {
+   "value": "47n 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": -3.525,
+   "v": -19.762,
+   "rot": 90.0,
+   "crt": [
+    -4.3,
+    -21.287,
+    -2.75,
+    -18.237
+   ],
+   "placed": "auto",
+   "from_anchor": 3.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -3.525,
+     "v": -20.537,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "/20 V inlet and eFuse/EF_DVDT"
+    },
+    {
+     "n": "2",
+     "u": -3.525,
+     "v": -18.987,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "GND"
+    }
+   ]
+  },
+  "C110": {
+   "value": "0.68u 50V",
+   "footprint": "C_0805_2012Metric",
+   "u": 42.176,
+   "v": -3.912,
+   "rot": 270.0,
+   "crt": [
+    41.151,
+    -5.657,
+    43.201,
+    -2.167
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 42.176,
+     "v": -2.962,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "/Amplifier/SPK_L_N"
+    },
+    {
+     "n": "2",
+     "u": 42.176,
+     "v": -4.862,
+     "tht": false,
+     "sx": 1.45,
+     "sy": 1.0,
+     "net": "GND"
+    }
+   ]
+  },
+  "D1": {
+   "value": "SMBJ22A",
+   "footprint": "D_SMB",
+   "u": -18.138,
+   "v": -13.039,
+   "rot": 90.0,
+   "crt": [
+    -20.433,
+    -16.734,
+    -15.843,
+    -9.344
+   ],
+   "placed": "auto",
+   "from_anchor": 5.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -18.138,
+     "v": -15.189,
+     "tht": false,
+     "sx": 2.3,
+     "sy": 2.5,
+     "net": "+20V"
+    },
+    {
+     "n": "2",
+     "u": -18.138,
+     "v": -10.889,
+     "tht": false,
+     "sx": 2.3,
+     "sy": 2.5,
+     "net": "GND"
+    }
+   ]
+  },
+  "R101": {
+   "value": "150k 1%",
+   "footprint": "R_0603_1608Metric",
+   "u": 36.906,
+   "v": 14.633,
+   "rot": 0.0,
+   "crt": [
+    35.381,
+    13.858,
+    38.431,
+    15.408
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 36.081,
+     "v": 14.633,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/Amplifier/GVDD"
+    },
+    {
+     "n": "2",
+     "u": 37.731,
+     "v": 14.633,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/Amplifier/SPK_GAIN"
+    }
+   ]
+  },
+  "F3": {
+   "value": "1 A 0453001.MR",
+   "footprint": "Fuse_Littelfuse-NANO2-451_453",
+   "u": -34.24,
+   "v": -11.2,
+   "rot": 270.0,
+   "crt": [
+    -36.115,
+    -14.935,
+    -32.365,
+    -7.465
+   ],
+   "placed": "auto",
+   "from_anchor": 0.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -34.24,
+     "v": -8.745,
+     "tht": false,
+     "sx": 3.15,
+     "sy": 1.96,
+     "net": "+5V"
+    },
+    {
+     "n": "2",
+     "u": -34.24,
+     "v": -13.655,
+     "tht": false,
+     "sx": 3.15,
+     "sy": 1.96,
+     "net": "5V_RADAR"
+    }
+   ]
+  },
+  "C12": {
+   "value": "4.7u 16V",
+   "footprint": "C_0805_2012Metric",
+   "u": -19.713,
+   "v": -8.016,
+   "rot": 0.0,
+   "crt": [
+    -21.458,
+    -9.041,
+    -17.968,
+    -6.991
+   ],
+   "placed": "auto",
+   "from_anchor": 3.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -20.663,
+     "v": -8.016,
+     "tht": false,
+     "sx": 1.0,
+     "sy": 1.45,
+     "net": "+3V3"
+    },
+    {
+     "n": "2",
+     "u": -18.763,
+     "v": -8.016,
+     "tht": false,
+     "sx": 1.0,
+     "sy": 1.45,
+     "net": "GND"
+    }
+   ]
+  },
+  "C103": {
+   "value": "1u 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": 36.239,
+   "v": 11.852,
+   "rot": 270.0,
+   "crt": [
+    35.464,
+    10.327,
+    37.014,
+    13.377
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 36.239,
+     "v": 12.627,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "/Amplifier/GVDD"
+    },
+    {
+     "n": "2",
+     "u": 36.239,
+     "v": 11.077,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "GND"
+    }
+   ]
+  },
+  "H3": {
+   "value": "M3 x 8",
+   "footprint": "MountingHole_3.2mm_M3_Post",
+   "u": -30.999,
+   "v": -25.25,
+   "rot": 0.0,
+   "crt": [
+    -34.546,
+    -28.796,
+    -27.454,
+    -21.704
+   ],
+   "placed": "fixed",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "",
+     "u": -30.999,
+     "v": -25.25,
+     "tht": true,
+     "sx": 3.2,
+     "sy": 3.2,
+     "net": ""
+    }
+   ]
+  },
+  "R18": {
+   "value": "100k",
+   "footprint": "R_0603_1608Metric",
+   "u": 4.236,
+   "v": -20.188,
+   "rot": 0.0,
+   "crt": [
+    2.711,
+    -20.963,
+    5.761,
+    -19.413
+   ],
+   "placed": "auto",
+   "from_anchor": 4.5,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 3.411,
+     "v": -20.188,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_DIN"
+    },
+    {
+     "n": "2",
+     "u": 5.061,
+     "v": -20.188,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "GND"
+    }
+   ]
+  },
+  "R23": {
+   "value": "0R DNP",
+   "footprint": "R_0603_1608Metric",
+   "u": -17.858,
+   "v": 26.517,
+   "rot": 0.0,
+   "crt": [
+    -19.383,
+    25.742,
+    -16.333,
+    27.292
+   ],
+   "placed": "auto",
+   "from_anchor": 2.75,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -18.683,
+     "v": 26.517,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_DIN"
+    },
+    {
+     "n": "2",
+     "u": -17.033,
+     "v": 26.517,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/RS_OUT"
+    }
+   ]
+  },
+  "C2": {
+   "value": "100n 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": -12.223,
+   "v": -21.998,
+   "rot": 0.0,
+   "crt": [
+    -13.748,
+    -22.773,
+    -10.698,
+    -21.223
+   ],
+   "placed": "auto",
+   "from_anchor": 2.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -12.998,
+     "v": -21.998,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "/20 V inlet and eFuse/VIN_EF"
+    },
+    {
+     "n": "2",
+     "u": -11.448,
+     "v": -21.998,
+     "tht": false,
+     "sx": 0.9,
+     "sy": 0.95,
+     "net": "GND"
+    }
+   ]
+  },
+  "U2": {
+   "value": "TPS70933QDBVRQ1",
+   "footprint": "SOT-23-5",
+   "u": -24.0,
+   "v": -11.0,
+   "rot": 0.0,
+   "crt": [
+    -26.095,
+    -12.745,
+    -21.905,
+    -9.255
+   ],
+   "placed": "auto",
+   "from_anchor": 0.0,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -25.137,
+     "v": -10.05,
+     "tht": false,
+     "sx": 1.325,
+     "sy": 0.6,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/LDO_IN"
+    },
+    {
+     "n": "2",
+     "u": -25.137,
+     "v": -11.0,
+     "tht": false,
+     "sx": 1.325,
+     "sy": 0.6,
+     "net": "GND"
+    },
+    {
+     "n": "3",
+     "u": -25.137,
+     "v": -11.95,
+     "tht": false,
+     "sx": 1.325,
+     "sy": 0.6,
+     "net": "/3.3 V, Pi link, sensors, radar, echo-ref/PI_3V3"
+    },
+    {
+     "n": "4",
+     "u": -22.863,
+     "v": -11.95,
+     "tht": false,
+     "sx": 1.325,
+     "sy": 0.6,
+     "net": "unconnected-(U2-NC-Pad4)"
+    },
+    {
+     "n": "5",
+     "u": -22.863,
+     "v": -10.05,
+     "tht": false,
+     "sx": 1.325,
+     "sy": 0.6,
+     "net": "+3V3"
+    }
+   ]
+  },
+  "R104": {
+   "value": "100k",
+   "footprint": "R_0603_1608Metric",
+   "u": 38.279,
+   "v": 18.55,
+   "rot": 270.0,
+   "crt": [
+    37.504,
+    17.025,
+    39.054,
+    20.075
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 38.279,
+     "v": 19.375,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "/Amplifier/AMP_GPIO1"
+    },
+    {
+     "n": "2",
+     "u": 38.279,
+     "v": 17.725,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.8,
+     "net": "GND"
+    }
+   ]
+  },
+  "C104": {
+   "value": "0.22u 50V",
+   "footprint": "C_0603_1608Metric",
+   "u": 34.95,
+   "v": 4.88,
+   "rot": 270.0,
+   "crt": [
+    34.175,
+    3.355,
+    35.725,
+    6.405
+   ],
+   "placed": "amp block",
+   "from_anchor": null,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 34.95,
+     "v": 5.655,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "/Amplifier/BST_AP"
+    },
+    {
+     "n": "2",
+     "u": 34.95,
+     "v": 4.105,
+     "tht": false,
+     "sx": 0.95,
+     "sy": 0.9,
+     "net": "/Amplifier/OUT_AP"
+    }
+   ]
+  },
+  "R1": {
+   "value": "412k 1%",
+   "footprint": "R_0603_1608Metric",
+   "u": -8.724,
+   "v": -21.956,
+   "rot": 0.0,
+   "crt": [
+    -10.249,
+    -22.731,
+    -7.199,
+    -21.181
+   ],
+   "placed": "auto",
+   "from_anchor": 2.25,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": -9.549,
+     "v": -21.956,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/20 V inlet and eFuse/VIN_EF"
+    },
+    {
+     "n": "2",
+     "u": -7.899,
+     "v": -21.956,
+     "tht": false,
+     "sx": 0.8,
+     "sy": 0.95,
+     "net": "/20 V inlet and eFuse/EF_UVLO"
+    }
+   ]
+  },
+  "D2": {
+   "value": "SMBJ6.0A-E",
+   "footprint": "D_SMB",
+   "u": 8.618,
+   "v": 16.785,
+   "rot": 0.0,
+   "crt": [
+    4.923,
+    14.49,
+    12.313,
+    19.08
+   ],
+   "placed": "auto",
+   "from_anchor": 5.5,
+   "side": "F",
+   "pads": [
+    {
+     "n": "1",
+     "u": 6.468,
+     "v": 16.785,
+     "tht": false,
+     "sx": 2.5,
+     "sy": 2.3,
+     "net": "+5V"
+    },
+    {
+     "n": "2",
+     "u": 10.768,
+     "v": 16.785,
+     "tht": false,
+     "sx": 2.5,
+     "sy": 2.3,
+     "net": "GND"
+    }
+   ]
+  }
+ }
+}
