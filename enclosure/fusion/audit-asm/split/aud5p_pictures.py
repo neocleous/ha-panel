@@ -81,7 +81,9 @@ def pic_step21(X):                                    # from above: boxes, scree
         rim.append(P['aud'](X, X.cp(p), 'rim_%d' % j, 'white'))
     usb = X.tbm.copy(k.tcopy(X, 'LEAD_USB_RESP')); P['aud'](X, usb, 'usb_lead', 'blue')
     bme = X.tbm.copy(k.tcopy(X, 'LEAD_BME680')); P['aud'](X, bme, 'bme_lead', 'green')
-    P['only'](X, ['SPKBOX_L', 'SPKBOX_R', 'HOUSING_F_plate'])
+    low = X.tbm.copy(k.tcopy(X, 'HOUSING_F_plate')); X.sec(low, X.wbox(-100.0, 100.0, -30.0, 15.0, 40.0, 88.0))   # the plate below z 88 only,
+    pb = P['aud'](X, low, 'plate_low', 'grey'); pb.appearance = X.body('HOUSING_F_plate').appearance             # so that lugs and screws show
+    P['only'](X, ['SPKBOX_L', 'SPKBOX_R'])
     tgt = (0.0, -38.0, 80.0); eye = (0.0, -38.0, 600.0)
     k.cam(X, eye, tgt, ext=15.0, up=(0.0, 1.0, 0.0))
     return save(X, 'step21_key.png')
