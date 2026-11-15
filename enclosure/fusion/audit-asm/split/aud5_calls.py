@@ -55,6 +55,10 @@
 # R['sidewall'], R['sw_section'], R['behind_plate'], R['chin_groove']: sections for the cloth's edges and the plate's give.
 
 # ---------------------------------------------------------------- block 2 and 3: copied as run
+# R['lip_pockets']: k.holes_of(shell, 4.0, 4.3), meant for 4 mm holes. It takes radii, so it returned the 8.0 to 8.6 mm cylinders (lesson 189):
+#   the 10 lip magnet pockets, 8 driver-screw head pockets and 3 K5 lane holes. A fingertip (r 8, 60 long) went along each, 4 ways
+#   (straight, 15 deg up / down / in), on HOUSING_F_front and HOUSING_F_front_v63. The magnet pockets were the same on both, except the two
+#   top ones (z 147.4): 15 deg from above free at version 64, 672 / 698 mm3 into the one-piece shell's front wall.
 def key25_usb(X, k, a5, x, R):                        # the 2.5 key on the two left lanes, heads at d 15.8 (v64) and 16.8 (one-piece shell)
     KEY25 = getattr(k, 'KEY25', [(3.0, 112.0), (39.0, 4.0)])
     its = x.body_items(X, ['LEAD_USB_RESP'], [])
