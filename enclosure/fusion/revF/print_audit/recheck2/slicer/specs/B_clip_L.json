@@ -1,0 +1,1 @@
+{"job": "B_clip_L", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "bed": "Textured PEI Plate", "opts": {"enable-support": "0", "brim-type": "outer_only", "brim-width": "3", "brim-object-gap": "0.1"}, "plates": [{"name": "B_clip_L", "objects": [{"path": "{OLD}/slicer/orient/clip_L_plan.stl"}]}]}

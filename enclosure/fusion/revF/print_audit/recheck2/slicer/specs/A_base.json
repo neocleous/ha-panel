@@ -1,0 +1,1 @@
+{"job": "A_base", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "opts": {"enable-support": "0", "brim-type": "no_brim"}, "plates": [{"name": "A_base", "objects": [{"stl": "base_plan.stl"}]}]}

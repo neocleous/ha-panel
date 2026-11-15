@@ -1,0 +1,1 @@
+{"job": "B_carrier", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "bed": "Textured PEI Plate", "opts": {"enable-support": "0", "brim-type": "no_brim"}, "plates": [{"name": "B_carrier", "objects": [{"path": "{OLD}/slicer/orient/carrier_plan.stl"}]}]}

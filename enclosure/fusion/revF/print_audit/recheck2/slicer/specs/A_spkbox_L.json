@@ -1,0 +1,1 @@
+{"job": "A_spkbox_L", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "opts": {"enable-support": "1", "brim-type": "outer_only", "brim-width": "3", "brim-object-gap": "0.1"}, "plates": [{"name": "A_spkbox_L", "objects": [{"stl": "spkbox_L_plan.stl"}]}]}

@@ -1,0 +1,1 @@
+{"job": "B_cap", "process": "process_0.12_HQ.json", "filaments": ["filament_BambuABS.json"], "bed": "Engineering Plate", "opts": {"enable-support": "0", "brim-type": "no_brim", "initial-layer-print-height": "0.2"}, "plates": [{"name": "B_cap", "objects": [{"path": "{OLD}/slicer/orient/cap_plan.stl"}]}]}
