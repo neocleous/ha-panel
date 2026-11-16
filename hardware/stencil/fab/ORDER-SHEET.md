@@ -39,7 +39,7 @@ No copper layer, on purpose. The mic strip has no area on the stencil; its parts
 | Main board area | outline 87.00 × 57.90, at the top |
 | Touch board area | outline 90.00 × 44.00, 10.1 below the main board, left edges in line |
 | Extent with both outlines | 90.1 × 112.1 mm (apertures alone 81.75 × 86.89) |
-| Smallest aperture | 0.300 × 1.475 (48 of them: the TAS5756M's pins, 0.5 pitch) |
+| Smallest aperture | 0.300 × 1.475 (48 of them: the TAS5756M's pins, 0.5 pitch). JLC's stencil page: apertures larger than 0.08 mm. |
 | Smallest area ratio at 0.12 | 1.07 (aperture area ÷ wall area; 0.66 is the usual lower limit) |
 | Paste area in all | 398.8 mm² |
 

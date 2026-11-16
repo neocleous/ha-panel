@@ -23,7 +23,8 @@ pad. One more hole stood 0.14 from a pasted pad. KiCad's board check does not re
 Rev 2.1 had 4 such vias, rev 3 had 50, rev 3.1 and 3.2 had 47 (`plug-check-result.txt`, `gen/fab32_vias.py check`).
 
 **Why it matters:** JLC plugs a via with ink only if it has no mask opening on either side, is 0.35 or more from other
-mask openings and its hole is 0.5 or less (capabilities page, "Plugged vias", read 2026-11-16). A hole in a pad stays
+mask openings and is "no wider than 0.5 mm diameter" (capabilities page, "Plugged vias", read 2026-11-16; JLC's
+via-covering article of 2026-11-10 puts the 0.5 on the hole, the table does not say hole or copper). A hole in a pad stays
 open, and on the hotplate the pad's paste can run down it. The boards are soldered on a hotplate, and Daniel does not
 solder surface-mount parts by iron.
 
@@ -48,8 +49,8 @@ Every move, old → new: [`via-moves.md`](via-moves.md). Before and after, drawn
 applied: `via-plan.json`; its log: `via-plan-run.txt`.
 
 **After:** 244 vias (132 of 0.3/0.6, 87 of 0.2/0.45, 25 of 0.4/0.8). The smallest mask width between a hole and a
-pasted pad is 0.20 (`via-check.txt`). Against JLC's plug conditions: the widest hole is 0.40; 61 of the 244 vias have
-their hole within 0.35 of a mask opening and so will not be plugged with ink. They keep their mask cover in the files
+pasted pad is 0.20 (`via-check.txt`). Against JLC's plug conditions: the widest hole is 0.40 (if the 0.5 means the via's copper, only the 87 vias of 0.45
+pass it); 61 of the 244 vias have their hole within 0.35 of a mask opening and so will not be plugged with ink. They keep their mask cover in the files
 (`plug-check-result.txt`).
 
 ## 3. Copper at the relief

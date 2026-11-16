@@ -33,7 +33,7 @@ Every option, with its reason, is in the order sheets.
 |---|---|---|
 | Copper to a routed edge | 0.2 mm or more | capabilities |
 | Outline tolerance | ±0.2 regular; ±0.1 "high precision", which needs a board of at least 50 × 50 and three tooling holes of 1.5 or more | capabilities |
-| Plugged vias | only where there is no soldermask opening on either side, the via is 0.35 or more from other openings, and it is no wider than 0.5 | capabilities; via-covering article |
+| Plugged vias | three conditions: no soldermask opening on either side; 0.35 or more from other soldermask openings such as pads; "no wider than 0.5 mm diameter". The table does not say hole or copper; the via-covering article says plugged holes of 0.5 or less | capabilities; via-covering article |
 | Vias that cannot be plugged | the alternative JLC names is epoxy or copper filling (free on boards of 6 layers and more) | via-covering article |
 | Smallest via | hole 0.15, diameter 0.25; a 0.2 or 0.25 hole in less than 0.45 diameter costs more | capabilities |
 | Ring of a component hole, multilayer, 1 oz | 0.20 recommended, 0.15 minimum | capabilities |
@@ -45,12 +45,13 @@ Every option, with its reason, is in the order sheets.
 | Inner copper | 0.5 oz by default | capabilities |
 | Finished thickness | ±10 % at 1.0 mm and more; ±0.1 below 1.0 | capabilities |
 | Inner corner of a routed outline | not in the capabilities table; JLC's blog gives about R 0.5 with a 1 mm cutter | blog, 2026-07-28 |
-| 4-layer stack-up JLC04161H-7628 | copper 0.035 / 0.0152 / 0.0152 / 0.035; prepreg 7628, 0.2104, εr 4.4; core 1.065, εr 4.6. It is the build JLC uses when no stack-up is asked for. | impedance |
+| 4-layer stack-up JLC04161H-7628 | copper 0.035 / 0.0152 / 0.0152 / 0.035; prepreg 7628, 0.2104, εr 4.4; core 1.065, εr 4.6. The page's "No requirement" stack-up shows the same layer values; the page does not call it the default in words. | impedance |
 | Stencil thickness | 0.10, 0.12, 0.15, 0.18, 0.20 | stencil |
 | Stencil electropolishing | named for ICs of 0.5 pitch and below, and BGA | stencil |
 | Several designs on one stencil | supported; JLC may adjust the layout; leave a remark | stencil |
 | Stencil apertures | optimised by JLC's engineers by default; a remark makes them follow the paste layer 1:1 | stencil |
-| Stencil custom size | within 650 × 580 | stencil |
+| Stencil custom size | within 650 × 580 (without frame) | stencil |
+| Stencil aperture | larger than 0.08 mm | stencil |
 | Files from KiCad 9 | Protel extensions, X2, netlist attributes, 4.6 mm; drill Excellon, alternate oval mode, absolute, mm, decimal, plated and unplated separate; **paste layers only for stencil or assembly orders** | KiCad 9 article |
 
 Pages are listed under "Sources".

@@ -36,7 +36,7 @@ No paste layer is in this zip. JLC's KiCad 9 guide asks for paste layers only on
 | Outer copper | 1 oz | |
 | Inner copper | 0.5 oz | JLC's default |
 | Impedance control | no | |
-| Layer stack-up | **JLC04161H-7628** | the same build as "No requirement"; it is written into the board file and the job file |
+| Layer stack-up | **JLC04161H-7628** | JLC's "No requirement" stack-up shows the same layer values; it is written into the board file and the job file |
 | Via covering | **Plugged** | see "What JLC's review may raise", item 2 |
 | Min via hole size/diameter | "0.3mm/(0.4/0.45mm)" | the board has 0.2 mm holes in 0.45 mm vias; the page's note of 2026-11-09 says that costs nothing extra on multilayer boards. If the page picks a smaller class by itself, it also switches the 4-wire test on. |
 | 4-Wire Kelvin Test | **No** | |
@@ -65,7 +65,7 @@ JLC figures: https://jlcpcb.com/capabilities/pcb-capabilities, read 2026-11-16 (
 | Item | This board | JLC |
 |---|---|---|
 | Track / space | 0.15 / 0.15 | 0.09 / 0.09 (multilayer) |
-| Vias (244) | 132 × 0.3/0.6, 87 × 0.2/0.45, 25 × 0.4/0.8 | minimum 0.15/0.25; 0.2 or 0.25 holes cost more below 0.45 diameter |
+| Vias (244), hole/diameter | 132 × 0.3/0.6, 87 × 0.2/0.45, 25 × 0.4/0.8 | minimum 0.15/0.25; 0.2 or 0.25 holes cost more below 0.45 diameter |
 | Thermal holes in the two chips' centre pads | U100: 39 × 0.2 in 0.45; U1: 15 × 0.3 in 0.6. They are part of the footprints: inside the centre pad on the door side, under soldermask on the back. | as vias |
 | Soldermask between a via's hole and a pad that takes paste | 0.20 or more at all 244 vias (`../rev3.2/fab-2026-11-16/via-check.txt`) | soldermask bridge 0.10 (green) |
 | Component hole ring | 0.35 or more, except J2 | multilayer 1 oz: 0.20 recommended, 0.15 minimum |
@@ -81,7 +81,10 @@ Holes in all (`drill-report.txt`): plated 383 = 126 × 0.20, 147 × 0.30, 41 × 
 
 ## What JLC's review may raise
 1. **J2's ring of 0.15.** It is the maker's land pattern and sits exactly at JLC's stated minimum. Answer: keep as drawn.
-2. **Vias that cannot be ink-plugged.** JLC plugs a via only if its hole is 0.35 or more from any soldermask opening. On this board 61 of the 244 vias are closer than that (`../rev3.2/fab-2026-11-16/plug-check-result.txt`). In the files they are covered by soldermask on both faces; what JLC does with a via it cannot plug is not stated on its pages. Nothing on the board depends on these 61 being filled: each has at least 0.20 of soldermask between its hole and the nearest pad that takes paste.
+2. **Vias that cannot be ink-plugged.** JLC's table gives three conditions for a plugged via: no soldermask opening on either side, 0.35 or more from other openings, and "no wider than 0.5 mm diameter".
+   - **The 0.35:** on this board 61 of the 244 vias have their hole closer than that to a pad's opening (`../rev3.2/fab-2026-11-16/plug-check-result.txt`).
+   - **The 0.5:** the table does not say whether it means the hole or the via's copper. JLC's via-covering article (dated 2026-11-10) says plugged holes of 0.5 or less. By the hole, every via passes (0.2, 0.3, 0.4). By the copper, only the 87 vias of 0.45 would; the 132 of 0.6 and the 25 of 0.8 would not. Rev 2.1 had the same via sizes.
+   - **What it means:** in the files every via is covered by soldermask on both faces. For a via it cannot ink-plug, JLC's article names epoxy or copper filling as the alternative; it does not say what happens on a plain order. Nothing on the board depends on a via being filled: each has at least 0.20 of soldermask between its hole and the nearest pad that takes paste. Answer to a query: leave them covered by soldermask, no filling.
 3. **Eight vias left in bare copper on purpose:** seven at test pads (TP2, TP7, TP9, TP15, TP17, TP19, TP20; the hole is 0.08 to 0.09 inside the pad's opening) and one in U100's centre pad. Test pads take no paste; U100's centre pad already has 39 thermal holes. Two more vias sit closer than 0.20 to an opening without paste: 0.13 from TP3 and 0.18 from J3 pad 9.
 4. **No paste files.** Expected for a bare board.
 
