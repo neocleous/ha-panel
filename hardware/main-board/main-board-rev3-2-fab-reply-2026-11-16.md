@@ -16,7 +16,7 @@ From the electronics session (`claude/brief-electronics-fab-files-rev3-2-2026-11
 | `525343b0cbd99caf90037206ab8b1ce563af6c6a` | main board rev 3.2, fab issue: the board file, its record, assembly drawing, README and NOTES |
 | `2da9dbcab83cb49ce7baaf2b16273d7f152b918e` | the fab sets, the stencil, the four order sheets, `hardware/notes/jlc-fab.md` |
 | `a1fc8e5eaf8cb01883bbeae5845eb93e0ced6acb` | the parts list and its difference to the DigiKey lines |
-| the commit after it | this reply; JLC's plugged-via wording corrected in three files (section 6, item 2) |
+| `0aee07f445647656f233bce0f16c417b4af862a6` | this reply; JLC's plugged-via wording corrected in three files (section 6, item 2) |
 
 | What | Path under `hardware/` |
 |---|---|
