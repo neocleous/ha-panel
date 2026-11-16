@@ -1,5 +1,7 @@
 # DigiKey BOM — main board, mic strips, harness (block 3, 2026-11-08)
 
+> **Checked 2026-11-16 against main board rev 3.2, the mic strip and touch board rev D: no line changes** (`bom-2026-11-16.md`). One note below is out of date: since rev 3 the sensor connector is two 1 × 4 male pin headers (J10, J11), not one 2 × 4. Prices and stock are those of 2026-11-08.
+
 Derived from the schematics on `docs` (main board rev 2.1, mic strip decisions 9.1 and 10.1, touch board rev D). Prices are DigiKey CH, CHF excl. VAT, cut tape at the quantity bought, seen 2026-11-08; stock as shown the same day. Build: one main board and two strips. Spares (Daniel, 2026-11-08): at least 3 for 0603 and smaller parts (SC-70 and SOD-523 included), at least 2 for 0805 and 1206 and for the MEMS mic, 1 for larger parts and ICs; the next price break is taken where it costs CHF 0.40 or less more. L1 and C5/C6 have no spare (large, robust).
 
 **Total: CHF 176.11 excl. VAT** (55 lines; CHF 190.37 incl. 8.1 % VAT). The DigiKey quick-add list is `digikey-bom.csv`.

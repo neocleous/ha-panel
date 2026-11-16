@@ -1,0 +1,10 @@
+symbols: main-board 94 (9 not fitted), mic-strip 12 (0 not fitted), touch-board 7 (0 not fitted)
+DigiKey lines: 55 in the list (45 board lines, 10 others); total of the Ext column 176.11
+DigiKey numbers on the boards: 45; all in the list: True
+board lines unchanged: 45
+need changed: []
+short of the rule: []
+added (on a board, not in the list): []
+removed (in the list, on no board): []
+parts with no DigiKey line: [('main-board', 'J10', '1x04 header BME680'), ('main-board', 'J11', '1x04 header VEML6030'), ('main-board', 'LK1', 'wire link'), ('touch-board', 'U1', 'AT42QT1070-SSU')]
+pieces per set: 116 fitted
