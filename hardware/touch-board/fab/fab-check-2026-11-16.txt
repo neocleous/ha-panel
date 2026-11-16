@@ -1,0 +1,48 @@
+1. files (touch-board-...)
+  ok   F_Cu.gtl
+  ok   B_Cu.gbl
+  ok   F_Mask.gts
+  ok   B_Mask.gbs
+  ok   F_Silkscreen.gto
+  ok   B_Silkscreen.gbo
+  ok   Edge_Cuts.gm1
+  ok   PTH.drl
+  ok   NPTH.drl
+  ok   job.gbrjob
+     also in the set: B_Paste.gbp, F_Paste.gtp
+     B_Cu.gbl           Copper,L2,Bot                flashes    34, drawn pieces     45 (arcs 0), filled regions    0
+     B_Mask.gbs         Soldermask,Bot               flashes     0, drawn pieces    776 (arcs 0), filled regions   30
+     B_Paste.gbp        Paste,Bot                    flashes    26, drawn pieces      0 (arcs 0), filled regions    0
+     B_Silkscreen.gbo   Legend,Bot                   flashes     0, drawn pieces   1798 (arcs 0), filled regions   31
+     Edge_Cuts.gm1      Profile,NP                   flashes     0, drawn pieces      8 (arcs 4), filled regions    0
+     F_Cu.gtl           Copper,L1,Top                flashes     8, drawn pieces      0 (arcs 0), filled regions    0
+     F_Mask.gts         Soldermask,Top               flashes     0, drawn pieces      0 (arcs 0), filled regions    0
+     F_Paste.gtp        Paste,Top                    flashes     0, drawn pieces      0 (arcs 0), filled regions    0
+     F_Silkscreen.gto   Legend,Top                   flashes     0, drawn pieces      0 (arcs 0), filled regions    0
+2. vias on the copper layers (4 vias)
+  ok   F_Cu.gtl: a round flash of the right diameter at every via (missing 0, wrong size 0)
+  ok   B_Cu.gbl: a round flash of the right diameter at every via (missing 0, wrong size 0)
+3. soldermask
+  ok   F_Mask.gts: no opening flashed at a via (0)
+  ok   F_Mask.gts: 0 openings flashed, 0 drawn as regions, for 0 pads with an opening
+  ok   B_Mask.gbs: no opening flashed at a via (0)
+  ok   B_Mask.gbs: 0 openings flashed, 30 drawn as regions, for 30 pads with an opening
+4. paste
+  ok   F_Paste.gtp: 0 apertures for 0 pasted pads
+  ok   B_Paste.gbp: 26 apertures for 26 pasted pads
+5. outline
+  ok   extent 90.00 x 44.00 in the file; the board 90.10 x 44.10 with its 0.1 line
+  ok   arcs: 4 in the file, 4 arcs and circles on the board's outline layer
+6. holes
+  ok   plated: 4 of 0.30
+  ok   not plated: none
+     slots (plated, oval holes): none
+7. job file
+     size 90.1 x 44.1, 2 layers, thickness 1.6, finish None; project Pcbnew rev rev?
+       Copper     F.Cu                   0.035
+       Dielectric F.Cu/B.Cu              1.51  FR4
+       Copper     B.Cu                   0.035
+  ok   layer count 2
+8. pours
+  ok   0 pours; a refill changes none by more than 0.0000 mm2 (the stored pours are current)
+RESULT: all checks passed

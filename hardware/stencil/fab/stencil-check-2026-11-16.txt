@@ -1,0 +1,13 @@
+apertures: stencil 267, main board 241, touch board 26
+  ok   1. main board: 241 of 241 apertures are in the stencil, same place, same size
+  ok      left over for the touch board: 26 (it has 26)
+  ok   2. touch board: all 26 apertures mirrored left-right and moved by one shift (90.0000, 68.0000)
+  ok   3. nothing else: 267 = 241 + 26 apertures; drawn pieces 0, filled regions 0
+  ok   4. outline file: 2 closed loops (18 pieces, every end met by exactly one other)
+   outlines: main board 87.00 x 57.90 above, touch board 90.00 x 44.00 below; gap 10.10; left edges 0.000 and 0.000
+  ok      left edges in line
+  ok      every aperture lies inside its own board's outline
+   pattern with both outlines: 90.00 x 112.00; apertures alone: 81.75 x 86.89
+5. smallest aperture 1.475 x 0.300 (48 of that size); paste area in all 398.8 mm2
+drawn: stencil/stencil-preview.png
+RESULT: all checks passed

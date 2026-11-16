@@ -36,7 +36,7 @@ Files: `touch-board.kicad_sch/.kicad_pcb/.kicad_pro`, `lib/` (ha_panel symbol + 
 
 **Fab (JLC, bare board; D57):** `fab/touch-board-jlc-2026-11-09.zip` (gerbers and drill, unzipped in `fab/gerbers/`;
 `fab/drill-report.txt`: 4 plated holes Ø0.30, the tented electrode vias; no NPTH). 2 layers, 1.6 mm, ENIG, 90 × 44.
-Order options and limits: `../notes/jlc-fab.md`. **Paste:** the touch board's back pattern is on the combined stencil
+Order options and limits: `fab/ORDER-SHEET.md` (the set of 2026-11-09 was confirmed current on 2026-11-16, `fab/fab-check-2026-11-16.txt`). **Paste:** the touch board's back pattern is on the combined stencil
 with the main board's front (`../stencil/`); don't tick the stencil box on the touch-board line.
 
 **Purchase fields** (in the schematic; `gen/bom_fields_touch.json`):

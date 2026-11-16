@@ -1,6 +1,6 @@
 # HA panel — mic strip (two boards of one design)
 
-Status: **block 3 done (2026-11-09) — fab files, assembly notes and drawing issued.** Decision 9 → **option 1** (Daniel, 2026-11-08): soldered wire pads instead of the JST connector. Decision 10 → **option 1** (Daniel, 2026-11-08): ESD321DYAR for D1–D3. JLC upload: **`fab/mic-strip-jlc-2026-11-09.zip`** (vias 0.5/0.3, D63 = b); order options in `../notes/jlc-fab.md` (0.8 mm, 2 layers, ENIG — Daniel, 2026-11-08). Assembly drawing: `mic-strip-assembly.pdf`; assembly and bring-up: below.
+Status: **block 3 done (2026-11-09) — fab files, assembly notes and drawing issued.** Decision 9 → **option 1** (Daniel, 2026-11-08): soldered wire pads instead of the JST connector. Decision 10 → **option 1** (Daniel, 2026-11-08): ESD321DYAR for D1–D3. JLC upload: **`fab/mic-strip-jlc-2026-11-09.zip`** (vias 0.5/0.3, D63 = b); order options in `fab/ORDER-SHEET.md` (0.8 mm, 2 layers, ENIG — Daniel, 2026-11-08; the set was confirmed current on 2026-11-16, `fab/fab-check-2026-11-16.txt`). Assembly drawing: `mic-strip-assembly.pdf`; assembly and bring-up: below.
 
 - **KiCad 9.0.9.** Open `mic-strip.kicad_pro`. Project libraries: `lib/ha_panel.kicad_sym` (IM69D120) and `lib/ha_panel.pretty` (IM69D120 land pattern, 5-pad wire column, heat-stake hole).
 - **Schematic PDF:** `mic-strip-schematic.pdf`. **ERC:** 0 errors, 0 warnings (`erc-report.txt`).

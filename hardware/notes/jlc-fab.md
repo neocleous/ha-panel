@@ -1,76 +1,59 @@
-# JLC order sheet: main board, mic strip, touch board, stencil (block 3; rev 2026-11-09)
+# JLC orders: the four uploads, JLC's figures and the export settings (rev 2026-11-16)
 
-Three boards and one stencil go into Daniel's JLC order (the one with the Spooky Manor boards; D54). **Bare boards only:** no SMT assembly, so no BOM or CPL files go to JLC. Daniel assembles the boards himself.
+Three boards and one stencil go to JLC. **Bare boards only:** no SMT assembly, so no BOM or placement files go to JLC. Daniel assembles the boards himself.
 
-Rev 2026-11-09: touch board rev D added (D57: 2 layers, 1.6, ENIG); the stencil now covers the main board's front **and** the touch board's back, from its own zip (D57). Later the same day: strip vias 0.3/0.5 and a new strip zip (D63 = b, "Strip vias").
+**Rev 2026-11-16 (fab issue of main board rev 3.2):** new main-board set and new stencil; the strip and touch-board sets of 2026-11-09 are confirmed current. Each upload now has its own order sheet next to its zip. **Nothing was uploaded and no quote was taken on 2026-11-16** (Daniel). JLC's capability pages were read on 2026-11-16; the order page was not opened, so the option names in the order sheets are those read on 2026-11-09.
 
-| Upload | Board | KiCad source |
-|---|---|---|
-| `hardware/main-board/fab/main-board-jlc-2026-11-08.zip` | main board, layout rev 2.1 | `hardware/main-board/main-board.kicad_pcb` |
-| `hardware/mic-strip/fab/mic-strip-jlc-2026-11-09.zip` | mic strip; one design, used twice. Vias 0.3/0.5 (D63 = b); it replaces the 2026-11-08 zip, which was removed from the tree. | `hardware/mic-strip/mic-strip.kicad_pcb` |
-| `hardware/touch-board/fab/touch-board-jlc-2026-11-09.zip` | touch board rev D | `hardware/touch-board/touch-board.kicad_pcb` |
-| `hardware/stencil/fab/stencil-main-touch-jlc-2026-11-09.zip` | **stencil line only:** main-board front + touch-board back paste | `hardware/stencil/stencil-main-touch.kicad_pcb` (generated; `hardware/stencil/README.md`) |
-
-The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `fab/drill-report.txt`.
-
-## Order options
-| Option | Main board | Mic strip | Touch board rev D |
+| Upload | Board | Order sheet | sha256 of the zip |
 |---|---|---|---|
-| Base material | FR-4 | FR-4 | FR-4 |
-| Layers | 4 | 2 | 2 |
-| Size | 90 × 55 mm | 28 × 6 mm | 90 × 44 mm |
-| Quantity | 5 (JLC minimum; 1 needed) | 5 (JLC minimum; 2 needed) | 5 (JLC minimum; 1 needed) |
-| Delivery format | single PCB | single PCB (see "Panelisation") | single PCB |
-| Thickness | 1.6 mm | **0.8 mm** (strip stack in the cap, K21) | 1.6 mm (rev F chin seat, as rev C) |
-| Impedance control | no | — | — |
-| Layer stack-up | JLC04161H-7628: 7628 prepreg 0.2104, core 1.065; the same build as "No requirement" | — | — |
-| Outer copper | 1 oz | 1 oz | 1 oz |
-| Inner copper | 0.5 oz (JLC default) | — | — |
-| Via hole / diameter | 0.2 / 0.45 mm, which carries no surcharge | **0.3 / 0.5 mm** (D63 = b, 2026-11-09) | 0.3 / 0.6 mm |
-| Via covering | **plugged** (JLC's default; "Tented" is greyed out for 4 layers on the order page, 2026-11-09) | tented | tented |
-| Surface finish | **ENIG** (Daniel, 2026-11-08) | **ENIG** (Daniel, 2026-11-08) | **ENIG** (Daniel, 2026-11-09, D57) |
-| Mask / silkscreen | green / white | green / white | green / white |
-| Mark on PCB | "Remove Mark" (the order page's default, no charge, 2026-11-09) | same | same |
-| Gold fingers, castellations, edge plating | no | no | no |
-| Min via hole size/diameter (order page) | "0.3mm/(0.4/0.45mm)": the page's note says that on multilayer boards a 0.2 mm hole with ≥ 0.45 mm diameter costs nothing extra | "0.3mm/(0.4/0.45mm)": the vias are 0.3/0.5, inside the free class (D63 = b) | "0.3mm/(0.4/0.45mm)" (vias 0.3/0.6) |
-| 4-Wire Kelvin Test (Advanced Options) | **No**: the page switches it on by itself when a smaller via class is picked; switch it back | No | No |
-| "Stencil: Order together with PCB" on this line | **off** (see "Stencil") | off | **off** (see "Stencil") |
+| `hardware/main-board/fab/main-board-rev3.2-jlc-2026-11-16.zip` | main board rev 3.2, 87.0 × 57.9, 4 layers | `hardware/main-board/fab/ORDER-SHEET.md` | `fc4588531ea277c1fc3e9009db38fae190042080e065443b0a663f34fa7449bd` |
+| `hardware/mic-strip/fab/mic-strip-jlc-2026-11-09.zip` | mic strip, 28 × 6, 2 layers; one design, used twice | `hardware/mic-strip/fab/ORDER-SHEET.md` | `f405cc567fab336cf9e0fb4b0da1def971ca79bae3d6d8b02ea9bce7e5584564` |
+| `hardware/touch-board/fab/touch-board-jlc-2026-11-09.zip` | touch board rev D, 90 × 44, 2 layers | `hardware/touch-board/fab/ORDER-SHEET.md` | `2d62d7eca9126be672a78bb0a46d35bbd1463b2dc3d9a8c736272d2777056a34` |
+| `hardware/stencil/fab/stencil-main-rev3.2-touch-revD-jlc-2026-11-16.zip` | **stencil line only:** main board door side + touch board back | `hardware/stencil/fab/ORDER-SHEET.md` | `f83d86d130e1cd6dd12528dfa11b598b52d56163d8d25fc2e75cec845d8e9dc2` |
 
-## What the files use against JLC's limits
-| Item | Main board | Mic strip | Touch board rev D | JLC limit |
+Superseded, kept for the record, **not to be ordered:** `hardware/main-board/rev2.1/fab/main-board-jlc-2026-11-08.zip` (rev 2.1, 90 × 55) and `hardware/stencil/fab/superseded/stencil-main-touch-jlc-2026-11-09.zip` (its paste pattern).
+
+The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `fab/drill-report.txt`; the check of each set is `fab/fab-check-2026-11-16.txt` (stencil: `fab/stencil-check-2026-11-16.txt`).
+
+## The orders at a glance
+| | Main board rev 3.2 | Mic strip | Touch board rev D | Stencil |
 |---|---|---|---|---|
-| Track / space | 0.10 / 0.15 | 0.20 / 0.15 | 0.25 / 0.15 (rule; supply 0.40) | 0.09 / 0.09 multilayer; 0.10 / 0.10 for 1–2 layers |
-| Vias | 0.2/0.45 ×18, 0.3/0.6 ×131, 0.4/0.8 ×4 | **0.3/0.5 ×25** (D63 = b): ring 0.10, hole to hole ≥ 0.45, hole to other-net copper ≥ 0.29 | 0.3/0.6 ×4 (electrode feeds) | 0.15/0.25 minimum; 0.2 preferred; extra cost below 0.45 diameter at 0.2–0.25 hole |
-| Component hole annular ring | 0.35 min, except J2 | — | — (no component holes) | multilayer 1 oz: 0.20 recommended, 0.15 absolute |
-| J2 (USB4085) ring | 0.15: 16 contacts Ø0.4 in Ø0.7 pads (GCT's recommended layout) | — | — | at the multilayer absolute minimum, so JLC's review may mention it |
-| Plated slots | J2's 4 shell stakes, 0.6 × 1.4 and 0.6 × 2.1 | — | — | 0.35 multilayer (0.5 in the description) |
-| NPTH | 4 × Ø2.7 (mounting) | Ø0.8 (mic port), 2 × Ø2.0 (heat-stake pins) | none | Ø0.50 minimum |
-| Copper to edge | 0.3 | 0.3 | 0.3 | 0.2 |
-| Silkscreen | text 1.0 high, 0.15 stroke; KiCad library outlines 0.12 | outlines and polarity marks only (no room for references) | back only: text 1.0 / 0.15, KiCad library outlines 0.12 | text 1.0 / 0.15, lines ≥ 0.15 |
+| Layers | 4 | 2 | 2 | — |
+| Size, mm | 87.0 × 57.9 | 28 × 6 | 90 × 44 | custom 190 × 190 |
+| Thickness, mm | 1.6 | 0.8 | 1.6 | 0.12 |
+| Finish | ENIG | ENIG | ENIG | electropolished |
+| Vias | plugged | tented | tented | — |
+| Quantity | 5 (1 needed) | 5 (2 needed) | 5 (1 needed) | 1 |
+| Other | stack-up JLC04161H-7628; outline regular ±0.2; "Remove Mark" | "Remove Mark" | "Remove Mark" | top only; two PCBs on one stencil; apertures 1:1 |
 
-- **Thin silk outlines.** The 0.12 mm outlines come from the KiCad standard footprints and may print thin. The block 3 assembly drawing carries every reference, polarity mark and pin-1 mark.
-- **Paste layers are included.** Main board: F.Paste only, since B.Paste is empty. Strip and touch board: B.Paste only, because their parts are on the back. JLC uses them only if the stencil box on that board's line is ticked, which it is not ("Stencil").
+Every option, with its reason, is in the order sheets.
 
-## Stencil (main board front + touch board back; D57, Daniel 2026-11-09)
-**One JLC SMT stencil, ordered as its own stencil line from `hardware/stencil/fab/stencil-main-touch-jlc-2026-11-09.zip`.**
-- That file's top paste layer holds both patterns: the main board's front as drawn, and the touch board's back mirrored, 10 mm below it. The pattern extent is 90.1 × 109.2 mm.
-- Leave the stencil toggle on the main-board and touch-board PCB lines off; it would cut a stencil from one board's zip alone.
-- The strip's 12 SMD parts are pasted by syringe.
-- How the file is built and checked: `hardware/stencil/README.md`.
-
-| Option | Choice | Why |
+## JLC's figures, read 2026-11-16
+| Figure | Value | Page |
 |---|---|---|
-| Product | "SMT Stencil" (its own quote page, not the PCB line's stencil toggle) | the upload is the combined stencil zip |
-| Framework | No | hand use on the hotplate; framework stencils are for printers |
-| Stencil side | **Top only** | both patterns are on the file's top paste layer; the touch board's back pattern is already mirrored |
-| Dimensions | **Custom 190 × 190 mm** | same price as the smallest standard size (380 × 280), 0.33 kg instead of 0.96 kg; holds the 90.1 × 109.2 pattern; rev C used 190 × 190 |
-| Thickness | "Select by Customer", **0.12 mm** | no extra charge; JLC suggests 0.10–0.12 for fine pitch |
-| Stencil process type | Solder paste stencil | |
-| Multiple PCBs on one stencil | **Yes** | The page's note: "If you have multiple different PCBs on one stencil, please click Yes." The pop-up then asks whether JLC may re-arrange the patterns' typesetting or distance. The option only stays on with **Yes**, at no extra charge. |
-| Polishing | Electropolishing (+€4.45) | JLC lists it as ideal for ICs at or below 0.5 mm pitch (the TAS5756M) |
-| Fiducials | No fiducial | aligned by hand to the pads |
-| Stencil aperture openings | **"1:1 as per Paste Layer"** | The default "Follow JLCPCB's Standard" resizes apertures. The TAS5756M thermal-pad windows (70–80 % of the pad, SLAS988B 11.1.3.2) are designed and must stay as drawn. |
-| **Stencil remark** | "Two PCBs on one stencil: main board top paste, and touch board bottom paste already mirrored in this file. No copper layer on purpose. Keep each pattern's orientation; spacing may change." | the pattern orientation is the one thing a re-arrangement must not change |
+| Copper to a routed edge | 0.2 mm or more | capabilities |
+| Outline tolerance | ±0.2 regular; ±0.1 "high precision", which needs a board of at least 50 × 50 and three tooling holes of 1.5 or more | capabilities |
+| Plugged vias | only where there is no soldermask opening on either side, the via is 0.35 or more from other openings, and it is no wider than 0.5 | capabilities; via-covering article |
+| Vias that cannot be plugged | the alternative JLC names is epoxy or copper filling (free on boards of 6 layers and more) | via-covering article |
+| Smallest via | hole 0.15, diameter 0.25; a 0.2 or 0.25 hole in less than 0.45 diameter costs more | capabilities |
+| Ring of a component hole, multilayer, 1 oz | 0.20 recommended, 0.15 minimum | capabilities |
+| Plated slot | 0.35 wide minimum (multilayer); 0.5 on 2 layers | capabilities |
+| Unplated hole | Ø0.50 minimum | capabilities |
+| Track / space | 0.09 / 0.09 multilayer; 0.10 / 0.10 on 1–2 layers | capabilities |
+| Silkscreen | line 0.15, text height 1.0 | capabilities |
+| Soldermask bridge | 0.10 (green) | capabilities |
+| Inner copper | 0.5 oz by default | capabilities |
+| Finished thickness | ±10 % at 1.0 mm and more; ±0.1 below 1.0 | capabilities |
+| Inner corner of a routed outline | not in the capabilities table; JLC's blog gives about R 0.5 with a 1 mm cutter | blog, 2026-07-28 |
+| 4-layer stack-up JLC04161H-7628 | copper 0.035 / 0.0152 / 0.0152 / 0.035; prepreg 7628, 0.2104, εr 4.4; core 1.065, εr 4.6. It is the build JLC uses when no stack-up is asked for. | impedance |
+| Stencil thickness | 0.10, 0.12, 0.15, 0.18, 0.20 | stencil |
+| Stencil electropolishing | named for ICs of 0.5 pitch and below, and BGA | stencil |
+| Several designs on one stencil | supported; JLC may adjust the layout; leave a remark | stencil |
+| Stencil apertures | optimised by JLC's engineers by default; a remark makes them follow the paste layer 1:1 | stencil |
+| Stencil custom size | within 650 × 580 | stencil |
+| Files from KiCad 9 | Protel extensions, X2, netlist attributes, 4.6 mm; drill Excellon, alternate oval mode, absolute, mm, decimal, plated and unplated separate; **paste layers only for stencil or assembly orders** | KiCad 9 article |
+
+Pages are listed under "Sources".
 
 ## Strip vias: resolved by D63 = (b) (Daniel, 2026-11-09)
 **The strip is re-routed with 0.3 mm via holes:** 28 vias at 0.2/0.45 became **25 vias at 0.3/0.5**.
@@ -108,7 +91,7 @@ The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `f
 **Order:** select "0.3mm/(0.4/0.45mm)" and leave the 4-wire Kelvin test off. Re-quoted 2026-11-09 at €18.62, unchanged.
 
 ## Export settings
-JLC's KiCad 9 guide, applied with kicad-cli 9.0.9:
+JLC's KiCad 9 guide, applied with kicad-cli 9.0.9 by `hardware/main-board/gen/fab_export.sh` (boards) and `hardware/main-board/gen/stencil_export.sh` (stencil):
 - **Gerbers:**
   - Protel extensions, X2 attributes and netlist attributes on;
   - coordinate format 4.6 mm;
@@ -118,14 +101,10 @@ JLC's KiCad 9 guide, applied with kicad-cli 9.0.9:
   - Excellon, PTH and NPTH in separate files;
   - absolute origin, millimetres, decimal zeros;
   - oval holes in alternate drill mode (G85 slots).
+- **Paste layers:** not in the main board's set of 2026-11-16, following the guide. The strip and touch-board sets of 2026-11-09 contain theirs; JLC ignores them on a bare-board order without the stencil switch.
+- **File names** carry board and revision (`main-board-rev3.2-…`, `stencil-main-rev3.2-touch-revD-…`), so two sets cannot be mixed.
 
-- **Stencil:** `kicad-cli pcb export gerbers --layers F.Paste,Edge.Cuts --exclude-value` on the generated stencil file.
-
-**Check:** rendered from the exported files with pygerber 2.4.3, and matching the KiCad boards:
-- the main-board front stack (copper, mask, silk, edge);
-- both sides of the strip, re-checked 2026-11-09 after D63: 25 via flashes Ø0.5 on each copper layer and none on either mask (tented); drill report 25 × Ø0.300 PTH, NPTH unchanged;
-- both sides of the touch board (2026-11-09): the front has the four electrodes under the mask with no openings, and the back has the parts, the HOST pads and their labels;
-- the stencil, which is also checked flash by flash against both boards' paste files (`hardware/stencil/README.md`).
+**Check of every set (2026-11-16):** `hardware/main-board/gen/fab_check.py` reads the exported files and compares them with the KiCad board: files and layer functions, a flash at every via on every copper layer, no soldermask opening at a via, paste counts, outline extent and arcs, hole counts per diameter, the job file's stack-up, and that the stored pours are current. The stencil is checked aperture by aperture against both boards' paste files by `hardware/main-board/gen/stencil_check.py`.
 
 ## Panelisation
 - **Not required.** JLC's minimum board size is 3 × 3 mm, and the strip is 28 × 6.
@@ -134,14 +113,21 @@ JLC's KiCad 9 guide, applied with kicad-cli 9.0.9:
 - At 0.8 mm the strip is above JLC's 0.6 mm manual-review threshold.
 
 ## Sources
-Read 2026-11-08 (the touch-board column and the stencil options use the same pages):
-- JLC PCB capabilities — https://jlcpcb.com/capabilities/pcb-capabilities
-- JLC "How to generate Gerber and Drill files in KiCAD 9" — https://jlcpcb.com/help/article/how-to-generate-gerber-and-drill-files-in-kicad-9
+Read 2026-11-16:
+- JLC PCB capabilities — https://jlcpcb.com/capabilities/pcb-capabilities (the page shows no revision date)
 - JLC stack-ups — https://jlcpcb.com/impedance
 - JLC stencil capabilities — https://jlcpcb.com/capabilities/pcb-stencil-manufacturing
+- JLC "How to generate Gerber and Drill files in KiCad 9" — https://jlcpcb.com/help/article/how-to-generate-gerber-and-drill-files-in-kicad-9 (page dated 2026-11-10)
+- JLC "PCB via covering" — https://jlcpcb.com/help/article/pcb-via-covering (page dated 2026-11-10)
+- JLC blog on rounded corners — https://jlcpcb.com/blog/rounded-corners-pcb-design (2026-07-28)
+
+Read earlier:
+- JLC order and quote pages, 2026-11-09 (option names, prices below)
 - GCT USB4085 drawing rev B (2023-02-28), recommended PCB layout — https://gct.co/files/drawings/usb4085.pdf (read 2026-11-07)
 
-## Quotes (jlcpcb.com quote page, 2026-11-09, not signed in, no coupons)
+## Quotes of 2026-11-09 (jlcpcb.com quote page, not signed in, no coupons)
+**These are the figures for the rev 2.1 main board (90 × 55) and the first stencil. No quote was taken for the 2026-11-16 sets;** the parts-list session takes it from the order sheets. The strip and touch-board lines are for the same files as today.
+
 JLC offers only EUR and USD for Switzerland. CHF is indicative at the ECB reference rate of 2026-11-05: 0.9180 CHF/EUR.
 
 | Line | Options as above | Build time | Price |
