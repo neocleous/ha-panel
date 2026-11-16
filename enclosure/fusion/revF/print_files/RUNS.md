@@ -15,6 +15,8 @@
 | 15:33 | pf_ps | SIGTERM to pid 89405, started 15:31:40 by pf_open. Daniel's own instance (pid 53911) untouched |
 | ~15:39 | pf_5_publish (PLA) | 8 projects to `1_PLA_trial/` |
 | 15:46:01 | pf_9_final_guard | Version 65 of 65, unmodified; 408 bodies, 96 in the unit, 37 visible, no `AUD_*`; the nine guard volumes as at the start; scope B unchanged; camera as found; one document open, unmodified |
+| ~15:55 | pf_ps (list only) | One Bambu Studio running: pid 53911, Daniel's, started 2026-11-15 22:35:19. Its window "Untitled", an empty plate: none of the three window projects open |
+| 15:55:44 | pf_9_final_guard (again, after pf_ps) | As at 15:46:01 and as at the start: version 65 of 65, unmodified; 408 bodies, 96 in the unit, 37 visible, no `AUD_*`; the nine guard volumes and scope B unchanged; camera as found |
 
 ## Slices (Bambu Studio's estimates: print / with the printer's preparation, min; the slicer's masses)
 | Job | Print / prep | Filament | Note |
@@ -41,3 +43,9 @@
 | T7_P6 | 113.1 / 118.7 | 48.23 g | "floating cantilever" |
 | Z1_P1_rc2mesh | 326.2 / 343.9 | 85.96 g | recheck2's meshes, this session's settings: the re-check's slice reproduced |
 | Z2_P1_rc2mesh_plainABS | 326.2 / 343.8 | 85.96 g | the same with the colourless ABS preset |
+
+## Commits (`docs`)
+- `4048255`: README, RUNS, mkcall, `lib/`.
+- `44ed3a9`: `fusion/`, the twelve steps.
+- `58d2446`: `slicer/`, `calib/`, `offline/`.
+- Each file checked against the session's copy by its git blob hash after the push.
