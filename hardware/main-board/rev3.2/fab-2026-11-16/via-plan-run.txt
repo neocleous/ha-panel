@@ -1,0 +1,41 @@
+R11.1     VBUS_PI                0.4/0.80  u +27.525 v -20.165 -> u +27.144 v -20.149  moved 0.381  mask -0.181 -> 0.200  door-side track(s) 0.52 x 0.80; back track carried 0.38
+U1.20     +20V                   0.4/0.80  u -13.350 v -13.662 -> u -13.775 v -13.809  moved 0.449  mask -0.175 -> 0.250  door-side track(s) 0.55 x 0.40
+U1.19     +20V                   0.4/0.80  u -12.250 v -14.412 -> u -12.461 v -12.775  moved 1.651  mask -0.175 -> 0.275  door-side track(s) 0.57/0.79 x 0.40
+L100.2    SPK_L_P                0.4/0.80  u +38.075 v -15.725 -> u +38.159 v -16.100  moved 0.384  mask -0.175 -> 0.200  door-side track(s) 0.52 x 0.80; back track carried 0.38
+F4.1      +3V3                   0.3/0.60 -> 0.2/0.45  u -27.966 v -13.725 -> u -28.244 v -13.426  moved 0.408  mask -0.150 -> 0.200  door-side track(s) 0.42 x 0.45; back track carried 0.41
+C11.2     GND                    0.3/0.60  u -26.900 v  -5.197 -> u -26.894 v  -4.797  moved 0.400  mask -0.150 -> 0.250  door-side track(s) 0.52 x 0.60
+R10.1     VBUS_PI                0.4/0.80  u +17.438 v -17.503 -> u +17.881 v -17.106  moved 0.595  mask -0.150 -> 0.250  door-side track(s) 0.57 x 0.80; back track carried 0.60
+C12.2     GND                    0.3/0.60  u -19.288 v  -8.191 -> u -19.663 v  -8.276  moved 0.384  mask -0.125 -> 0.250  door-side track(s) 0.52 x 0.60
+D1.1      +20V                   0.3/0.60  u -17.963 v -16.464 -> u -17.943 v -16.839  moved 0.376  mask -0.125 -> 0.250  door-side track(s) 0.52 x 0.60
+D1.2      GND                    0.3/0.60  u -17.463 v  -9.614 -> u -17.447 v  -9.239  moved 0.375  mask -0.125 -> 0.250  door-side track(s) 0.52 x 0.60
+U1.18     +20V                   0.4/0.80  u -12.100 v -13.362 -> u -13.150 v -12.777  moved 1.202  mask -0.125 -> 0.273  door-side track(s) 1.35/0.81/1.20 x 0.40
+D2.2      GND                    0.3/0.60  u  +9.493 v +16.960 -> u  +9.118 v +16.430  moved 0.649  mask -0.125 -> 0.250  door-side track(s) 0.52 x 0.60
+C8.2      GND                    0.3/0.60  u +16.335 v  -7.113 -> u +15.759 v  -7.213  moved 0.585  mask -0.122 -> 0.250  door-side track(s) 0.52 x 0.60
+R13.2     GND                    0.3/0.60  u -27.575 v -10.183 -> u -27.713 v  -9.838  moved 0.372  mask -0.122 -> 0.250  door-side track(s) 0.52 x 0.60
+R3.2      GND                    0.3/0.60 -> 0.2/0.45  u  -5.877 v -15.180 -> u  -6.008 v -14.939  moved 0.274  mask -0.122 -> 0.200  door-side track(s) 0.42 x 0.45
+C1.2      GND                    0.3/0.60  u -14.337 v -18.690 -> u -14.012 v -18.870  moved 0.371  mask -0.121 -> 0.250  door-side track(s) 0.52 x 0.60
+R17.2     GND                    0.3/0.60  u -17.493 v -19.889 -> u -17.838 v -19.860  moved 0.346  mask -0.120 -> 0.200  door-side track(s) 0.47 x 0.60
+R5.2      GND                    0.3/0.60  u -11.005 v -11.249 -> u -11.316 v -11.047  moved 0.371  mask -0.120 -> 0.250  door-side track(s) 0.52 x 0.60
+R4.2      GND                    0.3/0.60  u  -7.693 v -11.268 -> u  -6.293 v -11.893  moved 1.533  mask -0.120 -> 0.475  door-side track(s) 0.75 x 0.60
+R18.2     GND                    0.3/0.60  u  +4.686 v -19.763 -> u  +4.300 v -19.701  moved 0.391  mask -0.120 -> 0.250  door-side track(s) 0.52 x 0.60
+C10.2     GND                    0.3/0.60 -> 0.2/0.45  u -33.265 v -15.325 -> u -33.417 v -15.075  moved 0.293  mask -0.100 -> 0.200  door-side track(s) 0.42 x 0.45
+R22.1     I2S_DOUT               0.2/0.45  u -21.829 v +26.625 -> u -21.504 v +26.615  moved 0.325  mask -0.100 -> 0.200  door-side track(s) 0.42 x 0.45; back track carried 0.33
+C4.2      GND                    0.3/0.60  u -15.297 v -12.452 -> u -15.647 v -12.437  moved 0.350  mask -0.100 -> 0.250  door-side track(s) 0.52 x 0.60
+C4.1      +20V                   0.3/0.60  u -15.297 v -14.002 -> u -15.647 v -13.987  moved 0.350  mask -0.100 -> 0.250  door-side track(s) 0.52 x 0.60
+R5.1      EF_IMON                0.2/0.45  u -11.905 v -12.049 -> u -11.669 v -12.234  moved 0.300  mask -0.100 -> 0.200  door-side track(s) 0.42 x 0.45; back track carried 0.30
+C3.2      GND                    0.3/0.60 -> 0.2/0.45  u  -4.050 v -19.162 -> u  -4.343 v -19.302  moved 0.325  mask -0.100 -> 0.250  door-side track(s) 0.47 x 0.45
+R16.2     I2S_DOUT               0.2/0.45  u  +8.513 v -19.782 -> u  +8.032 v -19.506  moved 0.554  mask -0.100 -> 0.200  door-side track(s) 0.42 x 0.45; back track carried 0.55
+R1.2      EF_UVLO                0.2/0.45  u  -8.300 v -21.675 -> u  -8.599 v -21.662  moved 0.299  mask -0.099 -> 0.200  door-side track(s) 0.42 x 0.45; back track carried 0.30
+C2.2      GND                    0.3/0.60  u -11.723 v -22.523 -> u -10.598 v -21.900  moved 1.286  mask -0.096 -> 0.250  door-side track(s) 0.52 x 0.60
+C9.2      GND                    0.3/0.60  u +19.109 v -12.574 -> u +19.221 v -12.924  moved 0.367  mask -0.096 -> 0.250  door-side track(s) 0.52 x 0.60
+R8.2      GND                    0.3/0.60 -> 0.2/0.45  u -34.370 v  -5.979 -> u -34.608 v  -5.979  moved 0.238  mask -0.087 -> 0.200  door-side track(s) 0.42/0.24 x 0.45
+U2.2      GND                    0.3/0.60  u -25.863 v -10.825 -> u -26.150 v -10.836  moved 0.288  mask -0.087 -> 0.200  door-side track(s) 0.47/0.29 x 0.60
+R20.1     I2S_BCLK               0.2/0.45  u -26.925 v +25.975 -> u -26.783 v +25.720  moved 0.292  mask -0.086 -> 0.200  door-side track(s) 0.42 x 0.45; back track carried 0.29
+R23.1     PI_DIN                 0.2/0.45  u -18.508 v +26.025 -> u -18.560 v +25.742  moved 0.288  mask -0.083 -> 0.200  door-side track(s) 0.42 x 0.45; back track carried 0.29
+D2.1      +5V                    0.3/0.60  u  +5.143 v +17.010 -> u  +4.868 v +16.910  moved 0.293  mask -0.075 -> 0.200  door-side track(s) 0.47/0.29 x 0.60
+C117.1    SPK_R_P                0.4/0.80  u +18.375 v -13.475 -> u +18.250 v -13.250  moved 0.258  mask -0.057 -> 0.200  door-side track(s) 0.52 x 0.80; back track carried 0.26
+U1.14     EF_IMON                0.2/0.45  u  -9.225 v -13.175  taken out: the via 0.527 away on the same door-side track (u  -9.255 v -12.649, mask 0.385) serves; back track carried 0.53
+U1.16     EF_PGOOD               0.2/0.45  u -10.500 v -13.144 -> u -10.500 v -12.950  moved 0.194  mask +0.006 -> 0.200  door-side track(s) 0.40 x 0.40; back track carried 0.19
+U2.3      PI_3V3                 0.3/0.60  u -24.312 v -11.725 -> u -24.129 v -11.734  moved 0.184  mask +0.020 -> 0.200  door-side track(s) 0.47/0.18 x 0.60; back track carried 0.18
+R18.1     PI_DIN                 0.2/0.45  u  +2.967 v -19.550 -> u  +2.914 v -19.511  moved 0.066  mask +0.137 -> 0.200  door-side track(s) 0.42/0.07 x 0.45; back track carried 0.07
+40 vias with less than 0.20 of mask to a pasted pad: 39 moved (5 of them made 0.2/0.45), 1 taken out, 0 without a place; largest move 1.651; longest new door-side track 1.35

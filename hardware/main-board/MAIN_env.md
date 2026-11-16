@@ -8,6 +8,10 @@ Frame: the site document's board frame, seen from the door: u to the right, v up
 in the middle of the board, mm.
 Section numbers in the text are those of the reply.
 
+**Fab issue 2026-11-16:** copper and texts only (39 vias moved, 1 taken out, the pours 0.50 from the relief, the
+revision text's date). Outline, holes, heights, pin ends and connectors are unchanged, so this file and
+`main-board-rev3.2.step` stand (`rev3.2/fab-2026-11-16/README.md`).
+
 **Changed against rev 3.1:** only the outline: a relief in the +u side edge (section 3). Holes, heights, pin ends,
 connectors and plug envelopes are rev 3.1's; no part moved. (Rev 3.1 against rev 3: `rev3.1/MAIN_env.md`.)
 
@@ -18,7 +22,8 @@ connectors and plug envelopes are rev 3.1's; no part moved. (Rev 3.1 against rev
   - side walls at **v +0.5 and v +14.0**, from u +43.0 to the old edge at u +43.5; the corners there are square;
   - the two inner corners rounded at **r 1.0**, centres (+43.0, +1.5) and (+43.0, +13.0), so the full depth holds
     from v +1.5 to +13.0 (19.82 mm2 cut away);
-  - copper keeps 0.30 from the new edge (the board's copper-to-edge rule).
+  - copper keeps 0.30 from every edge (the board's rule); **since the fab issue of 2026-11-16 the pours keep 0.50
+    from the relief** (the nearest track there is 0.38 from the floor, as before).
   Nothing overhangs the top or side edges or stands in the relief (nearest part outline, R105's courtyard, 0.36 from
   the floor). At the bottom edge only the Pi power plug passes (it leaves downward).
 - **Holes:** four, 3.2 across, not plated, for the unit's standard M3 x 8 button-head screw (head 5.7 across, 1.65 high,

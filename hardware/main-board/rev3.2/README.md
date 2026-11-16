@@ -1,5 +1,9 @@
 # Main board rev 3.2 — the relief in the side edge (2026-11-14)
 
+> **2026-11-16: this report describes rev 3.2 as left on 2026-11-14** (`main-board-rev3.2-2026-11-14.kicad_pcb` in this
+> folder). The board in `../` has since had its vias moved out of the pasted pads, its pours kept 0.50 back from the
+> relief and its stack-up set, with the fab files: [`fab-2026-11-16/README.md`](fab-2026-11-16/README.md).
+
 Electronics session, brief `claude/brief-electronics-rev3-2-2026-11-13.md` (amended 2026-11-14). Positions are in the
 site's board frame, seen from the door: **u** to the right (toward the left speaker), **v** up, mm.
 Block 0 (what was in the way, and Daniel's decision): `block0.md`. The reply to the enclosure:

@@ -1,13 +1,11 @@
-# Main board — schematic notes (checkpoint 1, 2026-11-07; updated for decisions 1–5, 2026-11-07 20:45) — layout rev 2 (single-sided) 2026-11-08: §7
+# Main board — schematic notes, test pads and layout (rev 3.2, fab issue 2026-11-16)
 
-> **Rev 3 (2026-11-11):** sections 1 to 6 hold for rev 3 with these differences: H1 to H4 are 3.2 mm holes for M3 x 8;
-> the sensor header is two 1 x 4 headers (J10 BME680, J11 VEML6030, same nets as the 2 x 4); J3's pads are in housing
-> order (`gpio-leads.md`); J3, J4 and J7 use the project's wire-pad footprints; all test pads are on the door side.
-> Section 7 (layout) describes rev 2.1; the rev 3 layout is in `rev3/README.md`, section 14.
->
-> **Rev 3.1 (2026-11-11):** the circuit is rev 3's; only the layout changed (`rev3.1/README.md`). For the values in
-> sections 1 and 2: the Pi's 5 V board copper is 4.8 mOhm (rev 3: 7.2, rev 2.1: 26.7), calculated in
-> `rev3.1/check/`; test pads TP3 (IMON) and TP12 (RADAR) moved (`rev3.1/README.md`, section 2).
+> **What this file is.** Sections 1 to 4 and 6: every value of the circuit with its source, written at the schematic
+> checkpoints of 2026-11-07 and 2026-11-08 and unchanged since, because the circuit has not changed. They hold for
+> rev 3.2 with what rev 3 changed: H1 to H4 are 3.2 mm holes for M3 x 8; the sensor header is two 1 x 4 headers (J10
+> BME680, J11 VEML6030, the same nets as the old 2 x 4); J3's pads are in housing order (`gpio-leads.md`); J3, J4 and
+> J7 are wire pads. Sections 5 (test pads) and 7 (layout) were written again on 2026-11-16 for rev 3.2 as it goes to
+> the fab. The file as it stood on 2026-11-14 is `rev2.1/NOTES-2026-11-14.md`.
 
 KiCad **9.0.9**. Every value below is traced to a datasheet section or a project decision; sources and retrieval dates are at the end. "E" = engineering estimate, "not verified" = no source found.
 
@@ -69,7 +67,7 @@ KiCad **9.0.9**. Every value below is traced to a datasheet section or a project
 | J5 | JST B4B-XH-A | LD2410C: 1 VCC 5 V, 2 GND, 3 LD TX, 4 LD RX (envelope sheet: lead soldered to LD2410C pins 1, 2, 4, 5; OUT not wired). |
 | R19 | 4.7 kΩ | LD TX → Pi RXD. Replaces the provisional 1 kΩ: limits current into an unpowered Pi (radar stays on 5 V when the Pi is off) to 0.64 mA; with ≈ 10 pF the RC is 47 ns ≪ 3.9 µs bit time at 256000 Bd. |
 | J6 | JST B4B-XH-A | Touch board rev D (`hardware/touch-board`, decision 5A) HOST pads: VCC, GND, SDA, SCL. No INT (CHANGE# unused, as on rev C). |
-| J10 | 2 × 4 male header, 2.54 (plugged, D59, 2026-11-09; the footprint was already the header pattern) | **Decision 5A:** the BME680 (CJMCU-680) and VEML6030 Dupont leads land here instead of on the touch board: odd column BME680 (3V3_SENS, GND, SDA, SCL), even column VEML6030 (same). 3V3_SENS through F4. |
+| J10, J11 | 1 × 4 male pin header, 2.54, one each (rev 3; a generic part, chosen with the parts list, D103) | **Decision 5A, D59:** the BME680 (CJMCU-680) and VEML6030 Dupont leads land on the main board instead of on the touch board, each with a 1 × 4 Dupont housing: J10 BME680, J11 VEML6030. Both carry the same four nets, pin 1 to 4: 3V3_SENS, GND, SDA, SCL. 3V3_SENS comes through F4. (Rev 2.1 had one 2 × 4 header with a column per sensor.) |
 | J7 | 1 × 8 wire pads | D4a ReSpeaker tap, to the XIAO footprint (Seeed pinout): 1 GND, 2 I2S_BCLK, 3 I2S_LRCLK, 4 → I2S_DIN_SEC(dout) (reference into the XU316), 5 ← I2S_DIN_XIAO(din) (XU316 output), 6 GND, 7 SDA, 8 SCL. |
 | R20–R25 | 0 Ω 0603, **DNP** | Topology A (USB reference, default): all open. Topology B (bench 2.2): fit R20–R23 (+R24/R25 to reach the XU316 over I²C), I²S firmware, Pi as I²S clock consumer (custom overlay). |
 | H1–H4 | Ø2.7 NPTH | Fixed interface: 83 × 43 pattern, M2.5 into ruthex inserts in the bracket bosses. |
@@ -99,24 +97,28 @@ TAS5756M per TI SLAS988B Figure 79 (stereo BTL) and Table 22, wired like the Ras
 
 Thermal pad (pin 49): via array and paste windows at 70–80 % of the pad area (SLAS988B 11.1.3.2) — built into the custom footprint in block 2.
 
-## 5. Test pads (bench plan rev 3.5)
-All test pads are bare SMD pads Ø1.5 on the **back** (door side, `TestPoint_Pad_D1.5mm`): nothing to solder, probed with the door off, and no front-side area (layout density, decision 6).
+## 5. Test pads (rev 3.2)
+All 19 test pads are bare round pads, 1.5 across, **on the door side** (`TestPoint_Pad_D1.5mm`): nothing to solder,
+probed with the door off. **Their places, in mm from the board's left and bottom edges, and what stands beside each,
+are in `README.md`, "Test pads"**; the map is page 4 of `main-board-rev3.2-assembly.pdf`. Two moved on rev 3.1: TP3 and
+TP12. On rev 2.1 the pads were on the other face.
 
 | Pad | Net | Bench use |
 |---|---|---|
-| TP1 VIN | before the eFuse | 20 V present / OVP behaviour |
+| TP1 VIN | after the fuse F1, before the protection chip | 20 V present; over-voltage behaviour |
 | TP2 20V | +20V bus | "20 V bus" |
-| TP3 IMON | eFuse current monitor | 0.279 V/A — 20 V bus current, no meter in series |
-| TP4 FLT, TP5 PG, TP6 SHDN | eFuse status / control | fault, NID enable, forced off |
-| TP8 NID_IN | NID input (after L1) | "NID in" |
-| TP9 5V | NID output | "NID out", 2.6/2.7, 2.11 start-up |
-| TP10 5V_F | after F2 | 2.7 fuse drop |
-| TP11 EXT5V | VBUS at J2 (USB4085) | 2.6/2.7 "EXT5V at the USB4105" |
-| TP12 RADAR | radar 5 V after F3 | 2.12 radar VCC |
-| TP13 TRIM, TP14 RC | NID pins 12 and 13 | V20 trim check, NID enable |
-| TP16 3V3, TP19 FAULT | rails / amp status | bring-up (PVDD: probe F5 pin 2 **on the front, bench only** – TP18 dropped in layout, no free back spot on the PVDD side; PVDD has no exposed copper on the back, corrected 2026-11-09) |
-| TP7, TP15, TP17, TP20 | GND | probe returns |
-| LK1 | Pi branch link | 2.7 series current |
+| TP3 IMON | protection chip's current monitor | 0.279 V/A: the 20 V bus current without a meter in series |
+| TP4 FLT, TP5 PG, TP6 SHDN | protection chip's status and control | fault, 5 V module enable, forced off |
+| TP8 NID_IN | 5 V module input (after L1) | "NID in" |
+| TP9 5V | 5 V module output | "NID out"; bench 2.6, 2.7; 2.11 start-up |
+| TP10 5V_F | after F2 | bench 2.7, the fuse's drop |
+| TP11 EXT5V | 5 V at J2 (USB4085) | bench 2.6, 2.7 |
+| TP12 RADAR | radar 5 V after F3 | bench 2.12 |
+| TP13 TRIM, TP14 RC | 5 V module pins 12 and 13 | trim check (V20); module enable |
+| TP16 3V3, TP19 FAULT | rail; amplifier status | bring-up |
+| TP7, TP15, TP17, TP20 | GND | the probe's return |
+| (no TP18) | the amplifier's supply | probed at pad 2 of F5 |
+| LK1 | Pi branch link | bench 2.7, current in series |
 
 ## 6. Verify items answered in this block
 
@@ -126,42 +128,50 @@ All test pads are bare SMD pads Ø1.5 on the **back** (door side, `TestPoint_Pad
 - **V19** — §1.
 - **V20** — trim network R8/R9 DNP + TP13 (§2); trim function unverified on stock units.
 
-## 7. Layout (block 2; single-sided rev, 2026-11-08)
-- **Single-sided SMD** (Daniel 2026-11-07 22:48: no SMD on the back, no SMD by iron).
-  - Every SMD part is on the front.
-  - The back holds J2 (USB4085, THT), LK1, through-hole joints and the 19 bare test pads.
-  - Assembly: front SMD on the hotplate, then the through-hole parts by iron.
-- **Outline 90 × 55** (MAIN_env rev 2):
-  - It is the base of the design chat's outline T (`claude/report-main-board-outline-2026-11-07.md`): the top edge rises from z 84 to z 89, with the −x corner cut for the K5 lane.
-  - T's tab (z 89–116) was laid out but stayed empty, so it was cut off.
-- **Stack (4 layers, 1.6 mm; JLC stack-up picked in block 3):** L1 front parts + signals; In1 GND plane; In2 split power planes +5V, +20V and PVDD; L4 back signals. F/B GND pours with stitching vias to In1.
-- **Rules** (JLC capabilities, checked 2026-11-07: 0.10/0.10 track/space, via 0.2/0.45 without surcharge):
-  - tracks ≥ 0.10, set by Freerouting necks at the 0.5/0.65 mm pins; 0.15–0.8 elsewhere;
-  - clearance 0.15 (signals, PVDD, outputs) and 0.20 (default, 20 V);
-  - vias 0.45/0.2 signals, 0.6/0.3 power, 0.8/0.4 on the 20 V inlet;
-  - copper to edge 0.3.
-- **Placement:**
-  - The big parts and connectors keep their 2026-11-07 positions.
-  - Every former back-side part is placed on the front, next to the pin it serves: a spiral search with keep-outs for the TAS fan-out rows, the bracket bosses and the two amplifier output corridors.
-  - F5 (PVDD PTC) sits at (45.6, 30.45), straddling the +20V and PVDD planes.
-  - J4's courtyard is trimmed to its pads, because it is a wire landing with no header body.
-  - The farthest parts are the 3.3 V LDO group (U2 and its caps, F4) and D1/D2, at 15–20 mm from their anchors. They are supply parts; the TAS decoupling stays within about 11 mm.
-  - **Rev 2.1 (2026-11-08):** C7 (12.5 tall) sits in the top strip above the NID, body centre (50.67, −2.05), + towards the
-    +Vo pins. Between the NID and J6 it blocked a fingertip from J6's plug (design chat reach check), so the touch lead
-    would have had to go on before mounting. It stays 11 mm from the NID output pins and reaches In2 +5V and In1 GND
-    through its own pads, so no track changed (`gen/fix_c7.py`).
-- **TAS escape:** as in the two-sided rev: staggered fan-out rows, GND pins onto the land, PVDD bridges with one 0.6/0.3 via per side, bootstrap caps at the pins, outputs 0.6 mm to the inductors (`gen/amp.py`). The 0.1 µF PVDD caps C100/C121 are now on the front, with their own plane vias.
-- **Routing:** pre-routes for the amplifier outputs and the 20 V inlet → Freerouting 2.5.0 (32 left) → GND pours, stitching, dangling-via clean-up → fixes in `gen/fix_main1s.py`:
-  - VIN_EF ties;
-  - R1 link;
-  - PI_LRCLK around F5;
-  - C4's ground;
-  - F5 moved 0.45 mm off J6's courtyard;
-  - rev 2.1: C7 to the top strip (`gen/fix_c7.py`).
+## 7. Layout (rev 3.2, fab issue 2026-11-16)
+The layout's history is in the revisions' own reports: `rev3/README.md` §14 (the board laid out again for its site
+behind the display), `rev3.1/README.md` (hole and headers moved, supply copper, ground pours), `rev3.2/README.md` (the
+relief), `rev3.2/fab-2026-11-16/README.md` (the changes made with the fab files). Rev 2.1's layout notes are in
+`rev2.1/NOTES-2026-11-14.md` §7. What holds for the board as it goes to the fab:
 
-  The KiCad board is the source of truth. Re-running the scripts gives a different Freerouting result.
-- **Silkscreen:** 73 references on silk and 42 hidden in the dense areas (rev 2.1; C7's old place freed room for four). The block 3 assembly drawing (fab layers) carries every reference.
-- **DRC (KiCad 9.0.9, `drc-report.txt`):** 0 errors, 0 unconnected, schematic parity clean. Two warnings: J2's outline past the board edge removed, and J4's courtyard trimmed to its pads (both footprints differ from the library copy).
+- **Hand assembly** (Daniel, 2026-11-07 and 2026-11-10): every surface-mount part on one face, the door side; no
+  surface-mount part by iron; connectors through-hole; nothing smaller than 0603. The back carries no part.
+- **Outline:** 87.0 × 57.9, square corners, with the relief of rev 3.2 in the +u side edge: floor at u +42.0 over
+  v +1.5 … +13.0 (1.5 deep), side walls at v +0.5 and +14.0, inner corners drawn at r 1.0. Four 3.2 holes (M3 × 8).
+  JLC routes with ± 0.2 (regular); its own article gives about r 0.5 for inner corners with a 1 mm bit, so the arcs
+  cut as drawn (`../notes/jlc-fab.md`).
+- **Stack-up, set in the board file:** JLC04161H-7628, JLC's 4-layer stack for 1.6 mm with 1 oz outside and 0.5 oz
+  inside, read on jlcpcb.com/impedance on 2026-11-16:
+
+  | Layer | Thickness (mm) | Material |
+  |---|---|---|
+  | door side (F.Cu) | 0.035 | copper |
+  | | 0.2104 | prepreg 7628, εr 4.4 |
+  | layer 2 (In1.Cu), ground | 0.0152 | copper |
+  | | 1.065 | core, εr 4.6 |
+  | layer 3 (In2.Cu), +5 V, +20 V, amplifier supply | 0.0152 | copper |
+  | | 0.2104 | prepreg 7628, εr 4.4 |
+  | back (B.Cu) | 0.035 | copper |
+
+  It is the stack the supply-copper calculations assumed since rev 3.1, so their figures needed no correction for it.
+- **Rules** (in `main-board.kicad_pro`): clearance 0.15, and 0.20 for the 20 V nets; tracks 0.15 and wider; vias
+  0.2/0.45 (87), 0.3/0.6 (132) and 0.4/0.8 (25); hole to copper 0.25, hole to hole 0.25; copper to the edge 0.30.
+- **Copper at the relief:** the pours on all four layers end 0.50 from the relief (a rule area, pours only). With
+  JLC's cut 0.2 deeper they still end 0.30 from the real edge. The nearest track, the I²C clock on the back, is 0.38
+  from the floor as before, and the nearest pads, R105's, 0.66. JLC's rule is 0.2 as drawn.
+- **Vias and pasted pads:** no via hole is nearer than 0.20 to the bare area of a pad that gets paste. Rev 3's router
+  had set 40 of them in or right at such pads; 39 were moved and 1 taken out with the fab files
+  (`rev3.2/fab-2026-11-16/via-moves.md`, `gen/fab32_vias.py`). JLC plugs a via only if it is 0.35 or more from other
+  mask openings; the rest keep their mask cover. Seven vias in test pads and one in the amplifier's thermal pad stay.
+- **Supply copper, calculated** (`rev3.2/fab-2026-11-16/supply-copper-result.txt`, method of rev 3.1): the Pi's 5 V
+  board copper 4.84 mΩ; 20 V socket to fuse 1.06, fuse to protection chip 0.92, chip to filter coil 3.68, coil to
+  module 5.27 mΩ; amplifier supply, fuse F5 to the chip 7.564 and to C100–C102 8.886 mΩ.
+- **Ground:** layer 2 is an unbroken ground plane; ground pours on both outer layers with stitching vias (rev 3.1).
+  Bare circles round the four holes: 3.5 radius on the door side, 4.1 on the back.
+- **Silkscreen:** 67 of the 120 names are printed, 53 are hidden in the dense areas. The assembly drawing carries all
+  120. The back prints the connectors' names and `REV 3.2 2026-11-16`.
+- **Checks (KiCad 9.0.9, 2026-11-16):** schematic check 0 errors, 0 warnings; board check 0 errors, 0 open connections,
+  0 differences to the schematic, 2 warnings (J6's and J2's footprints differ from the library copies, on purpose).
 
 ## Sources (read 2026-11-07 unless noted)
 - TI TAS5756M, SLAS988B — https://www.ti.com/lit/ds/symlink/tas5756m.pdf
