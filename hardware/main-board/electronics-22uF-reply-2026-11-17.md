@@ -19,7 +19,7 @@ From the electronics session (`claude/brief-electronics-22uF-2026-11-17.md`). Re
 | `9f5bb2a49317d23941614e3108fa91708599d288` | the records: `harness.md`, `gpio-leads.md`, the four order sheets, `jlc-fab.md` |
 | `b5a793d1956a35cb171c0add8fec38a1a65ecafd` | the basket's state in `digikey-bom.md`; this reply |
 | `aa68554a3ed382726ead0cdca1aeb4564a0482de` | this reply names its own commit |
-| the commit after it | the basket change recorded in `digikey-bom.md` and in this reply |
+| `b6f437441b15a1221bfc7e38833f3aa47346c850` | the basket change recorded in `digikey-bom.md` and in this reply |
 
 | What | Path under `hardware/` |
 |---|---|
