@@ -2,7 +2,7 @@
 
 > **This file is the panel's DigiKey lines as they stand in Daniel's basket,** customer reference "HA-PANEL": 56 lines.
 > - **Quantities, prices, amounts and stock** are the parts-list session's reading of 2026-11-16: the basket for price and amount, each product page for stock (`claude/parts-list-2026-11-16.md` §2, in the project).
-> - **The line for C101, C102, C122 and C123** was read on 2026-11-17 (D192). **The basket change is still to be made;** the electronics session changed nothing in the basket.
+> - **The line for C101, C102, C122 and C123** was read on 2026-11-17 (D192). **The basket change was made on 2026-11-17 at about 11:30,** by the electronics session in Daniel's Chrome, on his word. Read back afterwards: 76 lines as before, 56 of them "HA-PANEL"; no other line changed; the whole basket is CHF 253.94 excl. VAT (it was 268.45), CHF 274.51 incl.; shipping free.
 > - The first issue, of 2026-11-08, had 55 lines at that day's prices (CHF 176.11). What changed since is under "DigiKey basket" below.
 
 Derived from the schematics on `docs` (main board rev 3.2, mic strip, touch board rev D) and checked against them in `bom-2026-11-17.md`. Prices are DigiKey CH, CHF excl. VAT, cut tape at the quantity bought. Build: one main board, two mic strips, one touch board. Spares (Daniel, 2026-11-08, D50): at least 3 for 0603 and smaller parts (SC-70 and SOD-523 included), at least 2 for 0805 and 1206 and for the MEMS mic, 1 for larger parts and ICs; the next price break is taken where it costs CHF 0.40 or less more. L1 and C5/C6 have no spare (large, robust).
@@ -137,8 +137,7 @@ Nothing is ordered. A line changes only on Daniel's yes.
 - **out:** `4713-GMC21X5R226M35NTCT-ND` × 6, CHF 17.52. Out of stock, on backorder, 30 weeks.
 - **in:** `445-C2012X7R1H475K125ACCT-ND` × 10, CHF 3.01, reference "HA-PANEL". 112'666 in stock on 2026-11-17.
 - The 56 lines then come to CHF 165.25 excl. VAT, CHF 14.51 less.
-- **The basket change is still to be made;** the electronics session changed nothing in the basket.
-- **How:** in the basket, delete the line `4713-GMC21X5R226M35NTCT-ND`; then add 10 × `445-C2012X7R1H475K125ACCT-ND` with the customer reference "HA-PANEL". No other line changes.
+- **The basket change was made on 2026-11-17 at about 11:30,** by the electronics session in Daniel's Chrome, on his word. Read back afterwards: 76 lines as before, 56 of them "HA-PANEL"; no other line changed; the whole basket is CHF 253.94 excl. VAT (it was 268.45), CHF 274.51 incl.; shipping free.
 
 **History, 2026-11-08:** the basket was rebuilt from the first issue of this list: 55 lines with the reference "HA panel", CHF 176.11 excl. VAT at that day's prices, beside the feet (CHF 6.35). The 39 older lines of order list rev 4 §2.2 were removed then.
 

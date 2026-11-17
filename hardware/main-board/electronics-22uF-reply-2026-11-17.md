@@ -1,8 +1,8 @@
-# The 22 µF substitute and the hardware records: reply to the Architect (2026-11-17)
+# The 22 µF substitute and the hardware records: reply to the Architect (2026-11-17; basket change added 11:35)
 
 From the electronics session (`claude/brief-electronics-22uF-2026-11-17.md`). Repo `neocleous/ha-panel`, branch `docs`, folder `hardware/`.
 
-**Nothing was ordered. No basket was changed. Nothing on `main`. Nothing was uploaded to JLC.**
+**Nothing was ordered. Nothing on `main`. Nothing was uploaded to JLC. One line of the DigiKey basket was changed, on Daniel's word (section 5).**
 
 ## 1. Answer
 1. **C101, C102, C122 and C123 are now TDK C2012X7R1H475K125AC: 4.7 µF 50 V X7R, 0805.** DigiKey `445-C2012X7R1H475K125ACCT-ND`, 112'666 in stock on 2026-11-17.
@@ -10,7 +10,7 @@ From the electronics session (`claude/brief-electronics-22uF-2026-11-17.md`). Re
 3. **Why 4.7 µF does the job of 22 µF:** at 20 V a 22 µF 35 V 0805 keeps about 1.9 µF, and this part keeps about 1.9 µF too (TDK's DC-bias data, read 2026-11-17). TI's datasheet gives a voltage rule and no minimum capacitance; 50 V meets the rule with more room than 35 V.
 4. **Daniel's choice:** he left it to the session on 2026-11-17 at 09:26 ("Make the best selection for the project"). The session took option 1a and told him before any file changed.
 5. **The records of the log's §6 are corrected.**
-6. **Still to do: the DigiKey basket change** (section 5). Daniel's Chrome could not be reached when the session came to it.
+6. **The DigiKey basket line is changed** (section 5): made at about 11:30, after Daniel's "back online, try again" at 11:27.
 
 ## 2. Paths and commits (branch `docs`, on top of `1b7c87d`)
 | Commit | Content |
@@ -18,6 +18,8 @@ From the electronics session (`claude/brief-electronics-22uF-2026-11-17.md`). Re
 | `622f286eef33cd12a21dd48aa1aa06dd7b3f3cc2` | the part change: schematic, value texts, checks, assembly drawing, `NOTES.md`, `README.md`, `digikey-bom`, `bom-2026-11-17` |
 | `9f5bb2a49317d23941614e3108fa91708599d288` | the records: `harness.md`, `gpio-leads.md`, the four order sheets, `jlc-fab.md` |
 | `b5a793d1956a35cb171c0add8fec38a1a65ecafd` | the basket's state in `digikey-bom.md`; this reply |
+| `aa68554a3ed382726ead0cdca1aeb4564a0482de` | this reply names its own commit |
+| the commit after it | the basket change recorded in `digikey-bom.md` and in this reply |
 
 | What | Path under `hardware/` |
 |---|---|
@@ -76,10 +78,18 @@ From the electronics session (`claude/brief-electronics-22uF-2026-11-17.md`). Re
 | TI's own TDK part from Farnell Schweiz (order code 2528773; 4'926 in stock; sold in fives, CHF 0.526) | a sixth supplier, against DigiKey first | nothing on the board; one more order |
 | Waiting for the TDK part at DigiKey | 24-week lead time | nothing; the build waits |
 
-## 5. The DigiKey basket: one line to change, not yet changed
+## 5. The DigiKey basket: one line changed
 - **Out:** `4713-GMC21X5R226M35NTCT-ND`, 6 pieces.
 - **In:** `445-C2012X7R1H475K125ACCT-ND`, 10 pieces, customer reference "HA-PANEL". 10 is the price break: CHF 0.07 more than 6.
-- **State:** not made. Daniel's Chrome answered for reading earlier in the session and was no longer connected when the session came to the basket. The session changed nothing in the basket. Section 7, decision 1.
+- **State: made on 2026-11-17 at about 11:30,** in Daniel's Chrome. The first report (10:05) had it open, because Chrome was not connected then; Daniel wrote "back online, try again" at 11:27.
+- **Read back afterwards, twice (once after a reload):**
+  - 76 lines, as before; 56 of them "HA-PANEL";
+  - removed: `4713-GMC21X5R226M35NTCT-ND`, 6 pieces, CHF 17.52;
+  - added, as line 76: `445-C2012X7R1H475K125ACCT-ND`, TDK C2012X7R1H475K125AC, 10 pieces, 0.301 each, CHF 3.01, all 10 "Immediate";
+  - no other line differs in part, quantity, reference, price or availability;
+  - the whole basket: CHF 253.94 excl. VAT (it was 268.45), VAT 20.57, CHF 274.51; shipping free; no line ticked.
+- **The panel's 56 lines:** CHF 165.25 excl. VAT, CHF 178.64 incl.
+- The two price rises of 2026-11-16 (`F3141CT-ND`, `455-3241-ND`) are still not in the basket's prices.
 
 ## 6. The records of the log's §6
 | Record | What was corrected |
@@ -98,10 +108,8 @@ From the electronics session (`claude/brief-electronics-22uF-2026-11-17.md`). Re
 
 ## 7. Open points
 **Decisions for Daniel:**
-1. **Who changes the DigiKey basket line?**
-   - a) The electronics session, in his Chrome, once it is reachable again. It then reads the whole basket back against `digikey-bom.md`. (Recommended; it is what the session chose under his answer of 09:26.)
-   - b) Daniel himself: delete the 22 µF line, add 10 × `445-C2012X7R1H475K125ACCT-ND` with the reference "HA-PANEL".
-2. **C12 on the same TDK part?** Optional.
+1. **Who changes the DigiKey basket line?** Settled: Daniel took a) at 11:27, and the session made the change (section 5).
+2. **C12 on the same TDK part?** Optional; open.
    - a) Yes: C12 becomes the TDK 4.7 µF 50 V part too. Only one 0805 part then reads 4.7 µF, so the two cannot be mixed up. The 10 pieces cover it (5 needed). The Samsung line `1276-2873-1-ND` (3 pieces, CHF 0.63) leaves the basket. The schematic, the parts list and the drawing are issued again; the zips do not change. At 3.3 V the TDK part keeps about 4.6 µF (TDK), against the 2.0 µF the regulator needs (`NOTES.md` §3).
    - b) No: leave C12 as it is. The drawing and the bags carry the voltage.
 
