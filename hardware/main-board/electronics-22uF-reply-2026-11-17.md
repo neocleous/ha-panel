@@ -17,7 +17,7 @@ From the electronics session (`claude/brief-electronics-22uF-2026-11-17.md`). Re
 |---|---|
 | `622f286eef33cd12a21dd48aa1aa06dd7b3f3cc2` | the part change: schematic, value texts, checks, assembly drawing, `NOTES.md`, `README.md`, `digikey-bom`, `bom-2026-11-17` |
 | `9f5bb2a49317d23941614e3108fa91708599d288` | the records: `harness.md`, `gpio-leads.md`, the four order sheets, `jlc-fab.md` |
-| the commit after it | the basket's state in `digikey-bom.md`; this reply |
+| `b5a793d1956a35cb171c0add8fec38a1a65ecafd` | the basket's state in `digikey-bom.md`; this reply |
 
 | What | Path under `hardware/` |
 |---|---|
