@@ -97,7 +97,7 @@ DOOR = ((50.0, -67.0, 0.34, -0.94, 8.2), (-50.0, -67.0, -0.34, -0.94, 8.2), (19.
 
 def build_door(X):
     cp2 = sys.modules['cp2']
-    b = X.tbm.copy(k.c['door_b']) if 'door_b' in k.c else cp2.new_door(X, 'b')
+    b = X.tbm.copy(k.c['door_b']) if 'door_b' in k.c else cp2.new_door(X, 'b')[0]             # the vents alone (cp2_vents.py): 47,034.26 mm3
     out = []
     for (bx, by, ux, uy, ln) in DOOR:
         m = math.hypot(ux, uy); ux /= m; uy /= m
@@ -123,12 +123,14 @@ def build_cap(X):
 def build_base(X):
     b = X.cp(X.body('FLOOR_PLATE')); out = []
     for (x, y) in ((-39.65, -54.5), (-39.65, -5.5), (18.35, -54.5), (18.35, -5.5)):
-        v0 = X.vol(b); X.uni(b, cone_w(X, (x, y, 2.5), 5.3, (x, y, 4.0), 3.8))
+        v0 = X.vol(b); X.uni(b, cone_w(X, (x, y, 2.5), 4.8, (x, y, 3.5), 3.8))                # 45 degree flare 1.0 (5.3 came 0.05 from the Pi's power plug)
         X.dif(b, X.cyl((x, y, 1.5), (x, y, 8.1), 2.0)); out.append(round(X.vol(b) - v0, 3))
     v0 = X.vol(b)
-    X.uni(b, X.wbox(-1.5, 6.5, -76.5, -68.5, 2.5, 12.5))
+    X.uni(b, X.wbox(-1.5, 6.5, -76.5, -72.5, 2.5, 12.5))                                    # joined behind their axes; the Pi's power lead lies 0.2 in front, as before
     for x in (-1.5, 6.5):
-        X.uni(b, cone_w(X, (x, -72.5, 2.5), 6.0, (x, -72.5, 8.5), 4.0))
+        c = cone_w(X, (x, -72.5, 2.5), 5.5, (x, -72.5, 8.5), 4.0)                            # 6.0 came 0.51 from the door
+        X.sec(c, X.wbox(x - 4.0, x + 4.0, -90.0, -70.7, 0.0, 20.0))                          # growth to the rear only: the Pi's power lead's space lies in front and beside (0.2, as before)
+        X.uni(b, c)
     for x in (-1.5, 6.5):
         X.dif(b, X.cyl((x, -72.5, 6.3), (x, -72.5, 13.1), 2.0))
     out.append(round(X.vol(b) - v0, 3))
@@ -146,9 +148,11 @@ def build_box(X, sx):
     b = X.cp(X.body(name)); out = {}
     v0 = X.vol(b); X.uni(b, X.cyl((sx * 52.75, -10.55, 10.25), (sx * 52.75, -9.7, 10.25), 1.3)); out['pilot tip filled'] = round(X.vol(b) - v0, 3)
     v0 = X.vol(b)
-    X.uni(b, tube(X, (sx * 88.25, -11.5, 10.25), (sx * 88.25, -5.7, 10.25), 4.0, 3.74))
+    X.uni(b, tube(X, (sx * 88.25, -11.5, 10.25), (sx * 88.25, -5.7, 10.25), 4.0, 3.74))       # the outer pair of driver columns 7.5 -> 8.0
     X.uni(b, tube(X, (sx * 88.25, -11.5, 45.75), (sx * 88.25, -3.0, 45.75), 4.0, 3.74))
-    out['outer columns 8.0'] = round(X.vol(b) - v0, 3)
+    for (x, z) in ((52.75, 10.25), (52.75, 45.75), (88.25, 10.25)):                          # the bosses the driver's frame sits on, 0.7 proud of the face: 8.0 too
+        X.uni(b, tube(X, (sx * x, -3.7, z), (sx * x, -3.0, z), 4.0, 3.74))
+    out['driver columns 8.0'] = round(X.vol(b) - v0, 3)
     v0 = X.vol(b)
     xa, xb = sorted((sx * 43.5, sx * 50.5))
     X.uni(b, X.wbox(xa, xb, YB, -8.5, 30.0, 46.0))
@@ -190,12 +194,12 @@ def build_carrier(X):
     v0 = X.vol(b)
     for (x, up) in posts:
         c = cone_d(X, x, up, 17.2, 6.0, 31.1, 4.0); X.sec(c, X.tbm.copy(prism))
-        if up < -40.0:                                  # the two lower posts stand 0.33 from the ReSpeaker's edge: no growth toward it
-            X.sec(c, X.dbox(x - 9.0, x + 9.0, 17.0, 31.3, -80.0, up + 4.0))
-            X.uni(c, X.cyld(x, up, 4.0, 24.4, 26.6))    # the notch for the board's edge ends where the insert's hole starts: wall 2.0 again
+        if up > -40.0 and x < -30.0:                    # the right microphone's lead passes 0.89 beside this post: no growth toward it
+            X.sec(c, X.dbox(-80.0, x + 4.0, 17.0, 31.3, -80.0, 20.0))
+        if up < -40.0:                                  # the two lower posts
+            X.sec(c, X.dbox(x - 9.0, x + 9.0, 17.0, 31.3, -80.0, up + 4.0))    # 0.7 from the ReSpeaker's edge: no growth toward it
+            X.uni(c, X.cyld(x, up, 4.0, 15.2, 31.1))    # whole again where the slab's bottom edge cut them (wall 1.70 -> 2.0), from the bed up
         X.uni(b, c)
-        if up < -40.0:
-            X.dif(b, X.dbox(x - 0.52, x + 0.52, 21.83, 24.4, up + 3.58, up + 8.0))             # the notch beside the board (d 22.2 .. 23.7) stays
         X.dif(b, X.cyld(x, up, 2.0, 24.4, 31.2))        # the insert hole as before
     out['posts added'] = round(X.vol(b) - v0, 3); v0 = X.vol(b)
     for (x, up) in bosses:
@@ -209,7 +213,7 @@ def build_carrier(X):
 # ---------- cradle ----------
 def build_cradle(X):
     b = X.cp(X.body('CRADLE_5807')); v0 = X.vol(b)
-    X.uni(b, X.wbox(10.4, 10.6, -83.0, -79.3, 14.5, 17.0))
+    X.uni(b, X.wbox(10.4, 10.55, -83.0, -79.3, 14.5, 17.0))                                 # wall round the right screw hole 1.95 -> 2.0; 0.35 to the grommet
     G['CRADLE_5807'] = b
     return round(X.vol(b) - v0, 3)
 
