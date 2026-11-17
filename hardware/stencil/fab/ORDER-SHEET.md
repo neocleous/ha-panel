@@ -1,12 +1,14 @@
-# Combined stencil, main board rev 3.2 + touch board rev D — JLC order sheet (2026-11-16)
+# Combined stencil, main board rev 3.2 + touch board rev D — JLC order sheet (2026-11-16; sheet corrected 2026-11-17)
 
 **Upload:** `stencil-main-rev3.2-touch-revD-jlc-2026-11-16.zip`
 sha256 `f83d86d130e1cd6dd12528dfa11b598b52d56163d8d25fc2e75cec845d8e9dc2`
 
 - One stencil, ordered as its own line ("SMT Stencil"), not through the stencil switch on a board's line.
 - It replaces `superseded/stencil-main-touch-jlc-2026-11-09.zip`, which holds the rev 2.1 main board's pattern and **must not be ordered**.
-- **Not uploaded, not quoted** (Daniel, 2026-11-16).
-- JLC's stencil figures were read on jlcpcb.com on **2026-11-16** (https://jlcpcb.com/capabilities/pcb-stencil-manufacturing). The option names are the ones read on the order page on 2026-11-09.
+- **Uploaded on 2026-11-16 and in JLC's cart,** as the stencil line `SO12611170159`: 1 stencil, €11.05 (6.54 + electropolishing 4.50), build 1–2 days (`claude/parts-list-2026-11-16.md` §1). Nothing is ordered. Daniel ticks the line at checkout.
+- **The part change of 2026-11-17** (C101, C102, C122, C123 become 4.7 µF 50 V on the same pads) does not change this zip: a fresh export gives the same 3 files (`../../main-board/rev3.2/parts-2026-11-17/`).
+- JLC's stencil figures were read on jlcpcb.com on **2026-11-16** (https://jlcpcb.com/capabilities/pcb-stencil-manufacturing).
+- The option names are the order page's own of 2026-11-16, as the parts-list session read them (`claude/parts-list-2026-11-16.md` §1; corrected here on 2026-11-17).
 
 ## What is in the zip (3 files)
 | File | Content |
@@ -24,13 +26,13 @@ No copper layer, on purpose. The mic strip has no area on the stencil; its parts
 | Framework | No | hand use on the hotplate |
 | Stencil side | **Top only** | both patterns are on the file's top paste layer; the touch board's is already mirrored |
 | Dimensions | **Custom 190 × 190 mm** | holds the 90.1 × 112.1 pattern. JLC accepts custom sizes up to 650 × 580. |
-| Thickness | **0.12 mm** | Daniel's standing decision; one of JLC's standard thicknesses |
+| Thickness | "Select by Customer", then **0.12 mm** | Daniel's standing decision; one of JLC's standard thicknesses |
 | Stencil process type | solder paste stencil | |
-| Multiple PCBs on one stencil | **Yes**, and Yes to the question whether JLC may re-arrange the patterns | JLC cuts several designs into one stencil and may change their spacing |
+| Multiple PCBs on one stencil | **Yes**; the page then asks in a dialog whether JLC may re-arrange the patterns: **Yes** | JLC cuts several designs into one stencil and may change their spacing |
 | Polishing | **Electropolishing** | Daniel's standing decision; JLC names it for ICs of 0.5 mm pitch and below (the TAS5756M) |
-| Fiducials | none | aligned by hand to the pads |
+| Fiducials | **"No Fiducial"** | aligned by hand to the pads |
 | Stencil aperture openings | **"1:1 as per Paste Layer"** | by default JLC's engineers resize apertures. The windows in the two chips' centre pads are designed and must stay as drawn. |
-| Stencil remark | "Two PCBs on one stencil: main board top paste, and touch board bottom paste already mirrored in this file. No copper layer on purpose. Keep each pattern's orientation; spacing may change. Apertures 1:1 as in the paste layer." | |
+| Stencil remark | "Two PCBs on one stencil: main board top paste + touch board bottom paste (already mirrored). No copper layer on purpose. Keep each orientation; spacing may change. Apertures 1:1 as in paste layer." | 196 characters, as entered on 2026-11-16. The page takes 200 at most; this sheet's earlier text had 224 and was shortened with every point kept (D194) |
 
 ## The pattern in numbers
 | Item | Value |

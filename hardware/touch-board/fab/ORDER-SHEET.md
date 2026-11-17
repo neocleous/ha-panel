@@ -1,12 +1,13 @@
-# Touch board rev D — JLC order sheet (set of 2026-11-09, confirmed current 2026-11-16)
+# Touch board rev D — JLC order sheet (set of 2026-11-09, confirmed current 2026-11-16; sheet corrected 2026-11-17)
 
 **Upload:** `touch-board-jlc-2026-11-09.zip`
 sha256 `2d62d7eca9126be672a78bb0a46d35bbd1463b2dc3d9a8c736272d2777056a34`
 
 - Bare board; no assembly files go to JLC.
 - **The set was not re-issued.** The board file has not changed since this zip was made. An export on 2026-11-16 gives the same files, line for line apart from the creation date. "Rev D" is the name in the project's records; the board's title block carries no revision.
-- **Not uploaded, not quoted** (Daniel, 2026-11-16).
-- JLC's capability figures were read on jlcpcb.com on **2026-11-16**. The option names are the ones read on the order page on 2026-11-09.
+- **Uploaded on 2026-11-16 and in JLC's cart,** as the line `touch-board-jlc-2026-11-09_Y18`: 5 boards, black, €19.03 (3.62 + ENIG 15.40), build 3 days (`claude/parts-list-2026-11-16.md` §1). Nothing is ordered. Daniel ticks the line at checkout.
+- JLC's capability figures were read on jlcpcb.com on **2026-11-16**; the soldermask figure for black on **2026-11-17**.
+- The option names are the order page's own of 2026-11-16, as the parts-list session read them (`claude/parts-list-2026-11-16.md` §1; corrected here on 2026-11-17).
 
 ## What is in the zip (12 files)
 `touch-board-F_Cu.gtl`, `-B_Cu.gbl`, `-F_Mask.gts`, `-B_Mask.gbs`, `-F_Silkscreen.gto`, `-B_Silkscreen.gbo`, `-F_Paste.gtp` (empty), `-B_Paste.gbp`, `-Edge_Cuts.gm1`, `-PTH.drl`, `-NPTH.drl` (no holes), `-job.gbrjob`.
@@ -22,12 +23,12 @@ The paste files are in the zip from 2026-11-09. JLC uses them only if a stencil 
 | Quantity | 5 | JLC's minimum on 2026-11-09; 1 needed |
 | Delivery format | single PCB | |
 | Thickness | **1.6 mm** | |
-| Mask / silkscreen | green / white | |
-| Surface finish | **ENIG** | Daniel, 2026-11-09 (D57) |
+| PCB colour / silkscreen | **black** / white | Daniel, 2026-11-16 (D191); this sheet said green before. Black costs nothing more on a 2-layer board |
+| Surface finish | **ENIG**, thickness "1U\"" | Daniel, 2026-11-09 (D57). The page's default for a 2-layer board is OSP: change it |
 | Outer copper | 1 oz | |
 | Via covering | tented | |
 | Min via hole size/diameter | "0.3mm/(0.4/0.45mm)" | the vias are 0.3/0.6 |
-| 4-Wire Kelvin Test | **No** | |
+| Electrical test | **"Flying Probe Fully Test"** | the only test the page of 2026-11-16 offers; it has no "4-Wire Kelvin Test" row |
 | Board outline tolerance | regular, ±0.2 mm | |
 | Mark on PCB | **"Remove Mark"** | |
 | Gold fingers, castellated holes, edge plating | no | |
@@ -35,7 +36,7 @@ The paste files are in the zip from 2026-11-09. JLC uses them only if a stencil 
 | PCB remark | none | |
 
 ## The files against JLC's limits
-JLC figures: https://jlcpcb.com/capabilities/pcb-capabilities, read 2026-11-16.
+JLC figures: https://jlcpcb.com/capabilities/pcb-capabilities, read 2026-11-16. The soldermask bridge was read again on 2026-11-17 for black: 1 oz copper, pad spacing 0.10 at least for green, red, yellow, blue and purple, **0.13 for black and white**.
 
 | Item | This board | JLC |
 |---|---|---|
@@ -44,7 +45,7 @@ JLC figures: https://jlcpcb.com/capabilities/pcb-capabilities, read 2026-11-16.
 | Component holes, unplated holes | none | — |
 | Copper to the routed edge | 0.3 | 0.2 |
 | Outline | routed, 90.00 × 44.00, four rounded outer corners | regular ±0.2 |
-| Soldermask | front: no openings (the four electrodes are under the mask); back: 30 openings | bridge 0.10 (green) |
+| Soldermask | front: no openings (the four electrodes are under the mask); back: 30 openings, the smallest web between two of them 0.65 (C1, C2) | bridge 0.13 (black) |
 | Silkscreen | back only: text 1.0 high, 0.15 stroke; library outlines 0.12 wide | text 1.0, line 0.15: the outlines may print thin |
 
 ## Checks (2026-11-16)

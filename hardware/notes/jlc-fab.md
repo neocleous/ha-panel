@@ -4,6 +4,8 @@ Three boards and one stencil go to JLC. **Bare boards only:** no SMT assembly, s
 
 **Rev 2026-11-16 (fab issue of main board rev 3.2):** new main-board set and new stencil; the strip and touch-board sets of 2026-11-09 are confirmed current. Each upload now has its own order sheet next to its zip. **Nothing was uploaded and no quote was taken on 2026-11-16** (Daniel). JLC's capability pages were read on 2026-11-16; the order page was not opened, so the option names in the order sheets are those read on 2026-11-09.
 
+**State on 2026-11-17:** the four uploads are in JLC's cart since the evening of 2026-11-16 (parts-list session, `claude/parts-list-2026-11-16.md` §1), the three boards in **black** (D191): €79.01 for the four lines. Nothing is ordered. The four order sheets were corrected on 2026-11-17 to the order page's option names of 2026-11-16 and to black. The option names and quotes of 2026-11-09 further down are kept as read then. The main board's part change of 2026-11-17 (C101, C102, C122, C123) changes neither its zip nor the stencil's (`hardware/main-board/rev3.2/parts-2026-11-17/`).
+
 | Upload | Board | Order sheet | sha256 of the zip |
 |---|---|---|---|
 | `hardware/main-board/fab/main-board-rev3.2-jlc-2026-11-16.zip` | main board rev 3.2, 87.0 × 57.9, 4 layers | `hardware/main-board/fab/ORDER-SHEET.md` | `fc4588531ea277c1fc3e9009db38fae190042080e065443b0a663f34fa7449bd` |
@@ -22,6 +24,7 @@ The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `f
 | Size, mm | 87.0 × 57.9 | 28 × 6 | 90 × 44 | custom 190 × 190 |
 | Thickness, mm | 1.6 | 0.8 | 1.6 | 0.12 |
 | Finish | ENIG | ENIG | ENIG | electropolished |
+| Colour | black (D191) | black | black | — |
 | Vias | plugged | tented | tented | — |
 | Quantity | 5 (1 needed) | 5 (2 needed) | 5 (1 needed) | 1 |
 | Other | stack-up JLC04161H-7628; outline regular ±0.2; "Remove Mark" | "Remove Mark" | "Remove Mark" | top only; two PCBs on one stencil; apertures 1:1 |
@@ -41,7 +44,7 @@ Every option, with its reason, is in the order sheets.
 | Unplated hole | Ø0.50 minimum | capabilities |
 | Track / space | 0.09 / 0.09 multilayer; 0.10 / 0.10 on 1–2 layers | capabilities |
 | Silkscreen | line 0.15, text height 1.0 | capabilities |
-| Soldermask bridge | 0.10 (green) | capabilities |
+| Soldermask bridge | 1 oz copper, pad spacing: 0.10 (green, red, yellow, blue, purple); **0.13 (black, white)**, read 2026-11-17 | capabilities |
 | Inner copper | 0.5 oz by default | capabilities |
 | Finished thickness | ±10 % at 1.0 mm and more; ±0.1 below 1.0 | capabilities |
 | Inner corner of a routed outline | not in the capabilities table; JLC's blog gives about R 0.5 with a 1 mm cutter | blog, 2026-07-28 |

@@ -6,11 +6,20 @@ Rev 3.1, 2026-11-11 (main board laid out for the site behind the display). KiCad
 **Rev 3.1 against rev 3:** one thing is new, the face the wires enter from (next line and the section "Entry face").
 Pads, nets, Pi pins, housings and colours are unchanged; J3 and J4 have not moved.
 
+**Corrected 2026-11-17:** the wires are cut from Adafruit 3141, not from YBM leads (D188, architect log 2026-11-17 §6).
+The colour of a signal wire is now free. Pads, nets, Pi pins and housings are unchanged; rev 3.2 moved nothing here.
+
 - **The 13 wires enter from the back face and are soldered on the door-side face.** Settled in step 3
   (`claude/main-board-rev3-enclosure-findings-2026-11-11.md`, section 5; brief of 2026-11-11, "What must stay", point 5).
 
-- **13 leads**, pre-crimped F-F Dupont leads (YBM 26 AWG UL1007: black = GND, red = 3V3, yellow = signal). Cut length: set in
-  the harness step, not here.
+- **13 leads**, cut from **Adafruit 3141** (DigiKey `1528-2176-ND`, in the basket since 2026-11-16): a strip of 40
+  pre-crimped socket-to-socket jumper wires, 28 AWG, 152 long.
+  - The contacts come bare, without housings (Adafruit's product page, read 2026-11-17). At the Pi end they go straight
+    into the three housings; at the main-board end the contact is cut off.
+  - **Colours:** red = 3V3, black = GND, any other colour = signal. The strip has four wires of each of ten colours;
+    these 13 take one red and three black. Adafruit's page names no colours (its picture shows a rainbow ribbon): if
+    the strip has no red or no black, pick one colour for each and note it here.
+  - Free length 70 each (`claude/harness-list-2026-11-14.md`, leads 8 to 10).
 - **Pi end: three Dupont housings** (Daniel's decision 2026-11-11, he has the housings):
   **housing 1, 1 × 3 on header pins 1-3-5**; **housing 2, 2 × 5 on pins 7–16**; **housing 3, 2 × 3 on pins 35–40**.
   The LCD's own lead keeps its own 1 × 3 housing on pins 2-4-6 and is not part of this set.
@@ -25,18 +34,18 @@ Pads, nets, Pi pins, housings and colours are unchanged; J3 and J4 have not move
 | Lead | Housing | Pi pin | Pi function | Net on the main board | Main-board pad | Colour | Notes |
 |---|---|---|---|---|---|---|---|
 | A1 | 1 | 1 | 3V3 | PI_3V3 → TPS70933 EN (U2.3) | J3.1 | red | Enable sense only: ≈ 33 µA into R13 100 kΩ. Board 3.3 V comes from U2, not from the Pi. |
-| A2 | 1 | 3 | GPIO2 SDA1 | I2C_SDA | J3.2 | yellow | I²C1; pull-ups 1.8 kΩ on the Pi. TAS5756M 0x4C, AT42QT1070 0x1B, VEML6030 0x48, BME680 0x76/0x77. |
-| A3 | 1 | 5 | GPIO3 SCL1 | I2C_SCL | J3.3 | yellow | |
-| A4 | 2 | 8 | GPIO14 TXD0 | PI_TXD → J5.4 (LD2410C RX) | J3.4 | yellow | UART0, 256000 8N1. |
+| A2 | 1 | 3 | GPIO2 SDA1 | I2C_SDA | J3.2 | other | I²C1; pull-ups 1.8 kΩ on the Pi. TAS5756M 0x4C, AT42QT1070 0x1B, VEML6030 0x48, BME680 0x76/0x77. |
+| A3 | 1 | 5 | GPIO3 SCL1 | I2C_SCL | J3.3 | other | |
+| A4 | 2 | 8 | GPIO14 TXD0 | PI_TXD → J5.4 (LD2410C RX) | J3.4 | other | UART0, 256000 8N1. |
 | A5 | 2 | 9 | GND | GND | J3.5 | black | |
-| A6 | 2 | 10 | GPIO15 RXD0 | PI_RXD ← R19 4.7 kΩ ← J5.3 (LD2410C TX) | J3.6 | yellow | R19 limits back-feed into an unpowered Pi to (3.3 − 0.3) V / 4.7 kΩ = 0.64 mA. |
-| A7 | 2 | 12 | GPIO18 PCM_CLK | PI_BCLK → R14 0 Ω → I2S_BCLK (U100.23 SCLK) | J3.7 | yellow | I²S bit clock, Pi = clock producer (overlay). Next to GND pin 14 in the housing. |
+| A6 | 2 | 10 | GPIO15 RXD0 | PI_RXD ← R19 4.7 kΩ ← J5.3 (LD2410C TX) | J3.6 | other | R19 limits back-feed into an unpowered Pi to (3.3 − 0.3) V / 4.7 kΩ = 0.64 mA. |
+| A7 | 2 | 12 | GPIO18 PCM_CLK | PI_BCLK → R14 0 Ω → I2S_BCLK (U100.23 SCLK) | J3.7 | other | I²S bit clock, Pi = clock producer (overlay). Next to GND pin 14 in the housing. |
 | A8 | 2 | 14 | GND | GND | J3.8 | black | |
-| A9 | 2 | 15 | GPIO22 | AMP_MUTE_N → U100.27 ~SPK_MUTE | J3.9 | yellow | `mute-gpios = <&gpio 22 0>`: driver drives 1 = play. R17 100 kΩ holds the amp muted while the Pi is off or booting. |
-| B1 | 3 | 35 | GPIO19 PCM_FS | PI_LRCLK → R15 0 Ω → I2S_LRCLK (U100.25) | J4.1 | yellow | |
-| B2 | 3 | 38 | GPIO20 PCM_DIN | PI_DIN ← R23 (DNP) ← J7.5 | J4.2 | yellow | Used only in echo topology B (ReSpeaker I²S out). R18 100 kΩ keeps it defined in topology A. |
+| A9 | 2 | 15 | GPIO22 | AMP_MUTE_N → U100.27 ~SPK_MUTE | J3.9 | other | `mute-gpios = <&gpio 22 0>`: driver drives 1 = play. R17 100 kΩ holds the amp muted while the Pi is off or booting. |
+| B1 | 3 | 35 | GPIO19 PCM_FS | PI_LRCLK → R15 0 Ω → I2S_LRCLK (U100.25) | J4.1 | other | |
+| B2 | 3 | 38 | GPIO20 PCM_DIN | PI_DIN ← R23 (DNP) ← J7.5 | J4.2 | other | Used only in echo topology B (ReSpeaker I²S out). R18 100 kΩ keeps it defined in topology A. |
 | B3 | 3 | 39 | GND | GND | J4.3 | black | |
-| B4 | 3 | 40 | GPIO21 PCM_DOUT | PI_DOUT → R16 0 Ω → I2S_DOUT (U100.24 SDIN) | J4.4 | yellow | Also the echo reference via R22 (DNP) in topology B. |
+| B4 | 3 | 40 | GPIO21 PCM_DOUT | PI_DOUT → R16 0 Ω → I2S_DOUT (U100.24 SDIN) | J4.4 | other | Also the echo reference via R22 (DNP) in topology B. |
 
 Not used: J3.10 (spare pad, no connect). Pi pins 2/4/6 = the LCD lead.
 
