@@ -1,13 +1,14 @@
-# DigiKey BOM — main board, mic strips, touch board, harness (basket of 2026-11-16; C101 line of 2026-11-17)
+# DigiKey BOM — main board, mic strips, touch board, harness (basket of 2026-11-16; capacitor lines of 2026-11-17)
 
-> **This file is the panel's DigiKey lines as they stand in Daniel's basket,** customer reference "HA-PANEL": 56 lines.
+> **This file is the panel's DigiKey lines as they stand in Daniel's basket,** customer reference "HA-PANEL": 55 lines.
 > - **Quantities, prices, amounts and stock** are the parts-list session's reading of 2026-11-16: the basket for price and amount, each product page for stock (`claude/parts-list-2026-11-16.md` §2, in the project).
-> - **The line for C101, C102, C122 and C123** was read on 2026-11-17 (D192). **The basket change was made on 2026-11-17 at about 11:30,** by the electronics session in Daniel's Chrome, on his word. Read back afterwards: 76 lines as before, 56 of them "HA-PANEL"; no other line changed; the whole basket is CHF 253.94 excl. VAT (it was 268.45), CHF 274.51 incl.; shipping free.
+> - **The line for C101, C102, C122 and C123** was read on 2026-11-17 (D192). The basket change was made on 2026-11-17 at about 11:30, by the electronics session in Daniel's Chrome, on his word.
+> - **C12 is on that line too since the evening of 2026-11-17 (D202),** and the Samsung line `1276-2873-1-ND` left the basket at 19:56, the same way. **Read back at 19:57, after a reload: 75 lines, 55 of them "HA-PANEL"; no other line changed; the whole basket is CHF 253.31 excl. VAT (it was 253.94), CHF 273.83 incl.; shipping free.**
 > - The first issue, of 2026-11-08, had 55 lines at that day's prices (CHF 176.11). What changed since is under "DigiKey basket" below.
 
 Derived from the schematics on `docs` (main board rev 3.2, mic strip, touch board rev D) and checked against them in `bom-2026-11-17.md`. Prices are DigiKey CH, CHF excl. VAT, cut tape at the quantity bought. Build: one main board, two mic strips, one touch board. Spares (Daniel, 2026-11-08, D50): at least 3 for 0603 and smaller parts (SC-70 and SOD-523 included), at least 2 for 0805 and 1206 and for the MEMS mic, 1 for larger parts and ICs; the next price break is taken where it costs CHF 0.40 or less more. L1 and C5/C6 have no spare (large, robust).
 
-**Total: CHF 165.25 excl. VAT** (56 lines; CHF 178.64 incl. 8.1 % VAT). About CHF 0.88 of it is HM-V2's share of the three merged lines. The quick-add list is `digikey-bom.csv`; it carries the panel's own quantity on those three lines.
+**Total: CHF 164.62 excl. VAT** (55 lines; CHF 177.95 incl. 8.1 % VAT). About CHF 0.88 of it is HM-V2's share of the three merged lines. The quick-add list is `digikey-bom.csv`; it carries the panel's own quantity on those three lines.
 
 Where a note names another part "at 0 stock", that is the reason for the choice made on 2026-11-08; those parts were not looked up again.
 
@@ -22,8 +23,7 @@ Where a note names another part "at 0 stock", that is the reason for the choice 
 | C5, C6 | Panasonic EEU-FR1J121B — CAP ALUM 120UF 20% 63V RADIAL TH | [P15289CT-ND](https://www.digikey.ch/en/products/detail/panasonic-industry/EEU-FR1J121B/3072306) | 2 | 2 | 0.960 | 1.92 | 145 |  |
 | C7 | Würth 860160572003 — CAP ALUM 22UF 20% 35V RADIAL TH | [732-9541-1-ND](https://www.digikey.ch/en/products/detail/w%C3%BCrth-elektronik/860160572003/5727771) | 1 | 2 | 0.120 | 0.24 | 19'370 |  |
 | C8, C11 | KEMET C1206C106K4RACTU — 10UF 16V X7R 1206 | [399-C1206C106K4RACTUCT-ND](https://www.digikey.ch/en/products/result?keywords=399-C1206C106K4RACTUCT-ND) | 2 | 4 | 0.410 | 1.64 | 155'484 | 16 V instead of 25 V (5 V rails); the 25 V X7R/X5R 1206 parts checked are at 0 stock or 2'193 |
-| C12 | Samsung CL21B475KOFNNNE — 4.7UF 16V X7R 0805 | [1276-2873-1-ND](https://www.digikey.ch/en/products/result?keywords=1276-2873-1-ND) | 1 | 3 | 0.210 | 0.63 | 602'886 |  |
-| C101, C102, C122, C123 | TDK C2012X7R1H475K125AC — CAP CER 4.7UF 50V X7R 0805 | [445-C2012X7R1H475K125ACCT-ND](https://www.digikey.ch/en/products/detail/tdk/C2012X7R1H475K125AC/10413507) | 4 | 10 | 0.301 | 3.01 | 112'666 | **read 2026-11-17** (D192): replaces 6 × Cal-Chip GMC21X5R226M35NT, 22 µF 35 V X5R (`4713-GMC21X5R226M35NTCT-ND`, CHF 17.52), out of stock with a 30-week lead time. 10 is the price break, CHF 0.07 more than 6. About 1.9 µF each at 20 V, as the 22 µF part (`../main-board/NOTES.md` §4) |
+| C12, C101, C102, C122, C123 | TDK C2012X7R1H475K125AC — CAP CER 4.7UF 50V X7R 0805 | [445-C2012X7R1H475K125ACCT-ND](https://www.digikey.ch/en/products/detail/tdk/C2012X7R1H475K125AC/10413507) | 5 | 10 | 0.301 | 3.01 | 112'666 | **read 2026-11-17** (D192): replaces 6 × Cal-Chip GMC21X5R226M35NT, 22 µF 35 V X5R (`4713-GMC21X5R226M35NTCT-ND`, CHF 17.52), out of stock with a 30-week lead time. 10 is the price break, CHF 0.07 more than 6. About 1.9 µF each at 20 V, as the 22 µF part (`../main-board/NOTES.md` §4). **C12 on this line since 2026-11-17 (D202),** in place of 3 × Samsung CL21B475KOFNNNE, 4.7 µF 16 V (`1276-2873-1-ND`, CHF 0.63): one 4.7 µF part on the boards. About 4.6 µF at 3.3 V (`NOTES.md` §3). 5 needed, 5 spare |
 | C103 | Taiyo Yuden UMK107AB7105KA-T — 1UF 50V X7R 0603 | [587-3247-1-ND](https://www.digikey.ch/en/products/detail/taiyo-yuden/UMK107AB7105KA-T/3660085) | 1 | 10 | 0.097 | 0.97 | 371'465 |  |
 | C104, C108, C111, C115 | Samsung CL10B224KB8NNNC — 0.22UF 50V X7R 0603 | [1276-CL10B224KB8NNNCCT-ND](https://www.digikey.ch/en/products/detail/samsung-electro-mechanics/CL10B224KB8NNNC/10479537) | 4 | 10 | 0.065 | 0.65 | 133'629 |  |
 | C105, C112, C118, C119, C120 | Yageo CC0603KRX7R8BB105 — 1UF 25V X7R 0603 | [311-1802-1-ND](https://www.digikey.ch/en/products/result?keywords=311-1802-1-ND) | 5 | 10 | 0.160 | 1.60 | 64'046 |  |
@@ -107,6 +107,7 @@ Where a note names another part "at 0 stock", that is the reason for the choice 
 - **The plugs on J10 and J11:** two 1 × 4 Dupont female housings from Daniel's stock. The two headers themselves are a DigiKey line since 2026-11-16.
 - **Raspberry Pi SC1132 display cable** (`2648-SC1132-ND`, 2): taken out of the basket on 2026-11-16 (D184, D187). The display uses Daniel's own Waveshare 200 mm ribbon (D133).
 - **Adafruit 266** (`1528-1379-ND`): taken out on 2026-11-16, 0 in stock. Adafruit 3141 takes its place (D188).
+- **Samsung CL21B475KOFNNNE** (`1276-2873-1-ND`, 3; 4.7 µF 16 V for C12): taken out of the basket on 2026-11-17 (D202). C12 takes the TDK 4.7 µF 50 V part on the line above.
 
 ## Removed from order list rev 4 §2.2 (provisional lines, 2026-11-08)
 - **0402 parts, replaced by the 0603 parts above:**
@@ -138,6 +139,18 @@ Nothing is ordered. A line changes only on Daniel's yes.
 - **in:** `445-C2012X7R1H475K125ACCT-ND` × 10, CHF 3.01, reference "HA-PANEL". 112'666 in stock on 2026-11-17.
 - The 56 lines then come to CHF 165.25 excl. VAT, CHF 14.51 less.
 - **The basket change was made on 2026-11-17 at about 11:30,** by the electronics session in Daniel's Chrome, on his word. Read back afterwards: 76 lines as before, 56 of them "HA-PANEL"; no other line changed; the whole basket is CHF 253.94 excl. VAT (it was 268.45), CHF 274.51 incl.; shipping free.
+
+**Change of 2026-11-17, evening** (D202; Daniel's "a" at 19:30):
+- **out:** `1276-2873-1-ND` × 3 (Samsung CL21B475KOFNNNE, C12), CHF 0.63. C12 takes the TDK part; its 10 pieces cover the 5 needed.
+- **Made on 2026-11-17 at 19:56,** by the electronics session in Daniel's Chrome. Nothing was added and no other line was touched.
+- **Read back twice, at 19:56 and after a reload at 19:57:**
+  - 75 lines (76 before); 55 of them "HA-PANEL" (56 before): 52 with that reference alone and the three merged lines;
+  - the 74 other lines are as before in part, quantity, reference, unit price, amount and availability, and in the same order; every line "Immediate"; no line ticked;
+  - HM-V2's 18 lines and the two lines without a reference are as before.
+- **The 55 lines:** CHF 164.62 excl. VAT, CHF 0.63 less; CHF 177.95 incl. 8.1 % VAT.
+- **The whole basket:** CHF 253.31 excl. VAT, VAT 20.52, CHF 273.83 incl.; shipping free (UPS Worldwide Saver 0.00).
+- **Read a third time at 20:06, against this list:** its 55 numbers are the basket's 55 "HA-PANEL" lines, with the same quantities except on the three merged lines; totals as above.
+- The two price rises of 2026-11-16 are still not in the basket's prices (`F3141CT-ND` 2.82, `455-3241-ND` 0.598).
 
 **History, 2026-11-08:** the basket was rebuilt from the first issue of this list: 55 lines with the reference "HA panel", CHF 176.11 excl. VAT at that day's prices, beside the feet (CHF 6.35). The 39 older lines of order list rev 4 §2.2 were removed then.
 

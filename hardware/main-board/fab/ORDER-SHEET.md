@@ -5,7 +5,7 @@ sha256 `fc4588531ea277c1fc3e9009db38fae190042080e065443b0a663f34fa7449bd`
 
 - Bare board. No SMT assembly, so no BOM or placement file goes to JLC.
 - **Uploaded on 2026-11-16 and in JLC's cart,** as the line `main-board-rev3.2-jlc-2026-11-16_Y16`: 5 boards, black, €30.08 (7.25 + ENIG 15.58 + colour 7.25), build 3–4 days (`claude/parts-list-2026-11-16.md` §1). Nothing is ordered. Daniel ticks the line at checkout.
-- **The part change of 2026-11-17** (C101, C102, C122, C123 become 4.7 µF 50 V) does not change this zip: a fresh export gives the same 12 files (`../rev3.2/parts-2026-11-17/`).
+- **The part changes of 2026-11-17** (C101, C102, C122, C123 become 4.7 µF 50 V; C12 takes the same part) do not change this zip: a fresh export gives the same 12 files, compared again after C12 (`../rev3.2/parts-2026-11-17/`).
 - JLC's capability figures below were read on jlcpcb.com on **2026-11-16**; the soldermask figure for black on **2026-11-17**.
 - The option names are the order page's own of 2026-11-16, as the parts-list session read them (`claude/parts-list-2026-11-16.md` §1; corrected here on 2026-11-17). The names of 2026-11-09 are in `../../notes/jlc-fab.md`.
 

@@ -3,6 +3,9 @@
 Brief `claude/brief-electronics-22uF-2026-11-17.md` (D192). Daniel left the choice to the electronics session on
 2026-11-17 ("make the best selection for the project").
 
+**The same evening C12 took the same part (D202): section 6.** Sections 1 to 5 are the record of the morning and stand
+as written, except the first point of section 5.
+
 **The copper did not change. The uploads of 2026-11-16 stand:** main board
 `fab/main-board-rev3.2-jlc-2026-11-16.zip` (sha256 `fc4588531ea277c1fc3e9009db38fae190042080e065443b0a663f34fa7449bd`)
 and stencil `stencil-main-rev3.2-touch-revD-jlc-2026-11-16.zip`
@@ -98,9 +101,61 @@ plug envelopes.
   0.05 of height above.
 
 ## 5. Two things to know at the bench
-1. **Two 0805 parts now read 4.7 µF:** this one (50 V) and C12 (Samsung CL21B475KOFNNNE, 16 V, on the 3.3 V
-   regulator). The 16 V part must not go on the amplifier's 20 V supply. The drawing and the placing list name the
-   voltage at each place.
+1. **Two 0805 parts read 4.7 µF: only until the evening of 2026-11-17.** That morning they were this one (50 V) and
+   C12 (Samsung CL21B475KOFNNNE, 16 V, on the 3.3 V regulator), and the 16 V part must not go on the amplifier's 20 V
+   supply. Since D202, C12 is this part too (section 6). The warning is gone from the drawing, `README.md` and the
+   parts list.
 2. **The inrush figure in `NOTES.md` §1** (385 µF, 0.39 A) was worked out before this change. The nominal capacitance
    behind the protection chip is now 69 µF lower. The 385 µF is not itemised there, so the figure is not
    recalculated; less capacitance means a lower inrush.
+
+## 6. C12 takes the same part (2026-11-17, evening; D202)
+Brief `claude/brief-electronics-c12-2026-11-17.md`. Daniel took option a at 19:30: one 4.7 µF part on the boards, so
+the 16 V part cannot be placed on the amplifier's supply by mistake.
+
+| | Until the evening of 2026-11-17 | Since |
+|---|---|---|
+| Part at C12 | Samsung CL21B475KOFNNNE, 4.7 µF 16 V X7R 0805 | **TDK C2012X7R1H475K125AC, 4.7 µF 50 V X7R 0805** |
+| DigiKey | `1276-2873-1-ND`, 3 pieces, CHF 0.63 | on the line `445-C2012X7R1H475K125ACCT-ND`: 10 pieces for 5 places |
+| Schematic value | `4.7u 16V` | `4.7u 50V` |
+| Land, pads, place | 0805, pads 1.0 × 1.45 | the same |
+
+**Why it is sound.** C12 is the output capacitor of the 3.3 V regulator U2, which needs 2.0 µF of effective
+capacitance (SBVS186H 8.1.1; `NOTES.md` §3). TDK's DC-bias curve for this part (product.tdk.com, "DC Bias
+Characteristic", nominal capacitance, read 2026-11-17 at about 19:58; TDK calls the data reference only):
+
+| DC voltage | 0 | 1.25 | 2 | 2.5 | 3.15 | 4 | 5 | 6.3 | 8 | 10 | 12.5 | 16 | 25 | 35 | 50 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| µF | 4.70 | 4.76 | 4.73 | 4.69 | 4.62 | 4.50 | 4.34 | 4.11 | 3.78 | 3.40 | 2.94 | 2.37 | 1.41 | 0.91 | 0.58 |
+
+- At 3.3 V, between the points at 3.15 V and 4 V: **about 4.6 µF.**
+- Taking off the part's 10 % tolerance and X7R's 15 % over temperature leaves about 3.5 µF (4.6 × 0.90 × 0.85;
+  ageing not counted). That is above 2.0 µF.
+- The points at 16 V and 25 V are those read in the morning (section 2).
+
+**What was changed**
+| File | Change |
+|---|---|
+| `io.kicad_sch` | C12: value, maker, maker's part number, DigiKey number, specification, note; a four-line note under U2 |
+| all five `.kicad_sch` | the title blocks' parts line now begins with C12. Date and revision as they were |
+| `main-board.kicad_pcb`, `../stencil/stencil-main-touch.kicad_pcb` | C12's value text on the fabrication layer (`4.7u 16V` → `4.7u 50V`). Nothing else |
+| `main-board-schematic.pdf` | exported again |
+| `main-board-rev3.2-assembly.pdf`, `-values.png` | made again: the five places read `4.7u` with no voltage, the placing list has one line of 5, and the footnote on two parts is replaced. `-names.png` came out identical |
+| `erc-report.txt`, `drc-report.txt` | the checks of the evening |
+| `NOTES.md` §3 and its head, `README.md` | the part and its capacitance at 3.3 V; the bench warning dropped |
+| `gen/main_board.py`, `gen/bom_fields_main.json`, `gen/assembly_rev32.py` | in step with the files |
+| `fab/ORDER-SHEET.md`, `../stencil/fab/ORDER-SHEET.md` | one sentence each: the part changes do not touch the zip |
+| `../notes/digikey-bom.md`, `.csv`; `../notes/bom-2026-11-17.md`, `.csv` | 55 lines; the TDK line with need 5, quantity 10; the Samsung line gone |
+
+**Checks (KiCad 9.0.9, 2026-11-17, 20:00)**
+- **Schematic check:** 0 errors, 0 warnings (`erc-c12.txt`).
+- **Board check with the schematic comparison:** 0 errors, 0 open connections, 0 differences to the schematic, the 2
+  known warnings (J6, J2) (`drc-c12.txt`).
+- **The uploads are still this board's** (`export-compare-c12-2026-11-17.txt`): the main board's 12 files and the
+  stencil's 3 files, 0 lines differ apart from the export's time. sha256 as at the top of this file.
+- **Before any change,** the same three checks were run on `9cffbcf` in a fresh KiCad 9.0.9 install, with the same
+  results as in section 4.
+- **Parts list:** 45 DigiKey numbers on the boards, all in the list with the stated need; 116 parts fitted, as before.
+
+**The DigiKey basket:** the Samsung line was removed on 2026-11-17 at 19:56 in Daniel's Chrome (`../../notes/digikey-bom.md`,
+"DigiKey basket").

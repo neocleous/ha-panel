@@ -6,7 +6,7 @@ sha256 `f83d86d130e1cd6dd12528dfa11b598b52d56163d8d25fc2e75cec845d8e9dc2`
 - One stencil, ordered as its own line ("SMT Stencil"), not through the stencil switch on a board's line.
 - It replaces `superseded/stencil-main-touch-jlc-2026-11-09.zip`, which holds the rev 2.1 main board's pattern and **must not be ordered**.
 - **Uploaded on 2026-11-16 and in JLC's cart,** as the stencil line `SO12611170159`: 1 stencil, €11.05 (6.54 + electropolishing 4.50), build 1–2 days (`claude/parts-list-2026-11-16.md` §1). Nothing is ordered. Daniel ticks the line at checkout.
-- **The part change of 2026-11-17** (C101, C102, C122, C123 become 4.7 µF 50 V on the same pads) does not change this zip: a fresh export gives the same 3 files (`../../main-board/rev3.2/parts-2026-11-17/`).
+- **The part changes of 2026-11-17** (C101, C102, C122, C123 become 4.7 µF 50 V on the same pads; C12 takes the same part) do not change this zip: a fresh export gives the same 3 files, compared again after C12 (`../../main-board/rev3.2/parts-2026-11-17/`).
 - JLC's stencil figures were read on jlcpcb.com on **2026-11-16** (https://jlcpcb.com/capabilities/pcb-stencil-manufacturing).
 - The option names are the order page's own of 2026-11-16, as the parts-list session read them (`claude/parts-list-2026-11-16.md` §1; corrected here on 2026-11-17).
 

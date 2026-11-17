@@ -182,6 +182,11 @@ def design(prj):
     # =================================================================== 3.3 V / IO
     s = s_io
     s.text('3.3 V LDO (follows the Pi 3V3)', 25.4, 25.4, size=2.0, bold=True)
+    s.text('C12: the same TDK 4.7 uF 50 V X7R as C101, C102,\n'
+           'C122, C123 since 2026-11-17 (D202), so that only one\n'
+           '0805 part reads 4.7 uF. About 4.6 uF at 3.3 V\n'
+           '(TDK DC-bias data); U2 needs >= 2.0 uF.',
+           88.9, 78.74, size=1.27)
     s.comp('R12', 'Device:R', '2.2R', (50.8, 50.8), rot=90, nets={'1': '+5V', '2': 'LDO_IN'}, footprint=R0805,
            fields=F(spec='2.2 Ohm 1% 0805', note='RC pre-filter with C11: fc 7.2 kHz, ~29 dB at the NID 200 kHz'))
     s.comp('C11', 'Device:C', '10u 25V', (73.66, 58.42), nets={'1': 'LDO_IN', '2': 'GND'}, footprint=C1206,
@@ -192,8 +197,10 @@ def design(prj):
            footprint='Package_TO_SOT_SMD:SOT-23-5', fields=F('TPS70933DBVR', 'Texas Instruments', note='new part (V17)'))
     s.comp('R13', 'Device:R', '100k', (73.66, 83.82), nets={'1': 'PI_3V3', '2': 'GND'}, footprint=R0603,
            fields=F(spec='100 kOhm 1% 0603', note='EN pull-down: LDO off unless the Pi 3V3 (header pin 1) is up'))
-    s.comp('C12', 'Device:C', '4.7u 16V', (127.0, 58.42), nets={'1': '+3V3', '2': 'GND'}, footprint=C0805,
-           fields=F(spec='4.7 uF 16 V X7R 0805', note='>= 2.0 uF effective (SBVS186H 8.1.1)'))
+    # 2026-11-17 (D202): the same TDK part as C101, C102, C122, C123, so that only one 0805 part reads 4.7 uF
+    s.comp('C12', 'Device:C', '4.7u 50V', (127.0, 58.42), nets={'1': '+3V3', '2': 'GND'}, footprint=C0805,
+           fields=F('C2012X7R1H475K125AC', 'TDK', '445-C2012X7R1H475K125ACCT-ND', '4.7 uF 50 V X7R 0805',
+                    '>= 2.0 uF effective (SBVS186H 8.1.1); about 4.6 uF at 3.3 V (TDK DC-bias data)'))
     s.comp('F4', 'Device:Polyfuse', '0.2 A 0ZCJ0020FF2E', (152.4, 50.8), rot=90, nets={'1': '+3V3', '2': '3V3_SENS'},
            footprint='Fuse:Fuse_1206_3216Metric',
            fields=F('0ZCJ0020FF2E', 'Bel Fuse', '5923-0ZCJ0020FF2ECT-ND', 'PTC 0.20 A hold, 30 V, R1max 2.5 Ohm',

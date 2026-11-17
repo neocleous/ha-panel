@@ -1,7 +1,8 @@
 # Main board — schematic notes, test pads and layout (rev 3.2, fab issue 2026-11-16)
 
 > **What this file is.** Sections 1 to 4 and 6: every value of the circuit with its source, written at the schematic
-> checkpoints of 2026-11-07 and 2026-11-08 and unchanged since, because the circuit has not changed. They hold for
+> checkpoints of 2026-11-07 and 2026-11-08 and unchanged since, because the circuit has not changed; only the rows of
+> the capacitors that changed their part on 2026-11-17 are new (C12 in §3; C101, C102, C122, C123 in §4). They hold for
 > rev 3.2 with what rev 3 changed: H1 to H4 are 3.2 mm holes for M3 x 8; the sensor header is two 1 x 4 headers (J10
 > BME680, J11 VEML6030, the same nets as the old 2 x 4); J3's pads are in housing order (`gpio-leads.md`); J3, J4 and
 > J7 are wire pads. Sections 5 (test pads) and 7 (layout) were written again on 2026-11-16 for rev 3.2 as it goes to
@@ -55,7 +56,7 @@ KiCad **9.0.9**. Every value below is traced to a datasheet section or a project
 |---|---|---|
 | U2 | TI TPS70933DBVR (new part) | **V17:** Raspberry Pi publishes no current rating for the Pi 5 header 3V3 pins (documentation `power-supplies.adoc` lists only "GPIO pins (combined) 50 mA maximum" as typical draw; HAT+ spec gives none) → brief item 4 fallback: LDO on the main board. TPS709: 2.7–30 V in, 150 mA, ±1 % at 3.3 V, EN high ≥ 0.9 V, shutdown 150 nA (SBVS186H Electrical Characteristics). 30 V input survives the NID's output OVP (6.4–7.5 V). |
 | R12, C11 | 2.2 Ω 0805, 10 µF 25 V X7R 1206 | RC pre-filter: f_c = 7.2 kHz, ≈ 29 dB at the NID's 200 kHz. Drop 0.19 V at 85 mA keeps U2 out of dropout. |
-| C12 | 4.7 µF 16 V X7R 0805 | ≥ 2.0 µF effective output C (SBVS186H 8.1.1). |
+| C12 | TDK C2012X7R1H475K125AC 4.7 µF 50 V X7R 0805 (since 2026-11-17, D202) | ≥ 2.0 µF effective output C (SBVS186H 8.1.1). The same part as C101, C102, C122 and C123 (§4), so only one 0805 part on the board reads 4.7 µF and no 16 V part can land on the amplifier's supply. At 3.3 V this part keeps about 4.6 µF: TDK's curve gives 4.62 µF at 3.15 V and 4.50 µF at 4 V (product.tdk.com, read 2026-11-17; the nominal curve, which TDK calls reference only). Taking off the part's 10 % tolerance and X7R's 15 % over temperature leaves about 3.5 µF (arithmetic; ageing not counted). Until 2026-11-17: Samsung CL21B475KOFNNNE 4.7 µF 16 V X7R 0805. Same 0805 land, so the uploads stand; 1.50 high at most (`MAIN_env.md` allows 3.0). |
 | R13 | 100 kΩ | EN pull-down; EN = Pi 3V3 (lead A1). In Pi STANDBY (5 V on, 3V3 off — HAT+ spec) the LDO is off, so nothing back-feeds the Pi's I²C pins, and the amp stays muted (R17). |
 | Load | ≈ 85 mA | TAS5756M DVDD + AVDD + CPVDD ≈ 35 mA (SLAS988B 7.12, idle) + touch/BME680/VEML6030 ≈ 50 mA (brief). U2 dissipation (5.0 − 0.19 − 3.3) V × 85 mA = 0.13 W. |
 | R26, R27 | 0 Ω 0603; R27 **DNP** | Amp logic rail 3V3_AMP (TAS DVDD/AVDD/CPVDD, C105/C119, R102). TAS5756M digital inputs need VIH ≥ 0.9 × DVDD (SLAS988B 7.3) and TI advises driving them from the DVDD supply (note 2); the Pi drives I²S/I²C/GPIO22 from its own 3V3, whose tolerance is not published. Default R26 = board LDO (±1 %); option R27 = the Pi 3V3 (lead A1 then carries ≈ 35 mA). Bench: compare TP16 with the Pi 3V3 at J3.1. |
@@ -177,6 +178,7 @@ relief), `rev3.2/fab-2026-11-16/README.md` (the changes made with the fab files)
 - TI TAS5756M, SLAS988B — https://www.ti.com/lit/ds/symlink/tas5756m.pdf
 - TI TPS1663, SLVSET9G (rev. April 2026) — https://www.ti.com/lit/ds/symlink/tps1663.pdf
 - TI TPS709, SBVS186H — https://www.ti.com/lit/ds/symlink/tps709.pdf
+- TDK C2012X7R1H475K125AC, product page with its DC-bias curve (read 2026-11-17) — https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C2012X7R1H475K125AC
 - TI SLAA701 rev B, LC filter design — https://www.ti.com/lit/an/slaa701/slaa701.pdf
 - Mean Well NID100-SPEC 2024-10-30 — https://www.meanwell.com/Upload/PDF/NID100/NID100-SPEC.PDF
 - GCT USB4105 drawing rev B4 (2023-12-18) — https://gct.co/files/drawings/usb4105.pdf; spec — https://gct.co/files/specs/usb4105-spec.pdf

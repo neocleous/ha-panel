@@ -1,7 +1,7 @@
 symbols: main-board 94 (9 not fitted), mic-strip 12 (0 not fitted), touch-board 7 (0 not fitted)
-DigiKey lines: 56 in the list (46 board lines, 10 others); total of the Ext column 165.25
-DigiKey numbers on the boards: 46; all in the list: True
-board lines unchanged: 46
+DigiKey lines: 55 in the list (45 board lines, 10 others); total of the Ext column 164.62
+DigiKey numbers on the boards: 45; all in the list: True
+board lines unchanged: 45
 need changed: []
 short of the rule: []
 added (on a board, not in the list): []

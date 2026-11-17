@@ -23499,7 +23499,7 @@
 				)
 			)
 		)
-		(property "Value" "4.7u 16V"
+		(property "Value" "4.7u 50V"
 			(at 0 1.68 0)
 			(layer "F.Fab")
 			(uuid "2ab36717-7131-4c78-a48b-71a58ecd3759")
