@@ -267,14 +267,14 @@
  },
  "J10": {
   "Value": "1x04 header BME680",
-  "MPN": "generic 1 x 4 male pin header, 2.54 mm pitch, THT, vertical",
-  "Manufacturer": "generic",
-  "DigiKey": "none - not in any basket; chosen with the parts list in step 5 (rev 3: one 1 x 4 header per sensor lead)"
+  "MPN": "PRPC004SAAN-RC",
+  "Manufacturer": "Sullins",
+  "DigiKey": "35-PRPC004SAAN-RC-ND"
  },
  "J11": {
   "Value": "1x04 header VEML6030",
-  "MPN": "generic 1 x 4 male pin header, 2.54 mm pitch, THT, vertical",
-  "Manufacturer": "generic",
-  "DigiKey": "none - not in any basket; chosen with the parts list in step 5 (rev 3: one 1 x 4 header per sensor lead)"
+  "MPN": "PRPC004SAAN-RC",
+  "Manufacturer": "Sullins",
+  "DigiKey": "35-PRPC004SAAN-RC-ND"
  }
 }

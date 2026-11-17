@@ -32,6 +32,7 @@ SCALE = 4.25                         # paper mm per board mm
 PT = SCALE * 72 / 25.4               # points per board mm
 PAGE = (420.0, 297.0)                # A3 landscape, mm
 ISSUE = '2026-11-16'
+PARTS = '2026-11-17'                 # the parts and values shown: C101, C102, C122, C123 are 4.7u 50V since then (D192)
 MAXERR = pcbnew.FromMM(0.005)
 
 GROUPS = [  # the order of placing: (heading, test on (ref, value, footprint))
@@ -185,8 +186,12 @@ def page_names(pdf, parts, outl, what):
     names = what == 'names'
     fig = plt.figure(figsize=(PAGE[0] / 25.4, PAGE[1] / 25.4))
     title = 'Main board rev 3.2 - door side - ' + ('part names (all 120)' if names else 'values')
-    ax, left, bottom = axes(fig, title, 'fab issue %s  |  seen from the door, the face with every part  |  4.25 : 1  |  page %d of 4' % (ISSUE, 1 if names else 2))
+    ax, left, bottom = axes(fig, title, 'fab issue %s, parts as of %s  |  seen from the door, the face with every part  |  4.25 : 1  |  page %d of 4' % (ISSUE, PARTS, 1 if names else 2))
     draw_board(ax, outl, parts)
+    twin = {}                                              # 0805 capacitors that share a short value but not the part (4.7u 16V and 4.7u 50V)
+    for p in parts:
+        if p.ref[0] == 'C' and '0805' in p.fp and not p.dnp:
+            twin.setdefault(p.value.split()[0], set()).add(p.value)
     for pt in parts:
         col = '#b03a2e' if pt.dnp else 'k'
         draw_fab(ax, pt, col)
@@ -205,6 +210,8 @@ def page_names(pdf, parts, outl, what):
             txt = {'J3': 'Pi wires 9', 'J4': 'Pi wires 4', 'J7': 'echo tap'}.get(pt.ref, pt.value.replace('B2B-XH-A', 'XH 2').replace('B4B-XH-A', 'XH 4').replace(' header', ''))
         elif pt.ref[0] in 'RC' and not pt.ref.startswith('C5') and pt.ref not in ('C6', 'C7'):
             txt = pt.value.split()[0]                      # the tolerance and voltage are in the list on page 3
+            if pt.ref[0] == 'C' and '0805' in pt.fp and len(twin.get(txt, ())) > 1:
+                txt = pt.value                             # ... except where a 16 V part could land on the 20 V supply: the voltage too
         elif pt.ref.startswith('F'):
             txt = pt.value.split()[0] + ' A'
         else:
@@ -215,7 +222,9 @@ def page_names(pdf, parts, outl, what):
             continue
         tw, th = w - 0.25, h - 0.25
         lines = [txt]
-        if not names and len(txt) > 7 and min(tw, th) > 2.2 and ' ' in txt:
+        if not names and pt.ref[0] == 'C' and '0805' in pt.fp and ' ' in txt:
+            lines = txt.split()
+        elif not names and len(txt) > 7 and min(tw, th) > 2.2 and ' ' in txt:
             k = txt.rfind(' ', 0, len(txt) // 2 + 3)
             lines = [txt[:k], txt[k + 1:]] if k > 0 else [txt]
         n = max(len(l) for l in lines)
@@ -248,7 +257,8 @@ def page_names(pdf, parts, outl, what):
         ['Short values on the drawing: resistors and capacitors without tolerance and voltage. The full value, the size and the maker\'s part number are on page 3.',
          'Red dot = pad 1, as on page 1.  "not fitted" = leave empty (R8, R9, R20 to R25, R27).'],
         ['Same-looking parts with different values sit side by side, above all the 0603 capacitors round the amplifier U100:',
-         '0.1u, 0.22u, 1u (25 V and 50 V) and 2.2u. Place one value at a time from page 3 and tick it off.'],
+         '0.1u, 0.22u, 1u (25 V and 50 V) and 2.2u. Place one value at a time from page 3 and tick it off.',
+         'The 0805 4.7u comes in two parts, so the drawing shows their voltage: 50V at C101, C102, C122, C123 (on 20 V), 16V at C12. Never the 16V part at the amplifier.'],
         ['Fuses: 5 A = F1, 10 A = F2, 1 A = F3 (the same body, read the marking); 0.2 A = F4 (1206); 2.6 A = F5 (2920).',
          'Source: main-board.kicad_pcb (rev 3.2, fab issue %s); gen/assembly_rev32.py.' % ISSUE],
     ])
@@ -261,7 +271,7 @@ def page_list(pdf, parts, fields):
     fig = plt.figure(figsize=(PAGE[0] / 25.4, PAGE[1] / 25.4))
     W, H = PAGE
     fig.text(20 / W, 1 - 9.0 / H, 'Main board rev 3.2 - placing list, value by value', fontsize=13, weight='bold', va='center')
-    fig.text(1 - 20 / W, 1 - 9.0 / H, 'fab issue %s  |  page 3 of 4' % ISSUE, fontsize=8, va='center', ha='right')
+    fig.text(1 - 20 / W, 1 - 9.0 / H, 'fab issue %s, parts as of %s  |  page 3 of 4' % (ISSUE, PARTS), fontsize=8, va='center', ha='right')
     smd = [p for p in parts if p.kind == 'smd' and not p.dnp]
     rows = []                                              # (heading | None, count, value, size, maker's part, names)
     used = set()
@@ -292,7 +302,7 @@ def page_list(pdf, parts, fields):
         if ref == 'LK1':
             mpn = 'tinned copper wire, 1.0 mm (holes 1.3)'
         if ref in ('J10', 'J11'):
-            mpn = 'pin header 1 x 4, 2.54 mm, straight (not in the DigiKey basket)'
+            mpn += ', pin header 1 x 4, 2.54 mm, straight'
         rows2.append((ref, p.value, mpn, {'LK1': 'bridge 7.62 long, flat on the board', 'J2': 'Pi power; 16 contacts and 4 shell stakes, its mouth at the bottom edge; pin ends only 0.5 behind the board',
                                           'C5': '+ lead in pad 1 (red dot)', 'C6': '+ lead in pad 1 (red dot)', 'C7': '+ lead in pad 1 (red dot)',
                                           'PS1': 'last; 13 pins; pin 1 at the end marked "+Vo"'}.get(ref, CONN.get(ref, ''))))
@@ -342,7 +352,7 @@ def page_test(pdf, parts, outl, texts):
     fig = plt.figure(figsize=(PAGE[0] / 25.4, PAGE[1] / 25.4))
     W, H = PAGE
     fig.text(12 / W, 1 - 7.0 / H, 'Main board rev 3.2 - test pads, connectors and the back face', fontsize=13, weight='bold', va='center')
-    fig.text(1 - 12 / W, 1 - 7.0 / H, 'fab issue %s  |  page 4 of 4' % ISSUE, fontsize=8, va='center', ha='right')
+    fig.text(1 - 12 / W, 1 - 7.0 / H, 'fab issue %s, parts as of %s  |  page 4 of 4' % (ISSUE, PARTS), fontsize=8, va='center', ha='right')
     s = 2.15                                               # both views at 2.15 : 1
     w, h = 89.0 * s, 59.9 * s
     ax = fig.add_axes([12 / W, (H - 16 - h) / H, w / W, h / H]); ax.set_xlim(-44.5, 44.5); ax.set_ylim(-29.95, 29.95); ax.set_aspect('equal'); ax.axis('off')
@@ -435,7 +445,7 @@ def main(board, out):
         rows, rows2 = page_list(pdf, parts, fields)
         tprows = page_test(pdf, parts, outl, texts)
         d = pdf.infodict()
-        d['Title'] = 'HA panel main board rev 3.2 - assembly drawing (fab issue %s)' % ISSUE
+        d['Title'] = 'HA panel main board rev 3.2 - assembly drawing (fab issue %s, parts as of %s)' % (ISSUE, PARTS)
         d['Subject'] = 'All 120 part names and values, placing list, test pads; from main-board.kicad_pcb'
     print('wrote %s: 4 pages, %d parts (%d names printed on the board, %d not)' % (out, len(parts), sum(1 for p in parts if p.shown), sum(1 for p in parts if not p.shown)))
     return parts, tprows

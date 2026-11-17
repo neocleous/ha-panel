@@ -1,9 +1,11 @@
-"""Parts list of the three boards from their schematics, and its difference to the DigiKey lines of order list rev 5.
+"""Parts list of the three boards from their schematics, set against the DigiKey lines (notes/digikey-bom.md).
 
     python3 boards_bom.py <hardware dir> <date> > report
 Reads:  main-board/main-board.kicad_sch, mic-strip/mic-strip.kicad_sch, touch-board/touch-board.kicad_sch (through
-        kicad-cli; each symbol carries MPN, Manufacturer and DigiKey), notes/digikey-bom.md (need and buy per line, as
-        frozen on 2026-11-08) and notes/digikey-bom.csv (the basket's quick-add list).
+        kicad-cli; each symbol carries MPN, Manufacturer and DigiKey), notes/digikey-bom.md (need and buy per line)
+        and notes/digikey-bom.csv (the basket's quick-add list).
+        Until 2026-11-16 the list was the frozen basket of 2026-11-08 (order list rev 5); since 2026-11-17 it is the
+        basket as it stands, and the headings below say "list" for both.
 Writes: notes/bom-<date>.csv (one row per part and board) and notes/bom-<date>.md: the text of
         notes/bom/bom-<date>-head.md, the tables made here, the text of notes/bom/bom-<date>-foot.md. The two texts are
         written by hand; the script stops if a DigiKey line has changed, so that they cannot go stale unnoticed.
@@ -178,9 +180,10 @@ def main(hw, date):
         d['value'] = one_value([r] + ([dict(value=d['value'])] if d['value'] else []))
         assert d['cls'] in (None, r['cls']) or {d['cls'], r['cls']} <= {'none', 'large'}, r
         d['cls'] = r['cls'] if d['cls'] is None else d['cls']
-    md.append('## 2. The set against the 45 DigiKey lines for board parts')
+    board_lines = [k for k in lines if lines[k]['section'] in ('Main board', 'Mic strip (two boards)')]
+    md.append('## 2. The set against the %d DigiKey lines for board parts' % len(board_lines))
     md.append('')
-    md.append("| Maker's part number | Value, package | Main | Strips (2) | Touch | Set needs | Spares by the rule | Least to buy | Basket: need on 2026-11-08 | Basket: quantity | Result |")
+    md.append("| Maker's part number | Value, package | Main | Strips (2) | Touch | Set needs | Spares by the rule | Least to buy | List: need | List: quantity | Result |")
     md.append('|---|---|---|---|---|---|---|---|---|---|---|')
     summary = dict(same=0, need_changed=[], short=[], added=[], removed=[])
     order = list(lines)
@@ -208,7 +211,6 @@ def main(hw, date):
         opt = ' (+%d option places)' % d['options'] if d['options'] else ''
         md.append('| %s | %s, %s | %d | %d | %d | %d%s | %d | %d | %d | %d | %s |' % (d['mpn'], d['value'], d['package'], m, s, t, tot, opt, sp, least, b['need'], b['buy'], '; '.join(res)))
     md.append('')
-    board_lines = [k for k in lines if lines[k]['section'] in ('Main board', 'Mic strip (two boards)')]
     for dk in board_lines:
         if dk not in need:
             summary['removed'].append((dk, lines[dk]))
@@ -228,7 +230,7 @@ def main(hw, date):
     md.append('')
     md.append('## 4. The %d DigiKey lines that are not board parts' % len(other))
     md.append('')
-    md.append('| DigiKey number | Line | Need on 2026-11-08 | Quantity |')
+    md.append('| DigiKey number | Line | Need | Quantity |')
     md.append('|---|---|---|---|')
     for k in other:
         md.append('| %s | %s: %s | %d | %d |' % (k, lines[k]['refs'], lines[k]['part'], lines[k]['need'], lines[k]['buy']))

@@ -9,7 +9,12 @@ and texts only (details: [`rev3.2/fab-2026-11-16/README.md`](rev3.2/fab-2026-11-
 3. the stack-up JLC04161H-7628 written into the board file;
 4. the revision text on the back reads `REV 3.2 2026-11-16`.
 
-Checks (KiCad 9.0.9, 2026-11-16): schematic check 0 errors, 0 warnings (`erc-report.txt`); board check 0 errors, 0 open
+**One part changed on 2026-11-17, the copper did not** ([`rev3.2/parts-2026-11-17/README.md`](rev3.2/parts-2026-11-17/README.md)):
+C101, C102, C122 and C123 are TDK C2012X7R1H475K125AC, 4.7 µF 50 V X7R 0805, in place of the 22 µF 35 V X5R, which
+DigiKey cannot deliver. At 20 V both keep about 1.9 µF (TDK's curves; `NOTES.md` §4). Same pads, so the upload of
+2026-11-16 stands: a fresh export of this board differs from the zip only in its creation dates.
+
+Checks (KiCad 9.0.9, 2026-11-17): schematic check 0 errors, 0 warnings (`erc-report.txt`); board check 0 errors, 0 open
 connections, 0 differences to the schematic, 2 warnings (the footprints of J6 and J2 differ from KiCad's library copies,
 on purpose) (`drc-report.txt`). **Nothing is ordered.** Everything is a draft until the unit is built and tested.
 
@@ -17,17 +22,17 @@ on purpose) (`drc-report.txt`). **Nothing is ordered.** Everything is a draft un
 | File | What |
 |---|---|
 | `main-board.kicad_pro`, `main-board.kicad_pcb`, five `.kicad_sch` | the design, KiCad 9.0.9. Project libraries: `lib/ha_panel.kicad_sym`, `lib/ha_panel.pretty` |
-| `main-board-schematic.pdf` | schematic, 5 pages (unchanged since 2026-11-14) |
+| `main-board-schematic.pdf` | schematic, 5 pages (2026-11-17: the four capacitors' value and a note on the amplifier sheet, the title blocks' date and parts line; the circuit is that of 2026-11-14) |
 | **`main-board-rev3.2-assembly.pdf`** | **assembly drawing, A3, 4 pages:** all 120 part names; all values; the placing list with the maker's part numbers; the test pads, connectors and the back face. Previews of pages 1 and 2: `main-board-rev3.2-assembly-names.png`, `-values.png`. Made by `gen/assembly_rev32.py` |
 | **`fab/main-board-rev3.2-jlc-2026-11-16.zip`** | **the upload for JLC** (bare board). Every option: [`fab/ORDER-SHEET.md`](fab/ORDER-SHEET.md). Unzipped: `fab/gerbers/`; holes: `fab/drill-report.txt` |
 | `../stencil/` | the combined stencil (this board's door side and the touch board's back): `../stencil/fab/stencil-main-rev3.2-touch-revD-jlc-2026-11-16.zip` |
-| `../notes/bom-2026-11-16.md` | the parts list of all three boards and its difference to the DigiKey lines |
+| `../notes/bom-2026-11-17.md` | the parts list of all three boards against the DigiKey lines (`../notes/digikey-bom.md`); `bom-2026-11-16.md` is the list before the capacitor changed |
 | `NOTES.md` | every value with its source; test pads (§5); layout (§7) |
 | `gpio-leads.md` | the 13 Pi signal wires: pad, Pi pin, housing, colour |
 | `main-board-rev3.2.step`, `main-board-rev3.1-plug-envelopes.step`, `MAIN_env.md` | for the enclosure model: the populated board, the plug envelopes, outline, holes and heights. Unchanged by the fab issue |
 | `main-board-copper-F-B.png` | both outer copper layers, drawn from the board of this issue |
 | `main-board-3d-door-side.png`, `main-board-3d-back.png` | renders of 2026-11-14 (the parts have not moved since) |
-| `rev3.2/` | rev 3.2 of 2026-11-14 (`main-board-rev3.2-2026-11-14.kicad_pcb`, its reports and checks) and the fab issue's record (`fab-2026-11-16/`) |
+| `rev3.2/` | rev 3.2 of 2026-11-14 (`main-board-rev3.2-2026-11-14.kicad_pcb`, its reports and checks), the fab issue's record (`fab-2026-11-16/`) and the record of the capacitor change (`parts-2026-11-17/`) |
 | `rev3.1/`, `rev3/`, `rev2.1/` | earlier revisions with their own reports; `rev2.1/` also holds the README and NOTES as they stood on 2026-11-14 |
 | `gen/` | the scripts that made the schematic, the layout and each change. The KiCad files are the source of truth |
 
@@ -74,6 +79,9 @@ One pass on the hotplate for every surface-mount part, then the through-hole par
 **Work from `main-board-rev3.2-assembly.pdf`:** page 1 names, page 2 values, page 3 the placing list, page 4 the back.
 
 **Before you start**
+- **Two 0805 capacitors read 4.7 µF.** The 50 V part (TDK C2012X7R1H475K125AC) goes to C101, C102, C122 and C123, on
+  the 20 V amplifier supply. The 16 V part (Samsung CL21B475KOFNNNE) goes to C12 only. Keep the two tapes apart; the
+  drawing shows the voltage at each of the five places.
 - **Paste:** Sn63/Pb37 no-clean, as on the rev C touch board (Chip Quik SMD291AXT4). Check its date.
 - **Stencil:** the main-board area of the combined stencil, 0.12 thick. The touch board's pattern is on the same sheet:
   keep the squeegee off it.

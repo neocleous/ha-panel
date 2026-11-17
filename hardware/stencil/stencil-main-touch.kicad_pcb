@@ -5029,7 +5029,7 @@
 				)
 			)
 		)
-		(property "Value" "22u 35V"
+		(property "Value" "4.7u 50V"
 			(at 0 1.68 270)
 			(layer "F.Fab")
 			(uuid "1ae8af07-46ec-4691-af98-c46847821ad2")
@@ -15530,7 +15530,7 @@
 				)
 			)
 		)
-		(property "Value" "22u 35V"
+		(property "Value" "4.7u 50V"
 			(at 0 1.68 270)
 			(layer "F.Fab")
 			(uuid "72f957f9-f9cb-443c-9b87-b03713a4e4f2")
@@ -15799,7 +15799,7 @@
 				)
 			)
 		)
-		(property "Value" "22u 35V"
+		(property "Value" "4.7u 50V"
 			(at 0 1.68 270)
 			(layer "F.Fab")
 			(uuid "5f98ffc2-fdd7-42be-ae4e-b7723f4e85b0")
@@ -21965,7 +21965,7 @@
 				)
 			)
 		)
-		(property "Value" "22u 35V"
+		(property "Value" "4.7u 50V"
 			(at 0 1.68 270)
 			(layer "F.Fab")
 			(uuid "3e73c851-6cd4-4fdb-bc07-8c7e575a7ef2")

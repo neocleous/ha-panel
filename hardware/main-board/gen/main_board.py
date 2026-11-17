@@ -286,14 +286,18 @@ def design(prj):
     s.pwr_flag('PVDD', (66.04, 60.96))
     s.text('PVDD probe point: F5 pin 2 (2920 land, door-side face). No TP18.',
            88.9, 38.1, size=1.27)
+    s.text('C101, C102, C122, C123: 4.7 uF 50 V X7R since 2026-11-17 (D192), not the 22 uF 35 V X5R of TI Table 22.\n'
+           'At 20 V both keep about 1.9 uF (TDK DC-bias data).',
+           101.6, 66.04, size=1.27)
     # PVDD decoupling (left side pins 6/7 and right side 41-43)
     for i, (ref, val, fp, spec) in enumerate([('C100', '0.1u 50V', C0603, '0.1 uF 50 V X7R 0603'),
-                                              ('C101', '22u 35V', C0805, '22 uF 35 V X5R 0805'),
-                                              ('C102', '22u 35V', C0805, '22 uF 35 V X5R 0805'),
+                                              ('C101', '4.7u 50V', C0805, '4.7 uF 50 V X7R 0805'),
+                                              ('C102', '4.7u 50V', C0805, '4.7 uF 50 V X7R 0805'),
                                               ('C121', '0.1u 50V', C0603, '0.1 uF 50 V X7R 0603'),
-                                              ('C122', '22u 35V', C0805, '22 uF 35 V X5R 0805'),
-                                              ('C123', '22u 35V', C0805, '22 uF 35 V X5R 0805')]):
-        mpn = ('GMC21X5R226M35NT', 'Cal-Chip', '4713-GMC21X5R226M35NTCT-ND') if val.startswith('22u') else ('', '', '')
+                                              ('C122', '4.7u 50V', C0805, '4.7 uF 50 V X7R 0805'),
+                                              ('C123', '4.7u 50V', C0805, '4.7 uF 50 V X7R 0805')]):
+        # 2026-11-17 (D192): TDK 4.7 uF 50 V X7R in place of the 22 uF 35 V X5R; about 1.9 uF each at 20 V either way (TDK's curves)
+        mpn = ('C2012X7R1H475K125AC', 'TDK', '445-C2012X7R1H475K125ACCT-ND') if val.startswith('4.7u') else ('', '', '')
         s.comp(ref, 'Device:C', val, (101.6 + i * 12.7, 53.34), nets={'1': 'PVDD', '2': 'GND'}, footprint=fp,
                fields=F(mpn[0], mpn[1], mpn[2], spec, 'PVDD pins 6/7 (C100-C102) and 41-43 (C121-C123): place at the pins'))
     s.comp('U100', 'ha_panel:TAS5756M', 'TAS5756MDCAR', (190.5, 129.54),
