@@ -41,4 +41,4 @@ Print: (u, v, h) per part, h = height above the bed (`fdm_lib.Part`).
 
 ## Status when this was pushed
 Blocks 0 to 4 done; block 5 (Daniel's answers) open. Slices in hand: shell, door, base plate, cradle, hood, one touch clip.
-Still to fetch from the Mac (it went offline at 17:00): boxes, cap, carrier, screen plate, bezel, grommet; and the closing guard read.
+Still to fetch from the Mac (it went offline at about 16:50): boxes, cap, carrier, screen plate, bezel, grommet; and the closing guard read.
