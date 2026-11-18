@@ -9,7 +9,7 @@ Independent audit to `claude/brief-fdm-design-audit-v66-2026-11-18.md`. Model "H
 |---|---|
 | `fusion/` | the three scripts run inside Fusion: preflight and guard volumes, the audit's measurement meshes, the slicer runner |
 | `scripts/` | the offline analysis (Python 3, numpy, scipy, trimesh, shapely, embreex, matplotlib) |
-| `data/` | results as JSON: `ray_*` true thickness features, `plane_*` thickness in the layers, `gaps_*` / `slits_*` narrow gaps, `slice_place.json` |
+| `data/` | results as JSON: `ray_*` true thickness features, `plane_*` thickness in the layers, `gaps_*` / `slits_*` narrow gaps, `slice_place.json`; `block6_slices.txt` (the checks on the last seven slices), `lip_fit.txt` (what stands in front of the lip) |
 | `img/` | sections, thickness renders, as-sliced layers, the pictures put to Daniel |
 
 ## Method
@@ -25,6 +25,10 @@ Independent audit to `claude/brief-fdm-design-audit-v66-2026-11-18.md`. Model "H
    print plan's process (0.20 Standard: 2 walls, 15 % grid, classic walls, thin-wall detection off), no supports, no brim;
    the G-code is read back and each loaded section is compared as sliced with the model.
 7. `c1_loads.py`: the load cases. `sec.py`, `secm.py`, `render.py`, `p_exceptions.py`: pictures.
+8. Block 6: `a7_holes.py` finds the upright round holes in a part's layers; `s5_block6.py` reads the last seven slices
+   (volume by line type, posts and bosses in torsion as sliced, the boxes' touch-clip block and floor boss layer by layer,
+   the grommet's walls, regions that start in mid-air); `s6_lip_fit.py` measures what printed parts stand in front of the
+   lip's inner faces, after Daniel chose the 2.0 lip.
 
 ## Frames
 Model mm (Fusion cm x 10): y = minus the depth behind the glass, z = up along the screen.
@@ -39,6 +43,12 @@ Print: (u, v, h) per part, h = height above the bed (`fdm_lib.Part`).
 217. Colouring a face by its thinnest sample misleads on large faces; cut the mesh to faces under 1 mm first (`render.thickness_mesh`).
 218. The print plan's process uses classic walls with thin-wall detection off and fills solid any inner region under 15 mm²: thin bosses come out solid, large cones and posts come out as two lines and a 15 % grid.
 
-## Status when this was pushed
-Blocks 0 to 4 done; block 5 (Daniel's answers) open. Slices in hand: shell, door, base plate, cradle, hood, one touch clip.
-Still to fetch from the Mac (it went offline at about 16:50): boxes, cap, carrier, screen plate, bezel, grommet; and the closing guard read.
+219. An as-sliced area counted as line width times layer height reads 100 to 113 % on solid plastic (the lines' rounded sides overlap). Compare against that, not against 100 %.
+220. A block that is 2.0 thick round a hole lying in the layers is not 2.0 of plastic: with 2 walls, 5 top and 3 bottom layers the slicer leaves 2 lines beside the hole, 1.0 under it, 0.6 over it and grid behind (the boxes' touch-clip block). A round boss under 15 mm² of inner region is filled solid (the boxes' floor bosses).
+221. After a conversation is cut and resumed, `project_write` to an existing doc is refused until the doc has been read with `project_read` in the resumed conversation.
+222. Before proposing to thicken a wall inward, list what stands in front of it. The door frame's front faces at y -53.5 stop the box backs in step 19; the 2.0 lip has to stay behind them.
+
+## Status: closed (2026-11-18 19:25)
+Blocks 0 to 6 done. Daniel's answers to the four exceptions (18:59): 1a (lip 2.0, grown inward 0.8), 2a (groove web 1.0), 3a (magnet seats stay 0.45,
+first-print check), 4a (listed items accepted). All thirteen audit slices read. Guard volumes identical at 16:23 and 18:59:56; the document was
+version 66 of 66 and unmodified at 19:02:38. Findings: Blocker 0, Major 2, Minor 7, Note 6. Nothing here is a print file; nothing was written to `main` or `hardware/`.

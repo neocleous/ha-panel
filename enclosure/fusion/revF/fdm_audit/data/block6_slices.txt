@@ -1,0 +1,170 @@
+1 as-sliced volume by line type
+slice        model    sliced      % | walls solid sparse gap bridge
+shell       107864     97018  89.9% |   55%   29%   11%    1%    4%
+plate        66464     73529 110.6% |    7%   38%   54%    0%    1%
+boxL         26322     26664 101.3% |   50%   24%    1%   20%    5%
+boxR         27043     27544 101.8% |   52%   25%    1%   17%    5%
+base         32622     29942  91.8% |   32%   50%    5%    2%   12%
+carrier      13652     12425  91.0% |   21%   58%    6%    1%   14%
+cradle        1771      1666  94.0% |   61%   27%    8%    1%    3%
+door         47573     42836  90.0% |   78%    5%   16%    0%    0%
+cap           9980      8376  83.9% |   27%   42%    9%    3%   19%
+clipL          571       620 108.5% |   60%   36%    0%    4%    0%
+bezel        62932     29759  47.3% |   45%   18%   28%    0%    9%
+grommet        506       537 106.0% |   77%   10%    0%    9%    3%
+hood           803       876 109.1% |   30%   60%    0%   10%    0%
+2 carrier post (-31.05, -52.70)
+  h  2.20 | r 4.00-5.99 | model A   85.9 J  1288.6 | sliced A   48.9 ( 57%) J  1000.4 ( 78%) | shear full 2.5 half 1.3 MPa (solid 1.9) | Outer wall 29%, Inner wall 29%, Floating verti 22%
+  h  3.00 | r 4.00-5.87 | model A   83.9 J  1220.6 | sliced A   40.9 ( 49%) J   823.5 ( 67%) | shear full 3.5 half 1.7 MPa (solid 2.3) | Outer wall 34%, Inner wall 34%, Sparse infill 32%
+  h  5.00 | r 4.00-5.58 | model A   79.1 J  1061.3 | sliced A   38.3 ( 48%) J   712.3 ( 67%) | shear full 3.9 half 2.0 MPa (solid 2.6) | Outer wall 35%, Inner wall 34%, Sparse infill 31%
+  h  8.00 | r 4.00-5.15 | model A   71.7 J   848.6 | sliced A   35.0 ( 49%) J   580.6 ( 68%) | shear full 4.4 half 2.2 MPa (solid 3.0) | Outer wall 36%, Inner wall 35%, Sparse infill 29%
+  h  9.00 | r 4.00-5.01 | model A   69.2 J   784.4 | sliced A   77.8 (112%) J   876.0 (112%) | shear full 2.9 half 1.4 MPa (solid 3.2) | Internal solid 69%, Outer wall 16%, Inner wall 15%
+  h  9.40 | r 4.00-4.95 | model A   55.6 J   732.9 | sliced A   57.5 (104%) J   767.1 (105%) | shear full 3.2 half 1.6 MPa (solid 3.4) | Inner wall 34%, Outer wall 32%, Internal solid 31%
+  h 12.00 | r 4.00-4.58 | model A   48.8 J   580.9 | sliced A   50.9 (104%) J   611.0 (105%) | shear full 3.7 half 1.9 MPa (solid 3.9) | Inner wall 36%, Outer wall 34%, Internal solid 25%
+  h 15.00 | r 4.00-4.14 | model A   40.6 J   425.2 | sliced A   42.8 (105%) J   452.4 (106%) | shear full 4.6 half 2.3 MPa (solid 4.9) | Inner wall 41%, Outer wall 38%, Gap infill 21%
+2 carrier post (-37.05, -5.45)
+  h  2.20 | r 4.79-5.99 | model A   98.7 J  1599.8 | sliced A   55.2 ( 56%) J  1232.9 ( 77%) | shear full 2.4 half 1.2 MPa (solid 1.9) | Outer wall 27%, Inner wall 26%, Floating verti 24%
+  h  3.00 | r 5.25-5.87 | model A   96.0 J  1508.5 | sliced A   43.2 ( 45%) J   956.2 ( 63%) | shear full 3.1 half 1.5 MPa (solid 1.9) | Sparse infill 33%, Outer wall 33%, Inner wall 33%
+  h  5.00 | r 4.01-5.58 | model A   89.2 J  1291.9 | sliced A   41.1 ( 46%) J   840.2 ( 65%) | shear full 3.3 half 1.7 MPa (solid 2.2) | Outer wall 34%, Inner wall 33%, Sparse infill 33%
+  h  7.00 | r 4.51-5.29 | model A   81.9 J  1082.3 | sliced A   38.7 ( 47%) J   721.1 ( 67%) | shear full 3.7 half 1.8 MPa (solid 2.4) | Outer wall 34%, Inner wall 33%, Sparse infill 33%
+  h  9.00 | r 4.30-5.01 | model A   74.6 J   894.4 | sliced A   75.5 (101%) J   880.4 ( 98%) | shear full 2.8 half 1.4 MPa (solid 2.8) | Internal solid 54%, Outer wall 16%, Inner wall 16%
+  h  9.40 | r 4.03-4.95 | model A   60.6 J   832.0 | sliced A   63.6 (105%) J   879.5 (106%) | shear full 2.8 half 1.4 MPa (solid 3.0) | Floating verti 39%, Inner wall 31%, Outer wall 29%
+  h 12.00 | r 4.07-4.58 | model A   51.4 J   628.2 | sliced A   46.2 ( 90%) J   582.7 ( 93%) | shear full 3.9 half 2.0 MPa (solid 3.6) | Inner wall 40%, Outer wall 38%, Sparse infill 20%
+2 cap boss (-45.91, 32.85)
+  h  2.48 | r 7.35-7.35 | model A   95.6 J  1924.6 | sliced A   76.7 ( 80%) J  1510.9 ( 79%) | shear full 2.4 half 1.2 MPa (solid 1.9) | Top surface 52%, Inner wall 24%, Sparse infill 16%
+  h  2.96 | r 4.56-7.35 | model A   69.4 J  1090.9 | sliced A   55.7 ( 80%) J   829.8 ( 76%) | shear full 2.7 half 1.4 MPa (solid 2.1) | Floating verti 33%, Inner wall 32%, Outer wall 28%
+  h  4.04 | r 4.00-7.35 | model A   57.7 J   810.4 | sliced A   59.9 (104%) J   853.4 (105%) | shear full 2.3 half 1.2 MPa (solid 2.5) | Internal solid 34%, Inner wall 32%, Outer wall 27%
+  h  5.96 | r 4.00-7.35 | model A   45.7 J   568.3 | sliced A   46.9 (103%) J   588.4 (104%) | shear full 3.4 half 1.7 MPa (solid 3.5) | Outer wall 43%, Inner wall 37%, Gap infill 20%
+  h  7.16 | r 4.00-4.00 | model A   37.7 J   376.1 | sliced A   38.2 (102%) J   386.7 (103%) | shear full 5.2 half 2.6 MPa (solid 5.3) | Inner wall 45%, Outer wall 42%, Gap infill 13%
+3 left box, touch-clip block round the pilot (pilot h 43.8 to 46.3)
+  layer top 41.8 | model A  15.1 | sliced A  14.9 ( 99%) | Outer wall 57%, Gap infill 43%
+  layer top 42.0 | model A  70.1 | sliced A  77.2 (110%) | Bridge 77%, Overhang wall 23%, Outer wall 0%
+  layer top 42.2 | model A  70.1 | sliced A  76.3 (109%) | Internal solid 77%, Inner wall 12%, Outer wall 11%
+  layer top 42.4 | model A  70.1 | sliced A  67.6 ( 96%) | Internal solid 67%, Inner wall 13%, Outer wall 12%, Sparse infill 7%
+  layer top 42.6 | model A  70.1 | sliced A  28.8 ( 41%) | Sparse infill 40%, Inner wall 31%, Outer wall 29%
+  layer top 42.8 | model A  70.1 | sliced A  31.8 ( 45%) | Sparse infill 37%, Inner wall 28%, Outer wall 26%, Floating verti 9%
+  layer top 43.0 | model A  70.1 | sliced A  48.6 ( 69%) | Bridge 51%, Inner wall 18%, Outer wall 17%, Sparse infill 11%
+  layer top 43.2 | model A  70.1 | sliced A  45.9 ( 66%) | Floating verti 46%, Inner wall 20%, Outer wall 18%, Sparse infill 16%
+  layer top 43.4 | model A  70.1 | sliced A  45.9 ( 65%) | Floating verti 46%, Inner wall 20%, Outer wall 18%, Sparse infill 16%
+  layer top 43.6 | model A  70.1 | sliced A  46.6 ( 67%) | Floating verti 46%, Inner wall 19%, Outer wall 18%, Sparse infill 15%
+  layer top 43.8 | model A  69.8 | sliced A  45.4 ( 65%) | Top surface 39%, Inner wall 25%, Outer wall 19%, Sparse infill 16%
+  layer top 44.0 | model A  64.3 | sliced A  42.6 ( 66%) | Outer wall 31%, Inner wall 29%, Floating verti 20%, Sparse infill 17%
+  layer top 44.2 | model A  61.0 | sliced A  38.4 ( 63%) | Outer wall 35%, Inner wall 31%, Sparse infill 19%, Floating verti 12%
+  layer top 44.4 | model A  58.8 | sliced A  33.7 ( 57%) | Outer wall 39%, Inner wall 34%, Sparse infill 21%, Gap infill 5%
+  layer top 44.6 | model A  57.7 | sliced A  33.6 ( 58%) | Outer wall 39%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 44.8 | model A  56.6 | sliced A  33.5 ( 59%) | Outer wall 40%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 45.0 | model A  56.0 | sliced A  33.6 ( 60%) | Outer wall 40%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 45.2 | model A  56.0 | sliced A  33.5 ( 60%) | Outer wall 40%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 45.4 | model A  56.6 | sliced A  33.5 ( 59%) | Outer wall 40%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 45.6 | model A  57.1 | sliced A  33.6 ( 59%) | Outer wall 39%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 45.8 | model A  58.7 | sliced A  34.1 ( 58%) | Outer wall 38%, Inner wall 33%, Sparse infill 21%, Gap infill 5%
+  layer top 46.0 | model A  60.3 | sliced A  34.4 ( 57%) | Outer wall 39%, Inner wall 33%, Sparse infill 21%, Gap infill 5%
+  layer top 46.2 | model A  62.8 | sliced A  34.2 ( 54%) | Outer wall 39%, Inner wall 35%, Sparse infill 23%, Gap infill 4%
+  layer top 46.4 | model A  70.2 | sliced A  45.8 ( 65%) | Bridge 46%, Inner wall 19%, Outer wall 18%, Sparse infill 16%
+  layer top 46.6 | model A  74.4 | sliced A  49.0 ( 66%) | Internal solid 32%, Bridge 31%, Sparse infill 15%, Inner wall 11%
+  layer top 46.8 | model A  74.4 | sliced A  42.2 ( 57%) | Internal solid 50%, Sparse infill 24%, Inner wall 14%, Outer wall 12%
+  layer top 47.0 | model A  74.4 | sliced A  28.1 ( 38%) | Sparse infill 42%, Inner wall 21%, Internal solid 20%, Outer wall 18%
+  layer top 47.2 | model A  74.4 | sliced A  23.2 ( 31%) | Sparse infill 53%, Inner wall 25%, Outer wall 21%
+  layer top 47.4 | model A  74.4 | sliced A  27.9 ( 38%) | Sparse infill 42%, Inner wall 21%, Floating verti 19%, Outer wall 18%
+  layer top 47.6 | model A  74.4 | sliced A  68.9 ( 93%) | Bridge 84%, Inner wall 8%, Outer wall 7%
+  layer top 47.8 | model A  74.4 | sliced A  83.5 (112%) | Internal solid 87%, Inner wall 7%, Outer wall 6%
+  layer top 48.0 | model A  74.4 | sliced A  83.2 (112%) | Internal solid 87%, Inner wall 7%, Outer wall 6%
+  layer top 48.2 | model A  74.4 | sliced A  83.5 (112%) | Internal solid 87%, Inner wall 7%, Outer wall 6%
+  layer top 48.4 | model A  74.4 | sliced A  82.3 (111%) | Top surface 94%, Outer wall 6%
+3 right box, the same
+  layer top 41.8 | model A  15.1 | sliced A  14.8 ( 98%) | Outer wall 57%, Gap infill 43%
+  layer top 42.0 | model A  70.1 | sliced A  81.5 (116%) | Bridge 78%, Overhang wall 22%, Outer wall 0%
+  layer top 42.2 | model A  70.1 | sliced A  76.2 (109%) | Internal solid 77%, Inner wall 12%, Outer wall 11%
+  layer top 42.4 | model A  70.1 | sliced A  67.5 ( 96%) | Internal solid 67%, Inner wall 13%, Outer wall 12%, Sparse infill 7%
+  layer top 42.6 | model A  70.1 | sliced A  28.8 ( 41%) | Sparse infill 40%, Inner wall 31%, Outer wall 29%
+  layer top 42.8 | model A  70.1 | sliced A  31.9 ( 46%) | Sparse infill 36%, Inner wall 28%, Outer wall 26%, Floating verti 9%
+  layer top 43.0 | model A  70.1 | sliced A  49.0 ( 70%) | Bridge 47%, Inner wall 18%, Outer wall 17%, Sparse infill 16%
+  layer top 43.2 | model A  70.1 | sliced A  45.9 ( 66%) | Floating verti 46%, Inner wall 20%, Outer wall 18%, Sparse infill 16%
+  layer top 43.4 | model A  70.1 | sliced A  45.9 ( 66%) | Floating verti 46%, Inner wall 20%, Outer wall 18%, Sparse infill 16%
+  layer top 43.6 | model A  70.1 | sliced A  46.8 ( 67%) | Floating verti 46%, Inner wall 19%, Outer wall 18%, Sparse infill 15%
+  layer top 43.8 | model A  69.8 | sliced A  45.4 ( 65%) | Top surface 39%, Inner wall 25%, Outer wall 19%, Sparse infill 16%
+  layer top 44.0 | model A  64.3 | sliced A  42.5 ( 66%) | Outer wall 31%, Inner wall 29%, Floating verti 20%, Sparse infill 17%
+  layer top 44.2 | model A  61.0 | sliced A  38.4 ( 63%) | Outer wall 35%, Inner wall 31%, Sparse infill 19%, Floating verti 12%
+  layer top 44.4 | model A  58.8 | sliced A  33.7 ( 57%) | Outer wall 39%, Inner wall 34%, Sparse infill 21%, Gap infill 5%
+  layer top 44.6 | model A  57.7 | sliced A  33.6 ( 58%) | Outer wall 40%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 44.8 | model A  56.6 | sliced A  33.5 ( 59%) | Outer wall 40%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 45.0 | model A  56.0 | sliced A  33.5 ( 60%) | Outer wall 40%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 45.2 | model A  56.0 | sliced A  33.5 ( 60%) | Outer wall 40%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 45.4 | model A  56.6 | sliced A  33.5 ( 59%) | Outer wall 40%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 45.6 | model A  57.1 | sliced A  33.6 ( 59%) | Outer wall 40%, Inner wall 33%, Sparse infill 21%, Gap infill 6%
+  layer top 45.8 | model A  58.7 | sliced A  34.1 ( 58%) | Outer wall 38%, Inner wall 33%, Sparse infill 21%, Gap infill 5%
+  layer top 46.0 | model A  60.3 | sliced A  34.3 ( 57%) | Outer wall 39%, Inner wall 33%, Sparse infill 21%, Gap infill 5%
+  layer top 46.2 | model A  62.8 | sliced A  34.1 ( 54%) | Outer wall 39%, Inner wall 35%, Sparse infill 23%, Gap infill 4%
+  layer top 46.4 | model A  70.2 | sliced A  45.8 ( 65%) | Bridge 46%, Inner wall 19%, Outer wall 18%, Sparse infill 16%
+  layer top 46.6 | model A  74.4 | sliced A  48.6 ( 65%) | Internal solid 32%, Bridge 30%, Sparse infill 15%, Inner wall 11%
+  layer top 46.8 | model A  74.4 | sliced A  42.3 ( 57%) | Internal solid 50%, Sparse infill 24%, Inner wall 14%, Outer wall 12%
+  layer top 47.0 | model A  74.4 | sliced A  28.1 ( 38%) | Sparse infill 42%, Inner wall 21%, Internal solid 20%, Outer wall 18%
+  layer top 47.2 | model A  74.4 | sliced A  23.2 ( 31%) | Sparse infill 53%, Inner wall 25%, Outer wall 21%
+  layer top 47.4 | model A  74.4 | sliced A  27.9 ( 37%) | Sparse infill 42%, Inner wall 21%, Floating verti 19%, Outer wall 18%
+  layer top 47.6 | model A  74.4 | sliced A  68.9 ( 92%) | Bridge 84%, Inner wall 8%, Outer wall 7%
+  layer top 47.8 | model A  74.4 | sliced A  83.3 (112%) | Internal solid 87%, Inner wall 7%, Outer wall 6%
+  layer top 48.0 | model A  74.4 | sliced A  83.5 (112%) | Internal solid 87%, Inner wall 7%, Outer wall 6%
+  layer top 48.2 | model A  74.4 | sliced A  83.5 (112%) | Internal solid 87%, Inner wall 7%, Outer wall 6%
+  layer top 48.4 | model A  74.4 | sliced A  82.3 (111%) | Top surface 94%, Outer wall 6%
+3 left box, floor boss (64, -45), hole lying in the layers
+  layer top 3.2 | model A  23.0 | sliced A  23.0 (100%) | Overhang wall 45%, Outer wall 30%, Gap infill 21%, Inner wall 4%
+  layer top 3.4 | model A  30.5 | sliced A  30.8 (101%) | Internal solid 24%, Outer wall 23%, Inner wall 23%, Overhang wall 17%
+  layer top 3.6 | model A  35.9 | sliced A  36.2 (101%) | Internal solid 35%, Inner wall 21%, Outer wall 20%, Overhang wall 14%
+  layer top 3.8 | model A  39.5 | sliced A  40.4 (102%) | Internal solid 42%, Outer wall 30%, Inner wall 21%, Gap infill 7%
+  layer top 4.0 | model A  42.7 | sliced A  44.1 (103%) | Internal solid 47%, Outer wall 27%, Inner wall 20%, Gap infill 6%
+  layer top 4.2 | model A  45.5 | sliced A  47.3 (104%) | Internal solid 50%, Outer wall 25%, Inner wall 20%, Gap infill 5%
+  layer top 4.4 | model A  47.9 | sliced A  49.8 (104%) | Internal solid 52%, Outer wall 24%, Inner wall 19%, Gap infill 4%
+  layer top 4.6 | model A  49.7 | sliced A  52.2 (105%) | Internal solid 54%, Outer wall 23%, Inner wall 19%, Gap infill 4%
+  layer top 4.8 | model A  51.5 | sliced A  54.2 (105%) | Internal solid 56%, Outer wall 22%, Inner wall 19%, Gap infill 3%
+  layer top 5.0 | model A  53.3 | sliced A  55.3 (104%) | Top surface 39%, Inner wall 23%, Outer wall 22%, Gap infill 16%
+  layer top 5.2 | model A  46.7 | sliced A  47.8 (103%) | Outer wall 36%, Internal solid 31%, Inner wall 29%, Gap infill 3%
+  layer top 5.4 | model A  42.0 | sliced A  43.3 (103%) | Outer wall 40%, Inner wall 31%, Internal solid 25%, Gap infill 4%
+  layer top 5.6 | model A  40.0 | sliced A  41.0 (103%) | Outer wall 43%, Inner wall 32%, Internal solid 21%, Gap infill 4%
+  layer top 5.8 | model A  38.6 | sliced A  38.8 (101%) | Outer wall 45%, Inner wall 33%, Gap infill 22%
+  layer top 6.0 | model A  37.2 | sliced A  37.5 (101%) | Outer wall 46%, Inner wall 34%, Gap infill 20%
+  layer top 6.2 | model A  35.9 | sliced A  36.7 (102%) | Outer wall 48%, Inner wall 34%, Gap infill 18%
+  layer top 6.4 | model A  35.8 | sliced A  35.9 (100%) | Outer wall 48%, Inner wall 35%, Gap infill 17%
+  layer top 6.6 | model A  34.5 | sliced A  35.5 (103%) | Outer wall 49%, Inner wall 35%, Gap infill 16%
+  layer top 6.8 | model A  34.8 | sliced A  35.3 (102%) | Outer wall 49%, Inner wall 35%, Gap infill 15%
+  layer top 7.0 | model A  34.5 | sliced A  35.1 (102%) | Outer wall 50%, Inner wall 35%, Gap infill 15%
+  layer top 7.2 | model A  34.5 | sliced A  35.2 (102%) | Outer wall 50%, Inner wall 35%, Gap infill 15%
+  layer top 7.4 | model A  34.8 | sliced A  35.3 (102%) | Outer wall 49%, Inner wall 35%, Gap infill 15%
+  layer top 7.6 | model A  34.5 | sliced A  35.5 (103%) | Outer wall 49%, Inner wall 35%, Gap infill 16%
+  layer top 7.8 | model A  35.8 | sliced A  35.9 (100%) | Outer wall 48%, Inner wall 35%, Gap infill 17%
+  layer top 8.0 | model A  35.9 | sliced A  36.7 (102%) | Outer wall 48%, Inner wall 34%, Gap infill 18%
+  layer top 8.2 | model A  37.2 | sliced A  37.5 (101%) | Outer wall 46%, Inner wall 34%, Gap infill 20%
+  layer top 8.4 | model A  38.6 | sliced A  38.8 (101%) | Outer wall 45%, Inner wall 33%, Gap infill 22%
+  layer top 8.6 | model A  40.0 | sliced A  41.0 (103%) | Outer wall 43%, Inner wall 32%, Internal solid 21%, Gap infill 4%
+  layer top 8.8 | model A  42.0 | sliced A  43.3 (103%) | Outer wall 40%, Inner wall 31%, Internal solid 25%, Gap infill 4%
+  layer top 9.0 | model A  46.7 | sliced A  48.1 (103%) | Internal solid 31%, Inner wall 29%, Outer wall 25%, Overhang wall 11%
+  layer top 9.2 | model A  53.3 | sliced A  56.1 (105%) | Bridge 47%, Outer wall 21%, Inner wall 18%, Internal solid 10%
+  layer top 9.4 | model A  51.5 | sliced A  54.2 (105%) | Internal solid 56%, Outer wall 22%, Inner wall 19%, Gap infill 3%
+  layer top 9.6 | model A  49.7 | sliced A  52.2 (105%) | Internal solid 54%, Outer wall 23%, Inner wall 19%, Gap infill 4%
+  layer top 9.8 | model A  47.9 | sliced A  49.8 (104%) | Internal solid 52%, Outer wall 24%, Inner wall 19%, Gap infill 4%
+  layer top 10.0 | model A  45.5 | sliced A  47.3 (104%) | Internal solid 50%, Outer wall 25%, Inner wall 20%, Gap infill 5%
+  layer top 10.2 | model A  42.7 | sliced A  44.1 (103%) | Internal solid 47%, Outer wall 27%, Inner wall 20%, Gap infill 6%
+  layer top 10.4 | model A  39.5 | sliced A  40.4 (102%) | Internal solid 42%, Outer wall 30%, Inner wall 21%, Gap infill 7%
+  layer top 10.6 | model A  35.9 | sliced A  35.8 (100%) | Internal solid 36%, Outer wall 33%, Inner wall 22%, Gap infill 9%
+  layer top 10.8 | model A  30.5 | sliced A  30.5 (100%) | Outer wall 39%, Internal solid 25%, Inner wall 23%, Gap infill 13%
+  layer top 11.0 | model A  23.0 | sliced A  21.7 ( 94%) | Outer wall 55%, Top surface 28%, Gap infill 17%
+4 grommet, upright lines of the 0.80 walls
+  layer top 8.60  Outer wall width 0.42 at u -14.440, v -84.72..-81.52
+  layer top 8.60  Outer wall width 0.42 at u -14.060, v -85.31..-81.53
+  layer top 8.60  Outer wall width 0.42 at u 8.960, v -85.30..-81.53
+  layer top 8.60  Outer wall width 0.42 at u 9.340, v -84.65..-81.52
+  layer top 17.84  Outer wall width 0.42 at u -14.060, v -84.93..-83.75
+  layer top 17.84  Outer wall width 0.42 at u 8.960, v -84.92..-83.73
+5 regions that start in mid-air (layer bottom h, area, world place)
+  HOUSING_F_front [(0.4, 86.6, [-0.0, 6.3, 50.9]), (1.2, 3.5, [-85.0, 5.5, 55.4]), (1.2, 3.5, [85.0, 5.5, 55.4]), (14.0, 1.8, [-76.9, -7.3, 115.0]), (24.0, 1.5, [-70.0, -17.3, 162.9]), (24.0, 1.5, [70.0, -17.3, 162.9]), (34.2, 7.9, [-43.4, -27.5, 171.8]), (34.2, 7.9, [43.4, -27.5, 171.8]), (35.2, 1.1, [-76.5, -28.5, 110.9]), (38.6, 0.6, [-21.5, -31.9, 169.6]), (38.6, 0.6, [21.5, -31.9, 169.6]), (39.2, 9.1, [-25.9, -32.5, 171.6]), (39.2, 9.1, [25.9, -32.5, 171.6]), (53.0, 1.3, [-61.3, -46.3, 110.6]), (56.6, 0.3, [-69.4, -49.9, 95.0])]
+  HOUSING_F_plate []
+  HOUSING_F_door []
+  HOUSING_F_cap []
+  FLOOR_PLATE []
+  SPKBOX_L [(40.6, 44.1, [52.8, -11.3, 45.8]), (40.6, 50.2, [88.3, -11.3, 45.8])]
+  SPKBOX_R [(40.6, 44.1, [-52.7, -11.3, 45.8]), (40.6, 50.2, [-88.2, -11.3, 45.8])]
+  RESP_CARRIER []
+  CRADLE_5807 []
+  TOUCH_CLIP_L []
+  GROMMET_usbc_F []
+  BME_HOOD []
+  SLAB_frame []
