@@ -1,0 +1,1 @@
+{"key": "cradle", "job": "H2_P2", "layers": 121, "tot_mm3": {"model": 1775.4, "printed": 1503.2, "missing": 0.8, "extra": 0.0}, "missing": [{"vol": 0.78, "nlayers": 1, "layers": [1, 1], "amax": 3.91, "bed": [169.97, 85.08, 173.2, 94.92], "z": [0.1, 0.1], "wmin": [-4.9, -84.5, 21.7], "wmax": [4.9, -84.5, 24.9]}], "extra": []}

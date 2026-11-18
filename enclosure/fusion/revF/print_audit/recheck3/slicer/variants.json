@@ -1,0 +1,10 @@
+{
+ "_note": "Jobs derived on the Mac from a base job's folder (assemble.json and args.json copied, then changed as listed). They were made with one-off commands, not with r3_specs.py; this file records what each changed. Output folder = the job's name.",
+ "H6_P4_capthin": {"from": "H6_P4", "change": "object 0 (cap): print_params.detect_thin_wall = 1"},
+ "H7_P6_thin": {"from": "H7_P6", "change": "argument added: --detect-thin-wall=1"},
+ "H7_P6_arachne": {"from": "H7_P6", "change": "argument added: --wall-generator=arachne"},
+ "F4_P3a": {"from": "H4_P3a_w4", "change": "blocker mesh shell_plan_blk_v2.stl -> shell_plan_blk_v3.stl (r3_blockers.py)"},
+ "F4_P3a_w2": {"from": "H4_P3a_w2", "change": "blocker mesh shell_plan_blk_v2.stl -> shell_plan_blk_v3.stl"},
+ "F0_adh": {"from": "H0_adh_w4", "change": "blocker mesh shell_chin8_blk.stl -> shell_chin8_blk_v3.stl (r3_blockers.py)"},
+ "F3_P3b": {"from": "H3_P3b_tree_if", "change": "screen plate given assemble_index 1; object added: screen_plan_blk.stl, subtype support_blocker, assemble_index 1, pos 0,0,0 (r3_plate_blockers.py)"}
+}

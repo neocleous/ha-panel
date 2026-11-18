@@ -1,0 +1,14 @@
+HOUSING_F_plate  b2:1(2mm3)  dt 1s
+HOUSING_F_door   b0:2(0mm3) b1:14(266mm3) b2:22(51mm3) b3:19(49mm3) b4:16(27mm3) b5:5(39689mm3)  dt 22s
+HOUSING_F_cap    b0:2(0mm3) b1:6(35mm3) b2:14(192mm3) b3:17(204mm3) b4:6(53mm3) b5:4(636mm3)  dt 8s
+FLOOR_PLATE      b1:1(0mm3) b2:3(2mm3) b3:8(45mm3) b4:8(604mm3) b5:444(5441mm3)  dt 71s
+SPKBOX_L         b1:1(1mm3) b2:4(227mm3) b3:5(13112mm3) b4:16(2487mm3) b5:24(831mm3)  dt 9s
+SPKBOX_R         b0:2(1mm3) b1:1(1mm3) b2:6(430mm3) b3:13(11502mm3) b4:24(3569mm3) b5:27(1104mm3)  dt 12s
+RESP_CARRIER     b5:8(988mm3)  dt 4s
+CRADLE_5807      b1:6(16mm3) b2:6(46mm3) b3:3(1mm3) b4:2(1mm3) b5:10(82mm3)  dt 1s
+TOUCH_CLIP_L     b3:2(55mm3) b4:2(6mm3) b5:2(7mm3)  dt 0s
+TOUCH_CLIP_R     b3:2(55mm3) b4:2(6mm3) b5:2(7mm3)  dt 0s
+GROMMET_usbc_F   b1:8(65mm3) b2:1(258mm3) b3:3(41mm3) b5:1(43mm3)  dt 1s
+BME_HOOD         b2:1(252mm3)  dt 0s
+SLAB_frame       b1:1(6mm3) b2:1(24mm3) b3:1(36mm3) b4:1(22mm3) b5:5(300mm3)  dt 3s
+HOUSING_F_front  b0:32(63mm3) b1:152(521mm3) b2:953(2578mm3) b3:162(1640mm3) b4:92(1129mm3) b5:74(11274mm3)  dt 98s

@@ -1,0 +1,14 @@
+HOUSING_F_front  area 103172 rays 1031719 miss 153 | area by class (mm2, one face): 471 2413 2305 1297 2110 31108 11875 | features 526 | dt 3s
+HOUSING_F_plate  area 39594 rays 395937 miss 2 | area by class (mm2, one face): 5 5 7 4 3 148 19625 | features 14 | dt 1s
+HOUSING_F_door   area 46015 rays 460148 miss 26 | area by class (mm2, one face): 47 586 386 128 72 16685 5103 | features 82 | dt 1s
+HOUSING_F_cap    area 9184 rays 91838 miss 34 | area by class (mm2, one face): 216 104 68 290 633 1325 1954 | features 84 | dt 0s
+FLOOR_PLATE      area 36956 rays 369557 miss 117 | area by class (mm2, one face): 422 319 1466 1180 442 12252 2391 | features 100 | dt 1s
+SPKBOX_L         area 33096 rays 330955 miss 2 | area by class (mm2, one face): 2 3 267 11757 120 2145 2254 | features 45 | dt 1s
+SPKBOX_R         area 33855 rays 338546 miss 3 | area by class (mm2, one face): 11 8 177 11029 336 2779 2587 | features 63 | dt 1s
+RESP_CARRIER     area 12545 rays 125449 miss 0 | area by class (mm2, one face): 0 0 0 0 0 4843 1429 | features 11 | dt 0s
+CRADLE_5807      area 1919 rays 19185 miss 0 | area by class (mm2, one face): 0 105 39 3 9 106 698 | features 17 | dt 0s
+TOUCH_CLIP_L     area 631 rays 6307 miss 0 | area by class (mm2, one face): 0 0 0 43 3 2 267 | features 4 | dt 0s
+TOUCH_CLIP_R     area 631 rays 6307 miss 0 | area by class (mm2, one face): 0 0 0 43 3 3 267 | features 5 | dt 0s
+GROMMET_usbc_F   area 1334 rays 13339 miss 1 | area by class (mm2, one face): 5 231 231 48 2 19 131 | features 7 | dt 0s
+BME_HOOD         area 1482 rays 14822 miss 0 | area by class (mm2, one face): 0 0 644 2 1 3 90 | features 1 | dt 0s
+SLAB_frame       area 26377 rays 263769 miss 6 | area by class (mm2, one face): 11 10 13 10 13 46 13085 | features 12 | dt 0s
