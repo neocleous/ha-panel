@@ -51,7 +51,7 @@ panel pulls `main` every night.
 
 ## History
 On 2026-11-19 this branch was cleaned up: earlier board revisions, superseded fab sets, the enclosure's build scripts and
-audits, and the working notes of the design sessions were removed. The history keeps all of it. The tree as it stood
+audits, and the design's working notes were removed. The history keeps all of it. The tree as it stood
 before: [commit 45a38e4](https://github.com/neocleous/ha-panel/tree/45a38e49d72cf125aab3f4aa91dd065b3bc4f7ee).
 
 ## Licence

@@ -88,5 +88,5 @@ These are bound to version 67:
 - Don't drive the macOS Open dialog.
 - `open -a` starts a second Bambu Studio.
 
-The run logs and session notes of both runs are in the history
+The run logs and working notes of both runs are in the history
 ([`enclosure/fusion/revF/print_files/` at commit 45a38e4](https://github.com/neocleous/ha-panel/tree/45a38e49d72cf125aab3f4aa91dd065b3bc4f7ee/enclosure/fusion/revF/print_files)).
