@@ -1,10 +1,10 @@
-# Mic strip — JLC order sheet (set of 2026-11-09, confirmed current 2026-11-16; sheet corrected 2026-11-17)
+# Mic strip — JLC order sheet (set of 2026-11-09, confirmed current 2026-11-16 and 2026-11-19; sheet corrected 2026-11-17)
 
 **Upload:** `mic-strip-jlc-2026-11-09.zip`
 sha256 `f405cc567fab336cf9e0fb4b0da1def971ca79bae3d6d8b02ea9bce7e5584564`
 
 - One design, used twice in the panel (left and right strip). Bare board; no assembly files go to JLC.
-- **The set was not re-issued.** The board file has not changed since this zip was made. An export on 2026-11-16 gives the same files, line for line apart from the creation date. The board has no revision in its title block; this issue, of 2026-11-09, is the one with 0.3 mm via holes.
+- **The set was not re-issued.** The board file has not changed since this zip was made. Exports on 2026-11-16 and 2026-11-19 give the same files, line for line apart from the creation date. The board has no revision in its title block; this issue, of 2026-11-09, is the one with 0.3 mm via holes.
 - **Price on 2026-11-16:** 5 boards, black, €18.85 (3.62 + ENIG 15.04 + deburring 0.18), build 3 days.
 - JLC's capability figures were read on jlcpcb.com on **2026-11-16**; the soldermask figure for black on **2026-11-17**.
 - The option names are the order page's own, read on 2026-11-16.
@@ -43,7 +43,7 @@ JLC figures: https://jlcpcb.com/capabilities/pcb-capabilities, read 2026-11-16. 
 |---|---|---|
 | Track / space | 0.20 / 0.15 | 0.10 / 0.10 (1–2 layers) |
 | Vias | 25 × 0.3/0.5 | minimum 0.15/0.25 |
-| Unplated holes | 1 × Ø0.8 (mic port), 2 × Ø2.0 (heat-stake pins) | Ø0.50 minimum |
+| Unplated holes | 1 × Ø0.8 (mic port), 2 × Ø2.0 (locating holes for the cap's pins) | Ø0.50 minimum |
 | Copper to the routed edge | 0.3 | 0.2 |
 | Outline | routed rectangle 28.00 × 6.00 | regular ±0.2 |
 | Soldermask web between two pads | 0.17 smallest (at the microphone) | 0.13 (black) |
