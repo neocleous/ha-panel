@@ -1,1 +1,0 @@
-{"job": "B_cradle", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "bed": "Textured PEI Plate", "opts": {"enable-support": "1", "brim-type": "no_brim"}, "plates": [{"name": "B_cradle", "objects": [{"path": "{OLD}/slicer/orient/cradle_plan.stl"}]}]}

@@ -1,1 +1,0 @@
-{"job": "A_cradle", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "opts": {"enable-support": "1", "brim-type": "no_brim"}, "plates": [{"name": "A_cradle", "objects": [{"stl": "cradle_plan.stl"}]}]}

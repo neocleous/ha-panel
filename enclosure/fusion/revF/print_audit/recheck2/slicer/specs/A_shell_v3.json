@@ -1,1 +1,0 @@
-{"job": "A_shell_v3", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "opts": {"enable-support": "1", "brim-type": "outer_only", "brim-width": "5", "brim-object-gap": "0.1"}, "plates": [{"name": "A_shell_v3", "objects": [{"stl": "shell_plan.stl", "assemble": 1}, {"stl": "shell_plan_blk_v2.stl", "assemble": 1, "subtype": "support_blocker"}]}]}

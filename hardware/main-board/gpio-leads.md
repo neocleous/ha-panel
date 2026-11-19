@@ -1,26 +1,26 @@
 # GPIO leads — pin assignment and plug maps (main board ↔ Pi 5 header)
 
 Rev 3.1, 2026-11-11 (main board laid out for the site behind the display). KiCad 9.0.9 schematic sheet "3.3 V, Pi link, XH, D4a"
-(`io.kicad_sch`), wire pads J3/J4. Earlier versions of this file: `rev3/gpio-leads.md`, `rev2.1/gpio-leads.md`.
+(`io.kicad_sch`), wire pads J3/J4. Earlier versions of this file are in the history (commit 45a38e4).
 
 **Rev 3.1 against rev 3:** one thing is new, the face the wires enter from (next line and the section "Entry face").
 Pads, nets, Pi pins, housings and colours are unchanged; J3 and J4 have not moved.
 
-**Corrected 2026-11-17:** the wires are cut from Adafruit 3141, not from YBM leads (D188, architect log 2026-11-17 §6).
+**Corrected 2026-11-17:** the wires are cut from Adafruit 3141, not from YBM leads.
 The colour of a signal wire is now free. Pads, nets, Pi pins and housings are unchanged; rev 3.2 moved nothing here.
 
-- **The 13 wires enter from the back face and are soldered on the door-side face.** Settled in step 3
-  (`claude/main-board-rev3-enclosure-findings-2026-11-11.md`, section 5; brief of 2026-11-11, "What must stay", point 5).
+- **The 13 wires enter from the back face and are soldered on the door-side face.** Settled with the enclosure
+  design on 2026-11-11.
 
-- **13 leads**, cut from **Adafruit 3141** (DigiKey `1528-2176-ND`, in the basket since 2026-11-16): a strip of 40
+- **13 leads**, cut from **Adafruit 3141** (DigiKey `1528-2176-ND`): a strip of 40
   pre-crimped socket-to-socket jumper wires, 28 AWG, 152 long.
   - The contacts come bare, without housings (Adafruit's product page, read 2026-11-17). At the Pi end they go straight
     into the three housings; at the main-board end the contact is cut off.
   - **Colours:** red = 3V3, black = GND, any other colour = signal. The strip has four wires of each of ten colours;
     these 13 take one red and three black. Adafruit's page names no colours (its picture shows a rainbow ribbon): if
     the strip has no red or no black, pick one colour for each and note it here.
-  - Free length 70 each (`claude/harness-list-2026-11-14.md`, leads 8 to 10).
-- **Pi end: three Dupont housings** (Daniel's decision 2026-11-11, he has the housings):
+  - Free length 70 each (harness list of 2026-11-14, leads 8 to 10).
+- **Pi end: three Dupont housings** (chosen 2026-11-11; housings from stock):
   **housing 1, 1 × 3 on header pins 1-3-5**; **housing 2, 2 × 5 on pins 7–16**; **housing 3, 2 × 3 on pins 35–40**.
   The LCD's own lead keeps its own 1 × 3 housing on pins 2-4-6 and is not part of this set.
 - **Main-board end: wire pads, not headers.** J3 (2 × 5) and J4 (2 × 2), 2.54 mm pitch, Ø1.0 mm plated holes, at the bottom
@@ -109,8 +109,8 @@ Silkscreen: the board is too full on the door side for a name at every pad. The 
 | **J4, edge row (v −27.00)** | **.3 B3 GND** | **.1 B1 LRCLK** |
 | u | +8.19 | +5.65 |
 
-- **Not here:** cut lengths and the route of the bundles. The enclosure routed them at 58 mm each from the back face to
-  the Pi (findings, section 5); the lengths are set in the harness step.
+- **Not here:** cut lengths and the route of the bundles. The enclosure model routes them at 58 mm each from the back face
+  to the Pi; the harness list sets the lengths.
 - No layout change came from this: the pads are plain plated holes and take a wire from either face.
 
 ## What the stock overlay expects (`dtoverlay=rpi-digiampplus`)

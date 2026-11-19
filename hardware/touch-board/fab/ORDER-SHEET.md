@@ -5,9 +5,9 @@ sha256 `2d62d7eca9126be672a78bb0a46d35bbd1463b2dc3d9a8c736272d2777056a34`
 
 - Bare board; no assembly files go to JLC.
 - **The set was not re-issued.** The board file has not changed since this zip was made. An export on 2026-11-16 gives the same files, line for line apart from the creation date. "Rev D" is the name in the project's records; the board's title block carries no revision.
-- **Uploaded on 2026-11-16 and in JLC's cart,** as the line `touch-board-jlc-2026-11-09_Y18`: 5 boards, black, €19.03 (3.62 + ENIG 15.40), build 3 days (`claude/parts-list-2026-11-16.md` §1). Nothing is ordered. Daniel ticks the line at checkout.
+- **Price on 2026-11-16:** 5 boards, black, €19.03 (3.62 + ENIG 15.40), build 3 days.
 - JLC's capability figures were read on jlcpcb.com on **2026-11-16**; the soldermask figure for black on **2026-11-17**.
-- The option names are the order page's own of 2026-11-16, as the parts-list session read them (`claude/parts-list-2026-11-16.md` §1; corrected here on 2026-11-17).
+- The option names are the order page's own, read on 2026-11-16.
 
 ## What is in the zip (12 files)
 `touch-board-F_Cu.gtl`, `-B_Cu.gbl`, `-F_Mask.gts`, `-B_Mask.gbs`, `-F_Silkscreen.gto`, `-B_Silkscreen.gbo`, `-F_Paste.gtp` (empty), `-B_Paste.gbp`, `-Edge_Cuts.gm1`, `-PTH.drl`, `-NPTH.drl` (no holes), `-job.gbrjob`.
@@ -23,8 +23,8 @@ The paste files are in the zip from 2026-11-09. JLC uses them only if a stencil 
 | Quantity | 5 | JLC's minimum on 2026-11-09; 1 needed |
 | Delivery format | single PCB | |
 | Thickness | **1.6 mm** | |
-| PCB colour / silkscreen | **black** / white | Daniel, 2026-11-16 (D191); this sheet said green before. Black costs nothing more on a 2-layer board |
-| Surface finish | **ENIG**, thickness "1U\"" | Daniel, 2026-11-09 (D57). The page's default for a 2-layer board is OSP: change it |
+| PCB colour / silkscreen | **black** / white | chosen 2026-11-16 (green before). Black costs nothing more on a 2-layer board |
+| Surface finish | **ENIG**, thickness "1U\"" | chosen 2026-11-09. The page's default for a 2-layer board is OSP: change it |
 | Outer copper | 1 oz | |
 | Via covering | tented | |
 | Min via hole size/diameter | "0.3mm/(0.4/0.45mm)" | the vias are 0.3/0.6 |

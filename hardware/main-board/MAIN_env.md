@@ -1,19 +1,18 @@
 # MAIN_env: main board rev 3.2, outline, holes and heights (2026-11-14)
 
-For the enclosure model. Sections 3 to 5 of the rev 3.1 reply (`main-board-rev3-1-reply-2026-11-11.md`) with the
-outline of rev 3.2; what changed on rev 3.2 is in `main-board-rev3-2-reply-2026-11-14.md` (also
-`claude/main-board-rev3-2-reply-2026-11-14.md` in the project). The connector table, the plug envelopes and the open
-points of rev 3.1 stand. Earlier files: `rev3.1/MAIN_env.md` (rev 3.1), `rev3/MAIN_env.md` (rev 3), `rev2.1/MAIN_env.md`.
+For the enclosure model: the board's outline, holes and heights, its connectors and the plug envelopes, as worked out
+for rev 3.1 on 2026-11-11, with the outline of rev 3.2. The connector table, the plug envelopes and the open points of
+rev 3.1 stand. Earlier versions of this file (rev 3.1, rev 3, rev 2.1) are in the history (commit 45a38e4).
 Frame: the site document's board frame, seen from the door: u to the right, v up, w out of the door-side face, origin
 in the middle of the board, mm.
-Section numbers in the text are those of the reply.
+The sections start at 3: they keep the numbers of the note this file came from.
 
 **Fab issue 2026-11-16:** copper and texts only (39 vias moved, 1 taken out, the pours 0.50 from the relief, the
 revision text's date). Outline, holes, heights, pin ends and connectors are unchanged, so this file and
-`main-board-rev3.2.step` stand (`rev3.2/fab-2026-11-16/README.md`).
+`main-board-rev3.2.step` stand.
 
 **Changed against rev 3.1:** only the outline: a relief in the +u side edge (section 3). Holes, heights, pin ends,
-connectors and plug envelopes are rev 3.1's; no part moved. (Rev 3.1 against rev 3: `rev3.1/MAIN_env.md`.)
+connectors and plug envelopes are rev 3.1's; no part moved.
 
 ## 3. Outline, holes, mounting
 - **Outline:** rectangle, u -43.5...+43.5, v -28.95...+28.95, square corners, 1.6 thick, **with a relief in the +u side
@@ -110,8 +109,8 @@ the ends of the through-hole pins:
 | C7 | +7.5...+9.5 | +11.4...+11.4 | 1.5 | 4.0 | over the ReSpeaker | leads cut after soldering (assumed, to be kept to on the bench) |
 | J1 | -1.2...+1.2 | -25.0...-25.0 | 1.8 | 12.0 | bottom band | post 3.4 below the seating plane (JST XH catalogue; the KiCad model agrees) - 1.6 |
 | J2 | +17.3...+25.9 | -24.7...-20.3 | 0.5 | 4.0 | over the ReSpeaker | shell stakes 2.10, signal tails 1.60 (GCT drawing) - 1.6 |
-| J3 | -25.3...-15.1 | -27.0...-24.5 | 1.5 | 12.0 | bottom band | wire pads: the Pi signal wires enter from this face and are soldered on the door side (step 3). No joint here; the wire itself leaves the face on the route of the enclosure. 1.5 kept as an allowance (assumed) |
-| J4 | +5.7...+8.2 | -27.0...-24.5 | 1.5 | 12.0 | bottom band | wire pads: the Pi signal wires enter from this face and are soldered on the door side (step 3). No joint here; the wire itself leaves the face on the route of the enclosure. 1.5 kept as an allowance (assumed) |
+| J3 | -25.3...-15.1 | -27.0...-24.5 | 1.5 | 12.0 | bottom band | wire pads: the Pi signal wires enter from this face and are soldered on the door side. No joint here; the wire itself leaves the face on the route of the enclosure. 1.5 kept as an allowance (assumed) |
+| J4 | +5.7...+8.2 | -27.0...-24.5 | 1.5 | 12.0 | bottom band | wire pads: the Pi signal wires enter from this face and are soldered on the door side. No joint here; the wire itself leaves the face on the route of the enclosure. 1.5 kept as an allowance (assumed) |
 | J5 | -40.3...-40.3 | -17.6...-10.1 | 1.8 | 4.0 | over the ReSpeaker | post 3.4 below the seating plane (JST XH catalogue; the KiCad model agrees) - 1.6 |
 | J6 | +12.3...+12.3 | -25.9...-18.4 | 1.8 | 4.0 | over the ReSpeaker | post 3.4 below the seating plane (JST XH catalogue; the KiCad model agrees) - 1.6 |
 | J7 | -29.5...-11.7 | +24.2...+24.2 | 1.5 | 5.0 | top band | wire pads (second echo-reference option only) |

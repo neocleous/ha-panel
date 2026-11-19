@@ -1,1 +1,0 @@
-{"job": "B_door", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "bed": "Textured PEI Plate", "opts": {"enable-support": "0", "brim-type": "outer_only", "brim-width": "5", "brim-object-gap": "0.1"}, "plates": [{"name": "B_door", "objects": [{"path": "{OLD}/slicer/orient/door_plan.stl"}]}]}

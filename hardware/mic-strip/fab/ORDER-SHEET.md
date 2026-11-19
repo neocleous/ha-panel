@@ -4,10 +4,10 @@
 sha256 `f405cc567fab336cf9e0fb4b0da1def971ca79bae3d6d8b02ea9bce7e5584564`
 
 - One design, used twice in the panel (left and right strip). Bare board; no assembly files go to JLC.
-- **The set was not re-issued.** The board file has not changed since this zip was made. An export on 2026-11-16 gives the same files, line for line apart from the creation date. The board has no revision in its title block; this issue is the one with 0.3 mm via holes (D63 = b, 2026-11-09).
-- **Uploaded on 2026-11-16 and in JLC's cart,** as the line `mic-strip-jlc-2026-11-09_Y17`: 5 boards, black, €18.85 (3.62 + ENIG 15.04 + deburring 0.18), build 3 days (`claude/parts-list-2026-11-16.md` §1). Nothing is ordered. Daniel ticks the line at checkout.
+- **The set was not re-issued.** The board file has not changed since this zip was made. An export on 2026-11-16 gives the same files, line for line apart from the creation date. The board has no revision in its title block; this issue, of 2026-11-09, is the one with 0.3 mm via holes.
+- **Price on 2026-11-16:** 5 boards, black, €18.85 (3.62 + ENIG 15.04 + deburring 0.18), build 3 days.
 - JLC's capability figures were read on jlcpcb.com on **2026-11-16**; the soldermask figure for black on **2026-11-17**.
-- The option names are the order page's own of 2026-11-16, as the parts-list session read them (`claude/parts-list-2026-11-16.md` §1; corrected here on 2026-11-17).
+- The option names are the order page's own, read on 2026-11-16.
 
 ## What is in the zip (12 files)
 `mic-strip-F_Cu.gtl`, `-B_Cu.gbl`, `-F_Mask.gts`, `-B_Mask.gbs`, `-F_Silkscreen.gto`, `-B_Silkscreen.gbo`, `-F_Paste.gtp` (empty), `-B_Paste.gbp`, `-Edge_Cuts.gm1`, `-PTH.drl`, `-NPTH.drl`, `-job.gbrjob`.
@@ -23,8 +23,8 @@ The two paste files are in the zip from 2026-11-09. JLC uses them only if a sten
 | Quantity | 5 | JLC's minimum on 2026-11-09; 2 needed |
 | Delivery format | single PCB | if the page asks for a panel: "Panel by JLCPCB" without edge rails |
 | Thickness | **0.8 mm** | the strip stack in the top cap |
-| PCB colour / silkscreen | **black** / white | Daniel, 2026-11-16 (D191); this sheet said green before. Black costs nothing more on a 2-layer board |
-| Surface finish | **ENIG**, thickness "1U\"" | Daniel, 2026-11-08. The page's default for a 2-layer board is OSP: change it |
+| PCB colour / silkscreen | **black** / white | chosen 2026-11-16 (green before). Black costs nothing more on a 2-layer board |
+| Surface finish | **ENIG**, thickness "1U\"" | chosen 2026-11-08. The page's default for a 2-layer board is OSP: change it |
 | Outer copper | 1 oz | |
 | Via covering | tented | |
 | Deburring | on | the page's default for a board this small; €0.18 |

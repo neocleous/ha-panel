@@ -11,3 +11,11 @@ venv/
 # OS
 .DS_Store
 Thumbs.db
+
+# KiCad: backups, caches, local settings and lock files
+*-backups/
+_autosave-*
+\#auto_saved_files\#
+*.kicad_prl
+fp-info-cache
+*.lck
