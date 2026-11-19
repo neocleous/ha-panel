@@ -1,6 +1,6 @@
 """Assembly drawing of main board rev 3.2 for hand assembly: every one of the 120 part names and every value.
 
-    python3 gen/assembly_rev32.py [board.kicad_pcb] [out.pdf]        (from hardware/main-board; KiCad 9's Python)
+    python3 tools/assembly_rev32.py [board.kicad_pcb] [out.pdf]        (from hardware/main-board; KiCad 9's Python)
 
 The silkscreen hides 53 of the 120 names, so the drawing is made from the board file itself, not from the silkscreen:
 outline, pads and each part's fab-layer outline, with the name (page 1) or the value (page 2) written into the part.
@@ -252,7 +252,7 @@ def page_names(pdf, parts, outl, what):
          'TP1 to TP20 (no TP18): bare round pads to probe. No paste, no part. Their uses are on page 4.'],
         ['Hotplate: every surface-mount part, this face up. Then by iron: the through-hole parts, fitted from this face and soldered on the back.',
          'The 13 Pi signal wires (J3, J4) go the other way: pushed in from the back, soldered on this face.',
-         'Source: main-board.kicad_pcb (rev 3.2, fab issue %s); gen/assembly_rev32.py.' % ISSUE],
+         'Source: main-board.kicad_pcb (rev 3.2, fab issue %s); tools/assembly_rev32.py.' % ISSUE],
     ] if names else [
         ['Short values on the drawing: resistors and capacitors without tolerance and voltage. The full value, the size and the maker\'s part number are on page 3.',
          'Red dot = pad 1, as on page 1.  "not fitted" = leave empty (R8, R9, R20 to R25, R27).'],
@@ -260,7 +260,7 @@ def page_names(pdf, parts, outl, what):
          '0.1u, 0.22u, 1u (25 V and 50 V) and 2.2u. Place one value at a time from page 3 and tick it off.',
          'The 0805 4.7u is one part at all five places: C12, C101, C102, C122 and C123 (TDK, 50 V).'],
         ['Fuses: 5 A = F1, 10 A = F2, 1 A = F3 (the same body, read the marking); 0.2 A = F4 (1206); 2.6 A = F5 (2920).',
-         'Source: main-board.kicad_pcb (rev 3.2, fab issue %s); gen/assembly_rev32.py.' % ISSUE],
+         'Source: main-board.kicad_pcb (rev 3.2, fab issue %s); tools/assembly_rev32.py.' % ISSUE],
     ])
     pdf.savefig(fig)
     plt.close(fig)
