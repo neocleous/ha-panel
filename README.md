@@ -4,6 +4,8 @@ A desk-mounted Home Assistant touch panel, vibe coded from start to finish — t
 
 Built on a Raspberry Pi 5 with a Waveshare 8" DSI touchscreen, environmental sensors, capacitive touch buttons, and a 3D-printable desk-stand enclosure ([STEP file](https://github.com/neocleous/ha-panel/blob/docs/enclosure/HA%20Panel%20Final.step) on the `docs` branch). Home Assistant runs on a separate server — each panel is a pure display and sensor client, no HAOS on the panel itself.
 
+The hardware design files — circuit boards, enclosure and print files — are on the [`docs` branch](https://github.com/neocleous/ha-panel/tree/docs); its [README](https://github.com/neocleous/ha-panel/blob/docs/README.md) is the place to start.
+
 ## What it does
 
 - **Kiosk dashboard** — Chromium in app mode under labwc (Wayland), portrait, no window chrome, with a working on-screen keyboard (squeekboard)
