@@ -1,5 +1,8 @@
 # HA Panel — Touch Board rev C
 
+**This is the touch board of the first panel (v1), which is built and in use.** The new panel uses touch board
+rev D, in [`../touch-board/`](../touch-board/).
+
 Capacitive 4-button touch board for the wall-mounted Home Assistant panel.
 Carries the touch controller and acts as the wiring hub for the panel's I2C
 sensor breakouts. Designed 2026-07; fabricated at JLCPCB.

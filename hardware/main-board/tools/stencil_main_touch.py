@@ -1,4 +1,4 @@
-"""One JLC stencil for the main board's front paste and the touch board's back paste (D57, Daniel 2026-11-09).
+"""One JLC stencil for the main board's front paste and the touch board's back paste (chosen 2026-11-09).
 
 Builds a stencil-only KiCad file from the two boards:
 - the main board's footprints where they are (all its SMD parts are on the front, F.Paste);

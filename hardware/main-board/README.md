@@ -1,43 +1,48 @@
-# HA panel — main board, rev 3.2 (fab issue 2026-11-16)
+# Main board, rev 3.2
 
-**The board in this folder is rev 3.2 as it goes to the fab.** Same parts, outline, holes and heights as rev 3.2 of
-2026-11-14, so `main-board-rev3.2.step`, `MAIN_env.md` and the plug envelopes stand. Changed with the fab files, copper
-and texts only (details: [`rev3.2/fab-2026-11-16/README.md`](rev3.2/fab-2026-11-16/README.md)):
+The panel's power and audio board. It sits behind the display on a printed carrier.
 
-1. 39 vias moved out of pasted pads and 1 taken out, so that no hole can take a pad's solder on the hotplate;
-2. the pours kept 0.50 back from the relief in the side edge (0.30 everywhere else, as before);
-3. the stack-up JLC04161H-7628 written into the board file;
-4. the revision text on the back reads `REV 3.2 2026-11-16`.
+- It takes 20 V from the USB-C inlet board (Adafruit 5807, a HUSB238 PD sink) and protects it.
+- It makes 5 V for the Raspberry Pi 5 and the radar, and 3.3 V for the sensors.
+- It drives the two speakers with a TAS5756M amplifier.
+- It carries the sockets for the touch board, the radar and the two sensor leads, and the wire pads for the Pi's signals.
 
-**Five capacitors changed their part on 2026-11-17, the copper did not** ([`rev3.2/parts-2026-11-17/README.md`](rev3.2/parts-2026-11-17/README.md)):
-- **C101, C102, C122 and C123** are TDK C2012X7R1H475K125AC, 4.7 µF 50 V X7R 0805, in place of the 22 µF 35 V X5R, which
-  DigiKey cannot deliver. At 20 V both keep about 1.9 µF (TDK's curves; `NOTES.md` §4).
-- **C12** takes the same TDK part (D202), in place of the Samsung 4.7 µF 16 V. Only one 0805 part on the board now
-  reads 4.7 µF. At 3.3 V it keeps about 4.6 µF; the regulator needs 2.0 µF (`NOTES.md` §3).
-- Same pads, so the upload of 2026-11-16 stands: a fresh export of this board differs from the zip only in its
-  creation dates.
+**State (2026-11-19):** the fab files were issued on 2026-11-16. On 2026-11-17 five capacitors changed their part; the
+copper and the fab files did not change. The board has not been built or tested yet.
 
-Checks (KiCad 9.0.9, 2026-11-17): schematic check 0 errors, 0 warnings (`erc-report.txt`); board check 0 errors, 0 open
-connections, 0 differences to the schematic, 2 warnings (the footprints of J6 and J2 differ from KiCad's library copies,
-on purpose) (`drc-report.txt`). **Nothing is ordered.** Everything is a draft until the unit is built and tested.
+**Checks (KiCad 9.0.9, 2026-11-17):** schematic 0 errors, 0 warnings (`erc-report.txt`); board 0 errors, 0 open
+connections, 0 differences to the schematic, 2 warnings: the footprints of J6 and J2 differ from KiCad's library copies,
+on purpose (`drc-report.txt`).
 
 ## Files
 | File | What |
 |---|---|
 | `main-board.kicad_pro`, `main-board.kicad_pcb`, five `.kicad_sch` | the design, KiCad 9.0.9. Project libraries: `lib/ha_panel.kicad_sym`, `lib/ha_panel.pretty` |
-| `main-board-schematic.pdf` | schematic, 5 pages (2026-11-17: the five capacitors' value and part, a note on the amplifier sheet and one at C12, the title blocks' date and parts line; the circuit is that of 2026-11-14) |
-| **`main-board-rev3.2-assembly.pdf`** | **assembly drawing, A3, 4 pages:** all 120 part names; all values; the placing list with the maker's part numbers; the test pads, connectors and the back face. Previews of pages 1 and 2: `main-board-rev3.2-assembly-names.png`, `-values.png`. Made by `gen/assembly_rev32.py` |
-| **`fab/main-board-rev3.2-jlc-2026-11-16.zip`** | **the upload for JLC** (bare board). Every option: [`fab/ORDER-SHEET.md`](fab/ORDER-SHEET.md). Unzipped: `fab/gerbers/`; holes: `fab/drill-report.txt` |
-| `../stencil/` | the combined stencil (this board's door side and the touch board's back): `../stencil/fab/stencil-main-rev3.2-touch-revD-jlc-2026-11-16.zip` |
-| `../notes/bom-2026-11-17.md` | the parts list of all three boards against the DigiKey lines (`../notes/digikey-bom.md`); `bom-2026-11-16.md` is the list before the capacitors changed |
-| `NOTES.md` | every value with its source; test pads (§5); layout (§7) |
-| `gpio-leads.md` | the 13 Pi signal wires: pad, Pi pin, housing, colour |
-| `main-board-rev3.2.step`, `main-board-rev3.1-plug-envelopes.step`, `MAIN_env.md` | for the enclosure model: the populated board, the plug envelopes, outline, holes and heights. Unchanged by the fab issue |
-| `main-board-copper-F-B.png` | both outer copper layers, drawn from the board of this issue |
-| `main-board-3d-door-side.png`, `main-board-3d-back.png` | renders of 2026-11-14 (the parts have not moved since) |
-| `rev3.2/` | rev 3.2 of 2026-11-14 (`main-board-rev3.2-2026-11-14.kicad_pcb`, its reports and checks), the fab issue's record (`fab-2026-11-16/`) and the record of the capacitor change (`parts-2026-11-17/`) |
-| `rev3.1/`, `rev3/`, `rev2.1/` | earlier revisions with their own reports; `rev2.1/` also holds the README and NOTES as they stood on 2026-11-14 |
-| `gen/` | the scripts that made the schematic, the layout and each change. The KiCad files are the source of truth |
+| `main-board-schematic.pdf` | the schematic, 5 pages |
+| `main-board-rev3.2-assembly.pdf` | **the assembly drawing**, A3, 4 pages: all 120 part names; all values; the placing list with the maker's part numbers; the test pads, connectors and the back face. Previews of pages 1 and 2: `main-board-rev3.2-assembly-names.png`, `-values.png` |
+| [`fab/`](fab/) | **what goes to JLC:** `main-board-rev3.2-jlc-2026-11-16.zip`, the same files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet |
+| [`NOTES.md`](NOTES.md) | every value of the circuit with its source; the test pads; the layout |
+| [`gpio-leads.md`](gpio-leads.md) | the 13 Pi signal wires: pad, Pi pin, housing, colour |
+| `main-board-rev3.2.step`, `main-board-rev3.1-plug-envelopes.step`, [`MAIN_env.md`](MAIN_env.md) | for the enclosure model: the populated board, the plug envelopes, the outline, holes and heights |
+| `main-board-copper-F-B.png` | both outer copper layers |
+| `main-board-3d-door-side.png`, `main-board-3d-back.png` | renders of the populated board |
+| `erc-report.txt`, `drc-report.txt` | KiCad's schematic and board checks |
+| [`tools/`](tools/) | scripts that export and check the fab set and the stencil, and draw the assembly drawing |
+
+## How to order
+- **Upload** `fab/main-board-rev3.2-jlc-2026-11-16.zip` to JLC as a bare board: no assembly, so no BOM or placement
+  file. sha256 `fc4588531ea277c1fc3e9009db38fae190042080e065443b0a663f34fa7449bd`.
+- **Options in short:** 4 layers, 87.0 × 57.9 mm, FR-4, 1.6 mm, black with white silkscreen, ENIG, 1 oz outer and
+  0.5 oz inner copper, stack-up JLC04161H-7628, vias plugged, outline tolerance ±0.2, "Remove Mark", 5 pieces (1 needed).
+  Every option with its reason, and what JLC's review may ask: [`fab/ORDER-SHEET.md`](fab/ORDER-SHEET.md).
+- **Paste stencil:** a separate line, shared with the touch board: [`../stencil/`](../stencil/).
+
+## Parts
+- Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-2026-11-17.md), section "Main board
+  rev 3.2". The DigiKey quick-add list is [`../notes/digikey-bom.csv`](../notes/digikey-bom.csv).
+- **One 0805 part reads 4.7 µF:** TDK C2012X7R1H475K125AC (50 V). It goes to all five places: C12, C101, C102, C122
+  and C123.
+- **Not from DigiKey:** LK1, a short piece of 1.0 mm tinned copper wire.
 
 ## The board in numbers
 - **87.0 × 57.9 × 1.6 mm, 4 layers,** with a relief 1.5 deep in the side edge toward the left speaker (floor over
@@ -65,7 +70,7 @@ on purpose) (`drc-report.txt`). **Nothing is ordered.** Everything is a draft un
 5. **Amplifier** — TAS5756M stereo, I²C address 0x4C, mute on GPIO22, 10 µH + 0.68 µF output filters, speaker sockets
    J8 (left) and J9 (right).
 
-Every value's source: `NOTES.md` §1 to §4.
+Every value's source: [`NOTES.md`](NOTES.md) §1 to §4.
 
 ## Default fit
 | Option | Default | Alternative |
@@ -77,14 +82,12 @@ Every value's source: `NOTES.md` §1 to §4.
 | 5 V module enable | R7 0 Ω (from power-good) | R7 open: the module runs whenever 20 V is there |
 | Pi branch | LK1 fitted | LK1 open with a 10 A meter in its place (bench) |
 
-## Assembly
-One pass on the hotplate for every surface-mount part, then the through-hole parts by iron.
-**Work from `main-board-rev3.2-assembly.pdf`:** page 1 names, page 2 values, page 3 the placing list, page 4 the back.
+## How to assemble
+One pass on the hotplate for every surface-mount part, then the through-hole parts by iron. **Work from
+`main-board-rev3.2-assembly.pdf`:** page 1 names, page 2 values, page 3 the placing list, page 4 the back.
 
 **Before you start**
-- **One 0805 part reads 4.7 µF:** TDK C2012X7R1H475K125AC (50 V). It goes to all five places: C12, C101, C102, C122
-  and C123.
-- **Paste:** Sn63/Pb37 no-clean, as on the rev C touch board (Chip Quik SMD291AXT4). Check its date.
+- **Paste:** Sn63/Pb37 no-clean (Chip Quik SMD291AXT4). Check its date.
 - **Stencil:** the main-board area of the combined stencil, 0.12 thick. The touch board's pattern is on the same sheet:
   keep the squeegee off it.
 - **U100 (TAS5756M) is moisture-sensitive, level 3:** 168 hours at 30 °C / 60 % humidity or less once its bag is open
@@ -108,9 +111,9 @@ One pass on the hotplate for every surface-mount part, then the through-hole par
    - PS1: pin 1 at the end the board marks "+Vo".
    - J2: its pin ends reach only 0.5 behind the board. Solder all 16 contacts and the 4 shell stakes.
    - **Cut the leads of C5, C6, C7 and LK1 to 1.5 or less behind the board.** In the unit the ReSpeaker and the
-     display's power lead lie behind the board, and pin ends may stand out 4.0 at most there (`MAIN_env.md` §5).
+     display's power lead lie behind the board, and pin ends may stand out 4.0 at most there ([`MAIN_env.md`](MAIN_env.md) §5).
 6. **The 13 Pi signal wires** (J3, J4): cut the terminal off the board end, push the wire in **from the back** and
-   solder it **on the door side**. Pad by pad: `gpio-leads.md`. The back prints "PI 1-15" and "PI 35-40".
+   solder it **on the door side**. Pad by pad: [`gpio-leads.md`](gpio-leads.md). The back prints "PI 1-15" and "PI 35-40".
 7. **J7 stays empty.**
 
 **Hotplate profile**
@@ -121,7 +124,7 @@ One pass on the hotplate for every surface-mount part, then the through-hole par
   39 holes under the pad are part of the footprint and take some solder by design.
 - The flux is no-clean: nothing is washed.
 
-**In the unit** (the project's assembly instructions hold the steps): the display's power lead is plugged onto the
+**In the unit** (the panel's assembly instructions hold the steps): the display's power lead is plugged onto the
 display before the board is screwed on. Plugging order on the board: speakers and 20 V, then touch and radar, then the
 BME680 and the VEML6030, the Pi's power last.
 
@@ -133,7 +136,7 @@ board's left edge and from its bottom edge (the edge with the sockets), seen fro
 |---|---|---|---|---|---|---|
 | TP1 | VIN | VIN_EF | 22.5 | 10.3 | 20 V after the fuse F1, before the protection chip | left of R17; below D1 |
 | TP2 | 20V | +20V | 31.1 | 19.6 | 20 V after the protection chip | above R5; left of R6 |
-| TP3 | IMON | EF_IMON | 40.3 | 12.7 | current monitor, 0.279 V per A on the 20 V bus. **Moved on rev 3.1** (rev 3: 40.3, 13.2) | right of R3; below J11 |
+| TP3 | IMON | EF_IMON | 40.3 | 12.7 | current monitor, 0.279 V per A on the 20 V bus | right of R3; below J11 |
 | TP4 | FLT | EF_FLT_N | 37.7 | 20.3 | protection chip fault (low = fault) | right of R6; above R4 |
 | TP5 | PG | EF_PGOOD | 34.5 | 21.5 | power good (enables the 5 V module) | above R6; below PS1 |
 | TP6 | SHDN | EF_SHDN | 40.8 | 20.4 | shutdown pin | above J11; below PS1 |
@@ -142,7 +145,7 @@ board's left edge and from its bottom edge (the edge with the sockets), seen fro
 | TP9 | 5V | +5V | 47.6 | 41.2 | 5 V module output | left of C7; right of C5 |
 | TP10 | 5V_F | 5V_PI_F | 50.2 | 14.5 | 5 V after the Pi fuse F2 | right of J11; below LK1 |
 | TP11 | EXT5V | VBUS_PI | 51.1 | 11.6 | 5 V at the Pi's USB-C socket | left of J6; above R16 |
-| TP12 | RADAR | 5V_RADAR | 9.3 | 10.4 | radar 5 V, after its fuse F3. **Moved on rev 3.1** (rev 3: 12.8, 17.3) | below C10; left of J10 |
+| TP12 | RADAR | 5V_RADAR | 9.3 | 10.4 | radar 5 V, after its fuse F3 | below C10; left of J10 |
 | TP13 | TRIM | NID_TRIM | 4.6 | 26.1 | 5 V module trim pin | left of PS1; below R7 |
 | TP14 | RC | NID_RC | 4.6 | 32.5 | 5 V module on/off pin | left of PS1; above R7 |
 | TP15 | GND | GND | 48.3 | 11.4 | ground | above R18; above R16 |
@@ -157,8 +160,8 @@ board's left edge and from its bottom edge (the edge with the sockets), seen fro
 - Seven test pads and the amplifier's thermal pad each have a via in them (TP2, TP7, TP9, TP15, TP17, TP19, TP20;
   U100). No paste goes there, so they were left as they are.
 
-## Bring-up (on the bench, board out of the enclosure)
-A meter is enough. Ground: TP7, TP15, TP17 or TP20.
+## Bring-up
+On the bench, with the board out of the enclosure. A meter is enough. Ground: TP7, TP15, TP17 or TP20.
 
 **Stage 1: 20 V only.** The USB-C inlet board and its charger on J1; no Pi, no leads, no sensors.
 
@@ -180,23 +183,27 @@ A meter is enough. Ground: TP7, TP15, TP17 or TP20.
 |---|---|---|
 | TP16 | 3.267 to 3.333 V | TPS70933, ± 1 % (SBVS186H) |
 | TP4, TP19 | about 3.3 V | no fault at the protection chip, none at the amplifier |
-| `vcgencmd get_throttled` | `0x0` | bench plan 2.6 |
-| `vcgencmd pmic_read_adc EXT5V_V` | 4.87 V or more under load | bench plan 2.6 |
+| `vcgencmd get_throttled` | `0x0` | the Pi's own under-voltage detector never tripped |
+| `vcgencmd pmic_read_adc EXT5V_V` | 4.87 V or more under load | the upper tolerance of the Pi's under-voltage detector (4.63 V ± 5 %) |
 
-**Stage 3: configuration and buses.** Apply `../notes/pi-config.md`, then plug the BME680 (J10), the VEML6030 (J11), the
-touch lead (J6) and the radar (J5).
+**Stage 3: configuration and buses.** Apply [`../notes/pi-config.md`](../notes/pi-config.md), then plug the BME680
+(J10), the VEML6030 (J11), the touch lead (J6) and the radar (J5).
 - `sudo i2cdetect -y 1`: **1b** (touch), **48** (VEML6030), **UU** at 4c (TAS5756M, held by its driver), and the
   BME680 at **76 or 77** (set by the sensor board's own strap).
 - Radar: record TP12 with the LD2410C running (the rail's lowest is 4.90 V; the LD2410C manual gives 5 to 12 V). Expect
   no invalid frame at 256000 8N1 on `/dev/ttyAMA0`.
-- Then the bench plan's stage 2.
+- Then the audio and voice tests on the bench.
 
 ## Earlier revisions
-- **Rev 3.2 of 2026-11-14:** rev 3.1 with the relief in the side edge. Report `rev3.2/README.md`; board file
-  `rev3.2/main-board-rev3.2-2026-11-14.kicad_pcb`.
+- **Rev 3.2 of 2026-11-14:** rev 3.1 with the relief in the side edge. The fab issue of 2026-11-16 changed copper and
+  texts only: 39 vias moved out of pasted pads and 1 taken out, so that no hole can take a pad's solder on the hotplate;
+  the pours kept 0.50 back from the relief (0.30 everywhere else); the stack-up JLC04161H-7628 written into the board
+  file; the revision text on the back reads `REV 3.2 2026-11-16`. Outline, holes, heights and parts did not change.
 - **Rev 3.1 (2026-11-11):** rev 3 with the top right hole moved, two headers moved, wider supply copper and ground
-  pours on both outer layers. Report `rev3.1/README.md`.
+  pours on both outer layers.
 - **Rev 3 (2026-11-11):** the board laid out again for its site behind the display, every part on the door side.
-  Report `rev3/README.md`.
-- **Rev 2.1 (2026-11-08):** the board for the earlier site, 90 × 55. Files in `rev2.1/`, with its fab set of
-  2026-11-08, which is **not** for this board.
+- **Rev 2.1 (2026-11-08):** the board for the earlier site, 90 × 55, with its own fab set of 2026-11-08, which is **not**
+  for this board.
+
+They are no longer in this folder. The history keeps each one with its reports and checks:
+[`hardware/main-board/` before the clean-up (commit 45a38e4)](https://github.com/neocleous/ha-panel/tree/45a38e49d72cf125aab3f4aa91dd065b3bc4f7ee/hardware/main-board).

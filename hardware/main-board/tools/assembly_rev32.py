@@ -32,7 +32,7 @@ SCALE = 4.25                         # paper mm per board mm
 PT = SCALE * 72 / 25.4               # points per board mm
 PAGE = (420.0, 297.0)                # A3 landscape, mm
 ISSUE = '2026-11-16'
-PARTS = '2026-11-17'                 # the parts and values shown: C12, C101, C102, C122, C123 are one 4.7u 50V part since then (D192, D202)
+PARTS = '2026-11-17'                 # the parts and values shown: C12, C101, C102, C122, C123 are one 4.7u 50V part since then
 MAXERR = pcbnew.FromMM(0.005)
 
 GROUPS = [  # the order of placing: (heading, test on (ref, value, footprint))
@@ -188,7 +188,7 @@ def page_names(pdf, parts, outl, what):
     title = 'Main board rev 3.2 - door side - ' + ('part names (all 120)' if names else 'values')
     ax, left, bottom = axes(fig, title, 'fab issue %s, parts as of %s  |  seen from the door, the face with every part  |  4.25 : 1  |  page %d of 4' % (ISSUE, PARTS, 1 if names else 2))
     draw_board(ax, outl, parts)
-    twin = {}                                              # 0805 capacitors that share a short value but not the part; none since C12 took the 50 V part (D202)
+    twin = {}                                              # 0805 capacitors that share a short value but not the part; none since C12 took the 50 V part
     for p in parts:
         if p.ref[0] == 'C' and '0805' in p.fp and not p.dnp:
             twin.setdefault(p.value.split()[0], set()).add(p.value)

@@ -4,10 +4,10 @@
 sha256 `fc4588531ea277c1fc3e9009db38fae190042080e065443b0a663f34fa7449bd`
 
 - Bare board. No SMT assembly, so no BOM or placement file goes to JLC.
-- **Uploaded on 2026-11-16 and in JLC's cart,** as the line `main-board-rev3.2-jlc-2026-11-16_Y16`: 5 boards, black, €30.08 (7.25 + ENIG 15.58 + colour 7.25), build 3–4 days (`claude/parts-list-2026-11-16.md` §1). Nothing is ordered. Daniel ticks the line at checkout.
-- **The part changes of 2026-11-17** (C101, C102, C122, C123 become 4.7 µF 50 V; C12 takes the same part) do not change this zip: a fresh export gives the same 12 files, compared again after C12 (`../rev3.2/parts-2026-11-17/`).
+- **Price on 2026-11-16:** 5 boards, black, €30.08 (7.25 + ENIG 15.58 + colour 7.25), build 3–4 days.
+- **The part changes of 2026-11-17** (C101, C102, C122, C123 become 4.7 µF 50 V; C12 takes the same part) do not change this zip: a fresh export gives the same 12 files, compared again after C12.
 - JLC's capability figures below were read on jlcpcb.com on **2026-11-16**; the soldermask figure for black on **2026-11-17**.
-- The option names are the order page's own of 2026-11-16, as the parts-list session read them (`claude/parts-list-2026-11-16.md` §1; corrected here on 2026-11-17). The names of 2026-11-09 are in `../../notes/jlc-fab.md`.
+- The option names are the order page's own, read on 2026-11-16.
 
 ## What is in the zip (12 files)
 | File | Layer |
@@ -33,8 +33,8 @@ No paste layer is in this zip. JLC's KiCad 9 guide asks for paste layers only on
 | Quantity | 5 | JLC's minimum on 2026-11-09; 1 needed |
 | Delivery format | single PCB | |
 | Thickness | **1.6 mm** | |
-| PCB colour / silkscreen | **black** / white | Daniel, 2026-11-16 (D191); this sheet said green before. Black adds €7.25 on this board. The page's note on the colour: "Two more days than green solder mask" |
-| Surface finish | **ENIG**, thickness "1U\"" | Daniel, 2026-11-08 |
+| PCB colour / silkscreen | **black** / white | chosen 2026-11-16 (green before). Black adds €7.25 on this board. The page's note on the colour: "Two more days than green solder mask" |
+| Surface finish | **ENIG**, thickness "1U\"" | chosen 2026-11-08 |
 | Outer copper | 1 oz | |
 | Inner copper | 0.5 oz | JLC's default |
 | Impedance control | no | the page of 2026-11-16 reads "No requirement" |
@@ -43,8 +43,8 @@ No paste layer is in this zip. JLC's KiCad 9 guide asks for paste layers only on
 | Via plating method | "Not Specified" | a row on the page of 2026-11-16; left as the page sets it |
 | Min via hole size/diameter | "0.3mm/(0.4/0.45mm)" | the board has 0.2 mm holes in 0.45 mm vias; the page's note of 2026-11-09 says that costs nothing extra on multilayer boards. On 2026-11-09 a smaller class also switched a 4-wire test on; the page of 2026-11-16 has no such row. |
 | Electrical test | **"Flying Probe Fully Test"** | the only test the page of 2026-11-16 offers; it has no "4-Wire Kelvin Test" row |
-| Board outline tolerance | **regular, ±0.2 mm** | D151 item 6. High precision (±0.1) is not wanted. |
-| Mark on PCB | **"Remove Mark"** | Daniel's standing decision |
+| Board outline tolerance | **regular, ±0.2 mm** | High precision (±0.1) is not wanted. |
+| Mark on PCB | **"Remove Mark"** | standing choice |
 | Gold fingers, castellated holes, edge plating | no | |
 | "Stencil: order together with PCB" on this line | **off** | the stencil is its own line |
 | PCB remark | none | |
@@ -70,7 +70,7 @@ JLC figures: https://jlcpcb.com/capabilities/pcb-capabilities, read 2026-11-16 (
 | Track / space | 0.15 / 0.15 | 0.09 / 0.09 (multilayer) |
 | Vias (244), hole/diameter | 132 × 0.3/0.6, 87 × 0.2/0.45, 25 × 0.4/0.8 | minimum 0.15/0.25; 0.2 or 0.25 holes cost more below 0.45 diameter |
 | Thermal holes in the two chips' centre pads | U100: 39 × 0.2 in 0.45; U1: 15 × 0.3 in 0.6. They are part of the footprints: inside the centre pad on the door side, under soldermask on the back. | as vias |
-| Soldermask between a via's hole and a pad that takes paste | 0.20 or more at all 244 vias (`../rev3.2/fab-2026-11-16/via-check.txt`) | soldermask bridge 0.13 (black) |
+| Soldermask between a via's hole and a pad that takes paste | 0.20 or more at all 244 vias | soldermask bridge 0.13 (black) |
 | Component hole ring | 0.35 or more, except J2 | multilayer 1 oz: 0.20 recommended, 0.15 minimum |
 | J2 (USB4085) ring | 0.15: 16 contacts of Ø0.4 in Ø0.7 pads, GCT's own land pattern | at JLC's minimum |
 | Plated slots | 4 at J2, 0.6 wide (0.6 × 1.4 and 0.6 × 2.1) | 0.35 minimum (multilayer) |
@@ -85,14 +85,14 @@ Holes in all (`drill-report.txt`): plated 383 = 126 × 0.20, 147 × 0.30, 41 × 
 ## What JLC's review may raise
 1. **J2's ring of 0.15.** It is the maker's land pattern and sits exactly at JLC's stated minimum. Answer: keep as drawn.
 2. **Vias that cannot be ink-plugged.** JLC's table gives three conditions for a plugged via: no soldermask opening on either side, 0.35 or more from other openings, and "no wider than 0.5 mm diameter".
-   - **The 0.35:** on this board 61 of the 244 vias have their hole closer than that to a pad's opening (`../rev3.2/fab-2026-11-16/plug-check-result.txt`).
+   - **The 0.35:** on this board 61 of the 244 vias have their hole closer than that to a pad's opening.
    - **The 0.5:** the table does not say whether it means the hole or the via's copper. JLC's via-covering article (dated 2026-11-10) says plugged holes of 0.5 or less. By the hole, every via passes (0.2, 0.3, 0.4). By the copper, only the 87 vias of 0.45 would; the 132 of 0.6 and the 25 of 0.8 would not. Rev 2.1 had the same via sizes.
    - **What it means:** in the files every via is covered by soldermask on both faces. For a via it cannot ink-plug, JLC's article names epoxy or copper filling as the alternative; it does not say what happens on a plain order. Nothing on the board depends on a via being filled: each has at least 0.20 of soldermask between its hole and the nearest pad that takes paste. Answer to a query: leave them covered by soldermask, no filling.
 3. **Eight vias left in bare copper on purpose:** seven at test pads (TP2, TP7, TP9, TP15, TP17, TP19, TP20; the hole is 0.08 to 0.09 inside the pad's opening) and one in U100's centre pad. Test pads take no paste; U100's centre pad already has 39 thermal holes. Two more vias sit closer than 0.20 to an opening without paste: 0.13 from TP3 and 0.18 from J3 pad 9.
 4. **No paste files.** Expected for a bare board.
 
 ## Checks on this zip (2026-11-16)
-`fab-check-2026-11-16.txt` (made by `../gen/fab_check.py`), all passed:
+`fab-check-2026-11-16.txt` (made by `../tools/fab_check.py`), all passed:
 - every expected file is there, with the right layer function in its header;
 - a round flash of the right diameter at each of the 244 vias on all four copper layers;
 - no soldermask opening at any via, either face; 339 openings on the door side and 89 on the back, one per pad that needs one;
@@ -103,7 +103,7 @@ Holes in all (`drill-report.txt`): plated 383 = 126 × 0.20, 147 × 0.30, 41 × 
 
 KiCad's own checks on the board: electrical rules 0 errors, 0 warnings; design rules 0 errors, 0 unconnected, 0 schematic mismatches, 2 warnings (J2 and J6 differ from their library footprints, as since rev 2.1). Render of the nine layers: `main-board-rev3.2-gerbers.png`.
 
-How the set is made: `../gen/fab_export.sh ../main-board.kicad_pcb main-board-rev3.2 . 2026-11-16 F.Cu,In1.Cu,In2.Cu,B.Cu,F.Mask,B.Mask,F.Silkscreen,B.Silkscreen,Edge.Cuts` (kicad-cli 9.0.9; settings in `../../notes/jlc-fab.md`).
+How the set is made: `../tools/fab_export.sh ../main-board.kicad_pcb main-board-rev3.2 . 2026-11-16 F.Cu,In1.Cu,In2.Cu,B.Cu,F.Mask,B.Mask,F.Silkscreen,B.Silkscreen,Edge.Cuts` (kicad-cli 9.0.9; settings in `../../notes/jlc-fab.md`).
 
 ## Earlier sets
-The rev 2.1 upload of 2026-11-08 (the 90 × 55 board) is kept in `../rev2.1/fab/main-board-jlc-2026-11-08.zip`. It is superseded by this set and must not be ordered.
+The rev 2.1 set of 2026-11-08 (the 90 × 55 board) is superseded and must not be ordered. It is no longer in this folder; the history keeps it ([`rev2.1/fab/` at commit 45a38e4](https://github.com/neocleous/ha-panel/tree/45a38e49d72cf125aab3f4aa91dd065b3bc4f7ee/hardware/main-board/rev2.1/fab)).

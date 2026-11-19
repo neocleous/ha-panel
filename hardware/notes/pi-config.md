@@ -1,8 +1,8 @@
-# HA panel V2 — Raspberry Pi 5 configuration for the new hardware (block 3, part 3, 2026-11-09)
+# HA panel V2 — Raspberry Pi 5 configuration for the new hardware (2026-11-09)
 
 What the main board, the radar and the landscape LCD need from the Pi. The changes are written as a diff against
-`system/install.sh` on `main` @ 62ea4d8 (2026-11-08). **Nothing here is applied to `main`:** the software session makes
-the change and tests it.
+`system/install.sh` on `main` @ 62ea4d8 (2026-11-08). **Nothing here is applied to `main` yet:** the change is to be
+made and tested there.
 
 ## Settings
 | # | Setting | Where | Why | Source |
@@ -11,7 +11,7 @@ the change and tests it.
 | 2 | `usb_max_current_enable=1` | `config.txt` | Allows 1.6 A on the USB ports instead of 600 mA. The white paper says it is set automatically once `PSU_MAX_CURRENT=5000`. It is kept so a reset EEPROM doesn't silently cap the ReSpeaker's USB port. | same |
 | 3 | `dtoverlay=rpi-digiampplus,auto_mute_amp` | `config.txt` | TAS5756M at I²C1 0x4C, I²S with the Pi as clock producer, mute on GPIO22: the DigiAMP+ wiring (`gpio-leads.md`). `auto_mute_amp` unmutes when an ALSA device opens and mutes 5 s after it closes. R17 (100 kΩ) holds the amp muted until the driver takes GPIO22. | Raspberry Pi audio documentation (DigiAMP+ mute); overlay sources read 2026-11-07 (`gpio-leads.md`) |
 | 4 | `dtparam=uart0=on` | `config.txt` | LD2410C on GPIO14/15 (J5 → plug A pins 8/10) at 256000 8N1, device **`/dev/ttyAMA0`**. On the Pi 5, `serial0` points to the debug header's UART (`/dev/ttyAMA10`), so the radar must use `/dev/ttyAMA0`. **Do not** add `dtparam=uart0_console`, which moves the console onto these pins. `enable_uart=1` concerns the debug UART on the Pi 5 and isn't needed. | Raspberry Pi documentation issue #3239; documentation PR #3294 (Pi 5 UARTs); pinout.xyz GPIO15 |
-| 5 | `dtoverlay=vc4-kms-dsi-waveshare-panel,8_0_inch` | `config.txt` | **Unchanged.** Same panel, same DSI connector as V1 (default DSI1; `dsi0` only if the ribbon goes to the other connector). The ribbon is Daniel's own Waveshare 200 mm, 22-way to 15-way (D133), not the Raspberry Pi SC1132 cable. | `install.sh` on `main` |
+| 5 | `dtoverlay=vc4-kms-dsi-waveshare-panel,8_0_inch` | `config.txt` | **Unchanged.** Same panel, same DSI connector as V1 (default DSI1; `dsi0` only if the ribbon goes to the other connector). The ribbon is a Waveshare 200 mm, 22-way to 15-way, from stock, not the Raspberry Pi SC1132 cable. | `install.sh` on `main` |
 | 6 | Landscape | `cmdline.txt`, `startup.sh` | The V2 panel is landscape: the 8" DSI LCD's native 1280 × 800, so there is no rotation. Remove V1's portrait console rotation (`fbcon=rotate:3`) and the wlr-randr portrait transform in `startup.sh`. If the rev F mounting shows the image upside down, use 180: `fbcon=rotate:2`, `wlr-randr --transform 180`, and invert the touch in x and y (`dtoverlay -h vc4-kms-dsi-waveshare-panel` on the Pi lists the overlay's touch parameters). Check this at first boot. | Waveshare 8inch DSI LCD (C): 1280 × 800 hardware resolution |
 | 7 | I²C1 on (`raspi-config nonint do_i2c 0`) | `install.sh` | **Unchanged.** One bus for the amp and every sensor: AT42QT1070 0x1B (touch rev D), VEML6030 0x48, TAS5756M 0x4C, BME680 0x77 (V1 addresses). Pull-ups are the Pi's 1.8 kΩ. | `gpio-leads.md`; runbook 2026-11-08 |
 | 8 | `dtoverlay=disable-bt` | `config.txt` | **Unchanged.** Bluetooth isn't used. | `install.sh` on `main` |
@@ -72,7 +72,7 @@ the change and tests it.
 - Header comment "4. Configure: …": becomes "display overlay, I2C, amp overlay, UART0, USB current / EEPROM, Bluetooth
   off, TTY1 autologin".
 
-## Checks after the first boot (bench and the software session)
+## Checks after the first boot (on the bench, and again with the new software)
 ```
 rpi-eeprom-config | grep PSU_MAX_CURRENT          # PSU_MAX_CURRENT=5000
 vcgencmd get_config usb_max_current_enable        # usb_max_current_enable=1
@@ -81,7 +81,7 @@ i2cdetect -y 1                                    # 1b, 48, UU at 4c (driver bou
 ls -l /dev/ttyAMA0 /dev/serial0                   # ttyAMA0 present; serial0 -> ttyAMA10
 cat /boot/firmware/cmdline.txt                    # no fbcon=rotate:3
 ```
-No low-power warning should appear on the desktop or in `dmesg`. The software session's own items are unchanged:
+No low-power warning should appear on the desktop or in `dmesg`. Items for the software, unchanged:
 - the LD2410C in `sensor-daemon` on `/dev/ttyAMA0`;
 - the at42qt1070 key map: rev D keeps KEY0…KEY3 left to right as rev C;
 - the amp ceiling −4.0 dBFS;
@@ -105,5 +105,5 @@ No low-power warning should appear on the desktop or in `dmesg`. The software se
   - https://pinout.xyz/pinout/pin10_gpio15 (GPIO14/15 carry a PL011 on the Pi 5; the console is on the debug
     header).
 - LCD: Waveshare 8inch DSI LCD (C), https://waveshare.com/wiki/8inch_DSI_LCD_(C) (1280 × 800 hardware resolution).
-- `hardware/main-board/gpio-leads.md` (overlay sources read 2026-11-07); `claude/runbook-panel-01-rebuild-2026-11-08.md`
-  (V1 I²C addresses).
+- `hardware/main-board/gpio-leads.md` (overlay sources read 2026-11-07); the panel-01 rebuild runbook of
+  2026-11-08 (V1 I²C addresses).
