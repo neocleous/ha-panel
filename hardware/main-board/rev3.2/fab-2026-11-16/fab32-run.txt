@@ -1,4 +1,0 @@
-vias changed: 40
-relief: rule area "relief: pours 0.50 from the edge" on four copper layers, 184 corners, u +41.50 ... +44.00, v -0.05 ... +14.55
-revision text: REV 3.2 2026-11-16
-stack-up: JLC04161H-7628 in the board file, read back by KiCad
