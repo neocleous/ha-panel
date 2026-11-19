@@ -4,16 +4,19 @@ A small board that carries one MEMS microphone (Infineon IM69D120) in the panel'
 right: two boards of this one design. Each strip is wired by a five-way lead to the ReSpeaker Lite, the panel's voice
 front end, in place of the ReSpeaker's own microphones.
 
-**State (2026-11-19):** the fab set of 2026-11-09 is current; it was checked again on 2026-11-16. Not built or tested yet.
+**State (2026-11-19):** the fab set of 2026-11-09 is current; it was checked again on 2026-11-16 and 2026-11-19.
+In the cap the strip is held by a printed clamp that presses on two areas of its back; its two holes only locate it
+on the cap's pins ("The board"). Not built or tested yet.
 
 **Checks (KiCad 9.0.9):** schematic 0 errors, 0 warnings (`erc-report.txt`); board (2026-11-09, all severities)
 0 violations, 0 unconnected, 0 footprint errors, schematic parity clean (`drc-report.txt`). The check "footprint differs
-from library" is set to ignore: U1's and MK1's silk marks at the board edge were removed on purpose.
+from library" is set to ignore: U1's and MK1's silk marks at the board edge were removed on purpose. Run again on
+2026-11-19 with the same result, and a fresh export gave the zip of 2026-11-09 file for file.
 
 ## Files
 | File | What |
 |---|---|
-| `mic-strip.kicad_pro`, `.kicad_sch`, `.kicad_pcb` | the design, KiCad 9.0.9. Project libraries: `lib/ha_panel.kicad_sym` (IM69D120) and `lib/ha_panel.pretty` (IM69D120 land pattern, 5-pad wire column, heat-stake hole) |
+| `mic-strip.kicad_pro`, `.kicad_sch`, `.kicad_pcb` | the design, KiCad 9.0.9. Project libraries: `lib/ha_panel.kicad_sym` (IM69D120) and `lib/ha_panel.pretty` (IM69D120 land pattern, 5-pad wire column, and the footprint the two locating holes are drawn with) |
 | `mic-strip-schematic.pdf` | the schematic |
 | `mic-strip-assembly.pdf` | the assembly drawing (the back, as seen from the back) |
 | `mic-strip-3d.png`, `mic-strip-copper-F-B.png` | a render (front = gasket side, back = parts) and both copper layers (back mirrored) |
@@ -47,8 +50,20 @@ Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-20
 - **28 × 6 × 0.8 mm, 2 layers.** x = 0 at the outer (port) end. Every part sits on the **back** (inner side); the front
   faces the 1.0 mm gasket and carries only the ground pour and short crossings.
 - **Port:** unplated Ø0.8 at (2.0, 3.0), under MK1's sound port.
-- **Heat-stake holes:** unplated Ø2.0 at (7.5, 3.0) and (26.0, 3.0) for the cap's Ø1.8 pins; Ø3.6 keep-outs on the back
-  (no copper, no parts) for the staked heads.
+- **Locating holes:** unplated Ø2.0 at (7.5, 3.0) and (26.0, 3.0). They sit on the cap's Ø1.8 pins; nothing is melted or
+  screwed through them. On the back a Ø3.6 ring round each hole has no copper. In the KiCad files the holes keep the
+  footprint `HeatStake_D2.0mm_Head3.6mm` and the rings the zone names "stake head 1" and "stake head 2", from when the
+  pins were to be melted; only the names are left.
+- **Press areas for the clamp's toes** (back, symmetric about y 3.0, one over each hole):
+  - outer x 6.5–8.5 and inner x 25.7–27.7, both y 2.0–4.0, for toes of 2.0 × 2.0;
+  - nothing under them but the holes; a corner of the inner area lies over ground pour under soldermask;
+  - nearest: U1's pad 1.120 from the outer area, C2 1.275, R4 1.445; J1's pads 1.650 from the inner area, which ends 0.3
+    from the board's inner end;
+  - room to move or grow at the same clearances (1.0 to any part, 1.5 to J1): x 6.23–8.62 and 25.56–27.70, out to 0.3
+    from the long edges.
+- **Heights on the back,** the makers' maximums without the solder under each part: MK1 1.3, the tallest, at the outer
+  end; C2 0.9 beside it; between the press areas U1 1.1, C1 1.0, C3 0.9, D1–D3 0.77, the resistors 0.55. The lead's
+  wires at J1 are 0.54–0.58 across their insulation.
 - One design for both sides: the left strip is the right one turned 180° in the cap's plane (port end outward, gasket
   side up).
 - **Rules:** tracks 0.2 (0.25–0.3 for supply and ground), clearance 0.15, copper to edge 0.3; vias 0.5/0.3, ring 0.10;
@@ -89,7 +104,13 @@ Build two identical strips. Drawing: `mic-strip-assembly.pdf`. One hotplate pass
    - R5 present.
 7. **Lead:** JST A05SR05SR30K305B with both housings cut off, free length 230 mm (harness list of 2026-11-14).
    - Strip end: solder the conductors in cable order to J1 pads 1–5: 1 VDD, 2 GND, 3 CLK, 4 SEL, 5 DATA. Pad 1 is at
-     the top in the drawing. Hot-melt strain relief over the pads.
+     the top in the drawing.
+   - **The wires lie on their pads with their tips toward the inner end, so that the lead leaves J1 over its outer end**
+     (toward D1–D3), never over the inner end: the inner press area starts 1.65 beyond it.
+   - Lay the five wires toward the long edge that faces the screen in the cap, and lead them off the board there, over
+     D1–D3 (x 19 to 22). Nothing of the lead goes toward the other long edge: the clamp is on that side.
+   - Hot-melt strain relief over the pads: a thin bead, no higher than U1 (1.1 from the board) and not past the pads'
+     inner end (x 24.05).
    - ReSpeaker end, by function: VDD → pad 1, CLK → 2, DATA → 3, GND → 4 (and 6), SEL → 5. SEL is static and sits
      between CLK and DATA in the cable.
    - SEL strap at the ReSpeaker end: one strip to GND (left), the other to VDD (right).
