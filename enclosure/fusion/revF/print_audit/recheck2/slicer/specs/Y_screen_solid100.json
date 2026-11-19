@@ -1,1 +1,0 @@
-{"job": "Y_screen_solid100", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "opts": {"enable-support": "0", "brim-type": "no_brim", "sparse-infill-density": "100%", "sparse-infill-pattern": "zig-zag"}, "debug": 4, "plates": [{"name": "Y_screen_solid100", "objects": [{"stl": "screen_plan.stl"}]}]}

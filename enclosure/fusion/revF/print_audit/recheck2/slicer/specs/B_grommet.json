@@ -1,1 +1,0 @@
-{"job": "B_grommet", "process": "process_0.12_HQ.json", "filaments": ["filament_BambuABS.json"], "bed": "Engineering Plate", "opts": {"enable-support": "1", "brim-type": "outer_only", "brim-width": "3", "brim-object-gap": "0.1"}, "plates": [{"name": "B_grommet", "objects": [{"path": "{OLD}/slicer/orient/grommet_side+z.stl"}]}]}

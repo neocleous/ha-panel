@@ -1,1 +1,0 @@
-{"job": "A_plate_nosup", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "opts": {"enable-support": "0", "brim-type": "no_brim"}, "plates": [{"name": "A_plate_nosup", "objects": [{"path": "{RC}/exports/plate.stl", "pos": [128.0033187866211, 166.74252486228943, 5.452819095808081e-06]}]}]}

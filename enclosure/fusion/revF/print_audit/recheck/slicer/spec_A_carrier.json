@@ -1,1 +1,0 @@
-{"job": "A_carrier", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"], "opts": {"enable-support": "0", "brim-type": "no_brim"}, "plates": [{"name": "A_carrier", "objects": [{"stl": "carrier_plan.stl"}]}]}

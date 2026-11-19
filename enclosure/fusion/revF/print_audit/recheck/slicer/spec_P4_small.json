@@ -1,8 +1,0 @@
-{"job": "P4_small", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"],
- "opts": {"enable-support": "0", "brim-type": "no_brim"},
- "plates": [{"name": "P4", "objects": [
-   {"stl": "carrier_plan.stl", "pos": [-38.0, 0.0, 0.0]},
-   {"stl": "cradle_plan.stl", "pos": [47.0, -38.0, 0.0], "params": {"enable_support": "1"}},
-   {"stl": "clip_L_plan.stl", "pos": [37.0, 0.0, 0.0], "params": {"brim_type": "outer_only", "brim_width": "3", "brim_object_gap": "0.1"}},
-   {"stl": "clip_R_plan.stl", "pos": [57.0, 0.0, 0.0], "params": {"brim_type": "outer_only", "brim_width": "3", "brim_object_gap": "0.1"}},
-   {"stl": "bme_hood_plan.stl", "pos": [47.0, 42.0, 0.0]}]}]}

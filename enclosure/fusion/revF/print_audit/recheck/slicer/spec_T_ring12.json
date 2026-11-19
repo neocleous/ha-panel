@@ -1,3 +1,0 @@
-{"job": "T_ring12", "process": "process_0.20_Standard.json", "filaments": ["filament_BambuABS.json"],
- "opts": {"enable-support": "1", "brim-type": "brim_ears", "brim-width": "5", "brim-object-gap": "0.1"},
- "plates": [{"name": "T_ring12", "objects": [{"stl": "front_ring12.stl"}]}]}
