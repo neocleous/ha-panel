@@ -1,0 +1,52 @@
+{
+ "job": "T6_P4",
+ "process": "process_0.12_HQ.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "0",
+  "brim-type": "no_brim",
+  "initial-layer-print-height": "0.2"
+ },
+ "title": "v67 TRIAL PLA P4 cap + grommet | TPEI",
+ "deliver": [
+  "1_PLA_trial",
+  "TRIAL_PLA_6_P4_cap_and_grommet_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 TRIAL PLA P4 cap + grommet | TPEI",
+   "objects": [
+    {
+     "stl": "cap_plan.stl",
+     "pos": [
+      0,
+      -28,
+      0
+     ],
+     "params": {
+      "brim_type": "brim_ears",
+      "detect_thin_wall": "1"
+     }
+    },
+    {
+     "stl": "grommet_plan.stl",
+     "pos": [
+      0,
+      52,
+      0
+     ],
+     "params": {
+      "enable_support": "1",
+      "brim_type": "outer_only",
+      "brim_width": "3",
+      "brim_object_gap": "0.1"
+     }
+    }
+   ]
+  }
+ ],
+ "desc": "PLA TRIAL, version 67. Textured PEI, no glue. Plain tree supports."
+}

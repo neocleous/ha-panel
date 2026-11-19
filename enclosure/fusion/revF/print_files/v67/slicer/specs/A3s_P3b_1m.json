@@ -1,0 +1,45 @@
+{
+ "job": "A3s_P3b_1m",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "sparse-infill-density": "100%",
+  "sparse-infill-pattern": "zig-zag",
+  "enable-support": "1",
+  "brim-type": "no_brim",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0"
+ },
+ "title": "A3s_P3b_1m",
+ "plates": [
+  {
+   "name": "v67 ABS P3b screen plate + SfA interface | TPEI + glue",
+   "objects": [
+    {
+     "stl": "screen_plan.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "stl": "screen_plan_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "slice": true,
+ "desc": "one-material stand-in of a window project, version 67 - not a print file"
+}

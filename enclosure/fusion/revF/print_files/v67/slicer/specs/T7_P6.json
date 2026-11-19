@@ -1,0 +1,36 @@
+{
+ "job": "T7_P6",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "0",
+  "brim-type": "outer_only",
+  "brim-width": "5",
+  "brim-object-gap": "0.1",
+  "detect-thin-wall": "1"
+ },
+ "title": "v67 TRIAL PLA P6 door | TPEI",
+ "deliver": [
+  "1_PLA_trial",
+  "TRIAL_PLA_7_P6_door_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 TRIAL PLA P6 door | TPEI",
+   "objects": [
+    {
+     "stl": "door_plan.stl",
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "desc": "PLA TRIAL, version 67. Textured PEI, no glue. Plain tree supports."
+}

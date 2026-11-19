@@ -1,0 +1,53 @@
+{
+ "job": "A0_cal",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "0",
+  "brim-type": "no_brim"
+ },
+ "title": "v67 ABS calibration | TPEI + glue",
+ "desc": "Black ABS, version 67. Textured PEI with glue. Frame 120 outside and 108 inside, 5 tall: measure outside and inside, X and Y, at mid-height. Tower 20 x 20 x 30: its height, and its width at the first layer and at 15 mm. Hole block (solid): the 4.0 drill shank into both 4.0 holes, an M3 screw through both 3.4 holes, and an M3 screw driven into the sideways 2.7 pilot in the lug and removed three times, with no crack line.",
+ "deliver": [
+  "2_ABS_calibration_and_adhesion_test",
+  "ABS_0a_calibration_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 ABS calibration | TPEI + glue",
+   "objects": [
+    {
+     "stl": "cal_frame.stl",
+     "pos": [
+      128,
+      128,
+      0
+     ]
+    },
+    {
+     "stl": "cal_tower.stl",
+     "pos": [
+      98,
+      128,
+      0
+     ]
+    },
+    {
+     "stl": "cal_holes_v67.stl",
+     "pos": [
+      149,
+      128,
+      0
+     ],
+     "params": {
+      "sparse_infill_density": "100%",
+      "sparse_infill_pattern": "zig-zag"
+     }
+    }
+   ]
+  }
+ ]
+}

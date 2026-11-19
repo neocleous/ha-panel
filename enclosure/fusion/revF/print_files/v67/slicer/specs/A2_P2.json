@@ -1,0 +1,78 @@
+{
+ "job": "A2_P2",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "0",
+  "brim-type": "no_brim"
+ },
+ "title": "v67 ABS P2 carrier, cradle, clips, hood | TPEI + glue",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_2_P2_carrier_cradle_clips_hood_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 ABS P2 carrier, cradle, clips, hood | TPEI + glue",
+   "objects": [
+    {
+     "stl": "carrier_plan.stl",
+     "pos": [
+      -38,
+      0,
+      0
+     ]
+    },
+    {
+     "stl": "cradle_plan.stl",
+     "pos": [
+      47,
+      -38,
+      0
+     ],
+     "params": {
+      "enable_support": "1"
+     }
+    },
+    {
+     "stl": "clip_L_plan.stl",
+     "pos": [
+      37,
+      0,
+      0
+     ],
+     "params": {
+      "brim_type": "outer_only",
+      "brim_width": "3",
+      "brim_object_gap": "0.1"
+     }
+    },
+    {
+     "stl": "clip_R_plan.stl",
+     "pos": [
+      57,
+      0,
+      0
+     ],
+     "params": {
+      "brim_type": "outer_only",
+      "brim_width": "3",
+      "brim_object_gap": "0.1"
+     }
+    },
+    {
+     "stl": "bme_hood_plan.stl",
+     "pos": [
+      47,
+      42,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "desc": "Black ABS, version 67. Textured PEI with glue."
+}

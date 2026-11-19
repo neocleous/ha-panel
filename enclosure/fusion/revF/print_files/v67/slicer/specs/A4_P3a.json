@@ -1,0 +1,58 @@
+{
+ "job": "A4_P3a",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json",
+  "filament_SupportABS_white.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "1",
+  "brim-type": "outer_only",
+  "brim-width": "5",
+  "brim-object-gap": "0.1",
+  "wall-loops": "4",
+  "support-filament": "1",
+  "support-interface-filament": "2",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0",
+  "enable-prime-tower": "1",
+  "filament-map": "1,2",
+  "wipe-tower-x": "110",
+  "wipe-tower-y": "205",
+  "prime-tower-width": "35"
+ },
+ "title": "v67 ABS P3a shell + SfA interface | TPEI + glue",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_4_P3a_shell_WINDOW_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 ABS P3a shell + SfA interface | TPEI + glue",
+   "objects": [
+    {
+     "stl": "shell_plan.stl",
+     "assemble": 1,
+     "pos": [
+      0.0,
+      -30.0,
+      0.0
+     ]
+    },
+    {
+     "stl": "shell_plan_blk_v3.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      0.0,
+      -30.0,
+      0.0
+     ]
+    }
+   ]
+  }
+ ],
+ "slice": false,
+ "desc": "Black ABS, version 67. Textured PEI with glue. Chin face down, 4 walls, blockers v3 (the settled boxes, the band along the chin edges and one cylinder in each post insert hole), 5 mm brim, tree supports in black ABS with the Support for ABS interface (D173), prime tower behind the part. Slice in the window. Filament 1 black ABS on the main (left) nozzle, filament 2 Support for ABS on the auxiliary (right) nozzle from its external spool (D178). Shrinkage: your calibrated preset on filament 1."
+}

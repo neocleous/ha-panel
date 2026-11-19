@@ -1,0 +1,58 @@
+{
+ "job": "A0_adh",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json",
+  "filament_SupportABS_white.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "slice": false,
+ "opts": {
+  "enable-support": "1",
+  "brim-type": "outer_only",
+  "brim-width": "5",
+  "brim-object-gap": "0.1",
+  "wall-loops": "4",
+  "support-filament": "1",
+  "support-interface-filament": "2",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0",
+  "enable-prime-tower": "1",
+  "filament-map": "1,2",
+  "wipe-tower-x": "110",
+  "wipe-tower-y": "205",
+  "prime-tower-width": "35"
+ },
+ "title": "v67 ABS adhesion test - shell first 8 mm",
+ "deliver": [
+  "2_ABS_calibration_and_adhesion_test",
+  "ABS_0b_adhesion_test_shell_8mm_WINDOW_v67.3mf"
+ ],
+ "desc": "Black ABS, version 67. The shell P3a first 8.0 mm, placed where it lies in P3a. Textured PEI with glue. Chin face down, 4 walls, blockers along the chin edges and in the two bottom insert holes, 5 mm brim, tree supports in black ABS with the Support for ABS interface, prime tower behind the part. Slice in the window. Filament 1 black ABS on the main (left) nozzle, filament 2 Support for ABS on the auxiliary (right) nozzle from its external spool (D178). Shrinkage: your calibrated preset on filament 1.",
+ "plates": [
+  {
+   "name": "v67 ABS adhesion test: shell first 8 mm + SfA | TPEI + glue",
+   "objects": [
+    {
+     "stl": "shell_chin8_plan.stl",
+     "assemble": 1,
+     "pos": [
+      0.0,
+      -30.0,
+      0.0
+     ]
+    },
+    {
+     "stl": "shell_chin8_blk_v3.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      0.0,
+      -30.0,
+      0.0
+     ]
+    }
+   ]
+  }
+ ]
+}

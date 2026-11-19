@@ -1,0 +1,36 @@
+{
+ "job": "A7_P6",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "0",
+  "brim-type": "outer_only",
+  "brim-width": "5",
+  "brim-object-gap": "0.1",
+  "detect-thin-wall": "1"
+ },
+ "title": "v67 ABS P6 door | TPEI + glue",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_7_P6_door_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 ABS P6 door | TPEI + glue",
+   "objects": [
+    {
+     "stl": "door_plan.stl",
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "desc": "Black ABS, version 67. Textured PEI with glue."
+}

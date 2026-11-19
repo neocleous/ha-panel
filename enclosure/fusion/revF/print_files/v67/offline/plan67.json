@@ -1,0 +1,160 @@
+{
+ "PLA trial": {
+  "T0_cal": {
+   "t": 34.54155680338542,
+   "tp": 40.168009440104164,
+   "g": 22.428421020507812,
+   "warn": ""
+  },
+  "T1_P1": {
+   "t": 318.44358723958334,
+   "tp": 324.0711263020833,
+   "g": 109.08338928222656,
+   "warn": "Unsupported overhangs were detected. Model \"spkbox_R_plan_1\" has 1 overhang region(s) that could not get support. Try adjusting the support settings or re-orienting the object."
+  },
+  "T2_P2": {
+   "t": 37.909122721354166,
+   "tp": 43.536580403645836,
+   "g": 17.62027931213379,
+   "warn": ""
+  },
+  "T3_P3b": {
+   "t": 75.20087890625,
+   "tp": 80.826318359375,
+   "g": 83.00702667236328,
+   "warn": ""
+  },
+  "T4_P3a": {
+   "t": 494.4436848958333,
+   "tp": 500.06858723958334,
+   "g": 170.8359375,
+   "warn": "Unsupported overhangs were detected. Model \"assemble_1\" has 2 overhang region(s) that could not get support. Try adjusting the support settings or re-orienting the object."
+  },
+  "T5_P5": {
+   "t": 196.9552734375,
+   "tp": 202.57906901041667,
+   "g": 36.87332534790039,
+   "warn": ""
+  },
+  "T6_P4": {
+   "t": 56.46880289713542,
+   "tp": 62.09590250651042,
+   "g": 10.815733909606934,
+   "warn": ""
+  },
+  "T7_P6": {
+   "t": 119.7093994140625,
+   "tp": 125.33563639322917,
+   "g": 51.44552230834961,
+   "warn": "It seems object door_plan_1 has floating cantilever. Please re-orient the object or enable support generation."
+  }
+ },
+ "ABS calibration": {
+  "A0_cal": {
+   "t": 50.74557291666667,
+   "tp": 68.37216796875,
+   "g": 17.94560432434082,
+   "warn": ""
+  }
+ },
+ "ABS one-material plates": {
+  "A1_P1": {
+   "t": 328.29527994791664,
+   "tp": 345.92298177083336,
+   "g": 87.95987701416016,
+   "warn": "Unsupported overhangs were detected. Model \"spkbox_R_plan_1\" has 1 overhang region(s) that could not get support. Try adjusting the support settings or re-orienting the object."
+  },
+  "A2_P2": {
+   "t": 42.915706380208334,
+   "tp": 60.54330647786458,
+   "g": 14.098512649536133,
+   "warn": ""
+  },
+  "A6_P4": {
+   "t": 58.81967366536458,
+   "tp": 76.44691569010416,
+   "g": 8.657110214233398,
+   "warn": ""
+  },
+  "A7_P6": {
+   "t": 196.47706705729166,
+   "tp": 214.10345052083332,
+   "g": 41.16305160522461,
+   "warn": "It seems object door_plan_1 has floating cantilever. Please re-orient the object or enable support generation."
+  }
+ },
+ "window": {
+  "Adhesion test": {
+   "stand_in": {
+    "t": 108.547021484375,
+    "tp": 126.17264811197917,
+    "g": 25.691024780273438,
+    "warn": ""
+   },
+   "sfa_mm3": 272.0,
+   "layers": 38,
+   "changes": 76,
+   "tower_cm3": 3.42,
+   "t": 114.88035481770832,
+   "tp": 132.5059814453125,
+   "abs_g": 27.186510375976564,
+   "sfa_g": 2.2991583740234374
+  },
+  "P3b": {
+   "stand_in": {
+    "t": 88.48115234375,
+    "tp": 106.10670572916666,
+    "g": 67.8717269897461,
+    "warn": ""
+   },
+   "sfa_mm3": 1093.0,
+   "layers": 2,
+   "changes": 4,
+   "tower_cm3": 0.18,
+   "t": 88.81448567708333,
+   "tp": 106.44003906249999,
+   "abs_g": 66.82862044677734,
+   "sfa_g": 1.3722649902343749
+  },
+  "P3a": {
+   "stand_in": {
+    "t": 589.8336588541666,
+    "tp": 607.4593098958334,
+    "g": 194.3116455078125,
+    "warn": ""
+   },
+   "sfa_mm3": 4379.9,
+   "layers": 297,
+   "changes": 594,
+   "tower_cm3": 26.73,
+   "t": 639.3336588541666,
+   "tp": 656.9593098958334,
+   "abs_g": 203.65614960937498,
+   "sfa_g": 20.584083886718748
+  },
+  "P5": {
+   "stand_in": {
+    "t": 192.35302734375,
+    "tp": 209.97747395833332,
+    "g": 31.151853561401367,
+    "warn": ""
+   },
+   "sfa_mm3": 3294.9,
+   "layers": 9,
+   "changes": 18,
+   "tower_cm3": 0.81,
+   "t": 193.85302734375,
+   "tp": 211.47747395833332,
+   "abs_g": 28.146397526245117,
+   "sfa_g": 4.291839423828124
+  }
+ },
+ "abs_set": {
+  "t": 1548.5088989257813,
+  "tp": 1671.8934773763021,
+  "abs_g": 450.50971906555174,
+  "sfa_g": 26.248188300781248,
+  "with_cal_adh_abs_g": 495.64183376586914,
+  "with_cal_adh_sfa_g": 28.547346674804686
+ }
+}

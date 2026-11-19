@@ -1,0 +1,47 @@
+{
+ "job": "T4_P3a",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "1",
+  "brim-type": "outer_only",
+  "brim-width": "5",
+  "brim-object-gap": "0.1",
+  "wall-loops": "4"
+ },
+ "title": "v67 TRIAL PLA P3a shell, plain trees | TPEI",
+ "deliver": [
+  "1_PLA_trial",
+  "TRIAL_PLA_4_P3a_shell_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 TRIAL PLA P3a shell, plain trees | TPEI",
+   "objects": [
+    {
+     "stl": "shell_plan.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "stl": "shell_plan_blk_v3.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "desc": "PLA TRIAL, version 67. Textured PEI, no glue. Plain tree supports."
+}

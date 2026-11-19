@@ -1,0 +1,37 @@
+{
+ "job": "T5_P5",
+ "process": "process_0.12_HQ.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "layer-height": "0.1",
+  "enable-support": "1",
+  "brim-type": "outer_only",
+  "brim-width": "3",
+  "brim-object-gap": "0.1",
+  "support-top-z-distance": "0.2"
+ },
+ "title": "v67 TRIAL PLA P5 slab, plain trees | TPEI",
+ "deliver": [
+  "1_PLA_trial",
+  "TRIAL_PLA_5_P5_slab_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 TRIAL PLA P5 slab, plain trees | TPEI",
+   "objects": [
+    {
+     "stl": "slab_plan.stl",
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "desc": "PLA TRIAL, version 67. Textured PEI, no glue. Plain tree supports."
+}

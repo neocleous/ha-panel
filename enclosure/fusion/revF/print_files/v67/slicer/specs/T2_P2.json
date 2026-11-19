@@ -1,0 +1,78 @@
+{
+ "job": "T2_P2",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "0",
+  "brim-type": "no_brim"
+ },
+ "title": "v67 TRIAL PLA P2 carrier, cradle, clips, hood | TPEI",
+ "deliver": [
+  "1_PLA_trial",
+  "TRIAL_PLA_2_P2_carrier_cradle_clips_hood_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 TRIAL PLA P2 carrier, cradle, clips, hood | TPEI",
+   "objects": [
+    {
+     "stl": "carrier_plan.stl",
+     "pos": [
+      -38,
+      0,
+      0
+     ]
+    },
+    {
+     "stl": "cradle_plan.stl",
+     "pos": [
+      47,
+      -38,
+      0
+     ],
+     "params": {
+      "enable_support": "1"
+     }
+    },
+    {
+     "stl": "clip_L_plan.stl",
+     "pos": [
+      37,
+      0,
+      0
+     ],
+     "params": {
+      "brim_type": "outer_only",
+      "brim_width": "3",
+      "brim_object_gap": "0.1"
+     }
+    },
+    {
+     "stl": "clip_R_plan.stl",
+     "pos": [
+      57,
+      0,
+      0
+     ],
+     "params": {
+      "brim_type": "outer_only",
+      "brim_width": "3",
+      "brim_object_gap": "0.1"
+     }
+    },
+    {
+     "stl": "bme_hood_plan.stl",
+     "pos": [
+      47,
+      42,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "desc": "PLA TRIAL, version 67. Textured PEI, no glue. Plain tree supports."
+}

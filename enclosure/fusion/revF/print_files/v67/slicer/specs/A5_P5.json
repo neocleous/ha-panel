@@ -1,0 +1,47 @@
+{
+ "job": "A5_P5",
+ "process": "process_0.12_HQ.json",
+ "filaments": [
+  "filament_BambuABS_black.json",
+  "filament_SupportABS_white.json"
+ ],
+ "bed": "Engineering Plate",
+ "opts": {
+  "layer-height": "0.1",
+  "enable-support": "1",
+  "brim-type": "outer_only",
+  "brim-width": "3",
+  "brim-object-gap": "0.1",
+  "support-filament": "2",
+  "support-interface-filament": "2",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0",
+  "enable-prime-tower": "1",
+  "filament-map": "1,2",
+  "wipe-tower-x": "30",
+  "wipe-tower-y": "110",
+  "prime-tower-width": "30"
+ },
+ "title": "v67 ABS P5 slab + SfA | Engineering + glue",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_5_P5_slab_WINDOW_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 ABS P5 slab + SfA | Engineering + glue",
+   "objects": [
+    {
+     "stl": "slab_plan.stl",
+     "pos": [
+      34,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "slice": false,
+ "desc": "Black ABS, version 67. Engineering plate with glue. 0.10 layers. All support in Support for ABS, top Z distance 0, dense interface, prime tower on the left of the slab, 3 mm brim. Slice in the window. Filament 1 black ABS on the main (left) nozzle, filament 2 Support for ABS on the auxiliary (right) nozzle from its external spool (D178). Shrinkage: your calibrated preset on filament 1."
+}

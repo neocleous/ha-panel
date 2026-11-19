@@ -1,0 +1,69 @@
+{
+ "job": "T1_P1",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "1",
+  "brim-type": "no_brim"
+ },
+ "title": "v67 TRIAL PLA P1 base plate + boxes | TPEI",
+ "deliver": [
+  "1_PLA_trial",
+  "TRIAL_PLA_1_P1_base_plate_and_boxes_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 TRIAL PLA P1 base plate + boxes | TPEI",
+   "objects": [
+    {
+     "stl": "base_plan.stl",
+     "pos": [
+      0,
+      75,
+      0
+     ],
+     "params": {
+      "enable_support": "0",
+      "brim_type": "no_brim"
+     }
+    },
+    {
+     "stl": "spkbox_L_plan.stl",
+     "pos": [
+      -50,
+      -72,
+      0
+     ],
+     "params": {
+      "enable_support": "1",
+      "brim_type": "outer_only",
+      "brim_width": "3",
+      "brim_object_gap": "0.1",
+      "sparse_infill_density": "100%",
+      "sparse_infill_pattern": "zig-zag"
+     }
+    },
+    {
+     "stl": "spkbox_R_plan.stl",
+     "pos": [
+      50,
+      -72,
+      0
+     ],
+     "params": {
+      "enable_support": "1",
+      "brim_type": "outer_only",
+      "brim_width": "3",
+      "brim_object_gap": "0.1",
+      "sparse_infill_density": "100%",
+      "sparse_infill_pattern": "zig-zag"
+     }
+    }
+   ]
+  }
+ ],
+ "desc": "PLA TRIAL, version 67. Textured PEI, no glue. Plain tree supports."
+}

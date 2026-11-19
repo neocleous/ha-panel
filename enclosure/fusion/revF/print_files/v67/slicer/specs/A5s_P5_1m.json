@@ -1,0 +1,35 @@
+{
+ "job": "A5s_P5_1m",
+ "process": "process_0.12_HQ.json",
+ "filaments": [
+  "filament_BambuABS_black.json"
+ ],
+ "bed": "Engineering Plate",
+ "opts": {
+  "layer-height": "0.1",
+  "enable-support": "1",
+  "brim-type": "outer_only",
+  "brim-width": "3",
+  "brim-object-gap": "0.1",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0"
+ },
+ "title": "A5s_P5_1m",
+ "plates": [
+  {
+   "name": "v67 ABS P5 slab + SfA | Engineering + glue",
+   "objects": [
+    {
+     "stl": "slab_plan.stl",
+     "pos": [
+      34,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "slice": true,
+ "desc": "one-material stand-in of a window project, version 67 - not a print file"
+}

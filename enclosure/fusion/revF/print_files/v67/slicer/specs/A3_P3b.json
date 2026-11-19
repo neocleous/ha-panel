@@ -1,0 +1,57 @@
+{
+ "job": "A3_P3b",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json",
+  "filament_SupportABS_white.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "sparse-infill-density": "100%",
+  "sparse-infill-pattern": "zig-zag",
+  "enable-support": "1",
+  "brim-type": "no_brim",
+  "support-filament": "1",
+  "support-interface-filament": "2",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0",
+  "enable-prime-tower": "1",
+  "filament-map": "1,2",
+  "wipe-tower-x": "110",
+  "wipe-tower-y": "205",
+  "prime-tower-width": "35"
+ },
+ "title": "v67 ABS P3b screen plate + SfA interface | TPEI + glue",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_3_P3b_screen_plate_WINDOW_v67.3mf"
+ ],
+ "plates": [
+  {
+   "name": "v67 ABS P3b screen plate + SfA interface | TPEI + glue",
+   "objects": [
+    {
+     "stl": "screen_plan.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "stl": "screen_plan_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "slice": false,
+ "desc": "Black ABS, version 67. Textured PEI with glue. Back face down, solid (100 % zig-zag), no brim. Tree supports under the raised border with the Support for ABS interface (top Z distance 0, dense), two blockers over the peg pocket and the peg slot, prime tower behind the part. Slice in the window. Filament 1 black ABS on the main (left) nozzle, filament 2 Support for ABS on the auxiliary (right) nozzle from its external spool (D178). Shrinkage: your calibrated preset on filament 1."
+}
