@@ -170,7 +170,9 @@ layout notes. What holds for the board as it goes to the fab:
 - **Ground:** layer 2 is an unbroken ground plane; ground pours on both outer layers with stitching vias (rev 3.1).
   Bare circles round the four holes: 3.5 radius on the door side, 4.1 on the back.
 - **Silkscreen:** 67 of the 120 names are printed, 53 are hidden in the dense areas. The assembly drawing carries all
-  120. The back prints the connectors' names and `REV 3.2 2026-11-16`.
+  120. The back prints the connectors' names and `REV 3.2 2026-11-16`. Every silk line is 0.15 wide since 2026-11-21,
+  JLC's minimum (the library footprints draw 0.12). C6's + mark is 0.9 across instead of 1.0 and 0.03 further from L1,
+  so the wider lines stay 0.05 apart.
 - **Checks (KiCad 9.0.9, 2026-11-16):** schematic check 0 errors, 0 warnings; board check 0 errors, 0 open connections,
   0 differences to the schematic, 2 warnings (J6's and J2's footprints differ from the library copies, on purpose).
 
