@@ -64,8 +64,9 @@ on purpose (`drc-report.txt`).
 3. **5 V supply and outputs** — 120 µF – L1 15 µH – 120 µF → NID100-5 (enabled by the protection chip's power-good) →
    22 µF + D2 SMBJ6.0A-E → Pi branch (F2 10 A → wire link LK1 → USB-C socket J2, 10 kΩ on each CC pin) and radar
    branch (F3 1 A). Trim network R8/R9 not fitted.
-4. **3.3 V, Pi link, sensors, radar, echo tap** — TPS70933 (enabled by the Pi's 3.3 V) → sensor branch through F4 and
-   the amplifier's logic rail; 13 wire pads for the Pi's signals (J3, J4); radar (J5) and touch (J6) sockets; one
+4. **3.3 V, Pi link, sensors, radar, echo tap** — TPS70933 (enabled by the Pi's 3.3 V) → sensor branch through F4
+   (BME680 and VEML6030), the touch socket J6 straight from the regulator (since 2026-11-21) and the amplifier's logic
+   rail; 13 wire pads for the Pi's signals (J3, J4); radar (J5) and touch (J6) sockets; one
    4-pin header each for the BME680 (J10) and the VEML6030 (J11); echo tap J7 with six links not fitted.
 5. **Amplifier** — TAS5756M stereo, I²C address 0x4C, mute on GPIO22, 10 µH + 0.68 µF output filters, speaker sockets
    J8 (left) and J9 (right).

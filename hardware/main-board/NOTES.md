@@ -60,14 +60,14 @@ KiCad **9.0.9**. Every value below is traced to a datasheet section or a project
 | R13 | 100 kΩ | EN pull-down; EN = Pi 3V3 (lead A1). In Pi STANDBY (5 V on, 3V3 off — HAT+ spec) the LDO is off, so nothing back-feeds the Pi's I²C pins, and the amp stays muted (R17). |
 | Load | ≈ 85 mA | TAS5756M DVDD + AVDD + CPVDD ≈ 35 mA (SLAS988B 7.12, idle) + touch/BME680/VEML6030 ≈ 50 mA (estimate). U2 dissipation (5.0 − 0.19 − 3.3) V × 85 mA = 0.13 W. |
 | R26, R27 | 0 Ω 0603; R27 **DNP** | Amp logic rail 3V3_AMP (TAS DVDD/AVDD/CPVDD, C105/C119, R102). TAS5756M digital inputs need VIH ≥ 0.9 × DVDD (SLAS988B 7.3) and TI advises driving them from the DVDD supply (note 2); the Pi drives I²S/I²C/GPIO22 from its own 3V3, whose tolerance is not published. Default R26 = board LDO (±1 %); option R27 = the Pi 3V3 (lead A1 then carries ≈ 35 mA). Bench: compare TP16 with the Pi 3V3 at J3.1. |
-| F4 | Bel 0ZCJ0020FF2E 0.2 A PTC | Chosen; sensor/touch branch. |
+| F4 | Bel 0ZCJ0020FF2E 0.2 A PTC | Chosen; sensor branch (J10 BME680, J11 VEML6030). Since 2026-11-21 the touch socket J6 is not behind F4: the BME680's heater draws its current in steps, up to about 33 mV across F4 (up to 2.5 Ω), more than the AT42QT1070's ±25 mV supply allowance, and the AT42QT1070 data sheet advises against sharing its supply with other loads. A short on the touch lead is now limited by the TPS70933's own current limit. |
 | J3, J4 | wire pads 2 × 5 + 2 × 2 | GPIO landing, 13 leads — see `gpio-leads.md`. |
 | R14–R16 | 0 Ω 0603 | I²S series positions (BCLK, LRCLK, DOUT): 0 Ω fitted; 22–47 Ω if the edges ring over the 150 mm leads (E). |
 | R17 | 100 kΩ | AMP_MUTE_N pull-down: muted unless GPIO22 drives high. |
 | R18 | 100 kΩ | PI_DIN pull-down (lead B2 unused in topology A, the echo reference from USB). |
 | J5 | JST B4B-XH-A | LD2410C: 1 VCC 5 V, 2 GND, 3 LD TX, 4 LD RX (component envelope spec: lead soldered to LD2410C pins 1, 2, 4, 5; OUT not wired). |
 | R19 | 4.7 kΩ | LD TX → Pi RXD. Replaces the provisional 1 kΩ: limits current into an unpowered Pi (radar stays on 5 V when the Pi is off) to 0.64 mA; with ≈ 10 pF the RC is 47 ns ≪ 3.9 µs bit time at 256000 Bd. |
-| J6 | JST B4B-XH-A | Touch board rev D (`../touch-board/`) HOST pads: VCC, GND, SDA, SCL. No INT (CHANGE# unused, as on rev C). |
+| J6 | JST B4B-XH-A | Touch board (`../touch-board/`) HOST pads: VCC, GND, SDA, SCL. No INT (CHANGE# unused, as on rev C). Pin 1 is +3V3 straight from U2 (since 2026-11-21; 3V3_SENS before), brought from the +3V3 via at (37.09, 33.53) by a 0.25 track on In2 to the via at (44.63, 46.18), the only track on an inner layer. |
 | J10, J11 | 1 × 4 male pin header, 2.54, straight, one each (since rev 3): Sullins PRPC004SAAN-RC, chosen with the parts list on 2026-11-16 | The BME680 (CJMCU-680) and VEML6030 Dupont leads land on the main board instead of on the touch board, each with a 1 × 4 Dupont housing: J10 BME680, J11 VEML6030. Both carry the same four nets, pin 1 to 4: 3V3_SENS, GND, SDA, SCL. 3V3_SENS comes through F4. (Rev 2.1 had one 2 × 4 header with a column per sensor.) |
 | J7 | 1 × 8 wire pads | ReSpeaker echo tap, to the XIAO footprint (Seeed pinout): 1 GND, 2 I2S_BCLK, 3 I2S_LRCLK, 4 → I2S_DIN_SEC(dout) (reference into the XU316), 5 ← I2S_DIN_XIAO(din) (XU316 output), 6 GND, 7 SDA, 8 SCL. |
 | R20–R25 | 0 Ω 0603, **DNP** | Topology A (USB reference, default): all open. Topology B (I²S reference, a bench option): fit R20–R23 (+R24/R25 to reach the XU316 over I²C), I²S firmware, Pi as I²S clock consumer (custom overlay). |
@@ -150,7 +150,7 @@ layout notes. What holds for the board as it goes to the fab:
   | | 0.2104 | prepreg 7628, εr 4.4 |
   | layer 2 (In1.Cu), ground | 0.0152 | copper |
   | | 1.065 | core, εr 4.6 |
-  | layer 3 (In2.Cu), +5 V, +20 V, amplifier supply | 0.0152 | copper |
+  | layer 3 (In2.Cu), +5 V, +20 V, amplifier supply; one +3V3 track to J6 | 0.0152 | copper |
   | | 0.2104 | prepreg 7628, εr 4.4 |
   | back (B.Cu) | 0.035 | copper |
 
