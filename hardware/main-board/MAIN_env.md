@@ -84,7 +84,10 @@ Everything not listed is 3.0 or lower. Screw heads at the four holes: 1.65.
   lead chosen and is not in my documents.
 - **Between the radar socket and the BME680 header** (4.14 between their boxes) now stand the radar fuse (2.94 tall),
   the radar capacitor (1.5) and a bare test pad. The radar plug's top is at 9.8.
-- **Supply module PS1:** 50.8 x 12 on the board, 27.5 +/- 1 tall, standing on one row of 13 pins at v -0.3. Unchanged.
+- **Supply module PS1:** 50.8 x 12 on the board, 27.5 +/- 1 tall, standing on one row of 13 pins at v +2.7. Its box
+  (v -4.6...+8.0) is unchanged. On 2026-11-21 the pin row moved 3.0 toward +v: Mean Well's side view puts the pins 5.0
+  from the component side and 7.0 from the back (9 from the component side to the module's board, pins 4 from it), and
+  the footprint had them 8.0 and 4.0. With the row at v +2.7 the module fills v -4.3...+7.7, inside the box.
 
 Plugged connectors and the nearest part that is taller than the mated plug (for the reach check):
 
@@ -119,7 +122,7 @@ the ends of the through-hole pins:
 | J10 | -30.4...-30.4 | -17.9...-10.3 | 1.4 | 4.0 | over the ReSpeaker | pin 3.0 below the seating plane (KiCad model; generic part, not verified) - 1.6 |
 | J11 | -4.5...+3.1 | -13.0...-13.0 | 1.4 | 4.0 | over the ReSpeaker | pin 3.0 below the seating plane (KiCad model; generic part, not verified) - 1.6 |
 | LK1 | +6.9...+14.5 | -11.2...-11.2 | 1.5 | 4.0 | over the ReSpeaker | wire cut after soldering (assumed) |
-| PS1 | -35.8...+12.5 | -0.3...-0.3 | 2.9 | 4.0 | over the ReSpeaker | pins 4.5 long (NID100-SPEC) - 1.6 |
+| PS1 | -35.8...+12.5 | +2.7...+2.7 | 2.9 | 4.0 | over the ReSpeaker | pins 4.5 long (NID100-SPEC) - 1.6; at v -0.3 until 2026-11-21 |
 
 - **Rev 3.2:** unchanged against rev 3.1. Beside the ReSpeaker's USB plug (u > +42.8, v +1.0...+13.4, 1.4 allowed)
   the board now ends at u +42.0 over v +0.5...+14.0; no joint stood there before either.
@@ -131,7 +134,7 @@ the ends of the through-hole pins:
   1.8, right speaker socket 1.8, C5 and C6 1.5. The limit is 4.0. The BME680 header's pins (1.4) are 10.2 from the
   -u edge strip (rev 3: 6.3).
 - **In front of the -u microphone lead's strip** (u -34.5...-30.5): supply module pins 11 and 12 at u -30.7 and -33.2,
-  v -0.3 (2.9 beyond the face), as before; the BME680 header's four pins now at the strip's +u edge, u -30.40,
+  v +2.7 (2.9 beyond the face; v -0.3 until 2026-11-21); the BME680 header's four pins now at the strip's +u edge, u -30.40,
   v -17.92...-10.30 (1.4 beyond the face). The parts that moved into that area are surface-mount: nothing of them
   comes through the board.
 - **J3 and J4:** no joint on this face. The 13 wires go in here (section 6).

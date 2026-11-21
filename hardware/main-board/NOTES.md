@@ -37,7 +37,7 @@ KiCad **9.0.9**. Every value below is traced to a datasheet section or a project
 |---|---|---|
 | C5, C6 | Panasonic EEU-FR1J121B 120 µF 63 V | Mean Well EMC circuit C1/C2 120 µF/63 V (NID100-SPEC 2024-10-30). C5 also = 20 V bus bulk. |
 | L1 | Bourns SRR1260-150M 15 µH | EMC circuit L1 15 µH (NiZn). SRR1260-150M: 15 µH ±20 %, Isat 4.60 A, I_rms 5.00 A, RDC 27 mΩ max, core "Ferrite DR and RI" (Bourns REV. 03/26). Single winding in +Vin: the NID is non-isolated, input and output share Com. **V18:** see §6. |
-| PS1 | Mean Well NID100-5 | Chosen. Pins: 1–4 +Vout, 5–8 Com, 9–10 +Vin, 11 NC, 12 Trim (optional), 13 R.C. (spec "Pin Configuration"). Switching 200 kHz typ. |
+| PS1 | Mean Well NID100-5 | Chosen. Pins: 1–4 +Vout, 5–8 Com, 9–10 +Vin, 11 NC, 12 Trim (optional), 13 R.C. (spec "Pin Configuration"). Switching 200 kHz typ. Footprint `ha_panel:MeanWell_NID100_SIP-13`: pin row 5.0 from the component side and 7.0 from the back, as the spec's side view (9 from the component side to the module's board, pins 4 from it); 8.0 and 4.0 until 2026-11-21. |
 | C7 | Würth 860160572003 22 µF 35 V | EMC circuit C3. External C on +5V = C7 22 + C8 10 (1206 X7R) + C9 + C10 + the LDO path behind 2.2 Ω ≈ 35 µF ≪ the 100 µF limit (spec). |
 | D2 | Littelfuse SMBJ6.0A-E | Chosen. |
 | R8, R9 | 0805, **DNP** | **V20 trim network:** R8 Trim → Com (raises Vout), R9 Trim → +Vout (lowers). Mean Well lists pin 12 as "Trim (optional)" and gives no formula; the direction assumes the usual feedback-divider tap (not published). On arrival: measure R(pin 12–Com) unpowered, then clip a trimmer from TP13 to GND and read Vout before fitting R8. No response → decide on an alternative regulator. |
