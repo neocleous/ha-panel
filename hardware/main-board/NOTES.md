@@ -1,4 +1,4 @@
-# Main board — schematic notes, test pads and layout (rev 3.2, fab issue 2026-11-16)
+# Main board — schematic notes, test pads and layout (rev 3.3, fab issue 2026-11-21)
 
 > **What this file is.** Sections 1 to 4 and 6: every value of the circuit with its source, written on 2026-11-07 and
 > 2026-11-08 and unchanged since, because the circuit has not changed; only the rows of
@@ -7,6 +7,8 @@
 > BME680, J11 VEML6030, the same nets as the old 2 x 4); J3's pads are in housing order (`gpio-leads.md`); J3, J4 and
 > J7 are wire pads. Sections 5 (test pads) and 7 (layout) were written again on 2026-11-16 for rev 3.2 as it goes to
 > the fab. The file as it stood on 2026-11-14 is in the history (commit 45a38e4).
+> **Rev 3.3 (2026-11-21)** changed the circuit in one place, J6's supply (§3, F4 and J6), and the layout in three: PS1's
+> pin row (§7), the via in U100's paste window, and the silk widths. The datasheet of U2 is now cited as the -Q1's.
 
 KiCad **9.0.9**. Every value below is traced to a datasheet section or a project decision; sources and retrieval dates are at the end. "E" = engineering estimate, "not verified" = no source found.
 
@@ -37,7 +39,7 @@ KiCad **9.0.9**. Every value below is traced to a datasheet section or a project
 |---|---|---|
 | C5, C6 | Panasonic EEU-FR1J121B 120 µF 63 V | Mean Well EMC circuit C1/C2 120 µF/63 V (NID100-SPEC 2024-10-30). C5 also = 20 V bus bulk. |
 | L1 | Bourns SRR1260-150M 15 µH | EMC circuit L1 15 µH (NiZn). SRR1260-150M: 15 µH ±20 %, Isat 4.60 A, I_rms 5.00 A, RDC 27 mΩ max, core "Ferrite DR and RI" (Bourns REV. 03/26). Single winding in +Vin: the NID is non-isolated, input and output share Com. **V18:** see §6. |
-| PS1 | Mean Well NID100-5 | Chosen. Pins: 1–4 +Vout, 5–8 Com, 9–10 +Vin, 11 NC, 12 Trim (optional), 13 R.C. (spec "Pin Configuration"). Switching 200 kHz typ. |
+| PS1 | Mean Well NID100-5 | Chosen. Pins: 1–4 +Vout, 5–8 Com, 9–10 +Vin, 11 NC, 12 Trim (optional), 13 R.C. (spec "Pin Configuration"). Switching 200 kHz typ. Footprint `ha_panel:MeanWell_NID100_SIP-13`: pin row 5.0 from the component side and 7.0 from the back, as the spec's side view (9 from the component side to the module's board, pins 4 from it); 8.0 and 4.0 until 2026-11-21. |
 | C7 | Würth 860160572003 22 µF 35 V | EMC circuit C3. External C on +5V = C7 22 + C8 10 (1206 X7R) + C9 + C10 + the LDO path behind 2.2 Ω ≈ 35 µF ≪ the 100 µF limit (spec). |
 | D2 | Littelfuse SMBJ6.0A-E | Chosen. |
 | R8, R9 | 0805, **DNP** | **V20 trim network:** R8 Trim → Com (raises Vout), R9 Trim → +Vout (lowers). Mean Well lists pin 12 as "Trim (optional)" and gives no formula; the direction assumes the usual feedback-divider tap (not published). On arrival: measure R(pin 12–Com) unpowered, then clip a trimmer from TP13 to GND and read Vout before fitting R8. No response → decide on an alternative regulator. |
@@ -54,20 +56,20 @@ KiCad **9.0.9**. Every value below is traced to a datasheet section or a project
 
 | Ref | Part / value | Why |
 |---|---|---|
-| U2 | TI TPS70933DBVR (new part) | **V17:** Raspberry Pi publishes no current rating for the Pi 5 header 3V3 pins (documentation `power-supplies.adoc` lists only "GPIO pins (combined) 50 mA maximum" as typical draw; HAT+ spec gives none) → fallback: an LDO on the main board. TPS709: 2.7–30 V in, 150 mA, ±1 % at 3.3 V, EN high ≥ 0.9 V, shutdown 150 nA (SBVS186H Electrical Characteristics). 30 V input survives the NID's output OVP (6.4–7.5 V). |
+| U2 | TI TPS70933QDBVRQ1 (TPS709-Q1; it replaced the TPS70933DBVR, out of stock, on 2026-11-08; same pinout) | **V17:** Raspberry Pi publishes no current rating for the Pi 5 header 3V3 pins (documentation `power-supplies.adoc` lists only "GPIO pins (combined) 50 mA maximum" as typical draw; HAT+ spec gives none) → fallback: an LDO on the main board. TPS709-Q1: 2.7–30 V in, 150 mA, ±1 % at 3.3 V plus up to 50 mV load and 10 mV line regulation, EN high ≥ 0.9 V, shutdown 150 nA typ (SLVSCE6D 5.5). 30 V input survives the NID's output OVP (6.4–7.5 V). |
 | R12, C11 | 2.2 Ω 0805, 10 µF 25 V X7R 1206 | RC pre-filter: f_c = 7.2 kHz, ≈ 29 dB at the NID's 200 kHz. Drop 0.19 V at 85 mA keeps U2 out of dropout. |
-| C12 | TDK C2012X7R1H475K125AC 4.7 µF 50 V X7R 0805 (since 2026-11-17) | ≥ 2.0 µF effective output C (SBVS186H 8.1.1). The same part as C101, C102, C122 and C123 (§4), so only one 0805 part on the board reads 4.7 µF and no 16 V part can land on the amplifier's supply. At 3.3 V this part keeps about 4.6 µF: TDK's curve gives 4.62 µF at 3.15 V and 4.50 µF at 4 V (product.tdk.com, read 2026-11-17; the nominal curve, which TDK calls reference only). Taking off the part's 10 % tolerance and X7R's 15 % over temperature leaves about 3.5 µF (arithmetic; ageing not counted). Until 2026-11-17: Samsung CL21B475KOFNNNE 4.7 µF 16 V X7R 0805. Same 0805 land, so the uploads stand; 1.50 high at most (`MAIN_env.md` allows 3.0). |
+| C12 | TDK C2012X7R1H475K125AC 4.7 µF 50 V X7R 0805 (since 2026-11-17) | ≥ 2 µF on the output (SLVSCE6D 5.3; 7.1.1 asks 1.5 µF effective at 3.3 V). The same part as C101, C102, C122 and C123 (§4), so only one 0805 part on the board reads 4.7 µF and no 16 V part can land on the amplifier's supply. At 3.3 V this part keeps about 4.6 µF: TDK's curve gives 4.62 µF at 3.15 V and 4.50 µF at 4 V (product.tdk.com, read 2026-11-17; the nominal curve, which TDK calls reference only). Taking off the part's 10 % tolerance and X7R's 15 % over temperature leaves about 3.5 µF (arithmetic; ageing not counted). Until 2026-11-17: Samsung CL21B475KOFNNNE 4.7 µF 16 V X7R 0805. Same 0805 land, so the uploads stand; 1.50 high at most (`MAIN_env.md` allows 3.0). |
 | R13 | 100 kΩ | EN pull-down; EN = Pi 3V3 (lead A1). In Pi STANDBY (5 V on, 3V3 off — HAT+ spec) the LDO is off, so nothing back-feeds the Pi's I²C pins, and the amp stays muted (R17). |
 | Load | ≈ 85 mA | TAS5756M DVDD + AVDD + CPVDD ≈ 35 mA (SLAS988B 7.12, idle) + touch/BME680/VEML6030 ≈ 50 mA (estimate). U2 dissipation (5.0 − 0.19 − 3.3) V × 85 mA = 0.13 W. |
 | R26, R27 | 0 Ω 0603; R27 **DNP** | Amp logic rail 3V3_AMP (TAS DVDD/AVDD/CPVDD, C105/C119, R102). TAS5756M digital inputs need VIH ≥ 0.9 × DVDD (SLAS988B 7.3) and TI advises driving them from the DVDD supply (note 2); the Pi drives I²S/I²C/GPIO22 from its own 3V3, whose tolerance is not published. Default R26 = board LDO (±1 %); option R27 = the Pi 3V3 (lead A1 then carries ≈ 35 mA). Bench: compare TP16 with the Pi 3V3 at J3.1. |
-| F4 | Bel 0ZCJ0020FF2E 0.2 A PTC | Chosen; sensor/touch branch. |
+| F4 | Bel 0ZCJ0020FF2E 0.2 A PTC | Chosen; sensor branch (J10 BME680, J11 VEML6030). Since 2026-11-21 the touch socket J6 is not behind F4: the BME680's heater draws its current in steps, up to about 33 mV across F4 (up to 2.5 Ω), more than the AT42QT1070's ±25 mV supply allowance, and the AT42QT1070 data sheet advises against sharing its supply with other loads. A short on the touch lead is now limited by the TPS70933's own current limit. |
 | J3, J4 | wire pads 2 × 5 + 2 × 2 | GPIO landing, 13 leads — see `gpio-leads.md`. |
 | R14–R16 | 0 Ω 0603 | I²S series positions (BCLK, LRCLK, DOUT): 0 Ω fitted; 22–47 Ω if the edges ring over the 150 mm leads (E). |
 | R17 | 100 kΩ | AMP_MUTE_N pull-down: muted unless GPIO22 drives high. |
 | R18 | 100 kΩ | PI_DIN pull-down (lead B2 unused in topology A, the echo reference from USB). |
 | J5 | JST B4B-XH-A | LD2410C: 1 VCC 5 V, 2 GND, 3 LD TX, 4 LD RX (component envelope spec: lead soldered to LD2410C pins 1, 2, 4, 5; OUT not wired). |
 | R19 | 4.7 kΩ | LD TX → Pi RXD. Replaces the provisional 1 kΩ: limits current into an unpowered Pi (radar stays on 5 V when the Pi is off) to 0.64 mA; with ≈ 10 pF the RC is 47 ns ≪ 3.9 µs bit time at 256000 Bd. |
-| J6 | JST B4B-XH-A | Touch board rev D (`../touch-board/`) HOST pads: VCC, GND, SDA, SCL. No INT (CHANGE# unused, as on rev C). |
+| J6 | JST B4B-XH-A | Touch board (`../touch-board/`) HOST pads: VCC, GND, SDA, SCL. No INT (CHANGE# unused, as on rev C). Pin 1 is +3V3 straight from U2 (since 2026-11-21; 3V3_SENS before), brought from the +3V3 via at (37.09, 33.53) by a 0.25 track on In2 to the via at (44.63, 46.18), the only track on an inner layer. |
 | J10, J11 | 1 × 4 male pin header, 2.54, straight, one each (since rev 3): Sullins PRPC004SAAN-RC, chosen with the parts list on 2026-11-16 | The BME680 (CJMCU-680) and VEML6030 Dupont leads land on the main board instead of on the touch board, each with a 1 × 4 Dupont housing: J10 BME680, J11 VEML6030. Both carry the same four nets, pin 1 to 4: 3V3_SENS, GND, SDA, SCL. 3V3_SENS comes through F4. (Rev 2.1 had one 2 × 4 header with a column per sensor.) |
 | J7 | 1 × 8 wire pads | ReSpeaker echo tap, to the XIAO footprint (Seeed pinout): 1 GND, 2 I2S_BCLK, 3 I2S_LRCLK, 4 → I2S_DIN_SEC(dout) (reference into the XU316), 5 ← I2S_DIN_XIAO(din) (XU316 output), 6 GND, 7 SDA, 8 SCL. |
 | R20–R25 | 0 Ω 0603, **DNP** | Topology A (USB reference, default): all open. Topology B (I²S reference, a bench option): fit R20–R23 (+R24/R25 to reach the XU316 over I²C), I²S firmware, Pi as I²S clock consumer (custom overlay). |
@@ -98,10 +100,10 @@ TAS5756M per TI SLAS988B Figure 79 (stereo BTL) and Table 22, wired like the Ras
 
 Thermal pad (pin 49): via array and paste windows at 70–80 % of the pad area (SLAS988B 11.1.3.2) — built into the custom footprint.
 
-## 5. Test pads (rev 3.2)
+## 5. Test pads (rev 3.2; unchanged on rev 3.3)
 All 19 test pads are bare round pads, 1.5 across, **on the door side** (`TestPoint_Pad_D1.5mm`): nothing to solder,
 probed with the door off. **Their places, in mm from the board's left and bottom edges, and what stands beside each,
-are in `README.md`, "Test pads"**; the map is page 4 of `main-board-rev3.2-assembly.pdf`. Two moved on rev 3.1: TP3 and
+are in `README.md`, "Test pads"**; the map is page 4 of `main-board-rev3.3-assembly.pdf`. Two moved on rev 3.1: TP3 and
 TP12. On rev 2.1 the pads were on the other face.
 
 | Pad | Net | Bench use |
@@ -129,11 +131,12 @@ TP12. On rev 2.1 the pads were on the other face.
 - **V19** — §1.
 - **V20** — trim network R8/R9 DNP + TP13 (§2); trim function unverified on stock units.
 
-## 7. Layout (rev 3.2, fab issue 2026-11-16)
+## 7. Layout (rev 3.3, fab issue 2026-11-21)
 The layout's history is in the revisions' own reports, which the history keeps (commit 45a38e4): rev 3 (the board
 laid out again for its site behind the display), rev 3.1 (hole and headers moved, supply copper, ground pours), rev 3.2
 of 2026-11-14 (the relief) and the fab issue of 2026-11-16 (the changes made with the fab files); rev 2.1 has its own
-layout notes. What holds for the board as it goes to the fab:
+layout notes. Rev 3.3 (2026-11-21) is the fab issue of 2026-11-16 with the changes of the pre-order review: PS1's pin
+row, J6's supply track on layer 3, one via out of U100's paste window, silk 0.15. What holds for the board as it goes to the fab:
 
 - **Hand assembly** (set 2026-11-07 and 2026-11-10): every surface-mount part on one face, the door side; no
   surface-mount part by iron; connectors through-hole; nothing smaller than 0603. The back carries no part.
@@ -150,13 +153,13 @@ layout notes. What holds for the board as it goes to the fab:
   | | 0.2104 | prepreg 7628, εr 4.4 |
   | layer 2 (In1.Cu), ground | 0.0152 | copper |
   | | 1.065 | core, εr 4.6 |
-  | layer 3 (In2.Cu), +5 V, +20 V, amplifier supply | 0.0152 | copper |
+  | layer 3 (In2.Cu), +5 V, +20 V, amplifier supply; one +3V3 track to J6 | 0.0152 | copper |
   | | 0.2104 | prepreg 7628, εr 4.4 |
   | back (B.Cu) | 0.035 | copper |
 
   It is the stack the supply-copper calculations assumed since rev 3.1, so their figures needed no correction for it.
 - **Rules** (in `main-board.kicad_pro`): clearance 0.15, and 0.20 for the 20 V nets; tracks 0.15 and wider; vias
-  0.2/0.45 (87), 0.3/0.6 (132) and 0.4/0.8 (25); hole to copper 0.25, hole to hole 0.25; copper to the edge 0.30.
+  0.2/0.45 (87), 0.3/0.6 (131) and 0.4/0.8 (25); hole to copper 0.25, hole to hole 0.25; copper to the edge 0.30.
 - **Copper at the relief:** the pours on all four layers end 0.50 from the relief (a rule area, pours only). With
   JLC's cut 0.2 deeper they still end 0.30 from the real edge. The nearest track, the I²C clock on the back, is 0.38
   from the floor as before, and the nearest pads, R105's, 0.66. JLC's rule is 0.2 as drawn.
@@ -170,14 +173,17 @@ layout notes. What holds for the board as it goes to the fab:
 - **Ground:** layer 2 is an unbroken ground plane; ground pours on both outer layers with stitching vias (rev 3.1).
   Bare circles round the four holes: 3.5 radius on the door side, 4.1 on the back.
 - **Silkscreen:** 67 of the 120 names are printed, 53 are hidden in the dense areas. The assembly drawing carries all
-  120. The back prints the connectors' names and `REV 3.2 2026-11-16`.
-- **Checks (KiCad 9.0.9, 2026-11-16):** schematic check 0 errors, 0 warnings; board check 0 errors, 0 open connections,
-  0 differences to the schematic, 2 warnings (J6's and J2's footprints differ from the library copies, on purpose).
+  120. The back prints the connectors' names and `REV 3.2 2026-11-16`. Every silk line is 0.15 wide since 2026-11-21,
+  JLC's minimum (the library footprints draw 0.12). C6's + mark is 0.9 across instead of 1.0 and 0.03 further from L1,
+  so the wider lines stay 0.05 apart.
+- **Checks (KiCad 9.0.9, 2026-11-21):** schematic check 0 errors, 0 warnings; board check 0 errors, 0 open connections,
+  0 differences to the schematic, 3 warnings (J6's, J2's and C6's footprints differ from the library copies, on purpose).
 
 ## Sources (read 2026-11-07 unless noted)
 - TI TAS5756M, SLAS988B — https://www.ti.com/lit/ds/symlink/tas5756m.pdf
 - TI TPS1663, SLVSET9G (rev. April 2026) — https://www.ti.com/lit/ds/symlink/tps1663.pdf
-- TI TPS709, SBVS186H — https://www.ti.com/lit/ds/symlink/tps709.pdf
+- TI TPS709-Q1, SLVSCE6D (revised August 2025), read 2026-11-21 — https://www.ti.com/lit/ds/symlink/tps709-q1.pdf. Until
+  2026-11-21 these notes cited the commercial TPS709 (SBVS186H); the part ordered is the -Q1.
 - TDK C2012X7R1H475K125AC, product page with its DC-bias curve (read 2026-11-17) — https://product.tdk.com/en/search/capacitor/ceramic/mlcc/info?part_no=C2012X7R1H475K125AC
 - TI SLAA701 rev B, LC filter design — https://www.ti.com/lit/an/slaa701/slaa701.pdf
 - Mean Well NID100-SPEC 2024-10-30 — https://www.meanwell.com/Upload/PDF/NID100/NID100-SPEC.PDF

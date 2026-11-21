@@ -1,14 +1,17 @@
 ** Drc report for main-board.kicad_pcb **
-** Created on 2026-11-17T20:00:45+0100 **
+** Created on 2026-11-21T19:54:30+0100 **
 ** Report includes: Errors, Warnings, Exclusions **
 
-** Found 2 DRC violations **
+** Found 3 DRC violations **
 [lib_footprint_mismatch]: Footprint 'JST_XH_B4B-XH-A_1x04_P2.50mm_Vertical' does not match copy in library 'Connector_JST'.
     Local override; warning
     @(55.8000 mm, 54.8900 mm): Footprint J6
 [lib_footprint_mismatch]: Footprint 'USB_C_Receptacle_GCT_USB4085' does not match copy in library 'Connector_USB'.
     Local override; warning
     @(62.1500 mm, 49.2900 mm): Footprint J2
+[lib_footprint_mismatch]: Footprint 'CP_Radial_D10.0mm_P5.00mm' does not match copy in library 'Capacitor_THT'.
+    Local override; warning
+    @(18.9990 mm, 15.0500 mm): Footprint C6
 
 ** Found 0 unconnected pads **
 

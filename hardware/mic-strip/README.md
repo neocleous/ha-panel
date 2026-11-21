@@ -4,14 +4,16 @@ A small board that carries one MEMS microphone (Infineon IM69D120) in the panel'
 right: two boards of this one design. Each strip is wired by a five-way lead to the ReSpeaker Lite, the panel's voice
 front end, in place of the ReSpeaker's own microphones.
 
-**State (2026-11-19):** the fab set of 2026-11-09 is current; it was checked again on 2026-11-16 and 2026-11-19.
+**State (2026-11-21):** rev 3, fab set issued on 2026-11-21 after the pre-order review: the vias are out of the soldered
+pads and the silk lines are 0.15 wide ("The board"). The set of 2026-11-09 (rev 1) is in `fab/superseded/` and must not
+be ordered. Rev 2 (31.4 long, 2026-11-19) was not built; its name is not reused.
 In the cap the strip is held by a printed clamp that presses on two areas of its back; its two holes only locate it
 on the cap's pins ("The board"). Not built or tested yet.
 
-**Checks (KiCad 9.0.9):** schematic 0 errors, 0 warnings (`erc-report.txt`); board (2026-11-09, all severities)
+**Checks (KiCad 9.0.9, 2026-11-21):** schematic 0 errors, 0 warnings (`erc-report.txt`); board (all severities)
 0 violations, 0 unconnected, 0 footprint errors, schematic parity clean (`drc-report.txt`). The check "footprint differs
-from library" is set to ignore: U1's and MK1's silk marks at the board edge were removed on purpose. Run again on
-2026-11-19 with the same result, and a fresh export gave the zip of 2026-11-09 file for file.
+from library" is set to ignore: U1's and MK1's silk marks at the board edge were removed on purpose. A fresh export
+gives the zip of 2026-11-21 file for file.
 
 ## Files
 | File | What |
@@ -19,17 +21,18 @@ from library" is set to ignore: U1's and MK1's silk marks at the board edge were
 | `mic-strip.kicad_pro`, `.kicad_sch`, `.kicad_pcb` | the design, KiCad 9.0.9. Project libraries: `lib/ha_panel.kicad_sym` (IM69D120) and `lib/ha_panel.pretty` (IM69D120 land pattern, 5-pad wire column, and the footprint the two locating holes are drawn with) |
 | `mic-strip-schematic.pdf` | the schematic |
 | `mic-strip-assembly.pdf` | the assembly drawing (the back, as seen from the back) |
-| `mic-strip-3d.png`, `mic-strip-copper-F-B.png` | a render (front = gasket side, back = parts) and both copper layers (back mirrored) |
+| `mic-strip-3d.png`, `mic-strip-copper-F-B.png` | a render of rev 1 (front = gasket side, back = parts; the moved vias do not show at its size) and both copper layers of rev 3 (back mirrored) |
 | `erc-report.txt`, `drc-report.txt` | KiCad's checks |
-| [`fab/`](fab/) | **what goes to JLC:** `mic-strip-jlc-2026-11-09.zip`, the files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet |
+| [`fab/`](fab/) | **what goes to JLC:** `mic-strip-rev3-jlc-2026-11-21.zip`, the files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet; `superseded/` holds rev 1's set, which must not be ordered |
 
 ## How to order
-- **Upload** `fab/mic-strip-jlc-2026-11-09.zip` to JLC as a bare board. sha256
-  `f405cc567fab336cf9e0fb4b0da1def971ca79bae3d6d8b02ea9bce7e5584564`.
+- **Upload** `fab/mic-strip-rev3-jlc-2026-11-21.zip` to JLC as a bare board. sha256
+  `0e378603bf06f547f44f3cb741d6ad13222e0321c87d36a35d0614bcfe94b095`. It replaces the zip of 2026-11-09.
 - **Options in short:** 2 layers, 28 × 6 mm, 0.8 mm, black with white silkscreen, ENIG (the page's default for 2 layers
   is OSP: change it), vias tented, deburring on, via class "0.3mm/(0.4/0.45mm)", 5 pieces (2 needed). Every option:
   [`fab/ORDER-SHEET.md`](fab/ORDER-SHEET.md).
-- **No stencil:** the strip is pasted by syringe.
+- **Stencil:** since 2026-11-21 the strip's back paste is on the touch board's stencil, its own line
+  ([`../stencil/`](../stencil/)). Don't tick the stencil box on the strip line.
 
 ## Parts
 Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-2026-11-17.md), section "Mic strip".
@@ -67,17 +70,31 @@ Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-20
 - One design for both sides: the left strip is the right one turned 180° in the cap's plane (port end outward, gasket
   side up).
 - **Rules:** tracks 0.2 (0.25–0.3 for supply and ground), clearance 0.15, copper to edge 0.3; vias 0.5/0.3, ring 0.10;
-  hole clearance 0.25, hole to hole 0.25.
-- **Vias (re-routed 2026-11-09): 28 × 0.45/0.2 became 25 × 0.5/0.3.** JLC's order page states its free 0.2 mm holes only
-  for multilayer boards; 0.3 mm holes are the free class on 2 layers. Placement, parts, pads and silk did not change.
-  Achieved: ring 0.10; via hole to hole ≥ 0.45; via hole to unplated hole ≥ 0.56; via hole to other-net track ≥ 0.29 and
-  to other-net pad ≥ 0.33. JLC's figures: [`../notes/jlc-fab.md`](../notes/jlc-fab.md).
+  hole clearance 0.25, hole to hole 0.25;
+  silk lines 0.15, JLC's minimum (0.12 until 2026-11-21).
+- **Vias: 24 × 0.5/0.3, all tented.** On 2026-11-09, 28 × 0.45/0.2 became 25 × 0.5/0.3: JLC's order page states its free
+  0.2 mm holes only for multilayer boards; 0.3 mm holes are the free class on 2 layers.
+- **Vias out of the soldered pads (2026-11-21).** Thirteen via holes lay inside pads that take solder, one wholly inside
+  MK1's SELECT pad, and one more ended 0.014 from U1's pin 4. Molten solder runs into an open hole, and the joints under
+  MK1 cannot be seen or reworked. Thirteen of these vias moved 0.21 to 0.80, each joined to its pad by a short track on
+  the back; the front tracks followed. U1's pin 3 lost its via: the pin already reaches the ground via at (12.925, 2.525)
+  through its track to R2.2. Placement, parts, pads, outline, holes and port did not change, and no via lies in the clamp's
+  press areas or their room (nearest 0.41 from the outer room, 0.59 from the outer area).
+  - Every via hole is now **0.217 or more** from the opening of every pad that takes paste. J1.2's ground via still lies
+    partly in its wire pad, which takes no paste; it is left as it is.
+  - Achieved: ring 0.10; via hole to hole ≥ 0.40; via hole to unplated hole ≥ 0.86; via hole to other-net track ≥ 0.27
+    and to other-net pad ≥ 0.27 (rule 0.25). JLC's figures: [`../notes/jlc-fab.md`](../notes/jlc-fab.md).
 
 ## How to assemble
 Build two identical strips. Drawing: `mic-strip-assembly.pdf`. One hotplate pass, parts side up.
 
 **Before you start**
-- **Paste:** the same Sn63/Pb37 no-clean as the main board, dispensed by syringe.
+- **Paste:** the same Sn63/Pb37 no-clean as the main board, through the stencil: the strip's pattern on the touch
+  board's sheet ([`../stencil/`](../stencil/)). The strip lies front-down in a jig that holds it flush with the
+  surface round it, so the sheet lies flat: a pocket of the strip's size, as deep as the strip and the Kapton of step
+  1, or spare strips laid round it. **No jig is drawn yet.**
+- **D1–D3 (ESD321DYAR) are moisture-sensitive, level 3:** once their bag is open, solder them within 168 hours at 30 °C /
+  60 % humidity or less (TI's package information); open the bag on the day, or bake them per J-STD-033 first.
 - **Bare strip:** hold it against the light: the Ø0.8 port hole must be open. Meter: VDD–GND (J1 pads 1–2) open.
 - **The port:** Infineon's datasheet (rev 1.0) gives only the reflow qualification: 3 reflows, peak 260 °C, IPC/JEDEC
   J-STD-020D-01; it has no handling, flux or washing rules. Other makers' bottom-port MEMS guides agree on these:
@@ -87,7 +104,9 @@ Build two identical strips. Drawing: `mic-strip-assembly.pdf`. One hotplate pass
 
 **Order**
 1. Kapton over the port hole on the front (gasket side).
-2. Small paste dots on the back pads. Nothing in or next to the port hole.
+2. Strip front-down in the jig; paste the back through the strip's pattern, keeping the squeegee off the touch
+   board's pattern (or tape it over). The sheet has no opening over the port; check that no paste lies in the port
+   hole or inside the microphone's ring.
 3. Place:
    - D1–D3 ESD321: pin 1 = GND (dot or notch on the body), at the closed end of the silk bracket;
    - C1 10 µF, C2 100 nF, C3 100 nF;
@@ -121,6 +140,8 @@ click count, noise floor and false-reject rate. If it fails, the options are: by
 change R4 from 33 Ω to 100 Ω.
 
 ## How it changed
+Rev 3 (2026-11-21): the vias out of the soldered pads and silk 0.15, after the pre-order review; nothing else moved.
+Rev 2 (31.4 long, holes for M2 screws, 2026-11-19) was not built: the clamp took its place, and rev 1 stood until rev 3.
 During the design the JST connector, the on-board strap JP1 and four test pads were dropped for the wire pads, R3 (a
 0 Ω bypass) for space; the MSM261DHP006 microphone was replaced by the IM69D120, and the TPD1E05U06DYAR diodes by the
 ESD321DYAR (DigiKey: 0 in stock, 26 weeks, 2026-11-08). The scripts that generated the schematic and the layout are in

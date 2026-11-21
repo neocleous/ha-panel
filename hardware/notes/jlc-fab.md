@@ -1,6 +1,15 @@
-# JLC orders: the four uploads, JLC's figures and the export settings (rev 2026-11-16)
+# JLC orders: the five uploads, JLC's figures and the export settings (rev 2026-11-21)
 
-Three boards and one stencil go to JLC. **Bare boards only:** no SMT assembly, so no BOM or placement files go to JLC. The boards are assembled by hand (see each board's README).
+Three boards and two stencils go to JLC. **Bare boards only:** no SMT assembly, so no BOM or placement files go to JLC. The boards are assembled by hand (see each board's README).
+
+**Cart on 2026-11-21 (about 20:35):** the five new lines, €84.91 in all: main board €31.19 and strip €19.90 (each with €0.96 for "Confirm Production file"), touch board €19.12, two stencils €7.35 each. The four lines of the older sets were deleted.
+Later the same evening the touch board's stencil line was replaced by the stencil that also carries the mic strip's
+pattern (Daniel, 20:39: he wants a stencil for the strip), `stencil-touch-revE-strip-rev3-jlc-2026-11-21-SO12611220107`,
+€7.35 like the line it replaced, so the five lines still come to €84.91. **Ordered 2026-11-21.**
+
+**Rev 2026-11-21 (after the pre-order review):** new sets for all three boards (main board rev 3.3, mic strip rev 3, touch board rev E) and two stencils of 100 × 100 in place of the combined one; the paste did not change. Since the same evening the
+second stencil carries the mic strip's back paste beside the touch board's. The older sets are in each folder's `fab/superseded/` and are not to be ordered. The options are unchanged except the stencils' size and "Multiple PCBs" (No for the main board, Yes for the touch
+board and strip). The table of uploads below is current; the sections further down keep the figures as read on their dates.
 
 **Rev 2026-11-16 (fab issue of main board rev 3.2):** new main-board set and new stencil; the strip and touch-board sets of 2026-11-09 are confirmed current. Each upload has its own order sheet next to its zip. JLC's capability pages were read on 2026-11-16.
 
@@ -8,26 +17,27 @@ Three boards and one stencil go to JLC. **Bare boards only:** no SMT assembly, s
 
 | Upload | Board | Order sheet | sha256 of the zip |
 |---|---|---|---|
-| `hardware/main-board/fab/main-board-rev3.2-jlc-2026-11-16.zip` | main board rev 3.2, 87.0 × 57.9, 4 layers | `hardware/main-board/fab/ORDER-SHEET.md` | `fc4588531ea277c1fc3e9009db38fae190042080e065443b0a663f34fa7449bd` |
-| `hardware/mic-strip/fab/mic-strip-jlc-2026-11-09.zip` | mic strip, 28 × 6, 2 layers; one design, used twice | `hardware/mic-strip/fab/ORDER-SHEET.md` | `f405cc567fab336cf9e0fb4b0da1def971ca79bae3d6d8b02ea9bce7e5584564` |
-| `hardware/touch-board/fab/touch-board-jlc-2026-11-09.zip` | touch board rev D, 90 × 44, 2 layers | `hardware/touch-board/fab/ORDER-SHEET.md` | `2d62d7eca9126be672a78bb0a46d35bbd1463b2dc3d9a8c736272d2777056a34` |
-| `hardware/stencil/fab/stencil-main-rev3.2-touch-revD-jlc-2026-11-16.zip` | **stencil line only:** main board door side + touch board back | `hardware/stencil/fab/ORDER-SHEET.md` | `f83d86d130e1cd6dd12528dfa11b598b52d56163d8d25fc2e75cec845d8e9dc2` |
+| `hardware/main-board/fab/main-board-rev3.3-jlc-2026-11-21.zip` | main board rev 3.3, 87.0 × 57.9, 4 layers | `hardware/main-board/fab/ORDER-SHEET.md` | `26ff743470ad6834af4412218b2413478ce8ec22a962c775d0f4b1875617acdd` |
+| `hardware/mic-strip/fab/mic-strip-rev3-jlc-2026-11-21.zip` | mic strip rev 3, 28 × 6, 2 layers; one design, used twice | `hardware/mic-strip/fab/ORDER-SHEET.md` | `0e378603bf06f547f44f3cb741d6ad13222e0321c87d36a35d0614bcfe94b095` |
+| `hardware/touch-board/fab/touch-board-revE-jlc-2026-11-21.zip` | touch board rev E, 90 × 44, 2 layers | `hardware/touch-board/fab/ORDER-SHEET.md` | `12641c710499f8dab67cd457623986f8389a1c9a527aa9ff06c9db64083fa4ec` |
+| `hardware/stencil/fab/stencil-main-rev3.3-jlc-2026-11-21.zip` | **stencil line only:** main board door side, 100 × 100 | `hardware/stencil/fab/ORDER-SHEET.md` | `e0097f6055bd09322dac74cab5a10de7c6d13a2cca149c6fb7ec895b5aba6ffe` |
+| `hardware/stencil/fab/stencil-touch-revE-strip-rev3-jlc-2026-11-21.zip` | **stencil line only:** touch board back and mic strip back (both mirrored), 100 × 100 | `hardware/stencil/fab/ORDER-SHEET.md` | `599ac64241dd84a9f7ddcb3c070b1c8a13831d882f812d0e3574a1854434f42c` |
 
 Superseded and **not to be ordered:** the rev 2.1 main-board set of 2026-11-08 (90 × 55) and its stencil of 2026-11-09. They are no longer in the tree; the history keeps them (commit 45a38e4).
 
-The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `fab/drill-report.txt`; the check of each set is `fab/fab-check-2026-11-16.txt` (stencil: `fab/stencil-check-2026-11-16.txt`).
+The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `fab/drill-report.txt`; the check of each set is `fab/fab-check-2026-11-21.txt` (stencils: `fab/stencil-main-check-2026-11-21.txt`, `fab/stencil-touch-strip-check-2026-11-21.txt`).
 
 ## The orders at a glance
-| | Main board rev 3.2 | Mic strip | Touch board rev D | Stencil |
+| | Main board rev 3.3 | Mic strip rev 3 | Touch board rev E | Stencils |
 |---|---|---|---|---|
 | Layers | 4 | 2 | 2 | — |
-| Size, mm | 87.0 × 57.9 | 28 × 6 | 90 × 44 | custom 190 × 190 |
+| Size, mm | 87.0 × 57.9 | 28 × 6 | 90 × 44 | custom 100 × 100: the main board; the touch board and strip |
 | Thickness, mm | 1.6 | 0.8 | 1.6 | 0.12 |
 | Finish | ENIG | ENIG | ENIG | electropolished |
 | Colour | black | black | black | — |
 | Vias | plugged | tented | tented | — |
-| Quantity | 5 (1 needed) | 5 (2 needed) | 5 (1 needed) | 1 |
-| Other | stack-up JLC04161H-7628; outline regular ±0.2; "Remove Mark" | "Remove Mark" | "Remove Mark" | top only; two PCBs on one stencil; apertures 1:1 |
+| Quantity | 5 (1 needed) | 5 (2 needed) | 5 (1 needed) | 1 each |
+| Other | stack-up JLC04161H-7628; outline regular ±0.2; "Remove Mark" | "Remove Mark" | "Remove Mark" | top only; one design each; apertures 1:1 |
 
 Every option, with its reason, is in the order sheets.
 
@@ -51,10 +61,10 @@ Every option, with its reason, is in the order sheets.
 | 4-layer stack-up JLC04161H-7628 | copper 0.035 / 0.0152 / 0.0152 / 0.035; prepreg 7628, 0.2104, εr 4.4; core 1.065, εr 4.6. The page's "No requirement" stack-up shows the same layer values; the page does not call it the default in words. | impedance |
 | Stencil thickness | 0.10, 0.12, 0.15, 0.18, 0.20 | stencil |
 | Stencil electropolishing | named for ICs of 0.5 pitch and below, and BGA | stencil |
-| Several designs on one stencil | supported; JLC may adjust the layout; leave a remark | stencil |
+| Several designs on one stencil | supported; JLC may adjust the layout; leave a remark. Re-read 2026-11-21: JLC keeps the layout as drawn if the stencil is large enough, and adjusts it only if not; no fee named (the order page charged none) | stencil |
 | Stencil apertures | optimised by JLC's engineers by default; a remark makes them follow the paste layer 1:1 | stencil |
 | Stencil custom size | within 650 × 580 (without frame) | stencil |
-| Stencil aperture | larger than 0.08 mm | stencil |
+| Stencil aperture | larger than 0.08 mm (also on 2026-11-21) | stencil |
 | Files from KiCad 9 | Protel extensions, X2, netlist attributes, 4.6 mm; drill Excellon, alternate oval mode, absolute, mm, decimal, plated and unplated separate; **paste layers only for stencil or assembly orders** | KiCad 9 article |
 
 Pages are listed under "Sources".
@@ -106,7 +116,7 @@ JLC's KiCad 9 guide, applied with kicad-cli 9.0.9 by `hardware/main-board/tools/
   - absolute origin, millimetres, decimal zeros;
   - oval holes in alternate drill mode (G85 slots).
 - **Paste layers:** not in the main board's set of 2026-11-16, following the guide. The strip and touch-board sets of 2026-11-09 contain theirs; JLC ignores them on a bare-board order without the stencil switch.
-- **File names** carry board and revision (`main-board-rev3.2-…`, `stencil-main-rev3.2-touch-revD-…`), so two sets cannot be mixed.
+- **File names** carry board and revision (`main-board-rev3.3-…`, `mic-strip-rev3-…`, `touch-board-revE-…`, `stencil-main-rev3.3-…`), so two sets cannot be mixed.
 
 **Check of every set (2026-11-16):** `hardware/main-board/tools/fab_check.py` reads the exported files and compares them with the KiCad board: files and layer functions, a flash at every via on every copper layer, no soldermask opening at a via, paste counts, outline extent and arcs, hole counts per diameter, the job file's stack-up, and that the stored pours are current. The stencil is checked aperture by aperture against both boards' paste files by `hardware/main-board/tools/stencil_check.py`.
 

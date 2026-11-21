@@ -15,9 +15,9 @@ touchscreen (1280 × 800, landscape). Around it:
 
 Home Assistant runs on a separate server; the panel is its display, sensor and voice client.
 
-## State (2026-11-19)
-- **The design is complete:** the enclosure (version 67 of the Fusion model), the main board (rev 3.2), the touch board
-  (rev D), the mic strips and the paste stencil.
+## State (2026-11-21)
+- **The design is complete:** the enclosure (version 67 of the Fusion model), the main board (rev 3.3), the touch board
+  (rev E), the mic strips (rev 3) and the two paste stencils.
 - **Made:** the boards' fab files and the print files of version 67.
 - **Next:** a fit trial printed in PLA, then the black ABS set, the boards' assembly, the build and bring-up.
 - **The first panel (v1)** is built and in use. `main` installs its software.
@@ -25,10 +25,10 @@ Home Assistant runs on a separate server; the panel is its display, sensor and v
 ## Folder map
 ```
 hardware/              the three boards and the paste stencil
-  main-board/          rev 3.2: power, amplifier, sockets
-  mic-strip/           one microphone per strip, two strips per panel
-  touch-board/         rev D: the four touch keys
-  stencil/             one paste stencil for the main board and the touch board
+  main-board/          rev 3.3: power, amplifier, sockets
+  mic-strip/           rev 3: one microphone per strip, two strips per panel
+  touch-board/         rev E: the four touch keys
+  stencil/             the paste stencils: the main board; the touch board with the mic strips
   notes/               parts lists, DigiKey and JLC notes, Raspberry Pi settings
   rev-c/               the first panel's touch board
 enclosure/             the housing

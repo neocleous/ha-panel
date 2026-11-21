@@ -1,5 +1,5 @@
-Drill report for touch-board.kicad_pcb
-Created on 2026-11-09T09:47:43+0100
+Drill report for touch-board-revE.kicad_pcb
+Created on 2026-11-21T19:54:46+0100
 
 Copper Layer Stackup:
     =============================================================
@@ -7,7 +7,7 @@ Copper Layer Stackup:
     L2 :  B.Cu                      back
 
 
-Drill file 'touch-board-PTH.drl' contains
+Drill file 'touch-board-revE-PTH.drl' contains
     plated through holes:
     =============================================================
     T1  0.300mm  0.0118"  (4 holes)
@@ -15,7 +15,7 @@ Drill file 'touch-board-PTH.drl' contains
     Total plated holes count 4
 
 
-Drill file 'touch-board-NPTH.drl' contains
+Drill file 'touch-board-revE-NPTH.drl' contains
     unplated through holes:
     =============================================================
 

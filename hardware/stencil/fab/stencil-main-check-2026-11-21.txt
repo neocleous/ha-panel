@@ -1,0 +1,6 @@
+  ok   241 apertures of the board file, 241 in the stencil; as drawn; one common shift (0.0000, 0.0000)
+  ok   nothing drawn or filled in the paste file (0 pieces, 0 regions)
+  ok   every aperture inside the outline
+  ok   outline 87.00 x 57.90 fits 100 x 100, margins 6.50 and 21.05 a side
+  ok   smallest aperture 1.475 x 0.300 (JLC: larger than 0.08)
+RESULT: all checks passed

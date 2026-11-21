@@ -1,4 +1,4 @@
-# Main board, rev 3.2
+# Main board, rev 3.3
 
 The panel's power and audio board. It sits behind the display on a printed carrier.
 
@@ -7,39 +7,46 @@ The panel's power and audio board. It sits behind the display on a printed carri
 - It drives the two speakers with a TAS5756M amplifier.
 - It carries the sockets for the touch board, the radar and the two sensor leads, and the wire pads for the Pi's signals.
 
-**State (2026-11-19):** the fab files were issued on 2026-11-16. On 2026-11-17 five capacitors changed their part; the
-copper and the fab files did not change. The board has not been built or tested yet.
+**State (2026-11-21):** rev 3.3, fab files issued on 2026-11-21 after the pre-order review. From rev 3.2: PS1's row of
+13 pins moved 3.0 toward +v to match Mean Well's side view (its body and box did not move; it is to be checked on the
+module when it arrives, see "PS1" below); the touch socket J6 takes +3V3 ahead of F4; the via in one of U100's paste
+windows is taken out; every silk line is 0.15 wide. The board has not been built or tested yet.
 
-**Checks (KiCad 9.0.9, 2026-11-17):** schematic 0 errors, 0 warnings (`erc-report.txt`); board 0 errors, 0 open
-connections, 0 differences to the schematic, 2 warnings: the footprints of J6 and J2 differ from KiCad's library copies,
-on purpose (`drc-report.txt`).
+**Checks (KiCad 9.0.9, 2026-11-21):** schematic 0 errors, 0 warnings (`erc-report.txt`); board 0 errors, 0 open
+connections, 0 differences to the schematic, 3 warnings: the footprints of J6, J2 and C6 differ from KiCad's library
+copies, on purpose (`drc-report.txt`; C6's + mark is 0.1 smaller to clear L1's outline with the wider silk).
+
+**PS1, to check on arrival:** measure on the module, from the pin row, how far its component side stands (Mean Well's
+side view: 5.0, the module board's component face 9 from the case's component side and the pins 4 from that face).
+About 5.0: rev 3.3 stands. About 8.3: the pin row belongs where rev 3.2 had it; revert commit `5db1985` and issue the
+set again. Anything else: stop and look again before soldering.
 
 ## Files
 | File | What |
 |---|---|
 | `main-board.kicad_pro`, `main-board.kicad_pcb`, five `.kicad_sch` | the design, KiCad 9.0.9. Project libraries: `lib/ha_panel.kicad_sym`, `lib/ha_panel.pretty` |
 | `main-board-schematic.pdf` | the schematic, 5 pages |
-| `main-board-rev3.2-assembly.pdf` | **the assembly drawing**, A3, 4 pages: all 120 part names; all values; the placing list with the maker's part numbers; the test pads, connectors and the back face. Previews of pages 1 and 2: `main-board-rev3.2-assembly-names.png`, `-values.png` |
-| [`fab/`](fab/) | **what goes to JLC:** `main-board-rev3.2-jlc-2026-11-16.zip`, the same files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet |
+| `main-board-rev3.3-assembly.pdf` | **the assembly drawing**, A3, 4 pages: all 120 part names; all values; the placing list with the maker's part numbers; the test pads, connectors and the back face. Previews of pages 1 and 2: `main-board-rev3.3-assembly-names.png`, `-values.png` |
+| [`fab/`](fab/) | **what goes to JLC:** `main-board-rev3.3-jlc-2026-11-21.zip`, the same files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet; `superseded/` holds the rev 3.2 set, which must not be ordered |
 | [`NOTES.md`](NOTES.md) | every value of the circuit with its source; the test pads; the layout |
 | [`gpio-leads.md`](gpio-leads.md) | the 13 Pi signal wires: pad, Pi pin, housing, colour |
-| `main-board-rev3.2.step`, `main-board-rev3.1-plug-envelopes.step`, [`MAIN_env.md`](MAIN_env.md) | for the enclosure model: the populated board, the plug envelopes, the outline, holes and heights |
-| `main-board-copper-F-B.png` | both outer copper layers |
-| `main-board-3d-door-side.png`, `main-board-3d-back.png` | renders of the populated board |
+| `main-board-rev3.2.step`, `main-board-rev3.1-plug-envelopes.step`, [`MAIN_env.md`](MAIN_env.md) | for the enclosure model: the populated board, the plug envelopes, the outline, holes and heights. The STEP file is rev 3.2's: on rev 3.3 only PS1's 13 pin holes sit 3.0 further toward +v, and its pin ends behind the board are in `MAIN_env.md` §5. It was not exported again because this session had no KiCad 3D-model library |
+| `main-board-copper-F-B.png` | both outer copper layers (rev 3.3) |
+| `main-board-3d-door-side.png`, `main-board-3d-back.png` | renders of the populated board, rev 3.2: on rev 3.3 PS1's pins and its two legends sit 3.0 higher, and the back reads `REV 3.3 2026-11-21` |
 | `erc-report.txt`, `drc-report.txt` | KiCad's schematic and board checks |
 | [`tools/`](tools/) | scripts that export and check the fab set and the stencil, and draw the assembly drawing |
 
 ## How to order
-- **Upload** `fab/main-board-rev3.2-jlc-2026-11-16.zip` to JLC as a bare board: no assembly, so no BOM or placement
-  file. sha256 `fc4588531ea277c1fc3e9009db38fae190042080e065443b0a663f34fa7449bd`.
+- **Upload** `fab/main-board-rev3.3-jlc-2026-11-21.zip` to JLC as a bare board: no assembly, so no BOM or placement
+  file. sha256 `26ff743470ad6834af4412218b2413478ce8ec22a962c775d0f4b1875617acdd`. It replaces the rev 3.2 zip.
 - **Options in short:** 4 layers, 87.0 × 57.9 mm, FR-4, 1.6 mm, black with white silkscreen, ENIG, 1 oz outer and
   0.5 oz inner copper, stack-up JLC04161H-7628, vias plugged, outline tolerance ±0.2, "Remove Mark", 5 pieces (1 needed).
   Every option with its reason, and what JLC's review may ask: [`fab/ORDER-SHEET.md`](fab/ORDER-SHEET.md).
-- **Paste stencil:** a separate line, shared with the touch board: [`../stencil/`](../stencil/).
+- **Paste stencil:** a separate line, 100 × 100 mm, for this board alone: [`../stencil/`](../stencil/).
 
 ## Parts
 - Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-2026-11-17.md), section "Main board
-  rev 3.2". The DigiKey quick-add list is [`../notes/digikey-bom.csv`](../notes/digikey-bom.csv).
+  rev 3.2" (rev 3.3 changed no part). The DigiKey quick-add list is [`../notes/digikey-bom.csv`](../notes/digikey-bom.csv).
 - **One 0805 part reads 4.7 µF:** TDK C2012X7R1H475K125AC (50 V). It goes to all five places: C12, C101, C102, C122
   and C123.
 - **Not from DigiKey:** LK1, a short piece of 1.0 mm tinned copper wire.
@@ -52,7 +59,7 @@ on purpose (`drc-report.txt`).
 - **120 names:** 72 surface-mount parts fitted and 9 not fitted, 13 through-hole parts, 3 blocks of wire pads
   (J3, J4, J7), 19 test pads, 4 holes. **Every part is on the door side; nothing is fitted on the back.**
 - **Sizes:** nothing smaller than 0603; the finest pitches are U100 (0.5) and U1 (0.65). Connectors are through-hole.
-- **Vias:** 244 — 87 of 0.2/0.45, 132 of 0.3/0.6, 25 of 0.4/0.8. Tracks 0.15 and wider. Copper to the edge 0.30;
+- **Vias:** 243 — 87 of 0.2/0.45, 131 of 0.3/0.6, 25 of 0.4/0.8. Tracks 0.15 and wider. Copper to the edge 0.30;
   the pours 0.50 at the relief.
 - **Frame used in every document:** seen from the door, u to the right (toward the left speaker), v up, origin in the
   middle of the board. "From the left edge" is u + 43.5; "from the bottom edge" is v + 28.95.
@@ -64,8 +71,9 @@ on purpose (`drc-report.txt`).
 3. **5 V supply and outputs** — 120 µF – L1 15 µH – 120 µF → NID100-5 (enabled by the protection chip's power-good) →
    22 µF + D2 SMBJ6.0A-E → Pi branch (F2 10 A → wire link LK1 → USB-C socket J2, 10 kΩ on each CC pin) and radar
    branch (F3 1 A). Trim network R8/R9 not fitted.
-4. **3.3 V, Pi link, sensors, radar, echo tap** — TPS70933 (enabled by the Pi's 3.3 V) → sensor branch through F4 and
-   the amplifier's logic rail; 13 wire pads for the Pi's signals (J3, J4); radar (J5) and touch (J6) sockets; one
+4. **3.3 V, Pi link, sensors, radar, echo tap** — TPS70933 (enabled by the Pi's 3.3 V) → sensor branch through F4
+   (BME680 and VEML6030), the touch socket J6 straight from the regulator (since 2026-11-21) and the amplifier's logic
+   rail; 13 wire pads for the Pi's signals (J3, J4); radar (J5) and touch (J6) sockets; one
    4-pin header each for the BME680 (J10) and the VEML6030 (J11); echo tap J7 with six links not fitted.
 5. **Amplifier** — TAS5756M stereo, I²C address 0x4C, mute on GPIO22, 10 µH + 0.68 µF output filters, speaker sockets
    J8 (left) and J9 (right).
@@ -84,15 +92,17 @@ Every value's source: [`NOTES.md`](NOTES.md) §1 to §4.
 
 ## How to assemble
 One pass on the hotplate for every surface-mount part, then the through-hole parts by iron. **Work from
-`main-board-rev3.2-assembly.pdf`:** page 1 names, page 2 values, page 3 the placing list, page 4 the back.
+`main-board-rev3.3-assembly.pdf`:** page 1 names, page 2 values, page 3 the placing list, page 4 the back.
 
 **Before you start**
 - **Paste:** Sn63/Pb37 no-clean (Chip Quik SMD291AXT4). Check its date.
-- **Stencil:** the main-board area of the combined stencil, 0.12 thick. The touch board's pattern is on the same sheet:
-  keep the squeegee off it.
-- **U100 (TAS5756M) is moisture-sensitive, level 3:** 168 hours at 30 °C / 60 % humidity or less once its bag is open
-  (TI's package information in the datasheet). Open the bag on the day. If it has been open longer, bake it per
-  J-STD-033 first.
+- **Stencil:** the main board's own stencil, 100 × 100, 0.12 thick.
+- **Four parts are moisture-sensitive.** Once its bag is open, each must be soldered within its floor life at 30 °C /
+  60 % humidity or less; open the bags on the day. A part whose bag has been open longer is baked per J-STD-033 first.
+  - U100 TAS5756M: level 3, 168 hours (TI's package information in the datasheet);
+  - U1 TPS16630PWPT: level 2, 1 year (TI);
+  - F4 Bel 0ZCJ0020FF2E: level 2a, 4 weeks (Bel, September 2025);
+  - F5 Littelfuse 2920L260/33DR: level 2a, 4 weeks (Littelfuse, 2025-02-13).
 - **Bare board, meter on ohms:** TP2 (20 V), pad 2 of F5 (amplifier supply), TP9 (5 V) and TP16 (3.3 V) each read open
   to TP7 (ground).
 
@@ -120,8 +130,9 @@ One pass on the hotplate for every surface-mount part, then the through-hole par
 - Follow the paste maker's profile. Chip Quik's chart for SMD291AX (datasheet rev 1.1) runs 25 → 100 → 150 °C, crosses
   the 183 °C melting point and tops at 235 °C, about 240 s in all.
 - U100 is rated for 260 °C peak (TI), above that profile.
-- U100's thermal pad: the stencil's 2 × 4 windows cover 72.8 % of it; TI asks for 70 to 80 % (SLAS988B 11.1.3.2). The
-  39 holes under the pad are part of the footprint and take some solder by design.
+- U100's thermal pad: the stencil's 2 × 4 windows put 20.16 mm² of paste on it, 72.8 % of the package's nominal
+  exposed pad and 61.9 % of the board's 3.70 × 8.80 opening; TI asks for 70 to 80 % (SLAS988B 11.1.3.2). Of the 39
+  holes under the pad, 3 lie inside the opening and can take some solder; the other 36 are under soldermask.
 - The flux is no-clean: nothing is washed.
 
 **In the unit** (the panel's assembly instructions hold the steps): the display's power lead is plugged onto the
@@ -157,8 +168,9 @@ board's left edge and from its bottom edge (the edge with the sockets), seen fro
 - **There is no TP18.** The amplifier's supply is probed at **pad 2 of the fuse F5**, the pad nearer the right-hand
   edge (54.9 from the left edge, 53.3 from the bottom).
 - **LK1** is the place for a meter in series with the Pi's 5 V (bench only).
-- Seven test pads and the amplifier's thermal pad each have a via in them (TP2, TP7, TP9, TP15, TP17, TP19, TP20;
-  U100). No paste goes there, so they were left as they are.
+- Seven test pads each have a via in them (TP2, TP7, TP9, TP15, TP17, TP19, TP20). No paste goes there, so they were
+  left as they are. The via that lay inside one of the paste windows of U100's centre pad was taken out on 2026-11-21:
+  its solder would have drained into the hole; the pad keeps its 39 thermal holes.
 
 ## Bring-up
 On the bench, with the board out of the enclosure. A meter is enough. Ground: TP7, TP15, TP17 or TP20.
@@ -181,20 +193,31 @@ On the bench, with the board out of the enclosure. A meter is enough. Ground: TP
 
 | Probe | Expect | Why |
 |---|---|---|
-| TP16 | 3.267 to 3.333 V | TPS70933, ± 1 % (SBVS186H) |
+| TP16 | 3.21 to 3.34 V | TPS70933-Q1: ± 1 % at 1 mA, plus up to 50 mV load and 10 mV line regulation (SLVSCE6D) |
 | TP4, TP19 | about 3.3 V | no fault at the protection chip, none at the amplifier |
 | `vcgencmd get_throttled` | `0x0` | the Pi's own under-voltage detector never tripped |
-| `vcgencmd pmic_read_adc EXT5V_V` | 4.87 V or more under load | the upper tolerance of the Pi's under-voltage detector (4.63 V ± 5 %) |
+| TP11 and `vcgencmd pmic_read_adc EXT5V_V`, with the Pi under full load (all cores busy, display on) | 4.87 V or more | the upper tolerance of the Pi's under-voltage detector (4.63 V ± 5 %). If lower, R8 is found on the bench at TP13 (`NOTES.md` §2) before the panel goes into use |
 
 **Stage 3: configuration and buses.** Apply [`../notes/pi-config.md`](../notes/pi-config.md), then plug the BME680
 (J10), the VEML6030 (J11), the touch lead (J6) and the radar (J5).
+- On 2026-11-21 the software on `main` did not yet carry all that `pi-config.md` plans. Still to come in the software
+  step: the amplifier overlay `rpi-digiampplus,auto_mute_amp`, `dtparam=uart0=on`, `usb_max_current_enable=1`, the
+  EEPROM's `PSU_MAX_CURRENT=5000`, and a driver for the LD2410C on `/dev/ttyAMA0`.
+- **Start with everything plugged in:** switch the 20 V off and on with the Pi, the display, the radar and the sensors
+  connected. TP9 must rise to 4.90–5.10 V once, without the module restarting, and the Pi must boot. Mean Well allows
+  100 µF on the module's output; the board carries about 35 µF (`NOTES.md` §2), and the Pi's, the display's and the
+  radar's own input capacitance is not published.
 - `sudo i2cdetect -y 1`: **1b** (touch), **48** (VEML6030), **UU** at 4c (TAS5756M, held by its driver), and the
   BME680 at **76 or 77** (set by the sensor board's own strap).
-- Radar: record TP12 with the LD2410C running (the rail's lowest is 4.90 V; the LD2410C manual gives 5 to 12 V). Expect
-  no invalid frame at 256000 8N1 on `/dev/ttyAMA0`.
+- Radar: record TP12 with the LD2410C running and the Pi under full load. The LD2410C manual gives 5 to 12 V; the
+  rail can sit just under 5 V (4.90 V at the module's lowest, less the drop to TP12). Expect no invalid frame at
+  256000 8N1 on `/dev/ttyAMA0` at the lowest TP12 seen.
 - Then the audio and voice tests on the bench.
 
 ## Earlier revisions
+- **Rev 3.2 (fab issue of 2026-11-16):** its set is in `fab/superseded/` and must not be ordered: PS1's pin row did not
+  match Mean Well's side view. Rev 3.3 also moved J6's supply ahead of F4, took out the via in U100's paste window and
+  widened the silk; the paste did not change.
 - **Rev 3.2 of 2026-11-14:** rev 3.1 with the relief in the side edge. The fab issue of 2026-11-16 changed copper and
   texts only: 39 vias moved out of pasted pads and 1 taken out, so that no hole can take a pad's solder on the hotplate;
   the pours kept 0.50 back from the relief (0.30 everywhere else); the stack-up JLC04161H-7628 written into the board
