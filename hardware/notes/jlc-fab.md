@@ -2,10 +2,10 @@
 
 Three boards and two stencils go to JLC. **Bare boards only:** no SMT assembly, so no BOM or placement files go to JLC. The boards are assembled by hand (see each board's README).
 
-**Cart on 2026-11-21 (about 20:35):** the five new lines, €84.91 in all: main board €31.19 and strip €19.90 (each with €0.96 for "Confirm Production file"), touch board €19.12, two stencils €7.35 each. The four lines of the older sets were deleted. Nothing is ordered.
+**Cart on 2026-11-21 (about 20:35):** the five new lines, €84.91 in all: main board €31.19 and strip €19.90 (each with €0.96 for "Confirm Production file"), touch board €19.12, two stencils €7.35 each. The four lines of the older sets were deleted.
 Later the same evening the touch board's stencil line was replaced by the stencil that also carries the mic strip's
 pattern (Daniel, 20:39: he wants a stencil for the strip), `stencil-touch-revE-strip-rev3-jlc-2026-11-21-SO12611220107`,
-€7.35 like the line it replaced, so the five lines still come to €84.91.
+€7.35 like the line it replaced, so the five lines still come to €84.91. **Ordered 2026-11-21.**
 
 **Rev 2026-11-21 (after the pre-order review):** new sets for all three boards (main board rev 3.3, mic strip rev 3, touch board rev E) and two stencils of 100 × 100 in place of the combined one; the paste did not change. Since the same evening the
 second stencil carries the mic strip's back paste beside the touch board's. The older sets are in each folder's `fab/superseded/` and are not to be ordered. The options are unchanged except the stencils' size and "Multiple PCBs" (No for the main board, Yes for the touch

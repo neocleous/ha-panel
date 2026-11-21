@@ -5,8 +5,8 @@ sha256 `12641c710499f8dab67cd457623986f8389a1c9a527aa9ff06c9db64083fa4ec`
 
 - Bare board; no assembly files go to JLC.
 - **What changed from rev D (set of 2026-11-09):** every silk line 0.15 wide; the back reads `HA panel touch board rev E 2026-11-21`; the board file carries a title block with rev E. Copper, mask, paste, outline and options are unchanged.
-- **The cart line of the 2026-11-09 zip must be replaced by this one.** That zip is kept in `superseded/` and must not be ordered.
-- **In the cart since 2026-11-21:** line `touch-board-revE-jlc-2026-11-21_Y23`, **€19.12**, build 3 days, the same as the 2026-11-09 line, which was deleted. (€19.03 on 2026-11-16: 3.62 + ENIG 15.40.) "Confirm Production file" is No on this line.
+- **The 2026-11-09 zip's cart line was replaced by this one before the order.** That zip is kept in `superseded/` and must not be ordered.
+- **Ordered 2026-11-21:** line `touch-board-revE-jlc-2026-11-21_Y23`, **€19.12**, build 3 days, the same as the 2026-11-09 line, which was deleted. (€19.03 on 2026-11-16: 3.62 + ENIG 15.40.) "Confirm Production file" is No on this line.
 - JLC's capability figures were read on jlcpcb.com on **2026-11-16**; the soldermask figure for black on **2026-11-17**.
 - The option names are the order page's own, read on 2026-11-16.
 

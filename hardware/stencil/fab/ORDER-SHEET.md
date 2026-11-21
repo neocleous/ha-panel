@@ -13,7 +13,7 @@ main board, and one for the touch board and the mic strip together.
   plots the combined stencil of 2026-11-16 was checked against (241 on the main board, 26 on the touch board).
 - **The mic strip's pattern is new on 2026-11-21** (Daniel, 20:39: he wants a stencil for the strip). It is the strip's
   own back paste, as in its upload, put on the touch board's sheet. Before, the strip was to be pasted by syringe.
-- **In the cart since 2026-11-21:**
+- **Ordered 2026-11-21:**
   - `stencil-main-rev3.3-jlc-2026-11-21-SO12611220098`, **€7.35** (100 × 100 €2.82 + electropolishing €4.53), build
     1–2 days;
   - `stencil-touch-revE-strip-rev3-jlc-2026-11-21-SO12611220107`, **€7.35**, the same make-up: the page

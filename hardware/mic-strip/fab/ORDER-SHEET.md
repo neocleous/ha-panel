@@ -5,8 +5,8 @@ sha256 `0e378603bf06f547f44f3cb741d6ad13222e0321c87d36a35d0614bcfe94b095`
 
 - One design, used twice in the panel (left and right strip). Bare board; no assembly files go to JLC.
 - **What changed from the set of 2026-11-09 (rev 1):** 13 vias moved out of the pads that take solder and one taken out (24 vias, was 25); every silk line 0.15 wide; the board file carries a title block with rev 3. Outline, holes, port, parts, pads and options are unchanged. Rev 2 (31.4 long) was never built; the name is not reused.
-- **The cart line of the 2026-11-09 zip must be replaced by this one.** That zip is kept in `superseded/` and must not be ordered.
-- **In the cart since 2026-11-21:** line `mic-strip-rev3-jlc-2026-11-21_Y22`, **€19.90**, build 3 days: the €18.94 of the 2026-11-09 line plus €0.96 for "Confirm Production file". The 2026-11-09 line was deleted. (€18.85 on 2026-11-16: 3.62 + ENIG 15.04 + deburring 0.18.)
+- **The 2026-11-09 zip's cart line was replaced by this one before the order.** That zip is kept in `superseded/` and must not be ordered.
+- **Ordered 2026-11-21:** line `mic-strip-rev3-jlc-2026-11-21_Y22`, **€19.90**, build 3 days: the €18.94 of the 2026-11-09 line plus €0.96 for "Confirm Production file". The 2026-11-09 line was deleted. (€18.85 on 2026-11-16: 3.62 + ENIG 15.04 + deburring 0.18.)
 - JLC's capability figures were read on jlcpcb.com on **2026-11-16**; the soldermask figure for black on **2026-11-17**.
 - The option names are the order page's own, read on 2026-11-16.
 
