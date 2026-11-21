@@ -9,12 +9,12 @@
 	(paper "A4")
 	(title_block
 		(title "HA panel main board")
-		(date "2026-11-16")
-		(rev "3.2")
+		(date "2026-11-21")
+		(rev "3.3")
 		(company "HA panel (neocleous/ha-panel)")
-		(comment 1 "Rev 3.2: relief in the +u side edge, v +1.5 to +13.0, 1.5 deep; amplifier GPIO2 via and the I2C pair moved for it (claude/brief-electronics-rev3-2-2026-11-13.md)")
+		(comment 1 "Rev 3.3, 2026-11-21: PS1 pin row 3.0 toward +v (Mean Well's side view); J6 pin 1 from +3V3 ahead of F4; U100's paste-window via out; silk 0.15")
 		(comment 2 "87.0 x 57.9 x 1.6 with a relief 1.5 deep in the +u side edge, 4 layers: parts + signals / GND / +5V, +20V, PVDD / signals + GND")
-		(comment 3 "Fab issue 2026-11-16: vias moved out of the pasted pads; pours 0.50 from the relief; stack-up JLC04161H-7628 (claude/brief-electronics-fab-files-rev3-2-2026-11-16.md)")
+		(comment 3 "Rev 3.2, 2026-11-16: relief in the +u side edge; vias out of the pasted pads; pours 0.50 from the relief; stack-up JLC04161H-7628")
 	)
 	(layers
 		(0 "F.Cu" signal)
@@ -24741,7 +24741,7 @@
 			(justify mirror)
 		)
 	)
-	(gr_text "REV 3.2 2026-11-16"
+	(gr_text "REV 3.3 2026-11-21"
 		(at 31.5 9.75 0)
 		(layer "B.SilkS")
 		(uuid "2b789e72-071a-4691-86c0-e41b9d78d4a1")

@@ -7,6 +7,14 @@
 		(legacy_teardrops no)
 	)
 	(paper "A4")
+	(title_block
+		(title "HA panel mic strip")
+		(date "2026-11-21")
+		(rev "3")
+		(company "HA panel (neocleous/ha-panel)")
+		(comment 1 "Rev 3, 2026-11-21: vias out of the soldered pads, silk 0.15. Rev 2 (31.4 long) was not built")
+		(comment 2 "28.0 x 6.0 x 0.8, 2 layers, every part on the back; two boards of this design (L and R)")
+	)
 	(layers
 		(0 "F.Cu" signal)
 		(2 "B.Cu" signal)
