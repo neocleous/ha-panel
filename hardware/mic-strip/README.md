@@ -67,7 +67,8 @@ Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-20
 - One design for both sides: the left strip is the right one turned 180° in the cap's plane (port end outward, gasket
   side up).
 - **Rules:** tracks 0.2 (0.25–0.3 for supply and ground), clearance 0.15, copper to edge 0.3; vias 0.5/0.3, ring 0.10;
-  hole clearance 0.25, hole to hole 0.25.
+  hole clearance 0.25, hole to hole 0.25;
+  silk lines 0.15, JLC's minimum (0.12 until 2026-11-21).
 - **Vias (re-routed 2026-11-09): 28 × 0.45/0.2 became 25 × 0.5/0.3.** JLC's order page states its free 0.2 mm holes only
   for multilayer boards; 0.3 mm holes are the free class on 2 layers. Placement, parts, pads and silk did not change.
   Achieved: ring 0.10; via hole to hole ≥ 0.45; via hole to unplated hole ≥ 0.56; via hole to other-net track ≥ 0.29 and
