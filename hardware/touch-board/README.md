@@ -1,4 +1,4 @@
-# Touch board, rev D
+# Touch board, rev E
 
 The panel's four touch keys. Four copper electrodes on the front face sit behind the shell's chin; an AT42QT1070 on the
 back reads them and talks to the Pi over I²C (address 0x1B) through a four-wire lead from the main board's socket J6.
@@ -6,10 +6,13 @@ back reads them and talks to the Pi over I²C (address 0x1B) through a four-wire
 It replaces rev C ([`../rev-c/`](../rev-c/), the touch board of the first panel) with the same 90 × 44 × 1.6 outline,
 R2 corners, no holes except tented vias and a flat front.
 
-**State (2026-11-19):** the fab set of 2026-11-09 is current; it was checked again on 2026-11-16. Not built or tested yet.
+**State (2026-11-21):** rev E, fab set issued on 2026-11-21: rev D with every silk line 0.15 wide and the back's text
+reading `rev E 2026-11-21`; copper, mask and paste are rev D's. The set of 2026-11-09 (rev D) is in `fab/superseded/`.
+Not built or tested yet.
 
-**Checks (KiCad 9.0.9, 2026-11-09):** schematic 0 errors, 0 warnings (`erc-report.txt`); board (all severities, with
-schematic parity) 0 violations, 0 unconnected, 0 footprint errors (`drc-report.txt`).
+**Checks (KiCad 9.0.9, 2026-11-21):** schematic 0 errors, 0 warnings (`erc-report.txt`); board (all severities, with
+schematic parity) 0 violations, 0 unconnected, 0 footprint errors (`drc-report.txt`). A fresh export gives the zip of
+2026-11-21 file for file.
 
 ## Files
 | File | What |
@@ -17,20 +20,20 @@ schematic parity) 0 violations, 0 unconnected, 0 footprint errors (`drc-report.t
 | `touch-board.kicad_pro`, `.kicad_sch`, `.kicad_pcb` | the design, KiCad 9.0.9; `lib/` holds the project's symbol and footprints |
 | `touch-board-schematic.pdf` | the schematic |
 | `touch-board-assembly.pdf` | the assembly drawing (the back, as seen from the back) |
-| `touch-board-front.png`, `touch-board-back.png` | renders of both faces |
+| `touch-board-front.png`, `touch-board-back.png` | renders of both faces, rev D: on rev E the back's text reads `rev E 2026-11-21` |
 | `erc-report.txt`, `drc-report.txt` | KiCad's checks |
-| [`fab/`](fab/) | **what goes to JLC:** `touch-board-jlc-2026-11-09.zip`, the files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet |
+| [`fab/`](fab/) | **what goes to JLC:** `touch-board-revE-jlc-2026-11-21.zip`, the files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet; `superseded/` holds rev D's set |
 
 ## How to order
-- **Upload** `fab/touch-board-jlc-2026-11-09.zip` to JLC as a bare board. sha256
-  `2d62d7eca9126be672a78bb0a46d35bbd1463b2dc3d9a8c736272d2777056a34`.
+- **Upload** `fab/touch-board-revE-jlc-2026-11-21.zip` to JLC as a bare board. sha256
+  `12641c710499f8dab67cd457623986f8389a1c9a527aa9ff06c9db64083fa4ec`. It replaces the zip of 2026-11-09.
 - **Options in short:** 2 layers, 90 × 44 mm, 1.6 mm, black with white silkscreen, ENIG (the page's default for 2 layers
   is OSP: change it), vias tented, 5 pieces (1 needed). Every option: [`fab/ORDER-SHEET.md`](fab/ORDER-SHEET.md).
-- **Paste:** the touch board's back pattern is on the combined stencil with the main board ([`../stencil/`](../stencil/)).
+- **Paste:** the touch board's back pattern has its own 100 × 100 stencil, a separate line ([`../stencil/`](../stencil/)).
   Don't tick the stencil box on the touch-board line.
 
 ## Parts
-Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-2026-11-17.md), section "Touch board rev D".
+Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-2026-11-17.md), section "Touch board rev D" (rev E changed no part).
 
 | Ref | Part | Note |
 |---|---|---|
@@ -61,9 +64,8 @@ JLC's minimum (0.12 until 2026-11-21).
 ## How to assemble
 One surface-mount face, the back. Drawing: `touch-board-assembly.pdf`.
 1. Bare board: VCC–GND on the HOST pads must read open.
-2. Paste the back through the touch area of the combined stencil ([`../stencil/`](../stencil/)).
-   - Use the stencil the same way up as for the main board: the touch pattern is already mirrored to match the back
-     seen from above.
+2. Paste the back through the touch board's stencil ([`../stencil/`](../stencil/)).
+   - The pattern is already mirrored to match the back seen from above, with the board lying front-down.
    - The HOST pads get no paste.
 3. Place U1 (pin 1 at the chamfered corner), C1 100 nF, C2 10 µF, R1–R4 4.7 kΩ.
 4. Hotplate with the front face down on a clean sheet (the front has no parts). The same paste and profile as the main
@@ -76,7 +78,7 @@ One surface-mount face, the back. Drawing: `touch-board-assembly.pdf`.
 VCC–GND not shorted; then, on the Pi, `sudo i2cdetect -y 1` shows **1b**.
 
 ## Earlier revisions
-Rev C, the touch board of the first panel, is in [`../rev-c/`](../rev-c/). The scripts that generated rev D's
+Rev D (set of 2026-11-09) is rev E without the wider silk and the new text; its set is in `fab/superseded/`. Rev C, the touch board of the first panel, is in [`../rev-c/`](../rev-c/). The scripts that generated rev D's
 schematic and layout are in the history
 ([`hardware/main-board/gen/` at commit 45a38e4](https://github.com/neocleous/ha-panel/tree/45a38e49d72cf125aab3f4aa91dd065b3bc4f7ee/hardware/main-board/gen));
 the KiCad files are the source.

@@ -1,4 +1,4 @@
-# Main board — schematic notes, test pads and layout (rev 3.2, fab issue 2026-11-16)
+# Main board — schematic notes, test pads and layout (rev 3.3, fab issue 2026-11-21)
 
 > **What this file is.** Sections 1 to 4 and 6: every value of the circuit with its source, written on 2026-11-07 and
 > 2026-11-08 and unchanged since, because the circuit has not changed; only the rows of
@@ -7,6 +7,8 @@
 > BME680, J11 VEML6030, the same nets as the old 2 x 4); J3's pads are in housing order (`gpio-leads.md`); J3, J4 and
 > J7 are wire pads. Sections 5 (test pads) and 7 (layout) were written again on 2026-11-16 for rev 3.2 as it goes to
 > the fab. The file as it stood on 2026-11-14 is in the history (commit 45a38e4).
+> **Rev 3.3 (2026-11-21)** changed the circuit in one place, J6's supply (§3, F4 and J6), and the layout in three: PS1's
+> pin row (§7), the via in U100's paste window, and the silk widths. The datasheet of U2 is now cited as the -Q1's.
 
 KiCad **9.0.9**. Every value below is traced to a datasheet section or a project decision; sources and retrieval dates are at the end. "E" = engineering estimate, "not verified" = no source found.
 
@@ -98,10 +100,10 @@ TAS5756M per TI SLAS988B Figure 79 (stereo BTL) and Table 22, wired like the Ras
 
 Thermal pad (pin 49): via array and paste windows at 70–80 % of the pad area (SLAS988B 11.1.3.2) — built into the custom footprint.
 
-## 5. Test pads (rev 3.2)
+## 5. Test pads (rev 3.2; unchanged on rev 3.3)
 All 19 test pads are bare round pads, 1.5 across, **on the door side** (`TestPoint_Pad_D1.5mm`): nothing to solder,
 probed with the door off. **Their places, in mm from the board's left and bottom edges, and what stands beside each,
-are in `README.md`, "Test pads"**; the map is page 4 of `main-board-rev3.2-assembly.pdf`. Two moved on rev 3.1: TP3 and
+are in `README.md`, "Test pads"**; the map is page 4 of `main-board-rev3.3-assembly.pdf`. Two moved on rev 3.1: TP3 and
 TP12. On rev 2.1 the pads were on the other face.
 
 | Pad | Net | Bench use |
@@ -129,11 +131,12 @@ TP12. On rev 2.1 the pads were on the other face.
 - **V19** — §1.
 - **V20** — trim network R8/R9 DNP + TP13 (§2); trim function unverified on stock units.
 
-## 7. Layout (rev 3.2, fab issue 2026-11-16)
+## 7. Layout (rev 3.3, fab issue 2026-11-21)
 The layout's history is in the revisions' own reports, which the history keeps (commit 45a38e4): rev 3 (the board
 laid out again for its site behind the display), rev 3.1 (hole and headers moved, supply copper, ground pours), rev 3.2
 of 2026-11-14 (the relief) and the fab issue of 2026-11-16 (the changes made with the fab files); rev 2.1 has its own
-layout notes. What holds for the board as it goes to the fab:
+layout notes. Rev 3.3 (2026-11-21) is the fab issue of 2026-11-16 with the changes of the pre-order review: PS1's pin
+row, J6's supply track on layer 3, one via out of U100's paste window, silk 0.15. What holds for the board as it goes to the fab:
 
 - **Hand assembly** (set 2026-11-07 and 2026-11-10): every surface-mount part on one face, the door side; no
   surface-mount part by iron; connectors through-hole; nothing smaller than 0603. The back carries no part.
@@ -173,8 +176,8 @@ layout notes. What holds for the board as it goes to the fab:
   120. The back prints the connectors' names and `REV 3.2 2026-11-16`. Every silk line is 0.15 wide since 2026-11-21,
   JLC's minimum (the library footprints draw 0.12). C6's + mark is 0.9 across instead of 1.0 and 0.03 further from L1,
   so the wider lines stay 0.05 apart.
-- **Checks (KiCad 9.0.9, 2026-11-16):** schematic check 0 errors, 0 warnings; board check 0 errors, 0 open connections,
-  0 differences to the schematic, 2 warnings (J6's and J2's footprints differ from the library copies, on purpose).
+- **Checks (KiCad 9.0.9, 2026-11-21):** schematic check 0 errors, 0 warnings; board check 0 errors, 0 open connections,
+  0 differences to the schematic, 3 warnings (J6's, J2's and C6's footprints differ from the library copies, on purpose).
 
 ## Sources (read 2026-11-07 unless noted)
 - TI TAS5756M, SLAS988B — https://www.ti.com/lit/ds/symlink/tas5756m.pdf

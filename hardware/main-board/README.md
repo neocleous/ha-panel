@@ -1,4 +1,4 @@
-# Main board, rev 3.2
+# Main board, rev 3.3
 
 The panel's power and audio board. It sits behind the display on a printed carrier.
 
@@ -7,39 +7,46 @@ The panel's power and audio board. It sits behind the display on a printed carri
 - It drives the two speakers with a TAS5756M amplifier.
 - It carries the sockets for the touch board, the radar and the two sensor leads, and the wire pads for the Pi's signals.
 
-**State (2026-11-19):** the fab files were issued on 2026-11-16. On 2026-11-17 five capacitors changed their part; the
-copper and the fab files did not change. The board has not been built or tested yet.
+**State (2026-11-21):** rev 3.3, fab files issued on 2026-11-21 after the pre-order review. From rev 3.2: PS1's row of
+13 pins moved 3.0 toward +v to match Mean Well's side view (its body and box did not move; it is to be checked on the
+module when it arrives, see "PS1" below); the touch socket J6 takes +3V3 ahead of F4; the via in one of U100's paste
+windows is taken out; every silk line is 0.15 wide. The board has not been built or tested yet.
 
-**Checks (KiCad 9.0.9, 2026-11-17):** schematic 0 errors, 0 warnings (`erc-report.txt`); board 0 errors, 0 open
-connections, 0 differences to the schematic, 2 warnings: the footprints of J6 and J2 differ from KiCad's library copies,
-on purpose (`drc-report.txt`).
+**Checks (KiCad 9.0.9, 2026-11-21):** schematic 0 errors, 0 warnings (`erc-report.txt`); board 0 errors, 0 open
+connections, 0 differences to the schematic, 3 warnings: the footprints of J6, J2 and C6 differ from KiCad's library
+copies, on purpose (`drc-report.txt`; C6's + mark is 0.1 smaller to clear L1's outline with the wider silk).
+
+**PS1, to check on arrival:** measure on the module, from the pin row, how far its component side stands (Mean Well's
+side view: 5.0, the module board's component face 9 from the case's component side and the pins 4 from that face).
+About 5.0: rev 3.3 stands. About 8.3: the pin row belongs where rev 3.2 had it; revert commit `5db1985` and issue the
+set again. Anything else: stop and look again before soldering.
 
 ## Files
 | File | What |
 |---|---|
 | `main-board.kicad_pro`, `main-board.kicad_pcb`, five `.kicad_sch` | the design, KiCad 9.0.9. Project libraries: `lib/ha_panel.kicad_sym`, `lib/ha_panel.pretty` |
 | `main-board-schematic.pdf` | the schematic, 5 pages |
-| `main-board-rev3.2-assembly.pdf` | **the assembly drawing**, A3, 4 pages: all 120 part names; all values; the placing list with the maker's part numbers; the test pads, connectors and the back face. Previews of pages 1 and 2: `main-board-rev3.2-assembly-names.png`, `-values.png` |
-| [`fab/`](fab/) | **what goes to JLC:** `main-board-rev3.2-jlc-2026-11-16.zip`, the same files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet |
+| `main-board-rev3.3-assembly.pdf` | **the assembly drawing**, A3, 4 pages: all 120 part names; all values; the placing list with the maker's part numbers; the test pads, connectors and the back face. Previews of pages 1 and 2: `main-board-rev3.3-assembly-names.png`, `-values.png` |
+| [`fab/`](fab/) | **what goes to JLC:** `main-board-rev3.3-jlc-2026-11-21.zip`, the same files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet; `superseded/` holds the rev 3.2 set, which must not be ordered |
 | [`NOTES.md`](NOTES.md) | every value of the circuit with its source; the test pads; the layout |
 | [`gpio-leads.md`](gpio-leads.md) | the 13 Pi signal wires: pad, Pi pin, housing, colour |
-| `main-board-rev3.2.step`, `main-board-rev3.1-plug-envelopes.step`, [`MAIN_env.md`](MAIN_env.md) | for the enclosure model: the populated board, the plug envelopes, the outline, holes and heights |
-| `main-board-copper-F-B.png` | both outer copper layers |
-| `main-board-3d-door-side.png`, `main-board-3d-back.png` | renders of the populated board |
+| `main-board-rev3.2.step`, `main-board-rev3.1-plug-envelopes.step`, [`MAIN_env.md`](MAIN_env.md) | for the enclosure model: the populated board, the plug envelopes, the outline, holes and heights. The STEP file is rev 3.2's: on rev 3.3 only PS1's 13 pin holes sit 3.0 further toward +v, and its pin ends behind the board are in `MAIN_env.md` §5. It was not exported again because this session had no KiCad 3D-model library |
+| `main-board-copper-F-B.png` | both outer copper layers (rev 3.3) |
+| `main-board-3d-door-side.png`, `main-board-3d-back.png` | renders of the populated board, rev 3.2: on rev 3.3 PS1's pins and its two legends sit 3.0 higher, and the back reads `REV 3.3 2026-11-21` |
 | `erc-report.txt`, `drc-report.txt` | KiCad's schematic and board checks |
 | [`tools/`](tools/) | scripts that export and check the fab set and the stencil, and draw the assembly drawing |
 
 ## How to order
-- **Upload** `fab/main-board-rev3.2-jlc-2026-11-16.zip` to JLC as a bare board: no assembly, so no BOM or placement
-  file. sha256 `fc4588531ea277c1fc3e9009db38fae190042080e065443b0a663f34fa7449bd`.
+- **Upload** `fab/main-board-rev3.3-jlc-2026-11-21.zip` to JLC as a bare board: no assembly, so no BOM or placement
+  file. sha256 `26ff743470ad6834af4412218b2413478ce8ec22a962c775d0f4b1875617acdd`. It replaces the rev 3.2 zip.
 - **Options in short:** 4 layers, 87.0 × 57.9 mm, FR-4, 1.6 mm, black with white silkscreen, ENIG, 1 oz outer and
   0.5 oz inner copper, stack-up JLC04161H-7628, vias plugged, outline tolerance ±0.2, "Remove Mark", 5 pieces (1 needed).
   Every option with its reason, and what JLC's review may ask: [`fab/ORDER-SHEET.md`](fab/ORDER-SHEET.md).
-- **Paste stencil:** a separate line, shared with the touch board: [`../stencil/`](../stencil/).
+- **Paste stencil:** a separate line, 100 × 100 mm, for this board alone: [`../stencil/`](../stencil/).
 
 ## Parts
 - Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-2026-11-17.md), section "Main board
-  rev 3.2". The DigiKey quick-add list is [`../notes/digikey-bom.csv`](../notes/digikey-bom.csv).
+  rev 3.2" (rev 3.3 changed no part). The DigiKey quick-add list is [`../notes/digikey-bom.csv`](../notes/digikey-bom.csv).
 - **One 0805 part reads 4.7 µF:** TDK C2012X7R1H475K125AC (50 V). It goes to all five places: C12, C101, C102, C122
   and C123.
 - **Not from DigiKey:** LK1, a short piece of 1.0 mm tinned copper wire.
@@ -85,12 +92,11 @@ Every value's source: [`NOTES.md`](NOTES.md) §1 to §4.
 
 ## How to assemble
 One pass on the hotplate for every surface-mount part, then the through-hole parts by iron. **Work from
-`main-board-rev3.2-assembly.pdf`:** page 1 names, page 2 values, page 3 the placing list, page 4 the back.
+`main-board-rev3.3-assembly.pdf`:** page 1 names, page 2 values, page 3 the placing list, page 4 the back.
 
 **Before you start**
 - **Paste:** Sn63/Pb37 no-clean (Chip Quik SMD291AXT4). Check its date.
-- **Stencil:** the main-board area of the combined stencil, 0.12 thick. The touch board's pattern is on the same sheet:
-  keep the squeegee off it.
+- **Stencil:** the main board's own stencil, 100 × 100, 0.12 thick.
 - **Four parts are moisture-sensitive.** Once its bag is open, each must be soldered within its floor life at 30 °C /
   60 % humidity or less; open the bags on the day. A part whose bag has been open longer is baked per J-STD-033 first.
   - U100 TAS5756M: level 3, 168 hours (TI's package information in the datasheet);
@@ -209,6 +215,9 @@ On the bench, with the board out of the enclosure. A meter is enough. Ground: TP
 - Then the audio and voice tests on the bench.
 
 ## Earlier revisions
+- **Rev 3.2 (fab issue of 2026-11-16):** its set is in `fab/superseded/` and must not be ordered: PS1's pin row did not
+  match Mean Well's side view. Rev 3.3 also moved J6's supply ahead of F4, took out the via in U100's paste window and
+  widened the silk; the paste did not change.
 - **Rev 3.2 of 2026-11-14:** rev 3.1 with the relief in the side edge. The fab issue of 2026-11-16 changed copper and
   texts only: 39 vias moved out of pasted pads and 1 taken out, so that no hole can take a pad's solder on the hotplate;
   the pours kept 0.50 back from the relief (0.30 everywhere else); the stack-up JLC04161H-7628 written into the board

@@ -1,58 +1,75 @@
-# Combined stencil, main board rev 3.2 + touch board rev D — JLC order sheet (2026-11-16; sheet corrected 2026-11-17)
+# Two stencils, main board rev 3.3 and touch board rev E — JLC order sheet (2026-11-21)
 
-**Upload:** `stencil-main-rev3.2-touch-revD-jlc-2026-11-16.zip`
-sha256 `f83d86d130e1cd6dd12528dfa11b598b52d56163d8d25fc2e75cec845d8e9dc2`
+Since 2026-11-21 each board has a stencil of its own, 100 × 100 mm, in place of the one combined stencil of 190 × 190.
 
-- One stencil, ordered as its own line ("SMT Stencil"), not through the stencil switch on a board's line.
-- It replaces the stencil set of 2026-11-09, which held the rev 2.1 main board's pattern and **must not be ordered**. That set is no longer in this folder; the history keeps it.
-- **Price on 2026-11-16:** 1 stencil, €11.05 (6.54 + electropolishing 4.50), build 1–2 days.
-- **The part changes of 2026-11-17** (C101, C102, C122, C123 become 4.7 µF 50 V on the same pads; C12 takes the same part) do not change this zip: a fresh export gives the same 3 files, compared again after C12.
-- JLC's stencil figures were read on jlcpcb.com on **2026-11-16** (https://jlcpcb.com/capabilities/pcb-stencil-manufacturing).
-- The option names are the order page's own, read on 2026-11-16.
+| Line | Upload | sha256 |
+|---|---|---|
+| Main board stencil | `stencil-main-rev3.3-jlc-2026-11-21.zip` | `e0097f6055bd09322dac74cab5a10de7c6d13a2cca149c6fb7ec895b5aba6ffe` |
+| Touch board stencil | `stencil-touch-revE-jlc-2026-11-21.zip` | `4905042379bd46d81aa8217ae9709bcbd5c1a186e9bffa961ae23bbe6d92a708` |
 
-## What is in the zip (3 files)
+- Each stencil is its own line ("SMT Stencil"), not the stencil switch on a board's line.
+- **The paste did not change.** Each board's paste plot of 2026-11-21 has the same apertures, place and size, as the
+  plots the combined stencil of 2026-11-16 was checked against (241 on the main board, 26 on the touch board).
+- **The combined stencil's cart line must be replaced by these two.** Its zip is kept in `superseded/`; its apertures
+  are still right for both boards, so it stays a fallback if one 190 × 190 stencil is wanted after all.
+- **Price:** not known yet. The combined stencil's line read €11.10 on 2026-11-21 (190 × 190, electropolished); the cart
+  shows the two new lines' prices once they are uploaded.
+- JLC's stencil page was read on **2026-11-21** (https://jlcpcb.com/capabilities/pcb-stencil-manufacturing): custom sizes
+  "within 650*580mm", no smallest custom size and no margin rule stated; "a 1:1 stencil matching the PCB" is named as a
+  custom size; apertures larger than 0.08 mm.
+- The option names are the order page's own, as read on 2026-11-16 for the combined stencil.
+
+## What is in each zip (3 files)
 | File | Content |
 |---|---|
-| `stencil-main-rev3.2-touch-revD-F_Paste.gtp` | 267 apertures: 241 of the main board's door side as drawn, and 26 of the touch board's back, mirrored left-right, below it |
-| `stencil-main-rev3.2-touch-revD-Edge_Cuts.gm1` | both board outlines, for orientation |
-| `stencil-main-rev3.2-touch-revD-job.gbrjob` | job file |
+| `stencil-main-rev3.3-F_Paste.gtp` | 241 apertures of the main board's door side, as drawn |
+| `stencil-main-rev3.3-Edge_Cuts.gm1` | the main board's outline, for orientation |
+| `stencil-main-rev3.3-job.gbrjob` | job file |
+| `stencil-touch-revE-F_Paste.gtp` | 26 apertures of the touch board's back, mirrored left-right onto the top layer: seen from the back, the way the stencil meets the board lying front-down |
+| `stencil-touch-revE-Edge_Cuts.gm1` | the touch board's outline, mirrored with it |
+| `stencil-touch-revE-job.gbrjob` | job file |
 
-No copper layer, on purpose. The mic strip has no area on the stencil; its parts are pasted by syringe.
+No copper layer, on purpose. The mic strips have no stencil; their parts are pasted by syringe.
 
-## Order options
+## Order options (both lines)
 | Option | Choice | Note |
 |---|---|---|
-| Product | SMT Stencil, its own line | |
+| Product | SMT Stencil, its own line | one line per stencil |
 | Framework | No | hand use on the hotplate |
-| Stencil side | **Top only** | both patterns are on the file's top paste layer; the touch board's is already mirrored |
-| Dimensions | **Custom 190 × 190 mm** | holds the 90.1 × 112.1 pattern. JLC accepts custom sizes up to 650 × 580. |
-| Thickness | "Select by Customer", then **0.12 mm** | standing choice; one of JLC's standard thicknesses |
+| Stencil side | **Top only** | the touch pattern is already mirrored onto the top layer |
+| Dimensions | **Custom 100 × 100 mm** | main outline 87.0 × 57.9: 6.5 and 21.05 of margin a side; touch outline 90.0 × 44.0: 5.0 and 28.0 |
+| Thickness | "Select by Customer", then **0.12 mm** | standing choice |
 | Stencil process type | solder paste stencil | |
-| Multiple PCBs on one stencil | **Yes**; the page then asks in a dialog whether JLC may re-arrange the patterns: **Yes** | JLC cuts several designs into one stencil and may change their spacing |
-| Polishing | **Electropolishing** | standing choice; JLC names it for ICs of 0.5 mm pitch and below (the TAS5756M) |
+| Multiple PCBs on one stencil | **No** | one design per stencil |
+| Polishing | **Electropolishing** | standing choice; JLC names it for ICs of 0.5 mm pitch and below (the TAS5756M on the main board) |
 | Fiducials | **"No Fiducial"** | aligned by hand to the pads |
-| Stencil aperture openings | **"1:1 as per Paste Layer"** | by default JLC's engineers resize apertures. The windows in the two chips' centre pads are designed and must stay as drawn. |
-| Stencil remark | "Two PCBs on one stencil: main board top paste + touch board bottom paste (already mirrored). No copper layer on purpose. Keep each orientation; spacing may change. Apertures 1:1 as in paste layer." | 196 characters, as entered on 2026-11-16. The page takes 200 at most; this sheet's earlier text had 224 and was shortened with every point kept |
+| Stencil aperture openings | **"1:1 as per Paste Layer"** | the windows in the two chips' centre pads are designed and must stay as drawn |
+| Stencil remark, main | "Main board top paste, one PCB. No copper layer on purpose. Apertures 1:1 as in paste layer. Centre the pattern on the 100x100 sheet." | 132 characters; the page takes 200 at most |
+| Stencil remark, touch | "Touch board bottom paste, already mirrored onto the top layer: cut as drawn, do not mirror again. No copper layer on purpose. Apertures 1:1. Centre the pattern." | 160 characters |
 
-## The pattern in numbers
-| Item | Value |
-|---|---|
-| Apertures | 267 = 241 (main board) + 26 (touch board) |
-| Main board area | outline 87.00 × 57.90, at the top |
-| Touch board area | outline 90.00 × 44.00, 10.1 below the main board, left edges in line |
-| Extent with both outlines | 90.1 × 112.1 mm (apertures alone 81.75 × 86.89) |
-| Smallest aperture | 0.300 × 1.475 (48 of them: the TAS5756M's pins, 0.5 pitch). JLC's stencil page: apertures larger than 0.08 mm. |
-| Smallest area ratio at 0.12 | 1.07 (aperture area ÷ wall area; 0.66 is the usual lower limit) |
-| Paste area in all | 398.8 mm² |
+## The patterns in numbers
+| Item | Main board | Touch board |
+|---|---|---|
+| Apertures | 241, of which 18 on the 9 parts not fitted by default (R8, R9, R20–R25, R27) | 26 (U1, C1, C2, R1–R4) |
+| Outline | 87.00 × 57.90 | 90.00 × 44.00 |
+| Smallest aperture | 0.300 × 1.475 (the TAS5756M's 48 pins, 0.5 pitch; area ratio 1.07 at 0.12) | 0.600 × 1.950 |
 
-Of the main board's 241 apertures, 18 belong to the 9 parts that are not fitted by default (R8, R9, R20–R25, R27). They get paste and stay empty; the paste reflows flat on the pads.
+## Checks (2026-11-21)
+`stencil-main-check-2026-11-21.txt` and `stencil-touch-check-2026-11-21.txt` (made by
+`../../main-board/tools/stencil_check_single.py`), all passed:
+1. each aperture of the board's own paste file is in the stencil: the main board's as drawn, the touch board's mirrored
+   left-right and moved by one common shift; same size;
+2. nothing else in the paste file, nothing drawn or filled;
+3. every aperture lies inside the outline, and the outline fits 100 × 100;
+4. the smallest aperture is above JLC's 0.08.
 
-## Checks (2026-11-16)
-`stencil-check-2026-11-16.txt` (made by `../../main-board/tools/stencil_check.py`), all passed:
-1. each of the 241 apertures of the main board's own door-side paste plot is in the stencil, same place, same size;
-2. each of the 26 apertures of the touch board's back paste file is in it, mirrored left-right and moved by one common shift;
-3. there is nothing else in the file: 267 = 241 + 26 apertures, nothing drawn, nothing filled;
-4. the outline file holds two closed loops; every aperture lies inside its own board's outline.
+The generator's own check: every paste pad at its expected place within 1 nm (`stencil_single.py`). A fresh export of
+each stencil file gives the same files as its zip, apart from the export's time (`fab_same.sh stencil`). Pictures:
+`../stencil-main-preview.png`, `../stencil-touch-preview.png`. The main board's paste plot the check compares against
+is in `check-2026-11-21/`; it is not in the main board's upload.
 
-The generator's own check: 267 paste pads, each at its expected place within 1 nm.
-Picture: `../stencil-preview.png`.
+## Earlier sets
+- **Combined stencil of 2026-11-16** (main rev 3.2 + touch rev D, custom 190 × 190): `superseded/stencil-main-rev3.2-touch-revD-jlc-2026-11-16.zip`
+  (sha256 `f83d86d1…9dc2`), with its check and preview. Replaced by the two stencils above; its apertures equal the
+  boards' current paste.
+- The stencil set of 2026-11-09 held the rev 2.1 main board's pattern and must not be ordered; the history keeps it.

@@ -4,14 +4,16 @@ A small board that carries one MEMS microphone (Infineon IM69D120) in the panel'
 right: two boards of this one design. Each strip is wired by a five-way lead to the ReSpeaker Lite, the panel's voice
 front end, in place of the ReSpeaker's own microphones.
 
-**State (2026-11-19):** the fab set of 2026-11-09 is current; it was checked again on 2026-11-16 and 2026-11-19.
+**State (2026-11-21):** rev 3, fab set issued on 2026-11-21 after the pre-order review: the vias are out of the soldered
+pads and the silk lines are 0.15 wide ("The board"). The set of 2026-11-09 (rev 1) is in `fab/superseded/` and must not
+be ordered. Rev 2 (31.4 long, 2026-11-19) was not built; its name is not reused.
 In the cap the strip is held by a printed clamp that presses on two areas of its back; its two holes only locate it
 on the cap's pins ("The board"). Not built or tested yet.
 
-**Checks (KiCad 9.0.9):** schematic 0 errors, 0 warnings (`erc-report.txt`); board (2026-11-09, all severities)
+**Checks (KiCad 9.0.9, 2026-11-21):** schematic 0 errors, 0 warnings (`erc-report.txt`); board (all severities)
 0 violations, 0 unconnected, 0 footprint errors, schematic parity clean (`drc-report.txt`). The check "footprint differs
-from library" is set to ignore: U1's and MK1's silk marks at the board edge were removed on purpose. Run again on
-2026-11-19 with the same result, and a fresh export gave the zip of 2026-11-09 file for file.
+from library" is set to ignore: U1's and MK1's silk marks at the board edge were removed on purpose. A fresh export
+gives the zip of 2026-11-21 file for file.
 
 ## Files
 | File | What |
@@ -19,13 +21,13 @@ from library" is set to ignore: U1's and MK1's silk marks at the board edge were
 | `mic-strip.kicad_pro`, `.kicad_sch`, `.kicad_pcb` | the design, KiCad 9.0.9. Project libraries: `lib/ha_panel.kicad_sym` (IM69D120) and `lib/ha_panel.pretty` (IM69D120 land pattern, 5-pad wire column, and the footprint the two locating holes are drawn with) |
 | `mic-strip-schematic.pdf` | the schematic |
 | `mic-strip-assembly.pdf` | the assembly drawing (the back, as seen from the back) |
-| `mic-strip-3d.png`, `mic-strip-copper-F-B.png` | a render (front = gasket side, back = parts) and both copper layers (back mirrored) |
+| `mic-strip-3d.png`, `mic-strip-copper-F-B.png` | a render of rev 1 (front = gasket side, back = parts; the moved vias do not show at its size) and both copper layers of rev 3 (back mirrored) |
 | `erc-report.txt`, `drc-report.txt` | KiCad's checks |
-| [`fab/`](fab/) | **what goes to JLC:** `mic-strip-jlc-2026-11-09.zip`, the files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet |
+| [`fab/`](fab/) | **what goes to JLC:** `mic-strip-rev3-jlc-2026-11-21.zip`, the files unzipped in `gerbers/`, the hole list, the check of the set, and the order sheet; `superseded/` holds rev 1's set, which must not be ordered |
 
 ## How to order
-- **Upload** `fab/mic-strip-jlc-2026-11-09.zip` to JLC as a bare board. sha256
-  `f405cc567fab336cf9e0fb4b0da1def971ca79bae3d6d8b02ea9bce7e5584564`.
+- **Upload** `fab/mic-strip-rev3-jlc-2026-11-21.zip` to JLC as a bare board. sha256
+  `0e378603bf06f547f44f3cb741d6ad13222e0321c87d36a35d0614bcfe94b095`. It replaces the zip of 2026-11-09.
 - **Options in short:** 2 layers, 28 × 6 mm, 0.8 mm, black with white silkscreen, ENIG (the page's default for 2 layers
   is OSP: change it), vias tented, deburring on, via class "0.3mm/(0.4/0.45mm)", 5 pieces (2 needed). Every option:
   [`fab/ORDER-SHEET.md`](fab/ORDER-SHEET.md).
@@ -132,6 +134,8 @@ click count, noise floor and false-reject rate. If it fails, the options are: by
 change R4 from 33 Ω to 100 Ω.
 
 ## How it changed
+Rev 3 (2026-11-21): the vias out of the soldered pads and silk 0.15, after the pre-order review; nothing else moved.
+Rev 2 (31.4 long, holes for M2 screws, 2026-11-19) was not built: the clamp took its place, and rev 1 stood until rev 3.
 During the design the JST connector, the on-board strap JP1 and four test pads were dropped for the wire pads, R3 (a
 0 Ω bypass) for space; the MSM261DHP006 microphone was replaced by the IM69D120, and the TPD1E05U06DYAR diodes by the
 ESD321DYAR (DigiKey: 0 in stock, 26 weeks, 2026-11-08). The scripts that generated the schematic and the layout are in

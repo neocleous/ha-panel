@@ -1,0 +1,57 @@
+1. files (main-board-rev3.3-...)
+  ok   F_Cu.gtl
+  ok   B_Cu.gbl
+  ok   In1_Cu.g1
+  ok   In2_Cu.g2
+  ok   F_Mask.gts
+  ok   B_Mask.gbs
+  ok   F_Silkscreen.gto
+  ok   B_Silkscreen.gbo
+  ok   Edge_Cuts.gm1
+  ok   PTH.drl
+  ok   NPTH.drl
+  ok   job.gbrjob
+     also in the set: nothing
+     B_Cu.gbl           Copper,L4,Bot                flashes   383, drawn pieces  12035 (arcs 0), filled regions   44
+     B_Mask.gbs         Soldermask,Bot               flashes     0, drawn pieces   4348 (arcs 0), filled regions   89
+     B_Silkscreen.gbo   Legend,Bot                   flashes     0, drawn pieces   5050 (arcs 0), filled regions   89
+     Edge_Cuts.gm1      Profile,NP                   flashes     0, drawn pieces     10 (arcs 2), filled regions    0
+     F_Cu.gtl           Copper,L1,Top                flashes   633, drawn pieces  17948 (arcs 0), filled regions   57
+     F_Mask.gts         Soldermask,Top               flashes     0, drawn pieces  11688 (arcs 0), filled regions  339
+     F_Silkscreen.gto   Legend,Top                   flashes     0, drawn pieces  14784 (arcs 50), filled regions  341
+     In1_Cu.g1          Copper,L2,Inr                flashes   382, drawn pieces  10304 (arcs 0), filled regions    1
+     In2_Cu.g2          Copper,L3,Inr                flashes   382, drawn pieces   7237 (arcs 0), filled regions    4
+2. vias on the copper layers (243 vias)
+  ok   F_Cu.gtl: a round flash of the right diameter at every via (missing 0, wrong size 0)
+  ok   B_Cu.gbl: a round flash of the right diameter at every via (missing 0, wrong size 0)
+  ok   In1_Cu.g1: a round flash of the right diameter at every via (missing 0, wrong size 0)
+  ok   In2_Cu.g2: a round flash of the right diameter at every via (missing 0, wrong size 0)
+3. soldermask
+  ok   F_Mask.gts: no opening flashed at a via (0)
+  ok   F_Mask.gts: 0 openings flashed, 339 drawn as regions, for 339 pads with an opening
+  ok   B_Mask.gbs: no opening flashed at a via (0)
+  ok   B_Mask.gbs: 0 openings flashed, 89 drawn as regions, for 89 pads with an opening
+4. paste
+     F_Paste.gtp: not in this set (the board has 241 pasted pads on that face)
+     B_Paste.gbp: not in this set (the board has 0 pasted pads on that face)
+5. outline
+  ok   extent 87.00 x 57.90 in the file; the board 87.10 x 58.00 with its 0.1 line
+  ok   arcs: 2 in the file, 2 arcs and circles on the board's outline layer
+6. holes
+  ok   plated: 126 of 0.20, 146 of 0.30, 41 of 0.40, 4 of 0.60, 2 of 0.80, 8 of 0.95, 40 of 1.00, 13 of 1.15, 2 of 1.30
+  ok   not plated: 4 of 3.20
+     slots (plated, oval holes): {0.6: 4}
+7. job file
+     size 87.1 x 58.0, 4 layers, thickness 1.6, finish ENIG; project Pcbnew rev 3.3
+       Copper     F.Cu                   0.035
+       Dielectric F.Cu/In1.Cu            0.2104  7628
+       Copper     In1.Cu                 0.0152
+       Dielectric In1.Cu/In2.Cu          1.065  FR4 core
+       Copper     In2.Cu                 0.0152
+       Dielectric In2.Cu/B.Cu            0.2104  7628
+       Copper     B.Cu                   0.035
+  ok   layer count 4
+8. pours
+  ok   9 pours; a refill changes none by more than 0.0000 mm2 (the stored pours are current)
+drawn: main-board-rev3.3-gerbers.png (9 layers, as the files hold them: the back layers are seen through the board)
+RESULT: all checks passed

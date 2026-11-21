@@ -1,4 +1,4 @@
-# MAIN_env: main board rev 3.2, outline, holes and heights (2026-11-14)
+# MAIN_env: main board rev 3.3, outline, holes and heights (2026-11-21)
 
 For the enclosure model: the board's outline, holes and heights, its connectors and the plug envelopes, as worked out
 for rev 3.1 on 2026-11-11, with the outline of rev 3.2. The connector table, the plug envelopes and the open points of
@@ -6,6 +6,10 @@ rev 3.1 stand. Earlier versions of this file (rev 3.1, rev 3, rev 2.1) are in th
 Frame: the site document's board frame, seen from the door: u to the right, v up, w out of the door-side face, origin
 in the middle of the board, mm.
 The sections start at 3: they keep the numbers of the note this file came from.
+
+**Rev 3.3 (2026-11-21):** PS1's 13 pins moved 3.0 toward +v, to v +2.7 (sections 4 and 5); its body and its box did not
+move. Nothing else on the board's faces moved: outline, the other holes, heights, connectors and plug envelopes are
+as below. `main-board-rev3.2.step` holds rev 3.2's PS1 pin holes; everything else in it stands.
 
 **Fab issue 2026-11-16:** copper and texts only (39 vias moved, 1 taken out, the pours 0.50 from the relief, the
 revision text's date). Outline, holes, heights, pin ends and connectors are unchanged, so this file and

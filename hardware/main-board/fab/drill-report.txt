@@ -1,5 +1,5 @@
-Drill report for main-board-rev3.2.kicad_pcb
-Created on 2026-11-16T17:56:57+0100
+Drill report for main-board-rev3.3.kicad_pcb
+Created on 2026-11-21T19:51:26+0100
 
 Copper Layer Stackup:
     =============================================================
@@ -9,12 +9,12 @@ Copper Layer Stackup:
     L4 :  B.Cu                      back
 
 
-Drill file 'main-board-rev3.2-PTH.drl' contains
+Drill file 'main-board-rev3.3-PTH.drl' contains
     plated through holes:
     =============================================================
     T1  0.200mm  0.0079"  (87 holes)
     T2  0.200mm  0.0079"  (39 holes)
-    T3  0.300mm  0.0118"  (132 holes)
+    T3  0.300mm  0.0118"  (131 holes)
     T4  0.300mm  0.0118"  (15 holes)
     T5  0.400mm  0.0157"  (25 holes)
     T6  0.400mm  0.0157"  (16 holes)
@@ -25,10 +25,10 @@ Drill file 'main-board-rev3.2-PTH.drl' contains
     T11  1.150mm  0.0453"  (13 holes)
     T12  1.300mm  0.0512"  (2 holes)
 
-    Total plated holes count 383
+    Total plated holes count 382
 
 
-Drill file 'main-board-rev3.2-NPTH.drl' contains
+Drill file 'main-board-rev3.3-NPTH.drl' contains
     unplated through holes:
     =============================================================
     T1  3.200mm  0.1260"  (4 holes)
