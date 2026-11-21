@@ -69,10 +69,18 @@ Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-20
 - **Rules:** tracks 0.2 (0.25–0.3 for supply and ground), clearance 0.15, copper to edge 0.3; vias 0.5/0.3, ring 0.10;
   hole clearance 0.25, hole to hole 0.25;
   silk lines 0.15, JLC's minimum (0.12 until 2026-11-21).
-- **Vias (re-routed 2026-11-09): 28 × 0.45/0.2 became 25 × 0.5/0.3.** JLC's order page states its free 0.2 mm holes only
-  for multilayer boards; 0.3 mm holes are the free class on 2 layers. Placement, parts, pads and silk did not change.
-  Achieved: ring 0.10; via hole to hole ≥ 0.45; via hole to unplated hole ≥ 0.56; via hole to other-net track ≥ 0.29 and
-  to other-net pad ≥ 0.33. JLC's figures: [`../notes/jlc-fab.md`](../notes/jlc-fab.md).
+- **Vias: 24 × 0.5/0.3, all tented.** On 2026-11-09, 28 × 0.45/0.2 became 25 × 0.5/0.3: JLC's order page states its free
+  0.2 mm holes only for multilayer boards; 0.3 mm holes are the free class on 2 layers.
+- **Vias out of the soldered pads (2026-11-21).** Thirteen via holes lay inside pads that take solder, one wholly inside
+  MK1's SELECT pad, and one more ended 0.014 from U1's pin 4. Molten solder runs into an open hole, and the joints under
+  MK1 cannot be seen or reworked. Thirteen of these vias moved 0.21 to 0.80, each joined to its pad by a short track on
+  the back; the front tracks followed. U1's pin 3 lost its via: the pin already reaches the ground via at (12.925, 2.525)
+  through its track to R2.2. Placement, parts, pads, outline, holes and port did not change, and no via lies in the clamp's
+  press areas or their room (nearest 0.41 from the outer room, 0.59 from the outer area).
+  - Every via hole is now **0.217 or more** from the opening of every pad that takes paste. J1.2's ground via still lies
+    partly in its wire pad, which takes no paste; it is left as it is.
+  - Achieved: ring 0.10; via hole to hole ≥ 0.40; via hole to unplated hole ≥ 0.86; via hole to other-net track ≥ 0.27
+    and to other-net pad ≥ 0.27 (rule 0.25). JLC's figures: [`../notes/jlc-fab.md`](../notes/jlc-fab.md).
 
 ## How to assemble
 Build two identical strips. Drawing: `mic-strip-assembly.pdf`. One hotplate pass, parts side up.
