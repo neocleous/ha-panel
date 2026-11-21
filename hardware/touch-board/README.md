@@ -55,7 +55,8 @@ Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-20
 | Cx | the AT42QT1070 accepts 1–30 pF per key | datasheet 6.2 |
 
 **Layout:** front copper = the electrodes only. Back: U1, R1–R4, C1, C2, the J1 pads and all traces (0.25 mm signal,
-0.4 mm supply), back-copper keep-outs behind the electrodes, and a tented via at each electrode's top edge.
+0.4 mm supply), back-copper keep-outs behind the electrodes, and a tented via at each electrode's top edge. Silk lines 0.15,
+JLC's minimum (0.12 until 2026-11-21).
 
 ## How to assemble
 One surface-mount face, the back. Drawing: `touch-board-assembly.pdf`.
