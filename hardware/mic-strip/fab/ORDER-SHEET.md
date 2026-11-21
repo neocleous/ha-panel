@@ -13,7 +13,7 @@ sha256 `0e378603bf06f547f44f3cb741d6ad13222e0321c87d36a35d0614bcfe94b095`
 ## What is in the zip (12 files)
 `mic-strip-rev3-F_Cu.gtl`, `-B_Cu.gbl`, `-F_Mask.gts`, `-B_Mask.gbs`, `-F_Silkscreen.gto`, `-B_Silkscreen.gbo`, `-F_Paste.gtp` (empty), `-B_Paste.gbp`, `-Edge_Cuts.gm1`, `-PTH.drl`, `-NPTH.drl`, `-job.gbrjob`.
 
-The two paste files are in the zip, as in the set of 2026-11-09. JLC uses them only if a stencil is ordered on this line, which it is not: the strip's parts are pasted by syringe.
+The two paste files are in the zip, as in the set of 2026-11-09. JLC uses them only if a stencil is ordered on this line, which it is not: since 2026-11-21 the strip's back paste is cut on the touch board's stencil, its own line (`../../stencil/fab/ORDER-SHEET.md`).
 
 ## Order options
 | Option | Choice | Note |
@@ -35,7 +35,7 @@ The two paste files are in the zip, as in the set of 2026-11-09. JLC uses them o
 | Mark on PCB | **"Remove Mark"** | |
 | Confirm Production file | **Yes** | Daniel, 2026-11-21. JLC sends its production file for confirmation; if it is not confirmed within 48 hours, the order goes into production by itself (the dialog's "Do not confirm automatically" box is left unticked). €0.96 |
 | Gold fingers, castellated holes, edge plating | no | |
-| "Stencil: order together with PCB" | **off** | |
+| "Stencil: order together with PCB" | **off** | the strip's pattern is on the touch board's stencil, its own line |
 | PCB remark | none | |
 
 ## The files against JLC's limits

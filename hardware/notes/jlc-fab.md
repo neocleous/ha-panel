@@ -3,8 +3,13 @@
 Three boards and two stencils go to JLC. **Bare boards only:** no SMT assembly, so no BOM or placement files go to JLC. The boards are assembled by hand (see each board's README).
 
 **Cart on 2026-11-21 (about 20:35):** the five new lines, €84.91 in all: main board €31.19 and strip €19.90 (each with €0.96 for "Confirm Production file"), touch board €19.12, two stencils €7.35 each. The four lines of the older sets were deleted. Nothing is ordered.
+Later the same evening the touch board's stencil line was replaced by the stencil that also carries the mic strip's
+pattern (Daniel, 20:39: he wants a stencil for the strip), `stencil-touch-revE-strip-rev3-jlc-2026-11-21-SO12611220107`,
+€7.35 like the line it replaced, so the five lines still come to €84.91.
 
-**Rev 2026-11-21 (after the pre-order review):** new sets for all three boards (main board rev 3.3, mic strip rev 3, touch board rev E) and two stencils of 100 × 100 in place of the combined one; the paste did not change. The older sets are in each folder's `fab/superseded/` and are not to be ordered. The options are unchanged except the stencils' size and "Multiple PCBs" (No). The table of uploads below is current; the sections further down keep the figures as read on their dates.
+**Rev 2026-11-21 (after the pre-order review):** new sets for all three boards (main board rev 3.3, mic strip rev 3, touch board rev E) and two stencils of 100 × 100 in place of the combined one; the paste did not change. Since the same evening the
+second stencil carries the mic strip's back paste beside the touch board's. The older sets are in each folder's `fab/superseded/` and are not to be ordered. The options are unchanged except the stencils' size and "Multiple PCBs" (No for the main board, Yes for the touch
+board and strip). The table of uploads below is current; the sections further down keep the figures as read on their dates.
 
 **Rev 2026-11-16 (fab issue of main board rev 3.2):** new main-board set and new stencil; the strip and touch-board sets of 2026-11-09 are confirmed current. Each upload has its own order sheet next to its zip. JLC's capability pages were read on 2026-11-16.
 
@@ -16,17 +21,17 @@ Three boards and two stencils go to JLC. **Bare boards only:** no SMT assembly, 
 | `hardware/mic-strip/fab/mic-strip-rev3-jlc-2026-11-21.zip` | mic strip rev 3, 28 × 6, 2 layers; one design, used twice | `hardware/mic-strip/fab/ORDER-SHEET.md` | `0e378603bf06f547f44f3cb741d6ad13222e0321c87d36a35d0614bcfe94b095` |
 | `hardware/touch-board/fab/touch-board-revE-jlc-2026-11-21.zip` | touch board rev E, 90 × 44, 2 layers | `hardware/touch-board/fab/ORDER-SHEET.md` | `12641c710499f8dab67cd457623986f8389a1c9a527aa9ff06c9db64083fa4ec` |
 | `hardware/stencil/fab/stencil-main-rev3.3-jlc-2026-11-21.zip` | **stencil line only:** main board door side, 100 × 100 | `hardware/stencil/fab/ORDER-SHEET.md` | `e0097f6055bd09322dac74cab5a10de7c6d13a2cca149c6fb7ec895b5aba6ffe` |
-| `hardware/stencil/fab/stencil-touch-revE-jlc-2026-11-21.zip` | **stencil line only:** touch board back (mirrored), 100 × 100 | `hardware/stencil/fab/ORDER-SHEET.md` | `4905042379bd46d81aa8217ae9709bcbd5c1a186e9bffa961ae23bbe6d92a708` |
+| `hardware/stencil/fab/stencil-touch-revE-strip-rev3-jlc-2026-11-21.zip` | **stencil line only:** touch board back and mic strip back (both mirrored), 100 × 100 | `hardware/stencil/fab/ORDER-SHEET.md` | `599ac64241dd84a9f7ddcb3c070b1c8a13831d882f812d0e3574a1854434f42c` |
 
 Superseded and **not to be ordered:** the rev 2.1 main-board set of 2026-11-08 (90 × 55) and its stencil of 2026-11-09. They are no longer in the tree; the history keeps them (commit 45a38e4).
 
-The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `fab/drill-report.txt`; the check of each set is `fab/fab-check-2026-11-21.txt` (stencils: `fab/stencil-main-check-2026-11-21.txt`, `fab/stencil-touch-check-2026-11-21.txt`).
+The unzipped files sit next to each zip in `fab/gerbers/`; hole counts are in `fab/drill-report.txt`; the check of each set is `fab/fab-check-2026-11-21.txt` (stencils: `fab/stencil-main-check-2026-11-21.txt`, `fab/stencil-touch-strip-check-2026-11-21.txt`).
 
 ## The orders at a glance
 | | Main board rev 3.3 | Mic strip rev 3 | Touch board rev E | Stencils |
 |---|---|---|---|---|
 | Layers | 4 | 2 | 2 | — |
-| Size, mm | 87.0 × 57.9 | 28 × 6 | 90 × 44 | custom 100 × 100, one per board |
+| Size, mm | 87.0 × 57.9 | 28 × 6 | 90 × 44 | custom 100 × 100: the main board; the touch board and strip |
 | Thickness, mm | 1.6 | 0.8 | 1.6 | 0.12 |
 | Finish | ENIG | ENIG | ENIG | electropolished |
 | Colour | black | black | black | — |
@@ -56,10 +61,10 @@ Every option, with its reason, is in the order sheets.
 | 4-layer stack-up JLC04161H-7628 | copper 0.035 / 0.0152 / 0.0152 / 0.035; prepreg 7628, 0.2104, εr 4.4; core 1.065, εr 4.6. The page's "No requirement" stack-up shows the same layer values; the page does not call it the default in words. | impedance |
 | Stencil thickness | 0.10, 0.12, 0.15, 0.18, 0.20 | stencil |
 | Stencil electropolishing | named for ICs of 0.5 pitch and below, and BGA | stencil |
-| Several designs on one stencil | supported; JLC may adjust the layout; leave a remark | stencil |
+| Several designs on one stencil | supported; JLC may adjust the layout; leave a remark. Re-read 2026-11-21: JLC keeps the layout as drawn if the stencil is large enough, and adjusts it only if not; no fee named (the order page charged none) | stencil |
 | Stencil apertures | optimised by JLC's engineers by default; a remark makes them follow the paste layer 1:1 | stencil |
 | Stencil custom size | within 650 × 580 (without frame) | stencil |
-| Stencil aperture | larger than 0.08 mm | stencil |
+| Stencil aperture | larger than 0.08 mm (also on 2026-11-21) | stencil |
 | Files from KiCad 9 | Protel extensions, X2, netlist attributes, 4.6 mm; drill Excellon, alternate oval mode, absolute, mm, decimal, plated and unplated separate; **paste layers only for stencil or assembly orders** | KiCad 9 article |
 
 Pages are listed under "Sources".

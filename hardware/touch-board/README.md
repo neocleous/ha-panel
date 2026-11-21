@@ -29,8 +29,8 @@ schematic parity) 0 violations, 0 unconnected, 0 footprint errors (`drc-report.t
   `12641c710499f8dab67cd457623986f8389a1c9a527aa9ff06c9db64083fa4ec`. It replaces the zip of 2026-11-09.
 - **Options in short:** 2 layers, 90 × 44 mm, 1.6 mm, black with white silkscreen, ENIG (the page's default for 2 layers
   is OSP: change it), vias tented, 5 pieces (1 needed). Every option: [`fab/ORDER-SHEET.md`](fab/ORDER-SHEET.md).
-- **Paste:** the touch board's back pattern has its own 100 × 100 stencil, a separate line ([`../stencil/`](../stencil/)).
-  Don't tick the stencil box on the touch-board line.
+- **Paste:** the touch board's back pattern is on a 100 × 100 stencil it shares with the mic strip's pattern, a
+  separate line ([`../stencil/`](../stencil/)). Don't tick the stencil box on the touch-board line.
 
 ## Parts
 Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-2026-11-17.md), section "Touch board rev D" (rev E changed no part).
@@ -64,7 +64,8 @@ JLC's minimum (0.12 until 2026-11-21).
 ## How to assemble
 One surface-mount face, the back. Drawing: `touch-board-assembly.pdf`.
 1. Bare board: VCC–GND on the HOST pads must read open.
-2. Paste the back through the touch board's stencil ([`../stencil/`](../stencil/)).
+2. Paste the back through the touch board's pattern on its stencil ([`../stencil/`](../stencil/)), keeping the squeegee
+   off the strip's pattern below it (or tape it over).
    - The pattern is already mirrored to match the back seen from above, with the board lying front-down.
    - The HOST pads get no paste.
 3. Place U1 (pin 1 at the chamfered corner), C1 100 nF, C2 10 µF, R1–R4 4.7 kΩ.

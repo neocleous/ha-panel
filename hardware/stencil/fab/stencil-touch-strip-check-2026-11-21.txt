@@ -1,0 +1,33 @@
+Touch board rev E + mic strip rev 3 stencil, 100 x 100 x 0.12 mm: checks of 2026-11-21
+
+Generator (main-board/tools/stencil_touch_strip.py):
+  F.Paste pads: touch 26 + strip 35 = expected 61 | placed 61 | misplaced [] | unexpected []
+  touch outline 90.00 x 44.00, strip outline 28.00 x 6.00 at (31.00, 54.00) to (59.00, 60.00); extent of both 90.00 x 60.00 mm
+
+File against file (main-board/tools/stencil_check_touch_strip.py), against the boards' uploaded paste and outline files:
+  stencil: fab/gerbers/stencil-touch-revE-strip-rev3-F_Paste.gtp, -Edge_Cuts.gm1
+  touch board: touch-board/fab/gerbers/touch-board-revE-B_Paste.gbp, -Edge_Cuts.gm1
+  mic strip: mic-strip/fab/gerbers/mic-strip-rev3-B_Paste.gbp, -Edge_Cuts.gm1
+  ok   1. the stencil outline file: 2 closed loops, 0 loose pieces
+  ok      touch board: its outline 90.00 x 44.00, mirrored left-right and moved by (90.0000, 0.0000), is a loop of the stencil (area apart 1.7e-06 mm2)
+  ok   2. touch board: 26 of 26 apertures in the stencil, mirrored and moved by its shift, same shape (largest area apart 9.1e-17 mm2), same part (0 differ)
+  ok      every one of them inside its own outline
+  ok      mic strip: its outline 28.00 x 6.00, mirrored left-right and moved by (59.0000, -54.0000), is a loop of the stencil (area apart 0.0e+00 mm2)
+  ok   2. mic strip: 35 of 35 apertures in the stencil, mirrored and moved by its shift, same shape (largest area apart 1.1e-14 mm2), same part (0 differ)
+  ok      every one of them inside its own outline
+  ok   3. nothing else: 61 apertures in the stencil = 26 + 35; drawn pieces 0, filled regions 0
+  ok   4. the outlines 10.00 apart
+  ok      together 90.00 x 60.00: they fit 100 x 100, margins 5.00 and 20.00 a side when centred
+       touch board: smallest aperture 0.600 x 1.950 (U1); lowest area ratio 1.92 (R1, 0.800 x 0.950)
+       mic strip: smallest aperture 0.400 x 0.650 (S-MK1); lowest area ratio 1.06 (S-MK1, 0.400 x 0.650)
+  ok   5. smallest aperture 0.400 across (JLC: larger than 0.08)
+  ok      lowest area ratio at 0.12 mm: 1.06 (0.66 or more)
+RESULT: all checks passed
+
+Fresh export (main-board/tools/fab_same.sh stencil):
+  fresh export of stencil-touch-strip.kicad_pcb against stencil-touch-revE-strip-rev3-jlc-2026-11-21.zip
+  stencil-touch-revE-strip-rev3-Edge_Cuts.gm1: 54 lines, 2 with the export's time left out, 0 differ
+  stencil-touch-revE-strip-rev3-F_Paste.gtp: 199 lines, 2 with the export's time left out, 0 differ
+  stencil-touch-revE-strip-rev3-job.gbrjob: 89 lines, 1 with the export's time left out, 0 differ
+  zip sha256 599ac64241dd84a9f7ddcb3c070b1c8a13831d882f812d0e3574a1854434f42c
+  result: the same set

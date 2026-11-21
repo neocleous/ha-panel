@@ -28,7 +28,7 @@ hardware/              the three boards and the paste stencil
   main-board/          rev 3.3: power, amplifier, sockets
   mic-strip/           rev 3: one microphone per strip, two strips per panel
   touch-board/         rev E: the four touch keys
-  stencil/             the paste stencils for the main board and the touch board
+  stencil/             the paste stencils: the main board; the touch board with the mic strips
   notes/               parts lists, DigiKey and JLC notes, Raspberry Pi settings
   rev-c/               the first panel's touch board
 enclosure/             the housing

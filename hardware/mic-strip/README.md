@@ -31,7 +31,8 @@ gives the zip of 2026-11-21 file for file.
 - **Options in short:** 2 layers, 28 × 6 mm, 0.8 mm, black with white silkscreen, ENIG (the page's default for 2 layers
   is OSP: change it), vias tented, deburring on, via class "0.3mm/(0.4/0.45mm)", 5 pieces (2 needed). Every option:
   [`fab/ORDER-SHEET.md`](fab/ORDER-SHEET.md).
-- **No stencil:** the strip is pasted by syringe.
+- **Stencil:** since 2026-11-21 the strip's back paste is on the touch board's stencil, its own line
+  ([`../stencil/`](../stencil/)). Don't tick the stencil box on the strip line.
 
 ## Parts
 Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-2026-11-17.md), section "Mic strip".
@@ -88,7 +89,10 @@ Every part with its DigiKey line: [`../notes/bom-2026-11-17.md`](../notes/bom-20
 Build two identical strips. Drawing: `mic-strip-assembly.pdf`. One hotplate pass, parts side up.
 
 **Before you start**
-- **Paste:** the same Sn63/Pb37 no-clean as the main board, dispensed by syringe.
+- **Paste:** the same Sn63/Pb37 no-clean as the main board, through the stencil: the strip's pattern on the touch
+  board's sheet ([`../stencil/`](../stencil/)). The strip lies front-down in a jig that holds it flush with the
+  surface round it, so the sheet lies flat: a pocket of the strip's size, as deep as the strip and the Kapton of step
+  1, or spare strips laid round it. **No jig is drawn yet.**
 - **D1–D3 (ESD321DYAR) are moisture-sensitive, level 3:** once their bag is open, solder them within 168 hours at 30 °C /
   60 % humidity or less (TI's package information); open the bag on the day, or bake them per J-STD-033 first.
 - **Bare strip:** hold it against the light: the Ø0.8 port hole must be open. Meter: VDD–GND (J1 pads 1–2) open.
@@ -100,7 +104,9 @@ Build two identical strips. Drawing: `mic-strip-assembly.pdf`. One hotplate pass
 
 **Order**
 1. Kapton over the port hole on the front (gasket side).
-2. Small paste dots on the back pads. Nothing in or next to the port hole.
+2. Strip front-down in the jig; paste the back through the strip's pattern, keeping the squeegee off the touch
+   board's pattern (or tape it over). The sheet has no opening over the port; check that no paste lies in the port
+   hole or inside the microphone's ring.
 3. Place:
    - D1–D3 ESD321: pin 1 = GND (dot or notch on the body), at the closed end of the silk bracket;
    - C1 10 µF, C2 100 nF, C3 100 nF;

@@ -13,7 +13,7 @@ sha256 `12641c710499f8dab67cd457623986f8389a1c9a527aa9ff06c9db64083fa4ec`
 ## What is in the zip (12 files)
 `touch-board-revE-F_Cu.gtl`, `-B_Cu.gbl`, `-F_Mask.gts`, `-B_Mask.gbs`, `-F_Silkscreen.gto`, `-B_Silkscreen.gbo`, `-F_Paste.gtp` (empty), `-B_Paste.gbp`, `-Edge_Cuts.gm1`, `-PTH.drl`, `-NPTH.drl` (no holes), `-job.gbrjob`.
 
-The paste files are in the zip, as in the set of 2026-11-09. JLC uses them only if a stencil is ordered on this line, which it is not: this board's paste pattern is on the combined stencil (`../../stencil/fab/ORDER-SHEET.md`).
+The paste files are in the zip, as in the set of 2026-11-09. JLC uses them only if a stencil is ordered on this line, which it is not: this board's paste pattern is on the stencil it shares with the mic strip, its own line (`../../stencil/fab/ORDER-SHEET.md`).
 
 ## Order options
 | Option | Choice | Note |

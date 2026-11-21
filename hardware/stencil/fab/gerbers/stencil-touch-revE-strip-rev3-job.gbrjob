@@ -5,17 +5,17 @@
       "Application": "Pcbnew",
       "Version": "9.0.9-9.0.9~ubuntu24.04.1"
     },
-    "CreationDate": "2026-11-21T19:59:21+01:00"
+    "CreationDate": "2026-11-21T20:43:08+01:00"
   },
   "GeneralSpecs": {
     "ProjectId": {
-      "Name": "stencil-touch-revE",
+      "Name": "stencil-touch-revE-strip-rev3",
       "GUID": "7374656e-6369-46c2-9d74-6f7563682d72",
       "Revision": "rev?"
     },
     "Size": {
       "X": 90.1,
-      "Y": 44.1
+      "Y": 60.1
     },
     "LayerNumber": 2,
     "BoardThickness": 1.6,
@@ -31,12 +31,12 @@
   ],
   "FilesAttributes": [
     {
-      "Path": "stencil-touch-revE-F_Paste.gtp",
+      "Path": "stencil-touch-revE-strip-rev3-F_Paste.gtp",
       "FileFunction": "SolderPaste,Top",
       "FilePolarity": "Positive"
     },
     {
-      "Path": "stencil-touch-revE-Edge_Cuts.gm1",
+      "Path": "stencil-touch-revE-strip-rev3-Edge_Cuts.gm1",
       "FileFunction": "Profile",
       "FilePolarity": "Positive"
     }
