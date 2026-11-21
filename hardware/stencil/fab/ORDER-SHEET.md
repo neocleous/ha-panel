@@ -12,8 +12,9 @@ Since 2026-11-21 each board has a stencil of its own, 100 × 100 mm, in place of
   plots the combined stencil of 2026-11-16 was checked against (241 on the main board, 26 on the touch board).
 - **The combined stencil's cart line must be replaced by these two.** Its zip is kept in `superseded/`; its apertures
   are still right for both boards, so it stays a fallback if one 190 × 190 stencil is wanted after all.
-- **Price:** not known yet. The combined stencil's line read €11.10 on 2026-11-21 (190 × 190, electropolished); the cart
-  shows the two new lines' prices once they are uploaded.
+- **In the cart since 2026-11-21:** lines `stencil-main-rev3.3-jlc-2026-11-21-SO12611220098` and
+  `stencil-touch-revE-jlc-2026-11-21-SO12611220099`, **€7.35 each** (100 × 100 €2.82 + electropolishing €4.53), build
+  1–2 days. The combined stencil's line (€11.10) was deleted.
 - JLC's stencil page was read on **2026-11-21** (https://jlcpcb.com/capabilities/pcb-stencil-manufacturing): custom sizes
   "within 650*580mm", no smallest custom size and no margin rule stated; "a 1:1 stencil matching the PCB" is named as a
   custom size; apertures larger than 0.08 mm.

@@ -4,7 +4,7 @@
 sha256 `26ff743470ad6834af4412218b2413478ce8ec22a962c775d0f4b1875617acdd`
 
 - Bare board. No SMT assembly, so no BOM or placement file goes to JLC.
-- **Price:** €30.08 on 2026-11-16 (7.25 + ENIG 15.58 + colour 7.25), build 3–4 days; the cart line of the rev 3.2 zip read €30.24 on 2026-11-21. Rev 3.3 has the same size, layers and options, so the price should not move; the cart shows it once the zip is uploaded.
+- **In the cart since 2026-11-21:** line `main-board-rev3.3-jlc-2026-11-21_Y21`, **€31.19**, build 3–4 days: the €30.24 of rev 3.2's line plus €0.96 for "Confirm Production file". Rev 3.2's line was deleted. (€30.08 on 2026-11-16: 7.25 + ENIG 15.58 + colour 7.25.)
 - **What changed from rev 3.2 (2026-11-16):** PS1's row of 13 pins moved 3.0 toward the top edge to match Mean Well's side view (its body and box did not move); J6 pin 1 takes +3V3 ahead of F4 through one inner-layer track; the via in one of U100's paste windows is taken out; every silk line is 0.15 wide; the back reads `REV 3.3 2026-11-21`. Outline, holes other than PS1's, parts and options are unchanged.
 - **The rev 3.2 zip in the cart must be replaced by this one.** It is kept in `superseded/` and must not be ordered.
 - JLC's capability figures below were read on jlcpcb.com on **2026-11-16**; the soldermask figure for black on **2026-11-17**.
@@ -46,6 +46,7 @@ No paste layer is in this zip. JLC's KiCad 9 guide asks for paste layers only on
 | Electrical test | **"Flying Probe Fully Test"** | the only test the page of 2026-11-16 offers; it has no "4-Wire Kelvin Test" row |
 | Board outline tolerance | **regular, ±0.2 mm** | High precision (±0.1) is not wanted. |
 | Mark on PCB | **"Remove Mark"** | standing choice |
+| Confirm Production file | **Yes** | Daniel, 2026-11-21. JLC sends its production file for confirmation; if it is not confirmed within 48 hours, the order goes into production by itself (the dialog's "Do not confirm automatically" box is left unticked). €0.96 |
 | Gold fingers, castellated holes, edge plating | no | |
 | "Stencil: order together with PCB" on this line | **off** | the stencil is its own line |
 | PCB remark | none | |
