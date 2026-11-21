@@ -52,7 +52,7 @@ on purpose (`drc-report.txt`).
 - **120 names:** 72 surface-mount parts fitted and 9 not fitted, 13 through-hole parts, 3 blocks of wire pads
   (J3, J4, J7), 19 test pads, 4 holes. **Every part is on the door side; nothing is fitted on the back.**
 - **Sizes:** nothing smaller than 0603; the finest pitches are U100 (0.5) and U1 (0.65). Connectors are through-hole.
-- **Vias:** 244 — 87 of 0.2/0.45, 132 of 0.3/0.6, 25 of 0.4/0.8. Tracks 0.15 and wider. Copper to the edge 0.30;
+- **Vias:** 243 — 87 of 0.2/0.45, 131 of 0.3/0.6, 25 of 0.4/0.8. Tracks 0.15 and wider. Copper to the edge 0.30;
   the pours 0.50 at the relief.
 - **Frame used in every document:** seen from the door, u to the right (toward the left speaker), v up, origin in the
   middle of the board. "From the left edge" is u + 43.5; "from the bottom edge" is v + 28.95.
@@ -158,8 +158,9 @@ board's left edge and from its bottom edge (the edge with the sockets), seen fro
 - **There is no TP18.** The amplifier's supply is probed at **pad 2 of the fuse F5**, the pad nearer the right-hand
   edge (54.9 from the left edge, 53.3 from the bottom).
 - **LK1** is the place for a meter in series with the Pi's 5 V (bench only).
-- Seven test pads and the amplifier's thermal pad each have a via in them (TP2, TP7, TP9, TP15, TP17, TP19, TP20;
-  U100). No paste goes there, so they were left as they are.
+- Seven test pads each have a via in them (TP2, TP7, TP9, TP15, TP17, TP19, TP20). No paste goes there, so they were
+  left as they are. The via that lay inside one of the paste windows of U100's centre pad was taken out on 2026-11-21:
+  its solder would have drained into the hole; the pad keeps its 39 thermal holes.
 
 ## Bring-up
 On the bench, with the board out of the enclosure. A meter is enough. Ground: TP7, TP15, TP17 or TP20.
