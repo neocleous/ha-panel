@@ -156,7 +156,7 @@ layout notes. What holds for the board as it goes to the fab:
 
   It is the stack the supply-copper calculations assumed since rev 3.1, so their figures needed no correction for it.
 - **Rules** (in `main-board.kicad_pro`): clearance 0.15, and 0.20 for the 20 V nets; tracks 0.15 and wider; vias
-  0.2/0.45 (87), 0.3/0.6 (132) and 0.4/0.8 (25); hole to copper 0.25, hole to hole 0.25; copper to the edge 0.30.
+  0.2/0.45 (87), 0.3/0.6 (131) and 0.4/0.8 (25); hole to copper 0.25, hole to hole 0.25; copper to the edge 0.30.
 - **Copper at the relief:** the pours on all four layers end 0.50 from the relief (a rule area, pours only). With
   JLC's cut 0.2 deeper they still end 0.30 from the real edge. The nearest track, the I²C clock on the back, is 0.38
   from the floor as before, and the nearest pads, R105's, 0.66. JLC's rule is 0.2 as drawn.
