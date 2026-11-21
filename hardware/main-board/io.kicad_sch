@@ -3353,7 +3353,7 @@
 				(hide yes)
 			)
 		)
-		(property "Note" ">= 2.0 uF effective (SBVS186H 8.1.1); about 4.6 uF at 3.3 V (TDK DC-bias data)"
+		(property "Note" ">= 2 uF (SLVSCE6D 5.3; 1.5 uF effective at 3.3 V, 7.1.1); about 4.6 uF at 3.3 V (TDK DC-bias data)"
 			(at 127 58.42 0)
 			(effects
 				(font
@@ -8763,7 +8763,7 @@
 			)
 		)
 	)
-	(text "Raspberry Pi publishes no current rating for the Pi 5 header 3V3 pins -> 3.3 V LDO on this board.\n  U2 TPS70933: 2.7-30 V in (survives the NID OVP 6.4-7.5 V), 150 mA, EN follows the Pi 3V3 (pin 1 lead, ~33 uA).\n  Loads: TAS5756M DVDD/AVDD/CPVDD 35 mA (SLAS988B 7.12) + touch/BME680/VEML6030 via F4.\n  STANDBY (Pi 3V3 off, 5 V on, HAT+ spec 2.2): LDO off -> no back-feed through I2C; amp muted by R17.\nR26/R27: amp logic rail 3V3_AMP from the LDO (default, R26) or from the Pi 3V3 (R27): TAS5756M VIH = 0.9 x DVDD\n  (SLAS988B 7.3) and TI advises driving its inputs from the DVDD supply; LDO +-1 % (SBVS186H) vs Pi 3V3 (not published).\nPi pins: 3/5 SDA/SCL (GPIO2/3, 1.8 k pull-ups on the Pi); 8/10 TXD/RXD (GPIO14/15, uart0);\n  12/35/38/40 = GPIO18/19/20/21 I2S BCLK/LRCLK/DIN/DOUT; 15 = GPIO22 amp mute (rpi-digiampplus).\nI2C map: AT42QT1070 0x1B, VEML6030 0x48, TAS5756M 0x4C, BME680 0x76/0x77 (ReSpeaker 0x42/0x18 only if R24/R25 fitted).\nSensor branch 3V3_SENS (F4 0.2 A PTC): J10 BME680, J11 VEML6030 (one 1 x 4 header each).\nJ6 (touch board) is fed from +3V3 ahead of F4, so the BME680 heater steps on F4 do not reach the touch controller.\nTopology B (bench option): fit R20-R23 (+R24/R25 for XU316 I2C), jumper J7 to the ReSpeaker XIAO footprint, I2S firmware."
+	(text "Raspberry Pi publishes no current rating for the Pi 5 header 3V3 pins -> 3.3 V LDO on this board.\n  U2 TPS70933-Q1: 2.7-30 V in (survives the NID OVP 6.4-7.5 V), 150 mA, EN follows the Pi 3V3 (pin 1 lead, ~33 uA).\n  Loads: TAS5756M DVDD/AVDD/CPVDD 35 mA (SLAS988B 7.12) + touch/BME680/VEML6030 via F4.\n  STANDBY (Pi 3V3 off, 5 V on, HAT+ spec 2.2): LDO off -> no back-feed through I2C; amp muted by R17.\nR26/R27: amp logic rail 3V3_AMP from the LDO (default, R26) or from the Pi 3V3 (R27): TAS5756M VIH = 0.9 x DVDD\n  (SLAS988B 7.3) and TI advises driving its inputs from the DVDD supply; LDO +-1 % (SLVSCE6D) vs Pi 3V3 (not published).\nPi pins: 3/5 SDA/SCL (GPIO2/3, 1.8 k pull-ups on the Pi); 8/10 TXD/RXD (GPIO14/15, uart0);\n  12/35/38/40 = GPIO18/19/20/21 I2S BCLK/LRCLK/DIN/DOUT; 15 = GPIO22 amp mute (rpi-digiampplus).\nI2C map: AT42QT1070 0x1B, VEML6030 0x48, TAS5756M 0x4C, BME680 0x76/0x77 (ReSpeaker 0x42/0x18 only if R24/R25 fitted).\nSensor branch 3V3_SENS (F4 0.2 A PTC): J10 BME680, J11 VEML6030 (one 1 x 4 header each).\nJ6 (touch board) is fed from +3V3 ahead of F4, so the BME680 heater steps on F4 do not reach the touch controller.\nTopology B (bench option): fit R20-R23 (+R24/R25 for XU316 I2C), jumper J7 to the ReSpeaker XIAO footprint, I2S firmware."
 		(exclude_from_sim no)
 		(at 25.4 190.5 0)
 		(effects

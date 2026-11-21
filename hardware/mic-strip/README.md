@@ -87,6 +87,8 @@ Build two identical strips. Drawing: `mic-strip-assembly.pdf`. One hotplate pass
 
 **Before you start**
 - **Paste:** the same Sn63/Pb37 no-clean as the main board, dispensed by syringe.
+- **D1–D3 (ESD321DYAR) are moisture-sensitive, level 3:** once their bag is open, solder them within 168 hours at 30 °C /
+  60 % humidity or less (TI's package information); open the bag on the day, or bake them per J-STD-033 first.
 - **Bare strip:** hold it against the light: the Ø0.8 port hole must be open. Meter: VDD–GND (J1 pads 1–2) open.
 - **The port:** Infineon's datasheet (rev 1.0) gives only the reflow qualification: 3 reflows, peak 260 °C, IPC/JEDEC
   J-STD-020D-01; it has no handling, flux or washing rules. Other makers' bottom-port MEMS guides agree on these:

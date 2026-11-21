@@ -91,9 +91,12 @@ One pass on the hotplate for every surface-mount part, then the through-hole par
 - **Paste:** Sn63/Pb37 no-clean (Chip Quik SMD291AXT4). Check its date.
 - **Stencil:** the main-board area of the combined stencil, 0.12 thick. The touch board's pattern is on the same sheet:
   keep the squeegee off it.
-- **U100 (TAS5756M) is moisture-sensitive, level 3:** 168 hours at 30 °C / 60 % humidity or less once its bag is open
-  (TI's package information in the datasheet). Open the bag on the day. If it has been open longer, bake it per
-  J-STD-033 first.
+- **Four parts are moisture-sensitive.** Once its bag is open, each must be soldered within its floor life at 30 °C /
+  60 % humidity or less; open the bags on the day. A part whose bag has been open longer is baked per J-STD-033 first.
+  - U100 TAS5756M: level 3, 168 hours (TI's package information in the datasheet);
+  - U1 TPS16630PWPT: level 2, 1 year (TI);
+  - F4 Bel 0ZCJ0020FF2E: level 2a, 4 weeks (Bel, September 2025);
+  - F5 Littelfuse 2920L260/33DR: level 2a, 4 weeks (Littelfuse, 2025-02-13).
 - **Bare board, meter on ohms:** TP2 (20 V), pad 2 of F5 (amplifier supply), TP9 (5 V) and TP16 (3.3 V) each read open
   to TP7 (ground).
 
@@ -121,8 +124,9 @@ One pass on the hotplate for every surface-mount part, then the through-hole par
 - Follow the paste maker's profile. Chip Quik's chart for SMD291AX (datasheet rev 1.1) runs 25 → 100 → 150 °C, crosses
   the 183 °C melting point and tops at 235 °C, about 240 s in all.
 - U100 is rated for 260 °C peak (TI), above that profile.
-- U100's thermal pad: the stencil's 2 × 4 windows cover 72.8 % of it; TI asks for 70 to 80 % (SLAS988B 11.1.3.2). The
-  39 holes under the pad are part of the footprint and take some solder by design.
+- U100's thermal pad: the stencil's 2 × 4 windows put 20.16 mm² of paste on it, 72.8 % of the package's nominal
+  exposed pad and 61.9 % of the board's 3.70 × 8.80 opening; TI asks for 70 to 80 % (SLAS988B 11.1.3.2). Of the 39
+  holes under the pad, 3 lie inside the opening and can take some solder; the other 36 are under soldermask.
 - The flux is no-clean: nothing is washed.
 
 **In the unit** (the panel's assembly instructions hold the steps): the display's power lead is plugged onto the
@@ -183,17 +187,25 @@ On the bench, with the board out of the enclosure. A meter is enough. Ground: TP
 
 | Probe | Expect | Why |
 |---|---|---|
-| TP16 | 3.267 to 3.333 V | TPS70933, ± 1 % (SBVS186H) |
+| TP16 | 3.21 to 3.34 V | TPS70933-Q1: ± 1 % at 1 mA, plus up to 50 mV load and 10 mV line regulation (SLVSCE6D) |
 | TP4, TP19 | about 3.3 V | no fault at the protection chip, none at the amplifier |
 | `vcgencmd get_throttled` | `0x0` | the Pi's own under-voltage detector never tripped |
-| `vcgencmd pmic_read_adc EXT5V_V` | 4.87 V or more under load | the upper tolerance of the Pi's under-voltage detector (4.63 V ± 5 %) |
+| TP11 and `vcgencmd pmic_read_adc EXT5V_V`, with the Pi under full load (all cores busy, display on) | 4.87 V or more | the upper tolerance of the Pi's under-voltage detector (4.63 V ± 5 %). If lower, R8 is found on the bench at TP13 (`NOTES.md` §2) before the panel goes into use |
 
 **Stage 3: configuration and buses.** Apply [`../notes/pi-config.md`](../notes/pi-config.md), then plug the BME680
 (J10), the VEML6030 (J11), the touch lead (J6) and the radar (J5).
+- On 2026-11-21 the software on `main` did not yet carry all that `pi-config.md` plans. Still to come in the software
+  step: the amplifier overlay `rpi-digiampplus,auto_mute_amp`, `dtparam=uart0=on`, `usb_max_current_enable=1`, the
+  EEPROM's `PSU_MAX_CURRENT=5000`, and a driver for the LD2410C on `/dev/ttyAMA0`.
+- **Start with everything plugged in:** switch the 20 V off and on with the Pi, the display, the radar and the sensors
+  connected. TP9 must rise to 4.90–5.10 V once, without the module restarting, and the Pi must boot. Mean Well allows
+  100 µF on the module's output; the board carries about 35 µF (`NOTES.md` §2), and the Pi's, the display's and the
+  radar's own input capacitance is not published.
 - `sudo i2cdetect -y 1`: **1b** (touch), **48** (VEML6030), **UU** at 4c (TAS5756M, held by its driver), and the
   BME680 at **76 or 77** (set by the sensor board's own strap).
-- Radar: record TP12 with the LD2410C running (the rail's lowest is 4.90 V; the LD2410C manual gives 5 to 12 V). Expect
-  no invalid frame at 256000 8N1 on `/dev/ttyAMA0`.
+- Radar: record TP12 with the LD2410C running and the Pi under full load. The LD2410C manual gives 5 to 12 V; the
+  rail can sit just under 5 V (4.90 V at the module's lowest, less the drop to TP12). Expect no invalid frame at
+  256000 8N1 on `/dev/ttyAMA0` at the lowest TP12 seen.
 - Then the audio and voice tests on the bench.
 
 ## Earlier revisions
