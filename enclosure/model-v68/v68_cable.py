@@ -1,14 +1,14 @@
 # Version 67 -> 68: the ReSpeaker's USB cable, fold 1.
-# The fold lay against the lip over the door opening. It is made nearer the plug (SHORTER mm less
-# cable between the plug's sleeve and the fold), which takes it off the lip. Below the fold the cable
-# leans back to its old line by the time it reaches the roll behind the left speaker box.
+# The fold lay against the lip over the door opening. It is made 1.4 nearer the plug (15.0 of cable
+# between the plug's sleeve and the fold instead of 16.4), which takes it 1.17 off the lip. Below the
+# fold the cable leans back to its old line by the time it reaches the roll behind the left speaker box.
 import sys, math
 
 v = sys.modules['v68']; k = v.k; G = v.G
 
 S1 = k.unit((0.0, -0.978, -0.208))     # the cable's run from the plug to the fold
 P1 = (47.0, -46.0, 113.0)              # a point on that run, before the fold
-SHORTER = 1.2
+SHORTER = 1.4
 Z_FOLD, Z_ROLL = 104.0, 62.0           # the cable is redrawn between these two levels
 RUN = (44.54, -55.265)                 # middle of the cable's run down (x, y); its section is 1.44 x 5.25
 
