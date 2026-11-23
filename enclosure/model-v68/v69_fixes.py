@@ -11,7 +11,7 @@
 #    The flat and the gusset that version 68 had under the boss are left out: they were drawn for a shell
 #    printed standing on its floor. The shell prints lying on its chin (world y is the print's height),
 #    where they would lie sideways and only add to the faces that look at the bed.
-# 2. Radar: the two blocks beside the board are 0.6 taller, so the pilots keep their wall to the end.
+# 2. Radar: the two blocks beside the board are 0.6 taller, so the pilots keep 1.6 of wall or more to their ends.
 # 3. Supply module on the main board: its 13 pins are drawn 3.0 toward +v, as on board rev 3.3.
 #
 # Loaded into Fusion's Python as the module "v69", after "c3k", "c3", "v68", "v68_shell" and "v68_commit".
@@ -70,11 +70,12 @@ def boss_tools(X):
 
 
 def block_tops(X):
-    """The extra 0.6 on top of the two radar blocks."""
+    """The extra 0.6 on top of the two radar blocks. On the screen side it stops 0.2 short of the block's outer
+    face, so that it stays as far from the screen plate, which leans in over it, as the block was (0.6)."""
     t = None
     for sg in (1.0, -1.0):
         dmin = -5.2 if sg > 0 else -6.6
-        b = sh.rbox(X, sg * 10.1, sg * 11.8, dmin, 2.0, 122.3, BLOCK_TOP)
+        b = sh.rbox(X, sg * 10.1, sg * (11.6 if sg > 0 else 11.8), dmin, 2.0, 122.3, BLOCK_TOP)
         t = b if t is None else X.uni(t, b)
     return t
 
