@@ -247,7 +247,7 @@ def hood_way(X):
                          'plate over the boss to boss': round(X.mm.measureMinimumDistance(web, bs).value * 10.0, 2),
                          "plate's new end to boss": round(X.mm.measureMinimumDistance(end, bs).value * 10.0, 2)}
     moves = [('lift %.1f' % a, comb((0.0, 0.0, 0.0), (a, sh.HA))) for a in (1.0, 2.0, 3.0, 3.5)]
-    for name, d in (('toward the middle', (1.0, 0.0, 0.0)), ('square to the side plate', sh.HN), ('along the end wall', sh.LW)):
+    for name, d in (('toward the middle', (1.0, 0.0, 0.0)), ('square to the side plate', sh.HN), ('straight toward the door', sh.LW)):
         for s in (0.3, 0.6, 1.0, 1.5, 2.0, 3.0, 5.0, 8.0):
             moves.append(('lift 3.5, %s %.1f' % (name, s), comb((0.0, 0.0, 0.0), (3.5, sh.HA), (s, d))))
     for name, d in moves:

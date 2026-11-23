@@ -6,8 +6,8 @@
 #    toward the middle, the hood's side plate also caught the boss.
 #    Now the boss is a plain round one, 6 across and 4.45 long (2.9 before): the whole thread lies in the
 #    boss and the pilot stops at the wall's face. The ear moves out with it. Below the ear the hood's side
-#    plate ends 1.75 short of the end wall's outer face, so the boss keeps 2.0 of wall or more all round
-#    and the lifted hood passes it.
+#    plate ends 1.75 short of the end wall's outer face, with its corner toward the wall broken 0.3,
+#    so the boss keeps 2.0 of wall or more all round and the lifted hood passes it.
 #    The flat and the gusset that version 68 had under the boss are left out: they were drawn for a shell
 #    printed standing on its floor. The shell prints lying on its chin (world y is the print's height),
 #    where they would lie sideways and only add to the faces that look at the bed.
@@ -32,6 +32,7 @@ def dot(a, b):
 
 LB = 4.45                          # the hood boss's length
 TRIM = 1.75                        # below the ear the hood's side plate ends this far short of the end wall's outer face
+BREAK = 0.3                        # ... and the corner of that end toward the wall is broken by this much at 45 degrees
 BLOCK_TOP = 123.0                  # top of the radar blocks (122.4 at version 68)
 PIN_SHIFT = 3.0                    # the supply module's pins, toward +v
 MORE = LB - sh.H_BOSS              # how far the ear and the screw move out along the screw's line
@@ -113,6 +114,13 @@ def hood(X):
     X.dif(t, X.cyl(along(hd, u, 0.1), along(hd, u, -1.1), 2.3, 1.1))          # countersink, head flush
     # below the ear the side plate ends TRIM short of the end wall's outer face
     X.dif(t, sh.hood_slab(X, -TRIM, 0.6, sh.SIDE[0] - 0.3, sh.SIDE[1] + 0.3, 76.0, 91.13))
+    # that end's corner toward the wall, broken at 45 degrees (only the side plate is cut)
+    q = 0.5 ** 0.5
+    ax = tuple(q * (sh.LW[i] + sh.HN[i]) for i in range(3))                   # along the broken corner's face; the box's height then points out of the corner
+    l = -TRIM - BREAK / 2.0 + 0.5 * q + sh.L_T0; n = sh.SIDE[0] + BREAK / 2.0 - 0.5 * q
+    cut = X.obox(tuple(l * sh.LW[i] + n * sh.HN[i] + 83.565 * sh.HA[i] for i in range(3)), ax, sh.HA, 2.0, 15.13, 1.0)
+    X.sec(cut, sh.hood_slab(X, -TRIM - 1.0, 0.1 - TRIM, sh.SIDE[0] - 0.3, sh.SIDE[1] + 0.3, 76.0, 91.13))
+    X.dif(t, cut)
     G['BME_HOOD'] = t
     return t
 
@@ -122,7 +130,7 @@ def supply_module(X):
     """The 13 pins moved PIN_SHIFT toward +v (board frame); the module's block stays where it is."""
     old = X.body('MAIN_PS1')
     t = X.tbm.copy(old)
-    zone = X.bbox(-37.5, 14.2, -0.75, 0.15, -4.7, 0.0)                        # the pins: everything of the body below the main board's top face
+    zone = X.bbox(-37.5, 14.2, -0.75, 0.15, -4.7, -0.005)                     # the pins: everything of the body below its block, whose underside lies at w -0.005
     pins = X.tbm.copy(zone)
     X.sec(pins, X.tbm.copy(old))
     X.dif(t, zone)
