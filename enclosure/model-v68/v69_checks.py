@@ -406,6 +406,10 @@ def matrix(X, tag='v69'):
     old = k.c[('k4m', 'v68')]; new = k.c.setdefault(('k4m', tag), {})
     ch = set(f.CHANGED)
     if not new:
+        h = k.hc()                                           # the library keeps copies by name and volume: a changed body of the same volume would be read as it was
+        for q in list(h.keys()):
+            if isinstance(q, tuple) and q[0] == 'tc' and q[1] in ch:
+                del h[q]
         for q, val in old.items():
             if q[0] not in ch and q[1] not in ch:
                 new[q] = val
