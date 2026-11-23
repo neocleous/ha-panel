@@ -266,6 +266,7 @@ def hood_out(X, across=(0.5, 1, 2, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48,
     hood = G['BME_HOOD']
     N = k.K4NS; vc = sys.modules['v68_commit']
     gone = set(N['names_of'](X, 'MODULE')) | {'HOUSING_F_door', 'GROMMET_usbc_F', 'BME_HOOD', 'SCREWS_M2x6_env'}
+    gone |= set(k.ST['PLUGS_MB'])                           # the main board's plugs come out with the module's leads
     items = []
     for b in k.current(X, leads=False, kos=False):
         if b.name not in gone:
