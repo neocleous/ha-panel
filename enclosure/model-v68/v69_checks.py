@@ -258,6 +258,41 @@ def hood_way(X):
     return out
 
 
+def hood_out(X, across=(0.5, 1, 2, 4, 8, 12, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60), back=(5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60),
+             at=(48.0, 56.0, 60.0), lift=3.5):
+    """Step 18 backwards with the display module out: the hood lifted off its pegs, moved toward the middle,
+    then drawn back out through the door opening. Per position: mm3 shared with anything, and the nearest body."""
+    out = R.setdefault('hood_out', {})
+    hood = G['BME_HOOD']
+    N = k.K4NS; vc = sys.modules['v68_commit']
+    gone = set(N['names_of'](X, 'MODULE')) | {'HOUSING_F_door', 'GROMMET_usbc_F', 'BME_HOOD', 'SCREWS_M2x6_env'}
+    items = []
+    for b in k.current(X, leads=False, kos=False):
+        if b.name not in gone:
+            items += [(b.name, p) for p in pieces(X, b.name)]
+    items += [('screw: ' + n, vc.screw(X, h, d)) for n, h, d in f.screw_list() if n != 'hood']      # the hood's own screw is out
+    pos = [('across %g' % s, (s, 0.0)) for s in across] + [('across %g, back %g' % (s, b), (s, b)) for s in at for b in back]
+    for name, (s, b) in pos:
+        if name in out or k.late():
+            continue
+        d = comb((0.0, 0.0, 0.0), (lift, sh.HA), (s, (1.0, 0.0, 0.0)), (b, (0.0, -1.0, 0.0)))
+        t = X.move(X.tbm.copy(hood), d[0], d[1], d[2])
+        q = t.boundingBox; e = 0.6
+        bb = adsk.core.BoundingBox3D.create(k.P3(q.minPoint.x - e, q.minPoint.y - e, q.minPoint.z - e),
+                                            k.P3(q.maxPoint.x + e, q.maxPoint.y + e, q.maxPoint.z + e))
+        best = None; shared = 0.0
+        for n, p in items:
+            if not bb.intersects(p.boundingBox):
+                continue
+            dd = X.mm.measureMinimumDistance(t, p).value * 10.0
+            if dd < 0.0005:
+                shared += X.xv(t, p)
+            if best is None or dd < best[0]:
+                best = (round(dd, 2), n)
+        out[name] = (round(shared, 3), best)
+    return out
+
+
 # ---------- the driver on the hood's screw ----------
 def profile(X, o, u, secs, items, st0=2.0, step=5.0, head=7.0):
     """Smallest room beside a tool on the line from o along u: in the head zone and beyond it, with the body and the place."""
