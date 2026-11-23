@@ -4,11 +4,17 @@ The panel's housing: rev F of the v5 "tapered" design. The display sits in a sla
 from the base to a flat, vented top, with the two speakers firing forward. Every printed part is black; the shell and the
 door are covered with cloth.
 
-**The model is in Autodesk Fusion, not in this repo:** document "HA Panel v5 - tapered", **version 67**. Version 67 is
-the version printed. Its saved description still ends in "not for print"; that note is out of date.
+**The model is in Autodesk Fusion, not in this repo:** document "HA Panel v5 - tapered", **version 69**. Version 69 is
+work in progress: it waits for its print re-check.
 
-**State (2026-11-19):** the print files of version 67 are made: 17 Bambu Studio projects. Four of them are sliced in
-Bambu Studio's window before printing. Next: the PLA fit trial, then the black ABS set.
+**State (2026-11-23):**
+- Versions 68 and 69 replaced the melted pins and the glue by seven M2 × 6 screws for plastic and two printed clamps, so
+  that the microphone strips, the light-sensor board, the USB-C grommet, the radar board and the BME680 hood come out
+  again with a driver. The scripts are in [`model-v68/`](model-v68/).
+- **The print files are version 67's:** 17 Bambu Studio projects, four of them sliced in Bambu Studio's window before
+  printing. They are held: out of date for the shell, the door, the cap, the grommet and the hood, and without the two
+  clamps, until the print re-check has run on version 69 and the files are made again.
+- Next: the print re-check and the new print files, then the PLA fit trial and the black ABS set.
 
 ## The printed parts
 | Plate | Parts |
@@ -23,6 +29,9 @@ Bambu Studio's window before printing. Next: the PLA fit trial, then the black A
 
 Before the set: a calibration plate (a frame, a tower and a hole block with a sideways pilot) and an adhesion test (the
 shell's first 8 mm).
+
+The plates are those of version 67's print files. Version 69 has two more printed parts, the clamps of the microphone
+strips; they are not on a plate yet.
 
 ## Material and print settings, in short
 - **Printer and slicer:** Bambu Lab X2D, both nozzles 0.4 High Flow; Bambu Studio 02.09.01.70.
@@ -49,6 +58,7 @@ shell's first 8 mm).
 ## Folders and files
 | Path | What |
 |---|---|
+| [`model-v68/`](model-v68/) | the scripts that made version 68 of the Fusion model from version 67 (screws and clamps instead of melted pins and glue) and version 69 from 68 (four corrections), with the checks on version 69 |
 | [`print-files/`](print-files/) | the scripts that export the printed parts from the Fusion model, set them on the bed and make the Bambu Studio projects |
 | `HA Panel Final.step` | **the first panel's enclosure (v1),** exported from Shapr3D and in the repo since 2026-08-24: the housing of the panel that is built and in use. `main`'s README links to it |
 
