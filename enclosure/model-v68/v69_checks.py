@@ -385,7 +385,13 @@ def way_in(X, behind=(1.05, 1.3, 1.5), lift=None, lim=12.0):
     lift = N['LIFT'] if lift is None else lift
     out = R.setdefault('way_in', {})
     ra, rc = sh.radar_tools(X)
-    fixed = [('hood', G['BME_HOOD']), ('hood boss', boss(X, False)), ('screws', G['SCREWS_M2x6_env']),
+    vc = sys.modules['v68_commit']
+    three = None                                             # the screws that are in the shell at this step: radar 2, hood 1
+    for sn, h0, d0 in f.screw_list():
+        if sn == 'hood' or sn.startswith('radar'):
+            one = vc.screw(X, h0, d0)
+            three = one if three is None else X.uni(three, one)
+    fixed = [('hood', G['BME_HOOD']), ('hood boss', boss(X, False)), ('screws in the shell', three),
              ('radar blocks', X.uni(ra, f.block_tops(X)))]
     e = lim / 10.0
     boxes = []
@@ -405,6 +411,13 @@ def way_in(X, behind=(1.05, 1.3, 1.5), lift=None, lim=12.0):
                     continue
                 if k.late():
                     left += 1; continue
+                # the piece's box at this place, before the piece itself is copied and moved
+                pb = p.boundingBox
+                sx, sy, sz = 0.0, (-b * k.C - h * k.S) / 10.0, (b * k.S - h * k.C) / 10.0
+                mb = adsk.core.BoundingBox3D.create(k.P3(pb.minPoint.x + sx, pb.minPoint.y + sy, pb.minPoint.z + sz),
+                                                    k.P3(pb.maxPoint.x + sx, pb.maxPoint.y + sy, pb.maxPoint.z + sz))
+                if not any(bx.intersects(mb) for bx in boxes):
+                    out[q] = {}; continue
                 t = X.move(X.tbm.copy(p), 0.0, -b, -h)
                 row = {}
                 for (fn, fb), bx in zip(fixed, boxes):
