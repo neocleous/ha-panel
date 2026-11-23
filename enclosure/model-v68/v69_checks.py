@@ -376,6 +376,56 @@ def ride(X):
             'pins: steps done': len(ps), 'pins met': {s: h for s, h in ps.items() if h}}
 
 
+# ---------- the shell lowered over the plate unit (step 20) ----------
+def way_in(X, behind=(1.05, 1.3, 1.5), lift=None, lim=12.0):
+    """The plate unit, lower than home by 'lift' and 'behind' its place (the audits' way-in), against what versions
+    68 and 69 put on its way: the hood, its boss, the seven screws and the radar blocks.
+    Returns per fixed body the nearest distance with the piece and its place, and every volume shared."""
+    N = k.K4NS
+    lift = N['LIFT'] if lift is None else lift
+    out = R.setdefault('way_in', {})
+    ra, rc = sh.radar_tools(X)
+    fixed = [('hood', G['BME_HOOD']), ('hood boss', boss(X, False)), ('screws', G['SCREWS_M2x6_env']),
+             ('radar blocks', X.uni(ra, f.block_tops(X)))]
+    e = lim / 10.0
+    boxes = []
+    for fn, fb in fixed:
+        q = fb.boundingBox
+        boxes.append(adsk.core.BoundingBox3D.create(k.P3(q.minPoint.x - e, q.minPoint.y - e, q.minPoint.z - e),
+                                                    k.P3(q.maxPoint.x + e, q.maxPoint.y + e, q.maxPoint.z + e)))
+    unit = []
+    for n in N['names_of'](X, 'UNIT', 'USBA'):
+        unit += [(n, i, p) for i, p in enumerate(N['pieces'](X, 'v68', n))]
+    left = 0
+    for n, i, p in unit:
+        for b in behind:
+            for h in lift:
+                q = (n, i, b, h)
+                if q in out:
+                    continue
+                if k.late():
+                    left += 1; continue
+                t = X.move(X.tbm.copy(p), 0.0, -b, -h)
+                row = {}
+                for (fn, fb), bx in zip(fixed, boxes):
+                    if not bx.intersects(t.boundingBox):
+                        continue
+                    d = X.mm.measureMinimumDistance(t, fb).value * 10.0
+                    if d < 0.0005:
+                        row[fn] = -round(X.xv(t, fb), 3)          # a negative figure is a shared volume
+                    elif d < lim:
+                        row[fn] = round(d, 2)
+                out[q] = row
+    best = {}; shared = []
+    for q, row in out.items():
+        for fn, d in row.items():
+            if d < 0:
+                shared.append((fn, q, -d))
+            elif fn not in best or d < best[fn][0]:
+                best[fn] = (d, q)
+    return {'left': left, 'positions': len(out), 'nearest': best, 'shared': shared}
+
+
 # ---------- after the bodies are in the document ----------
 def state(X):
     st = X.state()
