@@ -430,15 +430,19 @@ def matrix(X, tag='v69'):
             'not zero at version 68': sum(1 for val in old.values() if abs(val) > 0.0005), 'rows with a changed body': sorted(rows)}
 
 
-def bed_faces(X, name, box, down=(0.0, 1.0, 0.0), deg=45.0):
-    """mm2 of a model body's faces inside a world box that look at the bed by more than deg from upright.
-    The shell prints lying on its chin: the bed is toward +y."""
+def bed_faces(X, name, region, down=(0.0, 1.0, 0.0), deg=45.0):
+    """mm2 of a model body's faces that look at the bed by more than deg from upright, and how many faces were read.
+    Only faces that lie wholly inside the box of the temporary body 'region' are read (for the shell: the boss or the
+    radar blocks as built here and at version 68, joined). 'down' is the world direction of the bed: the shell prints
+    lying on its chin, bed toward +y; the hood has been printed back plate down, bed toward sh.HN."""
     b = X.body(name)
+    q = region.boundingBox; e = 0.03
+    bx = adsk.core.BoundingBox3D.create(k.P3(q.minPoint.x - e, q.minPoint.y - e, q.minPoint.z - e),
+                                        k.P3(q.maxPoint.x + e, q.maxPoint.y + e, q.maxPoint.z + e))
     dn = k.dv(down); lim = math.cos(math.radians(deg)); area = 0.0; nf = 0
-    bx = X.wbox(*box).boundingBox
     for fc in b.faces:
-        q = fc.boundingBox
-        if not (bx.contains(q.minPoint) and bx.contains(q.maxPoint)):
+        fb = fc.boundingBox
+        if not (bx.contains(fb.minPoint) and bx.contains(fb.maxPoint)):
             continue
         nf += 1
         calc = fc.meshManager.createMeshCalculator()

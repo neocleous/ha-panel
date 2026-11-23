@@ -15,11 +15,15 @@ touchscreen (1280 × 800, landscape). Around it:
 
 Home Assistant runs on a separate server; the panel is its display, sensor and voice client.
 
-## State (2026-11-21)
-- **The design is complete:** the enclosure (version 67 of the Fusion model), the main board (rev 3.3), the touch board
-  (rev E), the mic strips (rev 3) and the two paste stencils.
-- **Made:** the boards' fab files and the print files of version 67.
-- **Next:** a fit trial printed in PLA, then the black ABS set, the boards' assembly, the build and bring-up.
+## State (2026-11-23)
+- **The boards:** the main board (rev 3.3), the touch board (rev E), the mic strips (rev 3) and the two paste stencils.
+  Their fab files are made.
+- **The enclosure: the Fusion model is at version 69 and waits for its print re-check.** Versions 68 and 69 replaced the
+  melted and glued joints by screws and two printed clamps.
+- **The print files are version 67's.** Until the re-check has run and they are made again, they are out of date for the
+  shell, the door, the cap, the grommet and the hood, and they lack the two clamps.
+- **Next:** the print re-check and the new print files, then a fit trial printed in PLA, the black ABS set, the boards'
+  assembly, the build and bring-up.
 - **The first panel (v1)** is built and in use. `main` installs its software.
 
 ## Folder map
@@ -32,6 +36,7 @@ hardware/              the three boards and the paste stencil
   notes/               parts lists, DigiKey and JLC notes, Raspberry Pi settings
   rev-c/               the first panel's touch board
 enclosure/             the housing
+  model-v68/           the scripts that made versions 68 and 69 of the Fusion model from version 67
   print-files/         the scripts that make the print files from the Fusion model
   HA Panel Final.step  the first panel's enclosure
 ```
@@ -40,9 +45,10 @@ Start with [`hardware/README.md`](hardware/README.md) for the boards and [`enclo
 for the housing.
 
 ## Where things are that are not in this repo
-- **The enclosure model:** Autodesk Fusion, document "HA Panel v5 - tapered", version 67.
+- **The enclosure model:** Autodesk Fusion, document "HA Panel v5 - tapered", version 69 (work in progress).
 - **The print files:** Bambu Studio projects made from version 67, kept on the Mac in
-  `~/Documents/HA_panel_renders/print_files_v67/`.
+  `~/Documents/HA_panel_renders/print_files_v67/`. Five parts in them are out of date (see
+  [`enclosure/README.md`](enclosure/README.md)).
 - **The assembly instructions:** not in the repo yet; their final issue is still to come.
 
 ## The software
