@@ -75,14 +75,18 @@ def _old(tag, script, func, ref, kw, sec, setg=None):
         g[name] = val
     if 'ctmp' in g:
         g['ctmp'] = lambda X_, name, box: L['crop'](X_, name, box)
+    kw = dict(kw or {})
+    if isinstance(kw.get('pts'), str) and kw['pts'].startswith('@'):      # the positions of the last close, read from its output
+        import re
+        kw['pts'] = [tuple(float(v) for v in q.groups()) for q in (re.match(r'\s*\(\s*([-\d.]+),\s*([-\d.]+),\s*([-\d.]+)\):', l) for l in open(D70 + kw['pts'][1:])) if q]
     buf = io.StringIO(); t0 = time.time()
     with contextlib.redirect_stdout(buf):
         print(L['stamp'](), 'before', st0)
-        m[func](k, X, **(kw or {}))
+        m[func](k, X, **kw)
         print(L['stamp'](), 'after', X.state())
     text = buf.getvalue()
     open(D + 'd60_%s.txt' % tag, 'w').write(text)
-    res = ['%s %s %s -> d60_%s.txt, %d lines, %.1f s; version %s, modified %s' % (script, func, kw or '', tag, len(lines(text)), time.time() - t0, X.state()['version'], X.state()['modified'])]
+    res = ['%s %s %s -> d60_%s.txt, %d lines, %.1f s; version %s, modified %s' % (script, func, {q: (v if q != 'pts' else '%d positions' % len(v)) for q, v in kw.items()} or '', tag, len(lines(text)), time.time() - t0, X.state()['version'], X.state()['modified'])]
     if ref:
         res += compare(text, ref)
     open(D + 'd60_%s_cmp.txt' % tag, 'w').write('\n'.join(res) + '\n')
