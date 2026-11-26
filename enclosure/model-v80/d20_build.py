@@ -21,7 +21,8 @@
 #     the line 2.4 back at z 38 the 101 key's tip meets the door opening's arch at 58 to 59.5 deg): z 35.0 on the left box,
 #     z 41.0 on the right, so that the right clip is still the left one turned top for bottom about z 38
 #     the shell: lower bar removed, a channel for the ring to y 1.8 (bed 5.0) 18.75 either side of the axis, two side bars
-#     x 47.5..51.5 and 89.5..93.5, z 14.6..41.4, faces at y 0.0
+#     x 47.5..51.5 and 89.5..93.5, z 14.6..41.4, faces at y 0.0, cut back to the recess's wall where they would hang over it
+#     (block 2, third put: the first build left a lip 1.0 deep over the recess on each bar, a face that looks at the bed)
 # The boxes and the shell are built from version 79's state: from the hidden copy <name>_v79 where it exists (after the first
 # put), else from the body itself (before it). So a second run on version 80 builds the same bodies as the first on version 79.
 # Stages: spk, box, shell, clip (each for both sides), all. Run: runpy.run_path(D + 'd20_build.py')['main'](stage)  -> d20_<stage>.txt
@@ -37,6 +38,7 @@ Y_REAR = Y_BACK - 25.0                                  # the driver's rear end,
 CLIP_Y = -9.45; CLIP_Z = 38.0; CLIP_REAR = -12.8        # the clip's screw line (y), the clip's mid-height, the rear face of clip and block
 CLIP_DZ = 3.0                                           # the screw line's offset from the mid-height: down on the left, up on the right
 POCKET_R = 16.3; POCKET_W = 1.5
+POCKET_END = 0.4                                        # the relief's floor behind the magnet's rear end: y -29.2, bed 22.8 (on the grid; 0.3 would lie at 22.9)
 BAND = 18.75; Y_CHAN = 1.8
 
 
@@ -136,7 +138,7 @@ def box(k, X, sx):
     X.dif(t, X.cyl((sx * 43.4, CLIP_Y, clip_z(sx)), (sx * 49.25, CLIP_Y, clip_z(sx)), 1.35))
     # 9. the left box's plug pocket: its corner toward the driver as an arc wall, 16.3 to 17.8 from the axis, over the magnet's length
     if sx > 0:
-        ya = Y_REAR - 0.3; yb = -19.3
+        ya = Y_REAR - POCKET_END; yb = -19.3
         c = X.cyl((cx, ya, AZ), (cx, -19.45, AZ), POCKET_R + POCKET_W); X.sec(c, X.wbox(53.0, 57.15, ya - 1, -19.0, 17.0, 22.2)); X.uni(t, c)
         r0 = math.hypot(AX - 55.65, AZ - 20.7)                                                   # the pocket's inner corner, 16.547 from the axis
         c = X.cyl((cx, ya - 2.6, AZ), (cx, ya, AZ), r0, POCKET_R + POCKET_W); X.sec(c, X.wbox(53.0, 55.65, ya - 3, ya + 0.1, 17.0, 20.7)); X.uni(t, c)   # the lead-in below it
@@ -150,7 +152,9 @@ def shell(k, X):
         cx = sx * AX
         X.dif(t, X.wbox(cx - BAND, cx + BAND, -1.0, Y_CHAN, 2.0, AZ))                             # the ring's channel, with the lower bar
         for a, b in ((-23.0, -19.0), (19.0, 23.0)):                                               # the two side bars
-            X.uni(t, X.wbox(cx + a, cx + b, 0.0, 1.4, 14.6, 41.4))
+            bar = X.wbox(cx + a, cx + b, 0.0, 1.4, 14.6, 41.4)
+            X.dif(bar, X.cyl((cx, -0.2, AZ), (cx, 1.6, AZ), 20.0))                                # not over the recess (40 across): no lip hangs over it in the print
+            X.uni(t, bar)
     return t
 
 
