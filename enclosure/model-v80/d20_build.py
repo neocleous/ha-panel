@@ -109,8 +109,8 @@ def box(k, X, sx):
     # 6. the four stops: 8.0 across at y -4.0, flared 45 deg to 10.0 at the face, kept inside the box's own outline
     for px, pz in screws(sx):
         c = X.cyl((px, Y_FACE - 0.2, pz), (px, Y_STOP, pz), 5.2, 4.0); X.sec(c, X.cp(hull)); X.uni(t, c)
-    # 3. the opening, 40.6 across, cut after the stops so that a stop's flare ends at the opening's edge
-    X.dif(t, X.cyl((cx, Y_INNER - 0.6, AZ), (cx, Y_STOP + 0.5, AZ), 20.3))
+    # 3. the opening, 40.6 across, through the wall only (as before), cut after the stops so that a stop's flare ends at its edge
+    X.dif(t, X.cyl((cx, Y_INNER, AZ), (cx, Y_STOP + 0.5, AZ), 20.3))
     # 7. the insert holes 4.0 across, 6.7 deep from the stops' tops; behind the outer pair a 2.5 hole 0.8 deep, as before
     for px, pz in screws(sx):
         X.dif(t, X.cyl((px, Y_HOLE, pz), (px, Y_STOP + 0.2, pz), 2.0))
