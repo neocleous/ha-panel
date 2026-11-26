@@ -88,7 +88,7 @@ def _build(half=HALF, setback=SETBACK):
     X.uni(new, X.tbm.copy(keep))
     k.c['b5_fill'] = keep; k.c['b5_shell'] = new; k.c['b5_shell_before'] = X.tbm.copy(sh)
     print('fill: %.4f mm3 in %d lump(s), world box %s, faces %d' % (X.vol(keep), kept, k.r2(k.wbb(X, keep), 2), keep.faces.count))
-    print('shell: %.3f -> %.3f (very high %.3f -> %.3f), lumps %d -> %d, faces %d -> %d' % (sh.volume * 1000, X.vol(new), L['vhi'](sh), L['vhi'](new), sh.lumps.count, new.lumps.count, sh.faces.count, new.faces.count))
+    print('shell: %.3f -> %.3f, lumps %d -> %d, faces %d -> %d' % (sh.volume * 1000, X.vol(new), sh.lumps.count, new.lumps.count, sh.faces.count, new.faces.count))
     # the new shell's faces round the place: any on the box's far side or its root end would mean the box ended in air
     far = 0; root = 0; small = []
     zone = X.wbox(-70.0, -55.0, -58.0, -44.0, 95.0, 105.0).boundingBox
