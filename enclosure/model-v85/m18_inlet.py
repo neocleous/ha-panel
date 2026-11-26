@@ -16,6 +16,7 @@ import adsk.core, adsk.fusion
 D = '/Users/danielneocleous/Documents/HA_panel_renders/box_margins_v85/'
 L = runpy.run_path(D + 'm00_lib.py')
 AXES = ((-7.49, -81.16), (7.75, -81.16))        # the cradle's two pilots, 1.6 across, upright, z 14.5 to 20.2 (m10_holes_a.txt)
+LATER = ('HOUSING_F_door', 'GROMMET_usbc_F', 'HOUSING_F_front', 'SLAB_frame', 'HOUSING_F_plate', 'HOUSING_F_cap')   # not on at the inlet board's step (bench, plate unit)
 HOLE_R = 1.25; R_SH = 1.0; R_HD = 1.9; H_RIM = 0.3; H_CONE = 0.9; LEN = 6.0
 
 
@@ -78,15 +79,17 @@ def st_build(k, X, zb=None):
     print('bm_m2 %.3f mm3, lumps %d | built from %s %.3f, lumps %d' % (X.vol(t), t.lumps.count, src.name, src.volume * 1000, src.lumps.count))
 
 
-def st_check(k, X, src='model'):
+def st_check(k, X, src='model', which=(0, 1)):
     k.budget(72)
     S = k.c['bm_m2'] if src == 'cache' else X.tbm.copy(X.body('SCREWS_M2x6_env'))
     C = X.body('CRADLE_5807')
-    for x, y in AXES:
+    for i, (x, y) in enumerate(AXES):
+        if i not in which:
+            continue
         lump = None
         for lp in S.lumps:
             t = X.tbm.copy(lp); bb = k.wbb(X, t)
-            if bb[0] - 0.1 <= x <= bb[1] + 0.1 and bb[2] - 0.1 <= y <= bb[3] + 0.1:
+            if abs((bb[0] + bb[1]) / 2.0 - x) < 0.3 and abs((bb[2] + bb[3]) / 2.0 - y) < 0.3:
                 lump = t; lb = bb
         if lump is None:
             print('(%.2f, %.2f): NO SCREW' % (x, y)); continue
@@ -119,7 +122,7 @@ def st_check(k, X, src='model'):
                 print('   round the head (3.8 across, 1.2 high): %-22s %.3f' % (n, dd))
         for r in (2.1, 3.0, 4.0):
             hit = []
-            for n in near_names(k, X, (x - r, x + r, y - r, y + r, ztop, ztop + 150.0), skip=('SCREWS_M2x6_env',)):
+            for n in near_names(k, X, (x - r, x + r, y - r, y + r, ztop, ztop + 150.0), skip=('SCREWS_M2x6_env',) + LATER):
                 v = 0.0; zs = []
                 for p in k.parts(X, n):
                     c = X.cyl((x, y, ztop + 0.05), (x, y, ztop + 150.0), r); X.sec(c, X.tbm.copy(p))
@@ -127,7 +130,7 @@ def st_check(k, X, src='model'):
                         v += X.vol(c); zs += [k.W(vx.geometry)[2] for vx in c.vertices]
                 if v > 1e-4:
                     hit.append('%s %.2f (z %.1f..%.1f)' % (n, v, min(zs), max(zs)) if zs else '%s %.2f' % (n, v))
-            print('   driver\'s way, a bar %.1f across above the head, 150 long: %s' % (2 * r, ', '.join(hit) or 'free'))
+            print('   driver\'s way at its step (the door, the grommet and the shell not yet on), a bar %.1f across above the head, 150 long: %s' % (2 * r, ', '.join(hit) or 'free'))
         if k.late():
             print('time'); return
 
