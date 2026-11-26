@@ -119,29 +119,42 @@ def bodies(k, X):
     return q
 
 
-def st_stack(k, X, holes, off=2.3, reach=14.0, behind=10.0, sec=70):
-    """holes: [(part, mouth (x, y, z), outward axis (unit), closed end (x, y, z) or None)]."""
+def near_bodies(k, X, a, b, pad):
+    lo = [min(a[i], b[i]) - pad for i in range(3)]; hi = [max(a[i], b[i]) + pad for i in range(3)]
+    return [n for n, bb in bodies(k, X) if bb[0] <= hi[0] and bb[1] >= lo[0] and bb[2] <= hi[1] and bb[3] >= lo[1] and bb[4] <= hi[2] and bb[5] >= lo[2]]
+
+
+def st_stack(k, X, holes, reach=14.0, behind=10.0, sec=70):
+    """holes: [(label, part, mouth (x, y, z), far end (x, y, z), far end closed?, needle offset)]. Outward = from the far end to
+    the mouth. Prints the stretches of every body outside the mouth (offset needles, four sides; mm from the mouth outward);
+    beyond the far end: on the axis, in the part if closed, else in every body near the axis (mm from the far end)."""
     k.budget(sec)
-    bl = bodies(k, X)
-    for part, M, o, F in holes:
-        o = k.unit(o); u, v = perp(o)
+    for lab, part, M, F, closed, off in holes:
+        o = k.unit(tuple(M[i] - F[i] for i in range(3))); u, v = perp(o)
+        depth = math.sqrt(sum((M[i] - F[i]) ** 2 for i in range(3)))
         E = tuple(M[i] + o[i] * reach for i in range(3))
-        lo = [min(M[i], E[i]) - off - 0.5 for i in range(3)]; hi = [max(M[i], E[i]) + off + 0.5 for i in range(3)]
-        near = [n for n, bb in bl if bb[0] <= hi[0] and bb[1] >= lo[0] and bb[2] <= hi[1] and bb[3] >= lo[1] and bb[4] <= hi[2] and bb[5] >= lo[2]]
-        print('%s, mouth %s, outward %s: bodies near the axis %s' % (part, k.r2(M, 2), k.r2(o, 3), near))
+        near = near_bodies(k, X, M, E, off + 0.5)
+        print('%s: %s, mouth %s, far end %s (%s), %.3f deep, outward %s' % (lab, part, k.r2(M, 2), k.r2(F, 2), 'closed' if closed else 'open', depth, k.r2(o, 3)))
         for n in near:
             pl = k.parts(X, n); seg = []
             for w in (u, v, tuple(-q for q in u), tuple(-q for q in v)):
                 p0 = tuple(M[i] - o[i] * 1.0 + w[i] * off for i in range(3)); p1 = tuple(E[i] + w[i] * off for i in range(3))
                 seg.append([(round(a - 1.0, 2), round(b - 1.0, 2)) for a, b in k.needle_t(X, pl, p0, p1, 0.02)])
             if any(seg):
-                print('   %-22s at %.1f off the axis, four sides: %s' % (n, off, seg))
+                print('   out %-22s at %.1f off the axis, four sides: %s' % (n, off, seg))
             if k.late():
                 print('   time'); return
-        if F is not None:
-            pl = k.parts(X, part)
-            st = k.needle_t(X, pl, F, tuple(F[i] + o[i] * -behind for i in range(3)), 0.02)
-            print('   behind the closed end, on the axis, in %s: %s (from the end, %.1f long needle)' % (part, st, behind))
+        G = tuple(F[i] - o[i] * behind for i in range(3))
+        if closed:
+            st = k.needle_t(X, k.parts(X, part), F, G, 0.02)
+            print('   beyond the closed end, on the axis, in %s: %s (mm from the end; needle %.1f long)' % (part, st, behind))
+        else:
+            for n in near_bodies(k, X, F, G, 0.5):
+                st = k.needle_t(X, k.parts(X, n), F, G, 0.02)
+                if st:
+                    print('   beyond the open far end, on the axis, %-22s %s (mm from the end)' % (n, st))
+        if k.late():
+            print('   time'); return
 
 
 def lv(l):
