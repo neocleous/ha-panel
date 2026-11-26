@@ -102,8 +102,6 @@ def box(k, X, sx):
         s = X.wbox(-50.6, -45.9, -7.6, -6.9, 11.4, 30.1); X.sec(s, X.cp(a))
         if s.faces.count:
             X.uni(t, s)
-    # 3. the opening, 40.6 across
-    X.dif(t, X.cyl((cx, Y_INNER - 0.6, AZ), (cx, Y_FACE + 0.5, AZ), 20.3))
     # 4. the clip block: solid from y -12.8 to the face, x 43.5..50.5, z 30..46 (the old pilot filled)
     xa, xb = sorted((sx * 43.5, sx * 50.5))
     X.uni(t, X.wbox(xa, xb, CLIP_REAR, Y_FACE, 30.0, 46.0))
@@ -114,7 +112,9 @@ def box(k, X, sx):
         X.uni(t, X.cyl((px, Y_COL, pz), (px, Y_INNER + 0.1, pz), 4.0))
     # 6. the four stops: 8.0 across at y -4.0, flared 45 deg to 10.0 at the face, kept inside the box's own outline
     for px, pz in screws(sx):
-        c = X.cyl((px, Y_FACE - 0.05, pz), (px, Y_STOP, pz), 5.05, 4.0); X.sec(c, X.cp(hull)); X.uni(t, c)
+        c = X.cyl((px, Y_FACE - 0.2, pz), (px, Y_STOP, pz), 5.2, 4.0); X.sec(c, X.cp(hull)); X.uni(t, c)
+    # 3. the opening, 40.6 across, cut after the stops so that a stop's flare ends at the opening's edge
+    X.dif(t, X.cyl((cx, Y_INNER - 0.6, AZ), (cx, Y_STOP + 0.5, AZ), 20.3))
     # 7. the insert holes 4.0 across, 6.7 deep from the stops' tops; behind the outer pair a 2.5 hole 0.8 deep, as before
     for px, pz in screws(sx):
         X.dif(t, X.cyl((px, Y_HOLE, pz), (px, Y_STOP + 0.2, pz), 2.0))

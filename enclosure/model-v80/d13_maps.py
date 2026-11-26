@@ -66,7 +66,7 @@ def st_zmap(k, X, z=38.0, side='L', x0=36.0, x1=60.0, dx=0.5, y0=-14.0, y1=5.0, 
 
 
 def st_faces(k, X, name='SPKBOX_L', box=(44, 60, -53, -19, 3, 25), amin=0.3):
-    b = X.body(name)
+    b = k.c[name[2:]] if name.startswith('c:') else X.body(name)
     rows = k.faces(X, b, box, ('p', 'c'), amin)
     print('%s: faces with their sample point in %s (%d)' % (name, box, len(rows)))
     for r in sorted(rows, key=lambda q: str(q[:3])):
