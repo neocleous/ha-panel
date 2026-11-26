@@ -64,10 +64,11 @@ def _old(tag, script, func, ref, kw, sec):
     k = L['load'](); X = k.K(); k.budget(sec)
     st0 = X.state()
     m = runpy.run_path(D70 + script)
-    if 'dist' in m and m['dist'].__code__.co_argcount == 4:
-        m['dist'] = dist_t
-    if 'mind' in m:
-        m['mind'] = mind_t
+    g = m[func].__globals__                          # runpy hands back a copy; the functions look their helpers up here
+    if 'dist' in g and g['dist'].__code__.co_argcount == 4:
+        g['dist'] = dist_t
+    if 'mind' in g:
+        g['mind'] = mind_t
     buf = io.StringIO(); t0 = time.time()
     with contextlib.redirect_stdout(buf):
         print(L['stamp'](), 'before', st0)
