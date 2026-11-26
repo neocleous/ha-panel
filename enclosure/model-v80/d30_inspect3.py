@@ -8,6 +8,8 @@
 #   front    for each face D458 names: the bodies of the unit that stand in front of it within 1.0, with the true distance
 #            (a slab 0.05 thick laid on the face, cropped to the face's box, measured to each body near it)
 #   feet     the foot bodies and whatever else touches the recess floors
+#   top      every body whose lowest point lies near the base plate's top, with its distance to the plate
+#   nb       the neighbours of the faces that will move (kind, slope), to see where a root is tapered or an edge chamfered
 # Run: runpy.run_path(D + 'd30_inspect3.py')['main'](stage)  -> d30_<stage>.txt
 import runpy, math
 import adsk.core, adsk.fusion
@@ -74,9 +76,12 @@ def st_plate(k, X):
         if bx is None:
             continue
         rows.append((round(o[0], 2), round(o[1], 2), round(gm.radius * 10, 3), bx[4], bx[5], round(f.area * 100, 1)))
-    print('round faces with an upright axis: centre x, y; radius; from z to z; mm2 (%d)' % len(rows))
-    for r in sorted(set(rows)):
-        print('   (%7.2f, %7.2f) r %6.3f  z %6.3f .. %6.3f  %7.1f' % r)
+    grp = {}
+    for r in set(rows):
+        grp.setdefault((r[2], r[3], r[4]), []).append((r[0], r[1]))
+    print('round faces with an upright axis, grouped: radius, from z to z: count, centres (the first eight)')
+    for key, cs in sorted(grp.items()):
+        print('   r %6.3f  z %6.3f .. %6.3f : %3d  %s' % (key + (len(cs), sorted(cs)[:8])))
 
 
 def st_boxes(k, X):
@@ -201,10 +206,68 @@ def st_feet(k, X):
             print('%-22s box %s  volume %.3f  to the plate %.3f at %s; visible %s' % (ob.name, k.r2(w, 3), ob.volume * 1000, r.value * 10, k.r2(k.W(r.positionTwo), 2), ob.isLightBulbOn))
 
 
+def nb(k, f):
+    """The faces that share an edge with f: kind, a few figures, box; grouped."""
+    T = adsk.core.SurfaceTypes
+    names = {T.PlaneSurfaceType: 'plane', T.CylinderSurfaceType: 'cylinder', T.ConeSurfaceType: 'cone', T.TorusSurfaceType: 'torus', T.SphereSurfaceType: 'sphere'}
+    seen = {}; out = {}
+    for e in f.edges:
+        for g in e.faces:
+            if g.tempId == f.tempId or g.tempId in seen:
+                continue
+            seen[g.tempId] = 1
+            gm = g.geometry; kind = names.get(gm.surfaceType, 'other %s' % gm.surfaceType)
+            if kind == 'plane':
+                ok, nv = g.evaluator.getNormalAtPoint(g.pointOnFace); n = k.r2(k.wv(nv), 3)
+                key = ('plane', tuple(n))
+            elif kind == 'cylinder':
+                a = k.r2(k.unit(k.wv(gm.axis)), 2); key = ('cylinder', round(gm.radius * 10, 3), tuple(abs(q) for q in a))
+            elif kind == 'cone':
+                a = k.r2(k.unit(k.wv(gm.axis)), 2); key = ('cone', round(math.degrees(gm.halfAngle), 1), round(gm.radius * 10, 3), tuple(abs(q) for q in a))
+            elif kind == 'torus':
+                key = ('torus', round(gm.majorRadius * 10, 3), round(gm.minorRadius * 10, 3))
+            else:
+                key = (kind,)
+            a = out.setdefault(key, [0, None]); a[0] += 1
+            if a[1] is None:
+                a[1] = fbox(k, g)
+    return out
+
+
+def st_nb(k, X):
+    P = X.body('FLOOR_PLATE')
+    for f, p, s in level(k, P, 2):
+        if (abs(p[2] - 2.5) < 0.003 and s > 0 and f.area * 100 > 1000) or (abs(p[2]) < 0.003 and f.area * 100 > 1000):
+            print('FLOOR_PLATE face z %.2f (%.2f mm2), its neighbours: kind, figures: count, the first one\'s box' % (p[2], f.area * 100))
+            for key, (n, bx) in sorted(nb(k, f).items(), key=lambda r: str(r[0])):
+                print('   %-60s %4d  %s' % (key, n, bx))
+    for zz in (1.8, 1.9, 2.0, 2.1, 2.2, 2.3, 2.4, 2.6, 2.7, 5.55, 6.5, 9.4, 8.0, 2.8, 1.0):
+        rows = [(round(f.area * 100, 2), 'up' if s > 0 else 'down', fbox(k, f)) for f, p, s in level(k, P, 2) if abs(p[2] - zz) < 0.003]
+        print('FLOOR_PLATE faces at z %.2f: %d; %s' % (zz, len(rows), sorted(rows, key=lambda r: -r[0])[:4]))
+    for nm in ('SPKBOX_L', 'SPKBOX_R'):
+        b = X.body(nm)
+        for f, p, s in level(k, b, 2):
+            if abs(p[2] - 3.7) < 0.003 and s < 0:
+                print('%s bottom face z 3.7 (%.2f mm2), neighbours:' % (nm, f.area * 100))
+                for key, (n, bx) in sorted(nb(k, f).items(), key=lambda r: str(r[0])):
+                    print('   %-60s %4d  %s' % (key, n, bx))
+        for f, p, s in level(k, b, 1):
+            if abs(p[1] + 0.78) < 0.003:
+                print('%s tab top y %.4f (%.2f mm2), neighbours:' % (nm, p[1], f.area * 100))
+                for key, (n, bx) in sorted(nb(k, f).items(), key=lambda r: str(r[0])):
+                    print('   %-60s %4d  %s' % (key, n, bx))
+    S = X.body('HOUSING_F_front')
+    for f, p, s in level(k, S, 1):
+        if abs(p[1] + 23.3) < 0.01 or abs(p[1] + 63.5) < 0.01:
+            print('HOUSING_F_front face y %.4f (%.2f mm2) box %s, neighbours:' % (p[1], f.area * 100, fbox(k, f)))
+            for key, (n, bx) in sorted(nb(k, f).items(), key=lambda r: str(r[0])):
+                print('   %-60s %4d  %s' % (key, n, bx))
+
+
 def _main(stage, **kw):
     k = L['load'](); X = k.K()
     print(L['stamp'](), 'before', X.state())
-    {'plate': st_plate, 'boxes': st_boxes, 'shell': st_shell, 'front': st_front, 'top': st_top, 'feet': st_feet}[stage](k, X, **kw)
+    {'plate': st_plate, 'boxes': st_boxes, 'shell': st_shell, 'front': st_front, 'top': st_top, 'feet': st_feet, 'nb': st_nb}[stage](k, X, **kw)
     print(L['stamp'](), 'after', X.state())
 
 
