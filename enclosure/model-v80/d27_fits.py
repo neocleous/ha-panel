@@ -185,14 +185,16 @@ def st_walk(k, X, case='drivers', side='L', bs=(0.95, 1.6), s=0.0, sec=70, step=
     print('   %.1f s' % (time.time() - t0))
 
 
-def st_clipkey(k, X, state='build', holder=False, sides=('L', 'R'), phis=None, pts=False, old=False):
+def st_clipkey(k, X, state='build', holder=False, sides=('L', 'R'), phis=None, pts=False, old=False, pz=None, brief=False):
     C = runpy.run_path(D + 'd14_clip.py')
     y = -7.05 if old else runpy.run_path(D + 'd20_build.py')['CLIP_Y']; PZ = 38.0         # old: version 79's screw line, for the same sweep beside it
     k.budget(70)
     off_ = () if holder else ('RADAR_HOLDER', 'LD2410C_env_F')
+    PZ0 = PZ
     for side in sides:
         sx = 1.0 if side == 'L' else -1.0
         xe = sx * 24.9
+        PZ = (pz or {}).get(side, PZ0)                 # pz: a trial height for a side's screw line (read-only what-if)
         zone = X.wbox(min(xe, sx * 41.0) - 6.0, max(xe, sx * 41.0) + 6.0, -120.0, 12.0, -50.0, 185.0)
         fx = []
         for b in C['hard'](k, X, state, skip=off_):
@@ -213,16 +215,20 @@ def st_clipkey(k, X, state='build', holder=False, sides=('L', 'R'), phis=None, p
                     best = (d, nm, q)
             return best
         d, nm, q = nearest(X.cyl((sx * 40.5, y, PZ), (sx * 38.85, y, PZ), 2.85))
-        print('clip %s, screw at y %.2f, state %s, holder and radar %s: the head (5.7 across, 1.65 high) to the nearest body: %.3f, %s at %s' % (
-            side, y, state, 'on' if holder else 'off', d, nm, q))
+        print('clip %s, screw at y %.2f, z %.2f, state %s, holder and radar %s: the head (5.7 across, 1.65 high) to the nearest body: %.3f, %s at %s' % (
+            side, y, PZ, state, 'on' if holder else 'off', d, nm, q))
         rows = []
         for phi in (phis or range(0, 96, 15)):
             r = math.radians(phi)
             d, nm, q = nearest(X.cyl((xe, y, PZ), (xe, y - 101.0 * math.cos(r), PZ + 101.0 * math.sin(r)), 1.2))
-            rows.append('%s deg: %.2f %s%s' % (phi, d, k.sn(nm), (' at %s' % (q,)) if pts else ''))
+            rows.append((phi, d, k.sn(nm), q))
             if k.late():
-                rows.append('time'); break
-        print('   long arm (101 long, 2.4 across) to the nearest body: ' + '; '.join(rows))
+                rows.append(None); break
+        if brief:
+            ok = [r for r in rows if r]
+            free = [r[0] for r in ok if r[1] > 0.0005]
+            print('   long arm: free at %s; least while free %s' % (free, min(((round(r[1], 2), r[0], r[2]) for r in ok if r[1] > 0.0005), default=None)))
+        print('   long arm (101 long, 2.4 across) to the nearest body: ' + '; '.join(('%s deg: %.2f %s%s' % (r[0], r[1], r[2], (' at %s' % (r[3],)) if pts else '')) if r else 'time' for r in rows))
 
 
 def off(h, lh=0.2):
