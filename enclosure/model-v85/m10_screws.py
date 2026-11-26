@@ -81,7 +81,8 @@ def ends(k, b, h):
     return out
 
 
-def st_holes(k, X, only=None, rmin=0.7, rmax=2.1):
+def st_holes(k, X, only=None, rmin=0.7, rmax=2.1, sec=70):
+    k.budget(sec)
     for name in L['PRINTED']:
         if only and name not in only:
             continue
@@ -150,7 +151,8 @@ def lv(l):
         return -1.0
 
 
-def st_m2(k, X):
+def st_m2(k, X, sec=70):
+    k.budget(sec)
     S = X.body('SCREWS_M2x6_env')
     piles = []
     for name in L['PRINTED']:
