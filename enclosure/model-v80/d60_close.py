@@ -40,6 +40,11 @@ def lines(text):
 
 def compare(new_text, ref, maxd=16, width=210):
     out = []
+    if '*' in ref:                                   # the newest of the last pass's files of that name
+        import glob
+        fs = sorted(glob.glob(D70 + ref), key=os.path.getmtime)
+        if fs:
+            ref = os.path.basename(fs[-1])
     p = ref if ref.startswith('/') else (D + ref[2:] if ref.startswith('./') else D70 + ref)
     if not os.path.exists(p):
         return ['no file %s in the last pass\'s folder' % ref]
