@@ -12,8 +12,8 @@ L = runpy.run_path(D + 'v80_lib.py')
 CYL = adsk.core.SurfaceTypes.CylinderSurfaceType
 # waypoints of the new run for the left box (x mirrored for the right): from the lead's end at the wire hole's mouth
 # (62, -54, 30: d26 look), through the hole (4.0 across, y -52.0 to -50.5), forward and up to the top face of the connector's
-# envelope (z 46.25), where its axis lies one radius above the face
-WAY = [(62.0, -54.0, 30.0), (62.0, -46.0, 30.0), (64.0, -36.0, 40.0), (66.5, -30.5, 47.5), (68.0, -26.0, 47.85)]
+# envelope (z 46.25), which it reaches within 0.05 (its axis 1.65 above the face)
+WAY = [(62.0, -54.0, 30.0), (62.0, -46.0, 30.0), (64.0, -36.0, 40.0), (66.5, -30.5, 47.9), (68.0, -26.0, 47.9)]
 
 
 def st_look(k, X):
