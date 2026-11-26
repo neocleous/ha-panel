@@ -62,7 +62,7 @@ def compare(new_text, ref, maxd=16, width=210):
     return out
 
 
-def _old(tag, script, func, ref, kw, sec):
+def _old(tag, script, func, ref, kw, sec, setg=None):
     k = L['load'](); X = k.K(); k.budget(sec)
     st0 = X.state()
     m = runpy.run_path(D70 + script)
@@ -71,6 +71,8 @@ def _old(tag, script, func, ref, kw, sec):
         g['dist'] = dist_t
     if 'mind' in g:
         g['mind'] = mind_t
+    for name, val in (setg or {}).items():           # a list of the script cut down, to run one long check in parts
+        g[name] = val
     if 'ctmp' in g:
         g['ctmp'] = lambda X_, name, box: L['crop'](X_, name, box)
     buf = io.StringIO(); t0 = time.time()
@@ -119,9 +121,9 @@ def _slide(tag, side, sec):
     print(text.strip())
 
 
-def main(stage, tag='', script=None, func=None, ref=None, kw=None, sec=66, leads=False, side='L'):
+def main(stage, tag='', script=None, func=None, ref=None, kw=None, sec=66, leads=False, side='L', setg=None):
     if stage == 'old':
-        _old(tag, script, func, ref, kw, sec)
+        _old(tag, script, func, ref, kw, sec, setg)
     elif stage == 'ride':
         _ride(tag, leads, ref, sec)
     elif stage == 'slide':
