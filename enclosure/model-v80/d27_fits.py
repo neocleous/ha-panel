@@ -15,6 +15,7 @@
 #            their height above the bed and what they miss the layer grid by
 #   guards   counts, and the guard volumes of all 17 printed parts by both readings (D425), beside version 79's
 #   chamber  each box's chamber on the model's bodies (this version's, and version 79's from the hidden copies), d22's method
+#   where    where a walk meets: per mover the lifts that share volume and the box of what is shared; old=True on version 79's copies
 #   pocket   the left box's pocket corner: the arc wall by needles from the driver's axis, the USB-A plug's room, the magnet's
 # Run: runpy.run_path(D + 'd27_fits.py')['main'](stage, tag, **kw)  -> d27_<stage>_<tag>.txt
 import runpy, math, re, time
@@ -354,11 +355,46 @@ def st_pocket(k, X):
         print('   magnet grown %.2f all round: shares %.4f with the left box' % (g, X.xv(m2, X.tbm.copy(bx))))
 
 
+def st_where(k, X, case='boxes', side='L', b=0.95, s=0.0, old=False, sec=60, hs=None, shell_old=None):
+    """Where a walk meets: per mover, the lifts that share volume with the shell and the world box of what is shared (in the
+    shell's frame). old=True takes the movers from the hidden copies of version 79; shell_old likewise for the shell."""
+    k.budget(sec)
+    sx = 1 if side == 'L' else -1
+    names, boxes, near, hs0 = CASES[case]
+    hs = hs or hs0
+    sfx = '_v79' if old else ''
+    shn = 'HOUSING_F_front' + ('_v79' if (old if shell_old is None else shell_old) else '')
+    crops = [L['crop'](X, shn, bx) for bx in boxes(sx)]
+    for n in names(side):
+        src = X.body(n + sfx) or X.body(n)
+        m = X.tbm.copy(src)
+        if case == 'boxes':
+            X.sec(m, X.wbox(-110, 110, -16.0, 8.0, -1, 90))
+        if case == 'frame':
+            X.sec(m, X.wbox(-110, 110, -53.0, -47.0, -1, 85))
+        if near:
+            X.sec(m, X.wbox(*near))
+        hit = []; done = 0
+        for h in hs:
+            for cr in crops:
+                t = X.move(X.tbm.copy(m), s, -b, -h)
+                X.sec(t, X.tbm.copy(cr))
+                if t.faces.count and X.vol(t) > 0.0005:
+                    hit.append((h, round(X.vol(t), 3), k.r2(k.wbb(X, t), 2)))
+            done += 1
+            if k.late():
+                break
+        print('%s against %s, %.2f behind, %.2f to the side: %s%s' % (src.name, shn, b, s, ('%d lifts meet; first %s; largest %s; last %s' % (
+            len(hit), hit[0], max(hit, key=lambda q: q[1]), hit[-1])) if hit else 'clear', '' if done == len(hs) else '  NOT FINISHED after lift %.1f' % hs[done - 1]))
+        if k.late():
+            break
+
+
 def _main(stage, **kw):
     k = L['load'](); X = k.K()
     print(L['stamp'](), 'before', X.state())
     try:
-        {'near': st_near, 'push': st_push, 'ring': st_ring, 'walk': st_walk, 'clipkey': st_clipkey, 'grid': st_grid, 'guards': st_guards, 'chamber': st_chamber, 'pocket': st_pocket}[stage](k, X, **kw)
+        {'near': st_near, 'push': st_push, 'ring': st_ring, 'walk': st_walk, 'clipkey': st_clipkey, 'grid': st_grid, 'guards': st_guards, 'chamber': st_chamber, 'pocket': st_pocket, 'where': st_where}[stage](k, X, **kw)
     finally:
         left = [b for b in X.root.bRepBodies if b.name.startswith('TMP_')]
         for b in left:
