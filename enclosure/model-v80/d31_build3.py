@@ -204,4 +204,49 @@ def _diff(names):
 
 def diff(names, tag=''):
     L['out']('d31_diff%s.txt' % (('_' + tag) if tag else ''), _diff, names)
+
+def _lv(k, b, ax):
+    g = {}
+    for f in b.faces:
+        if f.geometry.surfaceType != PLN:
+            continue
+        ok, nv = f.evaluator.getNormalAtPoint(f.pointOnFace); n = k.wv(nv)
+        if abs(abs(n[ax]) - 1) > 1e-4:
+            continue
+        key = (round(k.W(f.pointOnFace)[ax], 4), '+' if n[ax] > 0 else '-')
+        a = g.setdefault(key, [0.0, 0]); a[0] += f.area * 100; a[1] += 1
+    return g
+
+
+def _levels(names):
+    """Level faces of what is built against the model's, along the part's print height: only the heights whose area changed."""
+    k = L['load'](); X = k.K()
+    spec = {'FLOOR_PLATE': (2, lambda v: v, 'z'), 'SPKBOX_L': (1, lambda v: v + 52.0, 'y'), 'SPKBOX_R': (1, lambda v: v + 52.0, 'y'),
+            'HOUSING_F_front': (1, lambda v: 6.7992 - v, 'y')}
+    for n in names:
+        if k.c.get(KEYS[n]) is None or n not in spec:
+            continue
+        ax, hf, nm = spec[n]
+        new = _lv(k, k.c[KEYS[n]], ax); old = _lv(k, X.body(n), ax)
+        print('%s: level faces whose area changed (%s, looks, bed height, off the grid: built mm2 / faces | model mm2 / faces)' % (n, nm))
+        for key in sorted(set(new) | set(old)):
+            a = new.get(key, [0.0, 0]); b = old.get(key, [0.0, 0])
+            if abs(a[0] - b[0]) < 0.005 and a[1] == b[1]:
+                continue
+            h = hf(key[0]); o = h - round(h / 0.2) * 0.2
+            print('   %s %9.4f %s  height %8.4f %s : %10.2f / %3d | %10.2f / %3d' % (nm, key[0], key[1], h, ('      ' if abs(o) < 0.002 else 'OFF %+.2f' % o)[:9], a[0], a[1], b[0], b[1]))
+        if n in ('SPKBOX_L', 'SPKBOX_R'):
+            new = _lv(k, k.c[KEYS[n]], 2); old = _lv(k, X.body(n), 2)
+            for key in sorted(set(new) | set(old)):
+                a = new.get(key, [0.0, 0]); b = old.get(key, [0.0, 0])
+                if abs(a[0] - b[0]) >= 0.005 or a[1] != b[1]:
+                    print('   z %9.4f %s (upright in the print): %10.2f / %3d | %10.2f / %3d' % (key[0], key[1], a[0], a[1], b[0], b[1]))
+        small_new = sorted((round(f.area * 100, 4), tuple(k.r2(k.W(f.pointOnFace), 1))) for f in k.c[KEYS[n]].faces if f.area * 100 < 0.3)
+        was = set(tuple(k.r2(k.W(f.pointOnFace), 1)) for f in X.body(n).faces if f.area * 100 < 0.3)
+        fresh = [q for q in small_new if q[1] not in was]
+        print('   faces under 0.3 mm2: built %d, model %d; not at an old place: %s' % (len(small_new), len(was), fresh[:16]))
+
+
+def levels(names, tag=''):
+    L['out']('d31_levels%s.txt' % (('_' + tag) if tag else ''), _levels, names)
 # END
