@@ -84,10 +84,10 @@ def ranges(a, step):
 
 def st_pocket(k, X):
     c = L['crop'](X, 'SPKBOX_L', (38.0, 102.0, -52.0, -2.0, -4.0, 62.0))
-    pl = X.tbm.copy(X.body('USBA_plug_env')); cb = X.tbm.copy(X.body('USBA_cable_env'))
-    print('USBA_plug_env box %s; USBA_cable_env box %s' % (k.wbb(X, X.body('USBA_plug_env')), k.wbb(X, X.body('USBA_cable_env'))))
+    pl = X.tbm.copy(X.body('USBA_plug_env')); cb = X.tbm.copy(X.body('LEAD_USB_RESP'))
+    print('USBA_plug_env box %s; LEAD_USB_RESP box %s' % (k.wbb(X, X.body('USBA_plug_env')), k.wbb(X, X.body('LEAD_USB_RESP'))))
     for y in (-18.0, -19.0, -20.0, -20.5, -21.0, -22.0, -24.0, -26.0, -28.0, -28.7, -29.5, -31.0):
-        print('  y %.1f: angle, box stretches (radius from..to), plug, cable' % y)
+        print('  y %.1f: angle, box stretches (radius from..to), plug, USB lead' % y)
         for th in range(185, 266, 5):
             ca = math.cos(math.radians(th)); sa = math.sin(math.radians(th))
             p0 = (AX + 6.0 * ca, y, AZ + 6.0 * sa); p1 = (AX + 34.0 * ca, y, AZ + 34.0 * sa)
@@ -95,11 +95,11 @@ def st_pocket(k, X):
             sp = [(round(6 + a, 2), round(6 + b, 2)) for a, b in k.needle_t(X, [pl], p0, p1, 0.02)]
             sc = [(round(6 + a, 2), round(6 + b, 2)) for a, b in k.needle_t(X, [cb], p0, p1, 0.02)]
             if sb and sb[0][0] < 21.0:
-                print('     %3d  box %s  plug %s  cable %s' % (th, sb, sp, sc))
+                print('     %3d  box %s  plug %s  lead %s' % (th, sb, sp, sc))
     r = X.mm.measureMinimumDistance(X.body('USBA_plug_env'), X.body('SPKBOX_L'))
     print('USBA_plug_env to SPKBOX_L, body to body: %.4f at %s / %s' % (r.value * 10, k.r2(k.W(r.positionOne), 3), k.r2(k.W(r.positionTwo), 3)))
-    r = X.mm.measureMinimumDistance(X.body('USBA_cable_env'), X.body('SPKBOX_L'))
-    print('USBA_cable_env to SPKBOX_L, body to body: %.4f at %s / %s' % (r.value * 10, k.r2(k.W(r.positionOne), 3), k.r2(k.W(r.positionTwo), 3)))
+    r = X.mm.measureMinimumDistance(X.body('LEAD_USB_RESP'), X.body('SPKBOX_L'))
+    print('LEAD_USB_RESP to SPKBOX_L, body to body: %.4f at %s / %s' % (r.value * 10, k.r2(k.W(r.positionOne), 3), k.r2(k.W(r.positionTwo), 3)))
 
 
 def st_chamber(k, X):
