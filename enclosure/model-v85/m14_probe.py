@@ -32,10 +32,18 @@ def st_faces(k, X, name, box, amin=0.5):
         print('   %s' % (r,))
 
 
+def st_needle(k, X, rows, keys=()):
+    """rows: [(label, body name or cache key, p0, p1)]: the solid stretches (mm from p0) of the body on the line p0 -> p1."""
+    k.budget(70)
+    for lab, src, p0, p1 in rows:
+        b = k.c[src] if src in k.c else k.tcopy(X, src)
+        print('%-30s %-18s from %s to %s: %s' % (lab, src, p0, p1, k.needle_t(X, [b], p0, p1, 0.02)))
+
+
 def _main(stage, **kw):
     k = L['load'](); X = k.K()
     print(L['stamp'](), 'before', X.state())
-    {'inbox': st_inbox, 'faces': st_faces}[stage](k, X, **kw)
+    {'inbox': st_inbox, 'faces': st_faces, 'needle': st_needle}[stage](k, X, **kw)
     print(L['stamp'](), 'after', X.state())
 
 
