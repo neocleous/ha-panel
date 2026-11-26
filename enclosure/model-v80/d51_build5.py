@@ -8,7 +8,9 @@
 #   the fill   everything straight above the pin in the print (between the two planes z 97 and z 103 that touch the pin's sides,
 #              from the level of its axis toward the wall) that is air today and joined to the gap, from the pin's root to a
 #              plane SETBACK behind the pin's end face and parallel to it. The pin and the fill together stand as one block
-#              with upright sides under the wall; nothing hangs.
+#              with upright sides under the wall; nothing hangs. With it goes the slit, up to 0.75 wide, between the pin's
+#              back end and the slanting end wall it grows from (d50: the pin's back end is cut square, the wall slants).
+#              Nothing is added within PILOT_KEEP of the axis.
 #   not filled the air beyond the pin's end face: the hood's ear sits there.
 # Keys: b5_fill (the added material), b5_shell (the shell with it), b5_shell_before (the shell as it stood).
 # Stages: build; hood (the added material against the hood at home and along its way off and out, the screw, the driver's
@@ -24,6 +26,7 @@ SETBACK = 0.5            # the fill ends this far behind the pin's end face
 S0 = -8.0                # along the axis from the end face's middle: where the fill's box begins (inside the block the pin grows from)
 DB = 6.6                 # from the axis toward the wall: the box's reach (it ends inside the wall)
 HALF = 3.0               # half the pin's width
+PILOT_KEEP = 1.2         # nothing is added within this of the axis: the pilot (0.8) stays as it is
 HN = (0.11394, 0.09756, 0.98869)      # the hood's own up (its pins' axis), as the last pass's p71 and p97 have it
 HU = (0.7593, 0.6497, 0.0)            # level, toward the middle, away from the wall (p71)
 
@@ -71,14 +74,14 @@ def _build(half=HALF, setback=SETBACK):
     cen = pt(E, a, bp, (S0 + s1) / 2.0, DB / 2.0)
     box = X.obox(cen, a, bp, s1 - S0, DB, 2 * half)
     v0 = X.vol(box)
-    X.dif(box, X.cyl(pt(E, a, bp, S0 - 1.0, 0.0), pt(E, a, bp, 1.0, 0.0), 2.9))          # the pin's own place, its pilot with it
+    X.dif(box, X.cyl(pt(E, a, bp, S0 - 1.0, 0.0), pt(E, a, bp, 1.0, 0.0), PILOT_KEEP))   # the pilot's place stays open
     v1 = X.vol(box)
     X.dif(box, X.tbm.copy(sh))
-    print('box %.1f long, %.1f toward the wall, %.1f wide: %.3f; less the pin\'s place %.3f; less the shell %.3f, lumps %d' % (s1 - S0, DB, 2 * half, v0, v1, X.vol(box), box.lumps.count))
+    print('box %.1f long, %.1f toward the wall, %.1f wide: %.3f; less the pilot\'s place %.3f; less the shell %.3f, lumps %d' % (s1 - S0, DB, 2 * half, v0, v1, X.vol(box), box.lumps.count))
     keep = None; kept = 0
     for lp in box.lumps:
         t = X.tbm.copy(lp); bb = k.r2(k.wbb(X, t), 2); v = X.vol(t)
-        take = bb[3] > -53.45 and v > 0.01                    # reaches the pin's side of the gap
+        take = bb[3] > -53.45 and bb[2] < -53.55 and v > 0.01   # reaches from the pin's side of the gap to the rear wall
         print('   lump %9.4f mm3, world box %s: %s' % (v, bb, 'the gap, taken' if take else 'left'))
         if take:
             keep = t if keep is None else X.uni(keep, t); kept += 1
@@ -88,7 +91,8 @@ def _build(half=HALF, setback=SETBACK):
     X.uni(new, X.tbm.copy(keep))
     k.c['b5_fill'] = keep; k.c['b5_shell'] = new; k.c['b5_shell_before'] = X.tbm.copy(sh)
     print('fill: %.4f mm3 in %d lump(s), world box %s, faces %d' % (X.vol(keep), kept, k.r2(k.wbb(X, keep), 2), keep.faces.count))
-    print('shell: %.3f -> %.3f, lumps %d -> %d, faces %d -> %d' % (sh.volume * 1000, X.vol(new), sh.lumps.count, new.lumps.count, sh.faces.count, new.faces.count))
+    print('shell: %.3f -> %.3f, lumps %d -> %d, closed skins %d -> %d (more would mean a hollow shut in), faces %d -> %d' % (
+        sh.volume * 1000, X.vol(new), sh.lumps.count, new.lumps.count, sh.shells.count, new.shells.count, sh.faces.count, new.faces.count))
     # the new shell's faces round the place: any on the box's far side or its root end would mean the box ended in air
     far = 0; root = 0; small = []
     zone = X.wbox(-70.0, -55.0, -58.0, -44.0, 95.0, 105.0).boundingBox
