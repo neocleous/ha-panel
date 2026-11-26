@@ -43,7 +43,7 @@ def st_total(k, X):
 def st_outer(k, X, near=1.0, names=None, pieces=True):
     ref = X.body('REF_F_outer'); names = names or PRINTED_CH
     print('cloth reference REF_F_outer: %.3f mm3, lumps %d, box %s' % (ref.volume * 1000, ref.lumps.count, k.r2(k.wbb(X, ref), 1)))
-    for n in names:
+    for n in (names if pieces != 'only' else ()):
         row = []
         for nm in (n, n + '_v79'):
             t = X.tbm.copy(X.body(nm)); X.dif(t, X.tbm.copy(ref))
@@ -61,7 +61,6 @@ def st_outer(k, X, near=1.0, names=None, pieces=True):
             best = None
             for lp in t.lumps:
                 c = X.tbm.copy(lp)
-                r = X.mm.measureMinimumDistance(c, ref)
                 # inside the reference the body-to-body distance is 0: read the distance to its faces
                 dmin = None
                 cb = c.boundingBox
@@ -70,9 +69,9 @@ def st_outer(k, X, near=1.0, names=None, pieces=True):
                     if (fb.minPoint.x - 0.3 > cb.maxPoint.x or fb.maxPoint.x + 0.3 < cb.minPoint.x or fb.minPoint.y - 0.3 > cb.maxPoint.y or
                             fb.maxPoint.y + 0.3 < cb.minPoint.y or fb.minPoint.z - 0.3 > cb.maxPoint.z or fb.maxPoint.z + 0.3 < cb.minPoint.z):
                         continue
-                    d = X.mm.measureMinimumDistance(c, f).value * 10.0
+                    r = X.mm.measureMinimumDistance(c, f); d = r.value * 10.0
                     if dmin is None or d < dmin[0]:
-                        dmin = (d, k.r2(k.W(X.mm.measureMinimumDistance(c, f).positionOne), 1))
+                        dmin = (d, k.r2(k.W(r.positionOne), 1))
                 if dmin and (best is None or dmin[0] < best[0]):
                     best = (round(dmin[0], 3), round(X.vol(c), 3), dmin[1])
             print('%-18s %-8s nearest to the reference\'s surface: %s' % (n, lab, ('%.3f (a piece of %.3f mm3, at %s)' % best) if best else 'more than 3 from every face of it'))
