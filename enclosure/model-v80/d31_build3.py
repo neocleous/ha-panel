@@ -85,8 +85,17 @@ def plate(k, X):
     cs = cones_on_top(k, src)
     for (cx, cy, r0, slope, zt) in cs:
         rb = r0 - slope * (TOP0 - TOP1)                                      # the cone carried on down to the new top
-        X.uni(keep, X.cyl((cx, cy, TOP1 - 0.0), (cx, cy, TOP0), rb, r0))
-        print('   tapered root at (%.2f, %.2f): %.4f across at z %.1f, %.4f at z %.1f (it narrows %.4f a mm, to z %.3f)' % (cx, cy, 2 * r0, TOP0, 2 * rb, TOP1, -slope, zt))
+        fr = X.cyl((cx, cy, TOP1), (cx, cy, TOP0), rb, r0)
+        how = 'whole'
+        if any(abs(cx - q[0]) < 0.01 and abs(cy - q[1]) < 0.01 for q in CRADLE) and zt > 5.0:
+            # the cradle posts' buttress cones (14 deg, to z 8.5) stand on the rear side of their post only (y below the
+            # post's axis) and end at the flats x -5.5 and x 10.5 (d30 cones): carried down inside the same bounds
+            a, b = (cx - 20.0, 10.5) if cx > 0 else (-5.5, cx + 20.0)
+            X.sec(fr, X.wbox(a, b, cy - 20.0, cy, TOP1 - 0.1, TOP0 + 0.1))
+            how = 'x %.1f to %.1f, y below %.1f' % (a, b, cy)
+        X.uni(keep, fr)
+        print('   tapered root at (%.2f, %.2f): %.4f across at z %.1f, %.4f at z %.1f (it narrows %.4f a mm, to z %.3f); carried down %s' % (
+            cx, cy, 2 * r0, TOP0, 2 * rb, TOP1, -slope, zt, how))
     cut = slab(X, TOP1, TOP0); X.dif(cut, keep)
     X.dif(t, cut)
     v1 = X.vol(t); print('E  top %.1f -> %.1f: %.3f removed' % (TOP0, TOP1, v0 - v1))
@@ -125,12 +134,12 @@ def box(k, X, sx):
     v2 = X.vol(t); print('%s I  tab top -0.78 -> -0.80: %.4f removed' % (name, v1 - v2))
     if sx > 0:
         # the pocket's end wall, its face toward the plug: the pocket's own air just below it, carried 0.15 up into the wall
-        air = X.wbox(44.0, 58.0, -21.10, -20.95, 9.0, 23.0); X.dif(air, X.cp(t))
+        air = X.wbox(40.0, 60.0, -21.10, -20.95, 4.0, 24.0); X.dif(air, X.cp(t))
         best = None
+        pin = k.Wp(50.92, -21.02, 12.75)                                    # under the plug's nearest point on the wall (d27 near)
         for lump in air.lumps:
-            c = X.cp(lump); bb = k.wbb(X, c)
-            if bb[0] > 44.5 and bb[1] < 57.5 and bb[4] > 9.5 and bb[5] < 22.5 and (best is None or X.vol(c) > X.vol(best)):
-                best = c
+            if lump.pointContainment(pin) == adsk.fusion.PointContainment.PointInsidePointContainment:
+                best = X.cp(lump)
         if best is None:
             raise RuntimeError('the pocket\'s air under its end wall was not found')
         print('%s    the pocket\'s section under its end wall: %.2f mm2, box %s' % (name, X.vol(best) / 0.15, k.r2(k.wbb(X, best), 3)))
