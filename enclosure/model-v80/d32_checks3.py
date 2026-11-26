@@ -32,13 +32,13 @@ def st_fits(k, X):
             print('%-18s to %-18s: a body is missing' % (a, b)); continue
         d, p, q = dist(k, X, A, B)
         print('%-18s to %-18s %8.4f  at %s / %s' % (a, b, d, p, q))
-    low = X.wbox(-120, 120, -110, 30, -1.0, 2.45); X.sec(low, X.tbm.copy(P))                # the plate without what stands on its top
+    low = X.wbox(-120, 120, -110, 30, -1.0, 2.401); X.sec(low, X.tbm.copy(P))               # the plate without what stands on its top
     for n in ('HOUSING_F_door', 'HOUSING_F_front', 'SPKBOX_L', 'SPKBOX_R', 'GROMMET_usbc_F', 'CRADLE_5807', 'PI5_F', 'LEAD_USB_RESP'):
         b = X.body(n)
         if b is None:
             continue
         d, p, q = dist(k, X, b, low)
-        print('%-18s to the plate below z 2.45 (its top and rim) %8.4f  at %s / %s' % (n, d, p, q))
+        print('%-18s to the plate below z 2.401 (its top and rim) %8.4f  at %s / %s' % (n, d, p, q))
     # the tip of the frame's left lower end and the lip, each to what stands behind it
     for nm, bx, others in (('frame end\'s tip', (65.0, 70.0, -64.0, -62.9, 6.0, 8.0), ('HOUSING_F_door',)),
                            ('lip under the cap\'s seam', (-60.5, 60.5, -23.6, -22.0, 175.5, 177.6), ('MIC_strip_L_env', 'MIC_strip_R_env', 'HOUSING_F_cap', 'LEAD_MIC_L', 'LEAD_MIC_R'))):
