@@ -1,15 +1,16 @@
 # Block 2 and the close: the fits at the drivers, read on the model as it stands (after the put; on the saved version when
-# the document is not modified). READ-ONLY but for stages that say they add TMP_ bodies, which they delete again.
+# the document is not modified). READ-ONLY: temporary bodies only (this Fusion measures distances to temporary bodies, so no
+# TMP_ body is added to the document).
 #   near     smallest distances, body to body, between the bodies of the drivers' joint (model bodies; no TMP)
 #   push     the plate unit pushed forward in steps against the shell and the screen plate: the order of the stops; the seat's
 #            contact area; D429's figures by needles (tongue faces to the lips, the noses over the lips), after p59_preflight
-#   ring     ADDS TMP: each driver's ring as a body of its own (36 across, 2.0 proud) and the flange's front disc: their true
-#            distances to the shell at home, with the nearest points
+#   ring     each driver's ring as a temporary body of its own (36 across, 2.0 proud), the flange's front disc, the magnet and the
+#            connector's envelope: their true distances to the shell or the box at home, with the nearest points
 #   walk     the shell's way down, after p52b_window: the plate unit b behind and h below its place against the shell cropped
 #            near the movers. case 'drivers' (driver, foam, screw heads against the bay), 'tongues' (base plate at the chin),
 #            'frame' (boxes at the door frame's lower ends), 'boxes' (the boxes' fronts and clips' blocks against the shell);
 #            side = to one side by s (+ toward the viewer's left)
-#   clipkey  ADDS TMP: the 2.0 key on each clip's screw (d14's sweep) with the true distance to the nearest body every 15 deg
+#   clipkey  the 2.0 key on each clip's screw (d14's sweep) with the true distance to the nearest body every 15 deg
 #   grid     level faces (square to the print's height) of the boxes, the shell and the clips where this pass changed them, with
 #            their height above the bed and what they miss the layer grid by
 #   guards   counts, and the guard volumes of all 17 printed parts by both readings (D425), beside version 79's
@@ -100,28 +101,27 @@ def st_push(k, X):
 
 def st_ring(k, X):
     S = X.body('HOUSING_F_front')
-    made = []
-    try:
-        for sx, s in ((1, 'L'), (-1, 'R')):
-            rg = X.add(X.cyl((sx * AX, 0.0, AZ), (sx * AX, 2.0, AZ), 18.0), 'TMP_ring_' + s, show=False); made.append(rg)
-            d, p, q = dist(k, X, rg, S)
-            print('ring %s (36 across, y 0.0 to 2.0) to the shell: %.4f at %s / %s' % (s, d, p, q))
-            top = X.add(X.cyl((sx * AX, 1.99, AZ), (sx * AX, 2.0, AZ), 18.0), 'TMP_top_' + s, show=False); made.append(top)
-            d, p, q = dist(k, X, top, S)
-            print('   its top face (y 2.0) to the shell: %.4f at %s / %s' % (d, p, q))
-            for nm, r0, r1, z0, z1 in (('upper half', 18.0, 18.0, AZ, AZ + 30), ('lower half', 18.0, 18.0, AZ - 30, AZ)):
-                h = X.cyl((sx * AX, 0.3, AZ), (sx * AX, 2.0, AZ), 18.0); X.sec(h, X.wbox(sx * AX - 30, sx * AX + 30, -1, 3, z0, z1))
-                hb = X.add(h, 'TMP_half', show=False); made.append(hb)
-                d, p, q = dist(k, X, hb, S)
-                print('   its %s above y 0.3 (clear of the seat\'s plane) to the shell: %.4f at %s / %s' % (nm, d, p, q))
-            cn = X.add(X.cyl((sx * AX, -0.01, AZ), (sx * AX, 0.0, AZ), 16.0), 'TMP_cone_' + s, show=False); made.append(cn)
-            c2 = L['crop'](X, 'HOUSING_F_front', (sx * AX - 16.0, sx * AX + 16.0, 2.5, 8.0, AZ - 16.0, AZ + 16.0))
-            cb = X.add(c2, 'TMP_grille', show=False); made.append(cb)
-            d, p, q = dist(k, X, cn, cb)
-            print('   the flange\'s front plane inside the ring (the cone\'s highest point lies about there) to the grille: %.4f at %s / %s' % (d, p, q))
-    finally:
-        for b in made:
-            b.deleteMe()
+    for sx, s in ((1, 'L'), (-1, 'R')):
+        rg = X.cyl((sx * AX, 0.0, AZ), (sx * AX, 2.0, AZ), 18.0)
+        d, p, q = dist(k, X, rg, S)
+        print('ring %s (36 across, y 0.0 to 2.0) to the shell: %.4f at %s / %s' % (s, d, p, q))
+        top = X.cyl((sx * AX, 1.99, AZ), (sx * AX, 2.0, AZ), 18.0)
+        d, p, q = dist(k, X, top, S)
+        print('   its top face (y 2.0) to the shell: %.4f at %s / %s' % (d, p, q))
+        for nm, z0, z1 in (('upper half', AZ, AZ + 30), ('lower half', AZ - 30, AZ)):
+            h = X.cyl((sx * AX, 0.3, AZ), (sx * AX, 2.0, AZ), 18.0); X.sec(h, X.wbox(sx * AX - 30, sx * AX + 30, -1, 3, z0, z1))
+            d, p, q = dist(k, X, h, S)
+            print('   its %s above y 0.3 (clear of the seat\'s plane) to the shell: %.4f at %s / %s' % (nm, d, p, q))
+        cn = X.cyl((sx * AX, -0.01, AZ), (sx * AX, 0.0, AZ), 16.0)
+        c2 = L['crop'](X, 'HOUSING_F_front', (sx * AX - 16.0, sx * AX + 16.0, 2.5, 8.0, AZ - 16.0, AZ + 16.0))
+        d, p, q = dist(k, X, cn, c2)
+        print('   the flange\'s front plane inside the ring (the cone\'s highest point lies about there) to the grille: %.4f at %s / %s' % (d, p, q))
+        mg = X.cyl((sx * AX, -28.8, AZ), (sx * AX, -18.8, AZ), 16.0)
+        d, p, q = dist(k, X, mg, X.body('SPKBOX_' + s))
+        print('   the magnet (32 across, the last 10) to the box: %.4f at %s / %s' % (d, p, q))
+        cu = X.wbox(sx * AX - 16.0, sx * AX + 16.0, -28.8, -18.8, AZ, AZ + 18.25)
+        d, p, q = dist(k, X, cu, X.body('SPKBOX_' + s))
+        print('   the connector\'s envelope (up) to the box: %.4f at %s / %s' % (d, p, q))
 
 
 CASES = {
@@ -174,45 +174,40 @@ def st_clipkey(k, X, state='build', holder=False, sides=('L', 'R')):
     C = runpy.run_path(D + 'd14_clip.py')
     y = runpy.run_path(D + 'd20_build.py')['CLIP_Y']; PZ = 38.0
     k.budget(70)
-    off = () if holder else ('RADAR_HOLDER', 'LD2410C_env_F')
-    made = []
-    try:
-        for side in sides:
-            sx = 1.0 if side == 'L' else -1.0
-            xe = sx * 24.9
-            zone = X.wbox(min(xe, sx * 41.0) - 6.0, max(xe, sx * 41.0) + 6.0, -120.0, 12.0, -50.0, 185.0)
-            fx = []
-            for b in C['hard'](k, X, state, skip=off):
-                t = X.tbm.copy(b)
-                if not t.boundingBox.intersects(zone.boundingBox):
-                    continue
-                X.sec(t, X.tbm.copy(zone))
-                if t.faces.count:
-                    fx.append((b.name, t))
-            allb = None
-            for nm, t in fx:
-                if nm.startswith('TOUCH_CLIP_' + side):
-                    continue
-                allb = X.tbm.copy(t) if allb is None else X.uni(allb, X.tbm.copy(t))
-            fb = X.add(allb, 'TMP_fixed', show=False); made.append(fb)
-            head = X.add(X.cyl((sx * 40.5, y, PZ), (sx * 38.85, y, PZ), 2.85), 'TMP_head', show=False); made.append(head)
-            d, p, q = dist(k, X, head, fb)
-            print('clip %s, screw at y %.2f, state %s, holder and radar %s: the head (5.7 across, 1.65 high) to the nearest body %.3f at %s' % (side, y, state, 'on' if holder else 'off', d, q))
-            rows = []
-            for phi in range(0, 96, 15):
-                r = math.radians(phi)
-                arm = X.add(X.cyl((xe, y, PZ), (xe, y - 101.0 * math.cos(r), PZ + 101.0 * math.sin(r)), 1.2), 'TMP_arm', show=False)
-                d, p, q = dist(k, X, arm, fb)
-                arm.deleteMe()
-                rows.append('%d deg: %.2f at %s' % (phi, d, q))
-            print('   long arm to the nearest body: ' + '; '.join(rows))
-            fb.deleteMe(); head.deleteMe(); made = []
-    finally:
-        for b in made:
-            try:
-                b.deleteMe()
-            except Exception:
-                pass
+    off_ = () if holder else ('RADAR_HOLDER', 'LD2410C_env_F')
+    for side in sides:
+        sx = 1.0 if side == 'L' else -1.0
+        xe = sx * 24.9
+        zone = X.wbox(min(xe, sx * 41.0) - 6.0, max(xe, sx * 41.0) + 6.0, -120.0, 12.0, -50.0, 185.0)
+        fx = []
+        for b in C['hard'](k, X, state, skip=off_):
+            if b.name == 'TOUCH_CLIP_' + side:
+                continue
+            t = X.tbm.copy(b)
+            if not t.boundingBox.intersects(zone.boundingBox):
+                continue
+            X.sec(t, X.tbm.copy(zone))
+            if t.faces.count:
+                fx.append((b.name, t))
+
+        def nearest(t):
+            best = None
+            for nm, f in fx:
+                d, p, q = dist(k, X, t, f)
+                if best is None or d < best[0]:
+                    best = (d, nm, q)
+            return best
+        d, nm, q = nearest(X.cyl((sx * 40.5, y, PZ), (sx * 38.85, y, PZ), 2.85))
+        print('clip %s, screw at y %.2f, state %s, holder and radar %s: the head (5.7 across, 1.65 high) to the nearest body: %.3f, %s at %s' % (
+            side, y, state, 'on' if holder else 'off', d, nm, q))
+        rows = []
+        for phi in range(0, 96, 15):
+            r = math.radians(phi)
+            d, nm, q = nearest(X.cyl((xe, y, PZ), (xe, y - 101.0 * math.cos(r), PZ + 101.0 * math.sin(r)), 1.2))
+            rows.append('%d deg: %.2f %s' % (phi, d, k.sn(nm)))
+            if k.late():
+                rows.append('time'); break
+        print('   long arm to the nearest body: ' + '; '.join(rows))
 
 
 def off(h, lh=0.2):
