@@ -98,10 +98,6 @@ def box(k, X, sx):
     X.dif(t, X.wbox(x0, x1, Y_FACE, 2.0, 0.0, Z_STEP))
     # 2. the front wall 2.0 again: the chamber's air between y -7.0 and the old inner face filled, below z 54.2
     s = X.wbox(x0, x1, Y_INNER, -5.5, 0.0, Z_STEP_IN); X.sec(s, X.cp(a)); X.uni(t, s)
-    if sx < 0:                                                                                    # the right box's stepped corner behind the wall: no pockets left under 0.6
-        s = X.wbox(-50.6, -45.9, -7.6, -6.9, 11.4, 30.1); X.sec(s, X.cp(a))
-        if s.faces.count:
-            X.uni(t, s)
     # 4. the clip block: solid from y -12.8 to the face, x 43.5..50.5, z 30..46 (the old pilot filled)
     xa, xb = sorted((sx * 43.5, sx * 50.5))
     X.uni(t, X.wbox(xa, xb, CLIP_REAR, Y_FACE, 30.0, 46.0))
