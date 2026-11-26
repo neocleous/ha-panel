@@ -1,10 +1,26 @@
 # A runner for the close: several jobs in one Fusion call, each job's printed output and any error caught into one file in
 # this pass's folder. A job is (script, function, args, kwargs) of a script of this folder. A job is not begun once 'limit'
 # seconds of the call are used; it is then listed as NOT RUN. Changes nothing itself.
+# get(sha, fn, sha256) fetches a script of this pass from the branch and checks it arrived whole.
 # Run: runpy.run_path(D + 'd61_run.py')['go'](jobs, outfile, limit)
-import runpy, io, contextlib, traceback, time
+import runpy, io, contextlib, traceback, time, hashlib, urllib.request, os
 
 D = '/Users/danielneocleous/Documents/HA_panel_renders/drivers_seat_v80/'
+
+
+U = 'https://raw.githubusercontent.com/neocleous/ha-panel/%s/enclosure/model-v80/%s'
+
+
+def get(sha, fn, h256):
+    """A script of this pass fetched from the branch at a commit into this folder, unless the file here already has that
+    sha256; refused when what arrives has another sha256 or does not end with its END line."""
+    p = D + fn
+    if not (os.path.exists(p) and hashlib.sha256(open(p, 'rb').read()).hexdigest() == h256):
+        src = urllib.request.urlopen(U % (sha, fn), timeout=25).read()
+        if hashlib.sha256(src).hexdigest() != h256 or not src.rstrip().endswith(b'# END'):
+            raise RuntimeError(fn + ' did not arrive whole')
+        open(p, 'wb').write(src)
+    return p
 
 
 def go(jobs, outfile, limit=55):
