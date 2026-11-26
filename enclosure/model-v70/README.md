@@ -36,10 +36,10 @@ Blocks 1 and 2 were studies and saved nothing; block 8 is held.
 - **`p66`–`p74`** block 7. **`p78`–`p81`** block 7b.
 - **`p75`–`p77`, `p82`–`p93`** block 9. `p82` is the first build of the holder; `p86` is the build that is in the
   model, and reads some constants from `p82`. `p92` draws the two section pictures with matplotlib; `p93` takes the views.
-- **`p94`–`p97`** the close: `p94` exports the archive and runs earlier checks again, reporting what changed in their
+- **`p94`–`p98`** the close: `p94` exports the archive and runs earlier checks again, reporting what changed in their
   outputs (`p94b` compares outputs outside Fusion); `p95` reads the door's stand, the display module's ride-in, the layer
-  grid over all 17 printed parts and the main board 0.1 out; `p96` and `p97` repeat the checks of the pass before this
-  one (`../model-v68/`) that no script here repeats.
+  grid over all 17 printed parts and the main board 0.1 out; `p96`, `p97` and `p98` repeat the checks of the pass before
+  this one (`../model-v68/`) that no script here repeats.
 - **`calc_b9_arm_and_lead.py`** plain Python: the holder's spring arm and the radar lead's free run as a hanging chain.
   It was written at the close from the block 9 report's inputs and gives that report's figures again.
 
