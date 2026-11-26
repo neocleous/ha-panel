@@ -13,7 +13,7 @@
 #               to -32.4 within 17.5 of the axis
 #            2. the driver columns but the inner lower pair 0.2 longer (rear ends y -12.6 -> -12.8, bed 39.2) (c); the floor bosses
 #               with 1.0 over their holes, at (64, -45) and (-72, -38), 0.3 taller (z 11.2 -> 11.5) (c); the right clip block 0.5 out
-#               round its pilot (x -50.5 -> -51.0, r 3.35) (c)
+#               round its pilot (x -50.5 -> -51.0, 6.7 square) (c)
 #            3. E taken out
 #            4. the holes: six driver insert holes to y -11.6 (bed 40.4; the 2.5 holes behind the outer pair go into them), the
 #               inner lower pair to y -11.0 (bed 41.0); the floor insert holes at (64, -45) and (-72, -38) to z 10.5 (those at
@@ -79,7 +79,7 @@ def build(k, X, sx):
     for bx, by in ((64.0, -45.0),) if sx > 0 else ((-72.0, -38.0),):
         X.uni(t, X.cyl((bx, by, 11.1), (bx, by, 11.5), 4.0))
     if sx < 0:
-        X.uni(t, X.cyl((-50.4, -9.45, 41.0), (-51.0, -9.45, 41.0), 3.35))
+        X.uni(t, X.wbox(-51.0, -50.4, -12.8, -6.1, 37.65, 44.35))     # a block, not a round boss: no sliver at the block's rear face
     # 3. E out
     X.dif(t, E(k, X, sx))
     # 4. holes
