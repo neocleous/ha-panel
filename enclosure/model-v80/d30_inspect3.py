@@ -264,10 +264,43 @@ def st_nb(k, X):
                 print('   %-60s %4d  %s' % (key, n, bx))
 
 
+def st_cones(k, X):
+    """The tapered roots on the base plate's top: each cone face that meets the top face, with its own neighbours."""
+    P = X.body('FLOOR_PLATE')
+    CON = adsk.core.SurfaceTypes.ConeSurfaceType
+    top = [f for f, p, s in level(k, P, 2) if abs(p[2] - 2.5) < 0.003 and s > 0 and f.area * 100 > 1000][0]
+    seen = {}
+    for e in top.edges:
+        for g in e.faces:
+            if g.tempId in seen or g.geometry.surfaceType != CON:
+                continue
+            seen[g.tempId] = 1
+            o = k.W(g.geometry.origin)
+            print('cone at (%.3f, %.3f), half angle %.2f, box %s, %.2f mm2, a point on it %s' % (o[0], o[1], math.degrees(g.geometry.halfAngle), fbox(k, g), g.area * 100, k.r2(k.W(g.pointOnFace), 2)))
+            for ee in g.edges:
+                oth = [q for q in ee.faces if q.tempId != g.tempId]
+                gm = ee.geometry
+                kind = gm.objectType.split('::')[-1]
+                ok, a, b = ee.evaluator.getEndPoints()
+                row = '      edge %-10s %s -> %s' % (kind, k.r2(k.W(a), 2), k.r2(k.W(b), 2))
+                for q in oth:
+                    qm = q.geometry
+                    if qm.surfaceType == PLN:
+                        ok, nv = q.evaluator.getNormalAtPoint(q.pointOnFace)
+                        row += ' | plane n %s through %s' % (k.r2(k.wv(nv), 3), k.r2(k.W(q.pointOnFace), 2))
+                    elif qm.surfaceType == CYL:
+                        row += ' | cylinder r %.3f axis %s at %s' % (qm.radius * 10, k.r2(k.unit(k.wv(qm.axis)), 2), k.r2(k.W(qm.origin), 2))
+                    elif qm.surfaceType == CON:
+                        row += ' | cone %.1f at %s' % (math.degrees(qm.halfAngle), k.r2(k.W(qm.origin), 2))
+                    else:
+                        row += ' | other %s box %s' % (qm.surfaceType, fbox(k, q))
+                print(row)
+
+
 def _main(stage, **kw):
     k = L['load'](); X = k.K()
     print(L['stamp'](), 'before', X.state())
-    {'plate': st_plate, 'boxes': st_boxes, 'shell': st_shell, 'front': st_front, 'top': st_top, 'feet': st_feet, 'nb': st_nb}[stage](k, X, **kw)
+    {'plate': st_plate, 'boxes': st_boxes, 'shell': st_shell, 'front': st_front, 'top': st_top, 'feet': st_feet, 'nb': st_nb, 'cones': st_cones}[stage](k, X, **kw)
     print(L['stamp'](), 'after', X.state())
 
 
