@@ -79,6 +79,8 @@ def _old(tag, script, func, ref, kw, sec, setg=None):
         g['mind'] = mind_t
     for name, val in (setg or {}).items():           # a list of the script cut down, to run one long check in parts
         g[name] = val
+    if 'k_' in g:                                    # p58 keeps the library under this name, set by its own main
+        g['k_'] = k
     if 'ctmp' in g:
         g['ctmp'] = lambda X_, name, box: L['crop'](X_, name, box)
     kw = dict(kw or {})
