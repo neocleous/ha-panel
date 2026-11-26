@@ -17,8 +17,13 @@
 #     8.0 across at y -4.0 (bed 48.0), flared 45 deg to 10.0 at the face; front wall 2.0 (inner face y -7.0) below z 54.2;
 #     insert holes 4.0 across, 6.7 deep from the stops' tops; columns to y -12.6; the clip block's pilot 2.4 further back
 #     (y -9.45) and the block y -12.8 to -5.0; the left box's pocket corner as an arc wall 16.3 to 17.8 from the driver's axis;
+#     the clips' screw line also 3.0 off the clip's mid-height (block 2, after the key's sweep was read on version 80: with
+#     the line 2.4 back at z 38 the 101 key's tip meets the door opening's arch at 58 to 59.5 deg): z 35.0 on the left box,
+#     z 41.0 on the right, so that the right clip is still the left one turned top for bottom about z 38
 #     the shell: lower bar removed, a channel for the ring to y 1.8 (bed 5.0) 18.75 either side of the axis, two side bars
 #     x 47.5..51.5 and 89.5..93.5, z 14.6..41.4, faces at y 0.0
+# The boxes and the shell are built from version 79's state: from the hidden copy <name>_v79 where it exists (after the first
+# put), else from the body itself (before it). So a second run on version 80 builds the same bodies as the first on version 79.
 # Stages: spk, box, shell, clip (each for both sides), all. Run: runpy.run_path(D + 'd20_build.py')['main'](stage)  -> d20_<stage>.txt
 import runpy, math
 import adsk.core, adsk.fusion
@@ -29,9 +34,18 @@ AX = 70.5; AZ = 28.0; HALF = 17.75                      # the driver's axis; hal
 Y_FRONT = 0.0; Y_BACK = -3.8; Y_FACE = -5.0; Y_STOP = -4.0; Y_INNER = -7.0; Y_HOLE = -10.7; Y_COL = -12.6
 Z_STEP = 52.2; Z_STEP_IN = 54.2
 Y_REAR = Y_BACK - 25.0                                  # the driver's rear end, -28.8
-CLIP_Y = -9.45; CLIP_Z = 38.0; CLIP_REAR = -12.8        # the clip's screw line and the rear face of clip and block
+CLIP_Y = -9.45; CLIP_Z = 38.0; CLIP_REAR = -12.8        # the clip's screw line (y), the clip's mid-height, the rear face of clip and block
+CLIP_DZ = 3.0                                           # the screw line's offset from the mid-height: down on the left, up on the right
 POCKET_R = 16.3; POCKET_W = 1.5
 BAND = 18.75; Y_CHAN = 1.8
+
+
+def clip_z(sx):
+    return CLIP_Z - CLIP_DZ if sx > 0 else CLIP_Z + CLIP_DZ
+
+
+def src(X, name):
+    return X.body(name + '_v79') or X.body(name)
 
 
 def screws(sx):
@@ -77,7 +91,7 @@ def air(k, X, name, sx):
     """The chamber's air of a box as it stands in the model (the record's method, k4a chambers), and the box filled with it."""
     x0, x1 = sorted((sx * 40.0, sx * 101.0))
     A = X.wbox(x0, x1, -60.0, 3.0, 1.0, 92.0)
-    X.dif(A, X.cp(X.body(name)))
+    X.dif(A, X.cp(src(X, name)))
     X.dif(A, X.wbox(x0, x1, -3.7, -3.0, 1.0, 92.0))
     X.dif(A, X.cyl((sx * 62.0, -53.5, 30.0), (sx * 62.0, -49.0, 30.0), 2.2))
     pc = k.Wp(sx * AX, -30.0, 62.0)
@@ -91,9 +105,9 @@ def box(k, X, sx):
     side = 'L' if sx > 0 else 'R'; name = 'SPKBOX_' + side
     cx = sx * AX
     x0, x1 = sorted((sx * 38.0, sx * 102.0))
-    t = X.cp(X.body(name))
+    t = X.cp(src(X, name))
     a = air(k, X, name, sx)
-    hull = X.cp(X.body(name)); X.uni(hull, X.cp(a))                                              # the box with its chamber filled
+    hull = X.cp(src(X, name)); X.uni(hull, X.cp(a))                                              # the box with its chamber filled
     # 1. the front face set back to y -5.0 below z 52.2
     X.dif(t, X.wbox(x0, x1, Y_FACE, 2.0, 0.0, Z_STEP))
     # 2. the front wall 2.0 again: the chamber's air between y -7.0 and the old inner face filled, below z 54.2
@@ -119,7 +133,7 @@ def box(k, X, sx):
         if abs(abs(px) - (AX + HALF)) < 0.01:
             X.dif(t, X.cyl((px, Y_HOLE - 0.8, pz), (px, Y_HOLE + 0.1, pz), 1.25))
     # 8. the clip's pilot, 2.7 across, along x, 5.75 deep as before
-    X.dif(t, X.cyl((sx * 43.4, CLIP_Y, CLIP_Z), (sx * 49.25, CLIP_Y, CLIP_Z), 1.35))
+    X.dif(t, X.cyl((sx * 43.4, CLIP_Y, clip_z(sx)), (sx * 49.25, CLIP_Y, clip_z(sx)), 1.35))
     # 9. the left box's plug pocket: its corner toward the driver as an arc wall, 16.3 to 17.8 from the axis, over the magnet's length
     if sx > 0:
         ya = Y_REAR - 0.3; yb = -19.3
@@ -131,7 +145,7 @@ def box(k, X, sx):
 
 
 def shell(k, X):
-    t = X.cp(X.body('HOUSING_F_front'))
+    t = X.cp(src(X, 'HOUSING_F_front'))
     for sx in (1, -1):
         cx = sx * AX
         X.dif(t, X.wbox(cx - BAND, cx + BAND, -1.0, Y_CHAN, 2.0, AZ))                             # the ring's channel, with the lower bar
@@ -145,9 +159,10 @@ def clip(k, X, sx):
     t = X.wbox(*xs(40.5, 43.5), CLIP_REAR, -0.5, 30.0, 46.0)
     X.uni(t, X.wbox(*xs(43.4, 45.0), Y_FACE + 0.4, -0.5, 30.0, 46.0))
     X.uni(t, X.wbox(*xs(43.6, 45.0), -0.6, 2.8, 30.0, 46.0))
+    cz = clip_z(sx)
     for dy in (-0.4, 0.4):
-        X.dif(t, X.cyl((sx * 40.4, CLIP_Y + dy, CLIP_Z), (sx * 43.6, CLIP_Y + dy, CLIP_Z), 1.7))
-    X.dif(t, X.wbox(*xs(40.4, 43.6), CLIP_Y - 0.4, CLIP_Y + 0.4, CLIP_Z - 1.7, CLIP_Z + 1.7))
+        X.dif(t, X.cyl((sx * 40.4, CLIP_Y + dy, cz), (sx * 43.6, CLIP_Y + dy, cz), 1.7))
+    X.dif(t, X.wbox(*xs(40.4, 43.6), CLIP_Y - 0.4, CLIP_Y + 0.4, cz - 1.7, cz + 1.7))
     return t
 
 

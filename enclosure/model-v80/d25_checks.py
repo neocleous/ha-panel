@@ -21,13 +21,20 @@ def new(k, X, name, pre):
     return X.tbm.copy(k.c[KEYS[name]]) if pre else X.tbm.copy(X.body(name))
 
 
-def old(k, X, name, pre):
-    return X.tbm.copy(X.body(name)) if pre else X.tbm.copy(X.body(name + '_v79'))
+def old(k, X, name, pre, against='v79'):
+    # against 'v79': version 79's state (the hidden copy once it exists, else the model's body before the first put);
+    # against 'model': the model's body as it stands (for a second put: what changes from the saved version)
+    if against == 'model' or X.body(name + '_v79') is None:
+        return X.tbm.copy(X.body(name))
+    return X.tbm.copy(X.body(name + '_v79'))
 
 
-def st_diff(k, X, pre, names=None):
+def st_diff(k, X, pre, names=None, against='v79'):
+    print('each body %s against %s' % ('as built (temporary)' if pre else 'in the model', 'version 79\'s' if against == 'v79' else 'the model\'s as it stands'))
     for n in (names or list(KEYS)):
-        a = new(k, X, n, pre); b = old(k, X, n, pre)
+        if pre and k.c.get(KEYS[n]) is None:
+            print('%-20s not built in this session: skipped' % n); continue
+        a = new(k, X, n, pre); b = old(k, X, n, pre, against)
         add = X.tbm.copy(a); X.dif(add, X.tbm.copy(b))
         rem = X.tbm.copy(b); X.dif(rem, X.tbm.copy(a))
         la = X.lumps(add) if add.faces.count else []; lr = X.lumps(rem) if rem.faces.count else []
@@ -51,9 +58,11 @@ def ring_min(k, X, c, p, e1, e2, r0, reach=9.0):
     return out
 
 
-def st_walls(k, X, pre):
+def st_walls(k, X, pre, sides=('L', 'R')):
     k.budget(75)
     for sx, side in ((1, 'L'), (-1, 'R')):
+        if side not in sides:
+            continue
         bx = new(k, X, 'SPKBOX_' + side, pre)
         a, b = sorted((sx * 38.0, sx * 102.0))
         c = X.wbox(a, b, -22.0, -2.0, 0.0, 60.0); X.sec(c, bx)
@@ -69,14 +78,21 @@ def st_walls(k, X, pre):
             ax = [(round(-22.0 + p, 2), round(-22.0 + q, 2)) for p, q in k.needle_t(X, [c], (px, -22.0, pz), (px, -2.0, pz), 0.02)]
             print('SPKBOX_%s column (%+.2f, %.2f): least wall round the insert hole in the stop %.2f (y %.2f), below it %.2f (y %.2f); solid on the axis %s' % (
                 side, px, pz, stop[0], stop[1], lo[0], lo[1], ax))
-        py = B20['CLIP_Y']; pzc = B20['CLIP_Z']
+        py = B20['CLIP_Y']; pzc = B20['clip_z'](sx)
         cc = X.wbox(*sorted((sx * 40.0, sx * 56.0)), -16.0, -2.0, 26.0, 50.0); X.sec(cc, new(k, X, 'SPKBOX_' + side, pre))
         rows = []
         for xs in (43.7, 44.5, 45.5, 46.5, 47.5, 48.5, 49.1):
             w = ring_min(k, X, cc, (sx * xs, py, pzc), (0, 1, 0), (0, 0, 1), 1.35)
-            rows.append('x %.1f: least %.2f (front %.2f, rear %.2f)' % (sx * xs, min(w), w[0], w[6]))
+            rows.append('x %.1f: least %.2f (front %.2f, up %.2f, rear %.2f, down %.2f)' % (sx * xs, min(w), w[0], w[3], w[6], w[9]))
+        # from the pilot's end outward (toward the driver): the plastic between it and whatever lies beyond, in a fan
+        fan = []
+        for deg in (-60, -30, 0, 30, 60):
+            r = math.radians(deg); d = (sx * math.cos(r), 0.0, math.sin(r))
+            sg = k.needle_t(X, [cc], (sx * 49.25, py, pzc), k.along((sx * 49.25, py, pzc), d, 9.0), 0.02)
+            fan.append('%+d deg: %s' % (deg, [(round(a, 2), round(b, 2)) for a, b in sg][:2]))
+        rows.append('beyond its end, in the x-z plane: ' + '; '.join(fan))
         end = [(round(p, 2), round(q, 2)) for p, q in k.needle_t(X, [cc], (sx * 43.0, py, pzc), (sx * 56.0, py, pzc), 0.02)]
-        print('SPKBOX_%s clip pilot at y %.2f: %s; solid along its axis from x %.1f: %s' % (side, py, '; '.join(rows), sx * 43.0, end))
+        print('SPKBOX_%s clip pilot at y %.2f, z %.2f: %s; solid along its axis from x %.1f: %s' % (side, py, pzc, '; '.join(rows), sx * 43.0, end))
         cl = new(k, X, 'TOUCH_CLIP_' + side, pre)
         s1 = [(round(-14.0 + p, 2), round(-14.0 + q, 2)) for p, q in k.needle_t(X, [cl], (sx * 42.0, -14.0, pzc), (sx * 42.0, 4.0, pzc), 0.02)]
         s2 = [(round(-14.0 + p, 2), round(-14.0 + q, 2)) for p, q in k.needle_t(X, [cl], (sx * 44.3, -14.0, pzc), (sx * 44.3, 4.0, pzc), 0.02)]
@@ -87,6 +103,8 @@ def st_walls(k, X, pre):
 
 def st_small(k, X, pre):
     for n in ('HOUSING_F_front', 'SPKBOX_L', 'SPKBOX_R', 'TOUCH_CLIP_L', 'TOUCH_CLIP_R'):
+        if pre and k.c.get(KEYS[n]) is None:
+            print('%-16s not built in this session: skipped' % n); continue
         res = []
         for t in (new(k, X, n, pre), old(k, X, n, pre)):
             rows = []

@@ -187,7 +187,10 @@ def st_walk(k, X, case='drivers', side='L', bs=(0.95, 1.6), s=0.0, sec=70, step=
 
 def st_clipkey(k, X, state='build', holder=False, sides=('L', 'R'), phis=None, pts=False, old=False, pz=None, brief=False):
     C = runpy.run_path(D + 'd14_clip.py')
-    y = -7.05 if old else runpy.run_path(D + 'd20_build.py')['CLIP_Y']; PZ = 38.0         # old: version 79's screw line, for the same sweep beside it
+    B20 = runpy.run_path(D + 'd20_build.py')
+    y = -7.05 if old else B20['CLIP_Y']; PZ = 38.0         # old: version 79's screw line (y -7.05, z 38), for the same sweep beside it
+    if pz is None and not old:
+        pz = {'L': B20['clip_z'](1), 'R': B20['clip_z'](-1)}                               # the screw line as built
     k.budget(70)
     off_ = () if holder else ('RADAR_HOLDER', 'LD2410C_env_F')
     PZ0 = PZ
