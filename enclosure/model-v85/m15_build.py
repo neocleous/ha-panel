@@ -11,12 +11,13 @@
 #               driver's axis from y -31.4 forward to its end wall, on a lead-in of 26 deg from y -35.7 (16.4 -> 18.5), and the end
 #               wall thickened from y -20.8 to -21.2 within 20.0 of the axis; right, the empty pocket's front face from y -31.0 back
 #               to -32.4 within 17.5 of the axis
-#            2. the outer driver columns 0.2 longer (rear ends y -12.6 -> -12.8, bed 39.2) (c); the floor bosses with 1.0 over their
-#               holes 0.3 taller (z 11.2 -> 11.5) (c); the right clip block 0.5 out round its pilot (x -50.5 -> -51.0, r 3.35) (c)
+#            2. the driver columns but the inner lower pair 0.2 longer (rear ends y -12.6 -> -12.8, bed 39.2) (c); the floor bosses
+#               with 1.0 over their holes, at (64, -45) and (-72, -38), 0.3 taller (z 11.2 -> 11.5) (c); the right clip block 0.5 out
+#               round its pilot (x -50.5 -> -51.0, r 3.35) (c)
 #            3. E taken out
-#            4. the holes: the eight driver insert holes to y -11.6 (bed 40.4; the 2.5 holes behind the outer pair go into them);
-#               the four floor insert holes to z 10.5; the holder's pilot to x 46.5; the left clip's pilot to x 49.5, the right's
-#               to x -50.0
+#            4. the holes: six driver insert holes to y -11.6 (bed 40.4; the 2.5 holes behind the outer pair go into them), the
+#               inner lower pair to y -11.0 (bed 41.0); the floor insert holes at (64, -45) and (-72, -38) to z 10.5 (those at
+#               (+-51, -14) stay: 1.2); the holder's pilot to x 46.5; the left clip's pilot to x 49.5, the right's to x -50.0
 #   check    the new bodies against the model: volume, lumps, E inside them, the driver's zones (m12), the plug, the leads, the
 #            chamber (d27's method), the holes' depths and the walls beyond them (needles), what they share with every body of
 #            the unit, the level faces that are new and their bed heights
@@ -29,6 +30,14 @@ L = runpy.run_path(D + 'm00_lib.py')
 AX = 70.5; AZ = 28.0; HALF = 17.75
 Y_BACK = -3.8; Y_REAR = -28.8
 PLN = adsk.core.SurfaceTypes.PlaneSurfaceType
+
+
+Y_FLOOR = -11.6        # the driver insert holes' floors, bed 40.4: the screw's tip 1.6 from it (c)
+Y_FLOOR_IL = -11.0     # the inner lower pair's, bed 41.0: 1.0 to the floor insert hole at (+-51, -14), whose top runs to z 10.2 at y -12.0 (c)
+
+
+def inner_lower(px, pz):
+    return abs(abs(px) - (AX - HALF)) < 0.01 and pz < AZ
 
 
 def screws(sx):
@@ -65,7 +74,7 @@ def build(k, X, sx):
         X.sec(f, X.wbox(-64.0, -46.0, -32.4, -31.0, 3.8, 16.0)); X.uni(t, f)
     # 2. columns, bosses, the right clip block
     for px, pz in screws(sx):
-        if abs(abs(px) - (AX + HALF)) < 0.01:
+        if not inner_lower(px, pz):
             X.uni(t, X.cyl((px, -12.8, pz), (px, -12.5, pz), 4.0))
     for bx, by in ((64.0, -45.0),) if sx > 0 else ((-72.0, -38.0),):
         X.uni(t, X.cyl((bx, by, 11.1), (bx, by, 11.5), 4.0))
@@ -75,8 +84,8 @@ def build(k, X, sx):
     X.dif(t, E(k, X, sx))
     # 4. holes
     for px, pz in screws(sx):
-        X.dif(t, X.cyl((px, -11.6, pz), (px, -10.5, pz), 2.0))
-    for bx, by in ((51.0, -14.0), (64.0, -45.0)) if sx > 0 else ((-51.0, -14.0), (-72.0, -38.0)):
+        X.dif(t, X.cyl((px, Y_FLOOR_IL if inner_lower(px, pz) else Y_FLOOR, pz), (px, -10.5, pz), 2.0))
+    for bx, by in ((64.0, -45.0),) if sx > 0 else ((-72.0, -38.0),):
         X.dif(t, X.cyl((bx, by, 10.1), (bx, by, 10.5), 2.0))
     if sx > 0:
         X.dif(t, X.cyl((45.25, -7.35, 57.6), (46.5, -7.35, 57.6), 1.35))
