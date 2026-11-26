@@ -34,7 +34,7 @@ def st_cut(k, X, sides=('L', 'R')):
         c = X.tbm.copy(B); X.sec(c, X.tbm.copy(e))
         print('SPKBOX_%s in E: %.3f mm3 in %d lumps' % (s, X.vol(c), c.lumps.count))
         nb = X.tbm.copy(B); X.dif(nb, X.tbm.copy(e))
-        for v, bb in k.lumps(c):
+        for v, bb in X.lumps(c):
             if v is None or bb is None:
                 print('   lump %s %s' % (v, bb)); continue
             q = ((bb[0] + bb[1]) / 2.0, (bb[2] + bb[3]) / 2.0, (bb[4] + bb[5]) / 2.0)
