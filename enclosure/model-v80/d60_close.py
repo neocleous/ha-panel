@@ -8,7 +8,9 @@
 #           lines that differ are printed (d60_<tag>_cmp.txt)
 #   ride    the display module's ride-in (p95's 'ride', with a tag of this version so that nothing cached is read)
 #   slide   a box with its driver, its foam and its lead slid onto the base plate (the library's slide, 17 positions), each side
-#   cmp     plain: compare two files again
+#   cmp     plain: compare a file of this folder with a file of the last close, or (ref './name') with another of this folder
+#   clear   drops what the last close left in the library's cache under its own tags
+#   ls      the names and line counts of this folder's outputs with a given start
 # Run: runpy.run_path(D + 'd60_close.py')['main'](stage, tag, **kw)
 import runpy, io, contextlib, os, time
 import adsk.core, adsk.fusion
@@ -38,7 +40,7 @@ def lines(text):
 
 def compare(new_text, ref, maxd=16, width=210):
     out = []
-    p = D70 + ref
+    p = ref if ref.startswith('/') else (D + ref[2:] if ref.startswith('./') else D70 + ref)
     if not os.path.exists(p):
         return ['no file %s in the last pass\'s folder' % ref]
     a = lines(open(p).read()); b = lines(new_text)
@@ -69,6 +71,8 @@ def _old(tag, script, func, ref, kw, sec):
         g['dist'] = dist_t
     if 'mind' in g:
         g['mind'] = mind_t
+    if 'ctmp' in g:
+        g['ctmp'] = lambda X_, name, box: L['crop'](X_, name, box)
     buf = io.StringIO(); t0 = time.time()
     with contextlib.redirect_stdout(buf):
         print(L['stamp'](), 'before', st0)
@@ -123,5 +127,16 @@ def main(stage, tag='', script=None, func=None, ref=None, kw=None, sec=66, leads
     elif stage == 'slide':
         _slide(tag, side, sec)
     elif stage == 'cmp':
-        print('\n'.join(compare(open(D + tag).read(), ref)))
+        print('%s:' % tag); print('\n'.join(compare(open(D + tag).read(), ref, maxd=(kw or {}).get('maxd', 16))))
+    elif stage == 'clear':
+        k = L['load']()
+        gone = [q for q in list(k.c.keys()) if q == 'close_rideholder' or (isinstance(q, tuple) and len(q) > 1 and q[1] in ('close79', 'v79s15'))]
+        for q in gone:
+            del k.c[q]
+        print('dropped from the library\'s cache: %d entries of the last close (close79, v79s15, close_rideholder)' % len(gone))
+    elif stage == 'ls':
+        import glob
+        for pre in (kw or {}).get('pre', ()):
+            fs = sorted(glob.glob(D + pre + '*.txt'))
+            print(pre + ': ' + ', '.join('%s(%d)' % (os.path.basename(f)[len(pre):-4], sum(1 for _ in open(f))) for f in fs))
 # END
