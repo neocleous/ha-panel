@@ -37,7 +37,7 @@ def screws(sx):
 
 def E(k, X, sx, g=1.0, behind=2.0):
     cx = sx * AX
-    e = X.cyl((cx, Y_BACK + 0.3, AZ), (cx, Y_REAR + 13.0, AZ), 20.0 + g, 18.75 + g)              # basket
+    e = X.cyl((cx, Y_BACK + 0.3, AZ), (cx, Y_REAR + 13.0, AZ), 20.0 + g + 0.05, 18.75 + g + 0.05)  # basket (0.05 more: the cone's offset)
     X.uni(e, X.cyl((cx, Y_REAR + 13.0, AZ), (cx, Y_REAR + 10.0 - g, AZ), 18.75 + g))               # band, and 1.0 behind it
     X.uni(e, X.cyl((cx, Y_REAR + 10.0, AZ), (cx, Y_REAR - g, AZ), 16.0 + g))                       # magnet
     X.uni(e, X.cyl((cx, Y_REAR, AZ), (cx, Y_REAR - behind, AZ), 16.0))                             # behind the magnet
