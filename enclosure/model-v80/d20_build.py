@@ -111,6 +111,8 @@ def box(k, X, sx):
         c = X.cyl((px, Y_FACE - 0.2, pz), (px, Y_STOP, pz), 5.2, 4.0); X.sec(c, X.cp(hull)); X.uni(t, c)
     # 3. the opening, 40.6 across, through the wall only (as before), cut after the stops so that a stop's flare ends at its edge
     X.dif(t, X.cyl((cx, Y_INNER, AZ), (cx, Y_STOP + 0.5, AZ), 20.3))
+    c = X.cyl((cx, CLIP_REAR - 0.1, AZ), (cx, Y_INNER, AZ), 20.3)                                 # the clip block's lower corner kept out of the opening's line
+    X.sec(c, X.wbox(*sorted((sx * 49.5, sx * 51.0)), CLIP_REAR - 0.2, Y_INNER + 0.1, 29.9, 32.0)); X.dif(t, c)
     # 7. the insert holes 4.0 across, 6.7 deep from the stops' tops; behind the outer pair a 2.5 hole 0.8 deep, as before
     for px, pz in screws(sx):
         X.dif(t, X.cyl((px, Y_HOLE, pz), (px, Y_STOP + 0.2, pz), 2.0))
