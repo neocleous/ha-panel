@@ -8,7 +8,9 @@
 #            connector's envelope: their true distances to the shell or the box at home, with the nearest points
 #   walk     the shell's way down, after p52b_window: the plate unit b behind and h below its place against the shell cropped
 #            near the movers. case 'drivers' (driver, foam, screw heads against the bay), 'tongues' (base plate at the chin),
-#            'frame' (boxes at the door frame's lower ends), 'boxes' (the boxes' fronts and clips' blocks against the shell);
+#            'frame' (boxes at the door frame's lower ends), 'boxes' (the boxes' fronts with their clip blocks against the shell;
+#            the clips themselves go on after the shell, step 22, and are not on the unit on this way), 'clips' (the clips alone:
+#            not a state of the build, read to say why the clips come off before the shell is lifted);
 #            side = to one side by s (+ toward the viewer's left)
 #   clipkey  the 2.0 key on each clip's screw (d14's sweep) with the true distance to the nearest body every 15 deg
 #   grid     level faces (square to the print's height) of the boxes, the shell and the clips where this pass changed them, with
@@ -132,7 +134,8 @@ CASES = {
                 [0.5 * i for i in range(0, 125)]),
     'tongues': (lambda s: ['FLOOR_PLATE'], lambda sx: [(-100, 100, -3, 8, 0, 12)], (-100, 100, -6, 9, -1, 15), [0.25 * i for i in range(0, 17)]),
     'frame': (lambda s: ['SPKBOX_' + s], lambda sx: [tuple(sorted((sx * 30.0, sx * 110.0))) + (-58.0, -48.0, 0.0, 85.0)], None, [1.0 * i for i in range(0, 31)]),
-    'boxes': (lambda s: ['SPKBOX_' + s, 'TOUCH_CLIP_' + s], lambda sx: [tuple(sorted((sx * 30.0, sx * 110.0))) + (-16.0, 8.0, 0.0, 90.0)], None, [1.0 * i for i in range(0, 63)]),
+    'boxes': (lambda s: ['SPKBOX_' + s], lambda sx: [tuple(sorted((sx * 30.0, sx * 110.0))) + (-16.0, 8.0, 0.0, 90.0)], None, [1.0 * i for i in range(0, 63)]),
+    'clips': (lambda s: ['TOUCH_CLIP_' + s], lambda sx: [tuple(sorted((sx * 30.0, sx * 110.0))) + (-16.0, 8.0, 0.0, 90.0)], None, [1.0 * i for i in range(0, 63)]),
 }
 
 
@@ -151,7 +154,7 @@ def st_walk(k, X, case='drivers', side='L', bs=(0.95, 1.6), s=0.0, sec=70, step=
             X.sec(m, X.wbox(*near))
         if case == 'frame':
             X.sec(m, X.wbox(-110, 110, -53.0, -47.0, -1, 85))
-        if case == 'boxes':
+        if case in ('boxes', 'clips'):
             X.sec(m, X.wbox(-110, 110, -16.0, 8.0, -1, 90))
         movers.append(m)
     if step:
@@ -368,7 +371,7 @@ def st_where(k, X, case='boxes', side='L', b=0.95, s=0.0, old=False, sec=60, hs=
     for n in names(side):
         src = X.body(n + sfx) or X.body(n)
         m = X.tbm.copy(src)
-        if case == 'boxes':
+        if case in ('boxes', 'clips'):
             X.sec(m, X.wbox(-110, 110, -16.0, 8.0, -1, 90))
         if case == 'frame':
             X.sec(m, X.wbox(-110, 110, -53.0, -47.0, -1, 85))
