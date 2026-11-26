@@ -185,9 +185,9 @@ def st_walk(k, X, case='drivers', side='L', bs=(0.95, 1.6), s=0.0, sec=70, step=
     print('   %.1f s' % (time.time() - t0))
 
 
-def st_clipkey(k, X, state='build', holder=False, sides=('L', 'R')):
+def st_clipkey(k, X, state='build', holder=False, sides=('L', 'R'), phis=None, pts=False, old=False):
     C = runpy.run_path(D + 'd14_clip.py')
-    y = runpy.run_path(D + 'd20_build.py')['CLIP_Y']; PZ = 38.0
+    y = -7.05 if old else runpy.run_path(D + 'd20_build.py')['CLIP_Y']; PZ = 38.0         # old: version 79's screw line, for the same sweep beside it
     k.budget(70)
     off_ = () if holder else ('RADAR_HOLDER', 'LD2410C_env_F')
     for side in sides:
@@ -216,13 +216,13 @@ def st_clipkey(k, X, state='build', holder=False, sides=('L', 'R')):
         print('clip %s, screw at y %.2f, state %s, holder and radar %s: the head (5.7 across, 1.65 high) to the nearest body: %.3f, %s at %s' % (
             side, y, state, 'on' if holder else 'off', d, nm, q))
         rows = []
-        for phi in range(0, 96, 15):
+        for phi in (phis or range(0, 96, 15)):
             r = math.radians(phi)
             d, nm, q = nearest(X.cyl((xe, y, PZ), (xe, y - 101.0 * math.cos(r), PZ + 101.0 * math.sin(r)), 1.2))
-            rows.append('%d deg: %.2f %s' % (phi, d, k.sn(nm)))
+            rows.append('%s deg: %.2f %s%s' % (phi, d, k.sn(nm), (' at %s' % (q,)) if pts else ''))
             if k.late():
                 rows.append('time'); break
-        print('   long arm to the nearest body: ' + '; '.join(rows))
+        print('   long arm (101 long, 2.4 across) to the nearest body: ' + '; '.join(rows))
 
 
 def off(h, lh=0.2):
