@@ -5,6 +5,9 @@
 #          of the shell have air between them, the air's y range; with what of the hood, its screw and the sensor's envelope
 #          lies in that air. Then the shell's faces that bound the place.
 #   faces  the shell's faces inside a box: kind, area, world box; a flat face's normal, a round face's radius and axis
+#   map    a picture in letters of a section: plane 'z' (columns x, rows y) or plane 'x' (columns z, rows y), from needles
+#          along y: # shell, H hood, S screw, e the sensor's envelope, f foam, D door, . air; 'extra' adds temporary bodies
+#          kept in k.c under the given keys, drawn as +
 #   near   the hood, its screw and the neighbours against the shell round the place: smallest distances, and where
 # Run: runpy.run_path(D + 'd50_inspect5.py')['main'](stage)  -> d50_<stage>.txt
 import runpy, math
@@ -82,6 +85,30 @@ def st_faces(k, X, box=(-60.5, -56.5, -58.0, -44.0, 98.0, 102.0), name='HOUSING_
     print('faces: %d' % n)
 
 
+def st_map(k, X, plane='z', at=100.0, c0=-64.0, c1=-54.0, dc=0.2, y0=-44.0, y1=-58.0, dy=0.2, name='HOUSING_F_front', extra=(), shell_key=None):
+    sh = L['crop'](X, k.c[shell_key] if shell_key else name, BOX)
+    oth = [(n, L['crop'](X, n, BOX)) for n in OTHERS if X.body(n) is not None]
+    oth = [(n, t) for n, t in oth if t.faces.count]
+    ch = {'BME_HOOD': 'H', 'SCREWS_M2x6_env': 'S', 'BME680_env': 'e', 'FOAM_bme_env': 'f', 'FOAM_bme_top_env': 'f', 'LEAD_BME680': 'l', 'HOUSING_F_door': 'D', 'HOUSING_F_cap': 'C'}
+    lay = [('#', sh)] + [('+', X.tbm.copy(k.c[q])) for q in extra] + [(ch[n], t) for n, t in oth]
+    nc = int(round((c1 - c0) / dc)) + 1; nr = int(round((y0 - y1) / dy)) + 1
+    grid = [['.'] * nc for _ in range(nr)]
+    for i in range(nc):
+        c = c0 + i * dc
+        p0 = (c, y0 + dy / 2, at) if plane == 'z' else (at, y0 + dy / 2, c)
+        p1 = (c, y1 - dy / 2, at) if plane == 'z' else (at, y1 - dy / 2, c)
+        for sym, t in lay:
+            for a, b in k.needle_t(X, [t], p0, p1, 0.02):
+                for j in range(nr):
+                    yy = j * dy + dy / 2                       # distance from p0 of the row's middle
+                    if a - 1e-6 <= yy <= b + 1e-6:
+                        grid[j][i] = sym
+    print('section at %s %.2f: columns %s from %.1f to %.1f every %.2f; rows y from %.1f to %.1f every %.2f (down the page = toward the back = up in the shell\'s print)' % (
+        plane, at, 'x' if plane == 'z' else 'z', c0, c1, dc, y0, y1, dy))
+    for j in range(nr):
+        print('%7.1f %s' % (y0 - j * dy, ''.join(grid[j])))
+
+
 def st_near(k, X):
     sh = L['crop'](X, 'HOUSING_F_front', (-90.0, -50.0, -60.0, -20.0, 86.0, 116.0))
     for n in OTHERS:
@@ -96,7 +123,7 @@ def st_near(k, X):
 def _main(stage, **kw):
     k = L['load'](); X = k.K()
     print(L['stamp'](), 'before', X.state())
-    {'gap': st_gap, 'faces': st_faces, 'near': st_near}[stage](k, X, **kw)
+    {'gap': st_gap, 'faces': st_faces, 'near': st_near, 'map': st_map}[stage](k, X, **kw)
     print(L['stamp'](), 'after', X.state())
 
 
