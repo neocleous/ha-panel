@@ -11,13 +11,14 @@ import adsk.core, adsk.fusion
 D = '/Users/danielneocleous/Documents/HA_panel_renders/box_margins_v85/'
 L = runpy.run_path(D + 'm00_lib.py')
 SUF = '_v85'
+MAY = tuple(L['MAY_CHANGE']) + ('SCREWS_M2x6_env',)        # the two boxes, and the screws' envelope for block 3 (not a printed part)
 
 
 def _copies(names):
     k = L['load'](); X = k.K()
     print(L['stamp'](), 'before', X.state())
     for n in names:
-        if n not in L['MAY_CHANGE']:
+        if n not in MAY:
             raise RuntimeError('not a body this pass may change: ' + n)
         b = X.body(n)
         if b is None:
@@ -33,7 +34,7 @@ def _put(pairs):
     k = L['load'](); X = k.K()
     print(L['stamp'](), 'before', X.state())
     for name, key in pairs:
-        if name not in L['MAY_CHANGE']:
+        if name not in MAY:
             raise RuntimeError('not a body this pass may change: ' + name)
         if k.c.get(key) is None:
             raise RuntimeError('missing ' + key)
