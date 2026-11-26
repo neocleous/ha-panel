@@ -26,6 +26,8 @@ import adsk.core, adsk.fusion
 D = '/Users/danielneocleous/Documents/HA_panel_renders/drivers_seat_v80/'
 L = runpy.run_path(D + 'v80_lib.py')
 AX = 70.5; AZ = 28.0
+# the ReSpeaker's two M2 x 6 in the screws' body (block 4; world boxes of the two lumps, d42, grown 0.5)
+RESP_SCREWS = ((-37.6, -32.7, -21.8, -14.2, 119.7, 124.9), (20.1, 25.0, -15.8, -8.2, 91.4, 96.6))
 PLN = adsk.core.SurfaceTypes.PlaneSurfaceType
 
 
@@ -206,6 +208,9 @@ def st_clipkey(k, X, state='build', holder=False, sides=('L', 'R'), phis=None, p
             t = X.tbm.copy(b)
             if not t.boundingBox.intersects(zone.boundingBox):
                 continue
+            if b.name == 'SCREWS_M2x6_env' and state == 'build':
+                for bx in RESP_SCREWS:                 # the ReSpeaker's two screws come with the display module, after step 22
+                    X.dif(t, X.wbox(*bx))
             X.sec(t, X.tbm.copy(zone))
             if t.faces.count:
                 fx.append((b.name, t))
