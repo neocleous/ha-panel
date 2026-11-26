@@ -124,7 +124,7 @@ def near_bodies(k, X, a, b, pad):
     return [n for n, bb in bodies(k, X) if bb[0] <= hi[0] and bb[1] >= lo[0] and bb[2] <= hi[1] and bb[3] >= lo[1] and bb[4] <= hi[2] and bb[5] >= lo[2]]
 
 
-def st_stack(k, X, holes, reach=14.0, behind=10.0, sec=70):
+def st_stack(k, X, holes, reach=12.0, behind=10.0, sec=70, sides=2):
     """holes: [(label, part, mouth (x, y, z), far end (x, y, z), far end closed?, needle offset)]. Outward = from the far end to
     the mouth. Prints the stretches of every body outside the mouth (offset needles, four sides; mm from the mouth outward);
     beyond the far end: on the axis, in the part if closed, else in every body near the axis (mm from the far end)."""
@@ -137,11 +137,11 @@ def st_stack(k, X, holes, reach=14.0, behind=10.0, sec=70):
         print('%s: %s, mouth %s, far end %s (%s), %.3f deep, outward %s' % (lab, part, k.r2(M, 2), k.r2(F, 2), 'closed' if closed else 'open', depth, k.r2(o, 3)))
         for n in near:
             pl = k.parts(X, n); seg = []
-            for w in (u, v, tuple(-q for q in u), tuple(-q for q in v)):
+            for w in (u, tuple(-q for q in u), v, tuple(-q for q in v))[:sides]:
                 p0 = tuple(M[i] - o[i] * 1.0 + w[i] * off for i in range(3)); p1 = tuple(E[i] + w[i] * off for i in range(3))
                 seg.append([(round(a - 1.0, 2), round(b - 1.0, 2)) for a, b in k.needle_t(X, pl, p0, p1, 0.02)])
             if any(seg):
-                print('   out %-22s at %.1f off the axis, four sides: %s' % (n, off, seg))
+                print('   out %-22s at %.1f off the axis, %d sides: %s' % (n, off, sides, seg))
             if k.late():
                 print('   time'); return
         G = tuple(F[i] - o[i] * behind for i in range(3))
