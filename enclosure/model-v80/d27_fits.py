@@ -14,6 +14,8 @@
 #   grid     level faces (square to the print's height) of the boxes, the shell and the clips where this pass changed them, with
 #            their height above the bed and what they miss the layer grid by
 #   guards   counts, and the guard volumes of all 17 printed parts by both readings (D425), beside version 79's
+#   chamber  each box's chamber on the model's bodies (this version's, and version 79's from the hidden copies), d22's method
+#   pocket   the left box's pocket corner: the arc wall by needles from the driver's axis, the USB-A plug's room, the magnet's
 # Run: runpy.run_path(D + 'd27_fits.py')['main'](stage, tag, **kw)  -> d27_<stage>_<tag>.txt
 import runpy, math, re, time
 import adsk.core, adsk.fusion
@@ -133,7 +135,7 @@ CASES = {
 }
 
 
-def st_walk(k, X, case='drivers', side='L', bs=(0.95, 1.6), s=0.0, sec=70):
+def st_walk(k, X, case='drivers', side='L', bs=(0.95, 1.6), s=0.0, sec=70, step=0):
     k.budget(sec)
     t0 = time.time()
     sx = 1 if side == 'L' else -1
@@ -151,8 +153,10 @@ def st_walk(k, X, case='drivers', side='L', bs=(0.95, 1.6), s=0.0, sec=70):
         if case == 'boxes':
             X.sec(m, X.wbox(-110, 110, -16.0, 8.0, -1, 90))
         movers.append(m)
+    if step:
+        hs = hs[::step]
     for b in bs:
-        hit = []
+        hit = []; done = 0
         for h in hs:
             v = 0.0
             for m in movers:
@@ -161,11 +165,18 @@ def st_walk(k, X, case='drivers', side='L', bs=(0.95, 1.6), s=0.0, sec=70):
                     v += X.xv(t, cr)
             if v > 0.0005:
                 hit.append((h, round(v, 4)))
+            done += 1
             if k.late():
                 break
-        print('%-8s %s, %.2f to the side, %.2f behind: %s%s' % (case, side, s, b, ('meets at lifts %s' % hit[:6]) if hit else 'clear at every lift (%d lifts to %.1f)' % (len(hs), hs[-1]),
-              '  TIME: not finished' if k.late() else ''))
-        if k.late():
+        whole = done == len(hs)
+        if hit:
+            res = 'meets at lifts %s' % hit[:6]
+        elif whole:
+            res = 'clear at every lift (%d lifts to %.1f)' % (len(hs), hs[-1])
+        else:
+            res = 'clear at the first %d lifts (to %.1f)' % (done, hs[done - 1])
+        print('%-8s %s, %.2f to the side, %.2f behind: %s%s' % (case, side, s, b, res, '' if whole else '  NOT FINISHED (time): run again'))
+        if not whole:
             break
     print('   %.1f s' % (time.time() - t0))
 
@@ -279,11 +290,75 @@ def st_guards(k, X):
         print('%-20s %12.3f %12.3f  lumps %d  visible %s' % (n, b.volume * 1000, L['vhi'](b), b.lumps.count, b.isLightBulbOn))
 
 
+PCIN = adsk.fusion.PointContainment.PointInsidePointContainment
+
+
+def chamber(k, X, bx, sx, yface, ystop, zmax):
+    """The air of a box behind its front face's plane (the opening closed there), the wire hole closed: d22's method."""
+    x0, x1 = sorted((sx * 40.0, sx * 101.0))
+    A = X.wbox(x0, x1, -60.0, 3.0, 1.0, 92.0)
+    X.dif(A, X.tbm.copy(bx))
+    X.dif(A, X.wbox(x0, x1, yface, ystop, 1.0, zmax))
+    X.dif(A, X.cyl((sx * 62.0, -53.5, 30.0), (sx * 62.0, -49.0, 30.0), 2.2))
+    pc = k.Wp(sx * AX, -30.0, 62.0)
+    for lump in A.lumps:
+        if lump.pointContainment(pc) == PCIN:
+            t = X.tbm.copy(lump)
+            return t, k.wbb(X, t), A.lumps.count
+    return None, None, A.lumps.count
+
+
+def st_chamber(k, X):
+    """Each box's chamber on the model's bodies: version 79's (the hidden copies) by the record's method, and this version's."""
+    for sx, s in ((1, 'L'), (-1, 'R')):
+        for tag, bn, dn, yf, ys, zm in (('version 79 (hidden copies)', 'SPKBOX_%s_v79' % s, 'SPK_%s_v79' % s, -3.7, -3.0, 92.0),
+                                        ('this version', 'SPKBOX_' + s, 'SPK_' + s, -5.0, -4.0, 52.2)):
+            a, bb, n = chamber(k, X, X.body(bn), sx, yf, ys, zm)
+            if a is None:
+                print('%s, %s: no chamber lump (%d lumps)' % (bn, tag, n)); continue
+            va = X.vol(a) / 1000.0
+            dv = X.xv(X.tbm.copy(X.body(dn)), a) / 1000.0
+            row = '%-14s %s: air %.3f cm3 (box %s, %d lumps); the driver\'s body in it %.3f; air less the driver %.3f' % (bn, tag, va, bb, n, dv, va - dv)
+            if tag == 'this version':
+                ld = X.xv(X.tbm.copy(X.body('LEAD_SPK_' + s)), a) / 1000.0
+                row += '; the lead in it %.3f; less both %.3f' % (ld, va - dv - ld)
+            print(row)
+
+
+def st_pocket(k, X):
+    """The left box's pocket corner (the arc wall round the driver's magnet) and the plug's room, on the model."""
+    bx = X.body('SPKBOX_L'); c = L['crop'](X, 'SPKBOX_L', (40, 70, -36, -14, 8, 30))
+    print('arc wall, needles outward from the driver\'s axis (x %.1f, z %.1f): solid between 14 and 20 from the axis, by y and direction' % (AX, AZ))
+    for y in (-30.5, -29.5, -29.0, -27.0, -24.0, -21.0, -19.6, -19.2):
+        rows = []
+        for deg in (180, 190, 200, 210, 215, 220, 225, 230, 240, 250, 260, 270):
+            r = math.radians(deg); d = (math.cos(r), 0.0, math.sin(r))
+            p0 = (AX + 14.0 * d[0], y, AZ + 14.0 * d[2]); p1 = (AX + 20.0 * d[0], y, AZ + 20.0 * d[2])
+            sg = [(round(14.0 + a, 2), round(14.0 + b, 2)) for a, b in k.needle_t(X, [c], p0, p1, 0.02)]
+            rows.append('%d: %s' % (deg, sg if sg else '-'))
+        print('   y %6.1f  %s' % (y, '; '.join(rows)))
+    pl = X.body('USBA_plug_env'); gb = k.wbb(X, pl)
+    print('USB-A plug envelope box %s' % (k.r2(gb, 3),))
+    d, p, q = dist(k, X, pl, bx); print('   plug to SPKBOX_L %.4f at %s / %s' % (d, p, q))
+    for nm in ('SPK_L', 'LEAD_USB_RESP', 'FLOOR_PLATE', 'LEAD_SPK_L'):
+        b = X.body(nm)
+        if b is not None:
+            d, p, q = dist(k, X, pl, b); print('   plug to %s %.4f at %s / %s' % (nm, d, p, q))
+    for g in (0.45, 0.5, 1.0, 2.0, 3.0, 3.3):
+        t = X.wbox(gb[0] - g, gb[1] + g, gb[2] - g, gb[3] + g, gb[4] - g, gb[5] + g)
+        v = X.xv(t, X.tbm.copy(bx)); v0 = X.xv(t, X.tbm.copy(X.body('SPKBOX_L_v79')))
+        print('   plug\'s box grown %.2f: shares %.4f with the left box (version 79\'s: %.4f)' % (g, v, v0))
+    mg = X.cyl((AX, -28.8, AZ), (AX, -18.8, AZ), 16.0)
+    for g in (0.25, 0.3, 0.35):
+        m2 = X.cyl((AX, -28.8, AZ), (AX, -18.8, AZ), 16.0 + g)
+        print('   magnet grown %.2f all round: shares %.4f with the left box' % (g, X.xv(m2, X.tbm.copy(bx))))
+
+
 def _main(stage, **kw):
     k = L['load'](); X = k.K()
     print(L['stamp'](), 'before', X.state())
     try:
-        {'near': st_near, 'push': st_push, 'ring': st_ring, 'walk': st_walk, 'clipkey': st_clipkey, 'grid': st_grid, 'guards': st_guards}[stage](k, X, **kw)
+        {'near': st_near, 'push': st_push, 'ring': st_ring, 'walk': st_walk, 'clipkey': st_clipkey, 'grid': st_grid, 'guards': st_guards, 'chamber': st_chamber, 'pocket': st_pocket}[stage](k, X, **kw)
     finally:
         left = [b for b in X.root.bRepBodies if b.name.startswith('TMP_')]
         for b in left:
