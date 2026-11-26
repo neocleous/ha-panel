@@ -69,26 +69,40 @@ def st_room(k, X, sides=('L', 'R'), grow=(0.3, 0.5, 0.7, 1.0, 1.5, 2.0)):
             print('time'); return
 
 
-def st_faces(k, X, sides=('L', 'R'), within=3.0):
+def facelist(k, X, B, m, within):
+    rows = []
+    for f in B.faces:
+        dd = X.mm.measureMinimumDistance(m, f).value * 10.0
+        if dd > within:
+            continue
+        g = f.geometry; t = g.surfaceType
+        ok, nv = f.evaluator.getNormalAtPoint(f.pointOnFace)
+        ws = [k.W(v.geometry) for v in f.vertices]
+        ext = [round(fn(w[i] for w in ws), 2) for i in range(3) for fn in (min, max)] if ws else None
+        r = X.mm.measureMinimumDistance(m, f)
+        rows.append((round(dd, 3), {0: 'plane', 1: 'cyl', 2: 'cone'}.get(t, str(t)), k.r2(k.wv(nv), 3), k.r2(k.W(r.positionTwo), 2), round(f.area * 100, 1), ext,
+                     round(g.radius * 10, 3) if t == 1 else None))
+    return sorted(rows)
+
+
+def st_faces(k, X, sides=('L', 'R'), side_within=1.05, rear_within=2.05):
+    """The box's faces nearer than aim 2 allows: within side_within of the driver behind y -4.0 (basket, band, magnet, connector),
+    and within rear_within of its rear end (the rear face of magnet and connector, 0.01 thick)."""
     k.budget(72)
     for s in sides:
         sx = 1 if s == 'L' else -1; cx = sx * AX
         B = X.body('SPKBOX_' + s)
-        m = X.cyl((cx, Y_REAR + 13.0, AZ), (cx, Y_REAR, AZ), 18.75)
+        m = X.cyl((cx, -4.0, AZ), (cx, Y_REAR + 13.0, AZ), 19.98, 18.75)
+        X.uni(m, X.cyl((cx, Y_REAR + 13.0, AZ), (cx, Y_REAR + 10.0, AZ), 18.75))
+        X.uni(m, X.cyl((cx, Y_REAR + 10.0, AZ), (cx, Y_REAR, AZ), 16.0))
         X.uni(m, X.wbox(cx - 16.0, cx + 16.0, Y_REAR + 10.0, Y_REAR, AZ, AZ + 18.25))
-        rows = []
-        for f in B.faces:
-            dd = X.mm.measureMinimumDistance(m, f).value * 10.0
-            if dd > within:
-                continue
-            g = f.geometry; t = g.surfaceType
-            ok, nv = f.evaluator.getNormalAtPoint(f.pointOnFace)
-            ws = [k.W(v.geometry) for v in f.vertices]
-            ext = [round(fn(w[i] for w in ws), 2) for i in range(3) for fn in (min, max)] if ws else None
-            rows.append((round(dd, 3), {0: 'plane', 1: 'cyl', 2: 'cone'}.get(t, str(t)), k.r2(k.wv(nv), 3), k.r2(k.W(f.pointOnFace), 2), round(f.area * 100, 1), ext,
-                         round(g.radius * 10, 3) if t == 1 else None))
-        print('SPKBOX_%s: faces within %.1f of the driver\'s rear 13 and connector (distance, kind, normal, point, mm2, box, radius):' % (s, within))
-        for r in sorted(rows):
+        print('SPKBOX_%s: faces within %.2f of the driver behind y -4.0 (distance, kind, normal, nearest point on the face, mm2, box, radius):' % (s, side_within))
+        for r in facelist(k, X, B, m, side_within):
+            print('   %s' % (r,))
+        rr = X.cyl((cx, Y_REAR + 0.01, AZ), (cx, Y_REAR, AZ), 16.0)
+        X.uni(rr, X.wbox(cx - 16.0, cx + 16.0, Y_REAR + 0.01, Y_REAR, AZ, AZ + 18.25))
+        print('SPKBOX_%s: faces within %.2f of the rear end (magnet and connector):' % (s, rear_within))
+        for r in facelist(k, X, B, rr, rear_within):
             print('   %s' % (r,))
         if k.late():
             print('time'); return
