@@ -9,7 +9,8 @@
 #   ride    the display module's ride-in (p95's 'ride', with a tag of this version so that nothing cached is read)
 #   slide   a box with its driver, its foam and its lead slid onto the base plate (the library's slide, 17 positions), each side
 #   cmp     plain: compare a file of this folder with a file of the last close, or (ref './name') with another of this folder
-#   clear   drops what the last close left in the library's cache under its own tags
+#   clear   drops what the last close left in the library's cache under its own tags and names (p95's rideholder, gridfit and
+#           main01 keep their results there by face number or body name, and would hand back version 79's)
 #   ls      the names and line counts of this folder's outputs with a given start
 # Run: runpy.run_path(D + 'd60_close.py')['main'](stage, tag, **kw)
 import runpy, io, contextlib, os, time
@@ -141,10 +142,10 @@ def main(stage, tag='', script=None, func=None, ref=None, kw=None, sec=66, leads
         print('%s:' % tag); print('\n'.join(compare(open(D + tag).read(), ref, maxd=(kw or {}).get('maxd', 16))))
     elif stage == 'clear':
         k = L['load']()
-        gone = [q for q in list(k.c.keys()) if q == 'close_rideholder' or (isinstance(q, tuple) and len(q) > 1 and q[1] in ('close79', 'v79s15'))]
+        gone = [q for q in list(k.c.keys()) if q in ('close_rideholder', 'close_gridfit', 'close_main01') or (isinstance(q, tuple) and len(q) > 1 and q[1] in ('close79', 'v79s15'))]
         for q in gone:
             del k.c[q]
-        print('dropped from the library\'s cache: %d entries of the last close (close79, v79s15, close_rideholder)' % len(gone))
+        print('dropped from the library\'s cache: %d entries of the last close (close79, v79s15, close_rideholder, close_gridfit, close_main01)' % len(gone))
     elif stage == 'ls':
         import glob
         for pre in (kw or {}).get('pre', ()):
