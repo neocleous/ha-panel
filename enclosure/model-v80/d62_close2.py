@@ -40,10 +40,10 @@ def st_total(k, X):
         print('%-20s %12.3f   new in this pass, lumps %d, visible %s, box %s' % (n, b.volume * 1000, b.lumps.count, b.isLightBulbOn, k.r2(k.wbb(X, b), 1)))
 
 
-def st_outer(k, X, near=1.0):
-    ref = X.body('REF_F_outer')
+def st_outer(k, X, near=1.0, names=None, pieces=True):
+    ref = X.body('REF_F_outer'); names = names or PRINTED_CH
     print('cloth reference REF_F_outer: %.3f mm3, lumps %d, box %s' % (ref.volume * 1000, ref.lumps.count, k.r2(k.wbb(X, ref), 1)))
-    for n in PRINTED_CH:
+    for n in names:
         row = []
         for nm in (n, n + '_v79'):
             t = X.tbm.copy(X.body(nm)); X.dif(t, X.tbm.copy(ref))
@@ -53,7 +53,7 @@ def st_outer(k, X, near=1.0):
     # so the changes are read against the reference's faces instead: the smallest distance of what was added or removed
     faces = [f for f in ref.faces]
     print('reference faces: %d' % len(faces))
-    for n in PRINTED_CH:
+    for n in (names if pieces else ()):
         add, rem = dd(X, X.body(n), X.body(n + '_v79'))
         for lab, t in (('added', add), ('removed', rem)):
             if not t.faces.count:
