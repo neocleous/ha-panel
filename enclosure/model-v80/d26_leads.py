@@ -1,8 +1,8 @@
 # Block 2: the two speaker leads' ends inside the boxes, to the driver's connector as turned (up, toward the box's roof).
 #   look     READ-ONLY: each lead's lumps, round faces and where it ends inside its box
-#   build    builds the new leads as temporary bodies k.c['ds_lead_L'], k.c['ds_lead_R'] (nothing put): the lead as it is, cut off
-#            in front of the wire hole's inner end (y -49.5), and a new run from there to the connector's top, as round bars of
-#            the lead's own radius through the waypoints WAY; prints the new run's length along its axis
+#   build    builds the new leads as temporary bodies k.c['ds_lead_L'], k.c['ds_lead_R'] (nothing put): the lead as it is (it
+#            ends at the wire hole's mouth; its run inside the box was never drawn) and a new run from there through the hole to
+#            the connector's top, as round bars of the lead's own radius through the waypoints WAY; prints the run's length
 # Run: runpy.run_path(D + 'd26_leads.py')['main'](stage)  -> d26_<stage>.txt
 import runpy, math
 import adsk.core, adsk.fusion
@@ -10,10 +10,10 @@ import adsk.core, adsk.fusion
 D = '/Users/danielneocleous/Documents/HA_panel_renders/drivers_seat_v80/'
 L = runpy.run_path(D + 'v80_lib.py')
 CYL = adsk.core.SurfaceTypes.CylinderSurfaceType
-YCUT = -49.5
-# waypoints of the new run for the left box (x mirrored for the right): from the lead's axis at the cut, forward and up to
-# the top face of the connector's envelope (z 46.25) at its middle (y -23.8)
-WAY = [(None, YCUT, None), (63.0, -44.0, 36.0), (66.0, -34.0, 46.0), (68.5, -26.5, 48.0), (69.5, -23.8, 46.6)]
+# waypoints of the new run for the left box (x mirrored for the right): from the lead's end at the wire hole's mouth
+# (62, -54, 30: d26 look), through the hole (4.0 across, y -52.0 to -50.5), forward and up to the top face of the connector's
+# envelope (z 46.25), where its axis lies one radius above the face
+WAY = [(62.0, -54.0, 30.0), (62.0, -46.0, 30.0), (64.0, -36.0, 40.0), (66.5, -30.5, 47.5), (68.0, -26.0, 47.85)]
 
 
 def st_look(k, X):
@@ -42,27 +42,30 @@ def st_look(k, X):
 def build(k, X, sx):
     s = 'L' if sx > 0 else 'R'
     b = X.body('LEAD_SPK_' + s)
-    a, bb = sorted((sx * 30.0, sx * 110.0))
-    c = L['crop'](X, 'LEAD_SPK_' + s, (a, bb, YCUT - 0.05, YCUT + 0.05, 0.0, 90.0))
-    lb = X.lumps(c)[0][1]                                   # world box of the lead's slice at the cut
-    cx = (lb[0] + lb[1]) / 2.0; cz = (lb[4] + lb[5]) / 2.0
-    r = max(lb[1] - lb[0], lb[5] - lb[4]) / 2.0
+    r = 1.6                                                  # the lead's own radius (d26 look: every round face 1.600)
     t = X.cp(b)
-    X.dif(t, X.wbox(a, bb, YCUT, -10.0, 0.0, 90.0))          # the old end inside the box, in front of the cut
-    pts = [(cx, YCUT, cz)] + [(sx * p[0], p[1], p[2]) for p in WAY[1:]]
-    ln = 0.0
+    pts = [(sx * p[0], p[1], p[2]) for p in WAY]
+    ln = 0.0; inside = 0.0
     for p, q in zip(pts[:-1], pts[1:]):
         X.uni(t, X.cyl(p, q, r)); X.uni(t, X.sph(q, r))
-        ln += math.dist(p, q)
-    X.uni(t, X.sph(pts[0], r))
-    print('LEAD_SPK_%s: slice at the cut %s, axis (%.2f, %.2f, %.2f), radius %.3f; new run %.1f along its axis; new body %.3f mm3 in %d lumps (was %.3f)' % (
-        s, lb, cx, YCUT, cz, r, ln, X.vol(t), t.lumps.count, b.volume * 1000))
-    old = L['crop'](X, 'LEAD_SPK_' + s, (a, bb, YCUT, -10.0, 0.0, 90.0))
-    print('   the old end in front of the cut: %.3f mm3, box %s' % (X.vol(old), X.lumps(old)[0][1] if old.faces.count else None))
+        d = math.dist(p, q); ln += d
+        if p[1] >= -52.0:
+            inside += d
+        elif q[1] > -52.0:
+            inside += d * (q[1] + 52.0) / (q[1] - p[1])
+    print('LEAD_SPK_%s: new run from the lead\'s end at the wire hole %s to the connector\'s top %s: %.1f along its axis, %.1f of it in front of the box\'s rear face (y -52.0)' % (
+        s, pts[0], pts[-1], ln, inside))
+    print('   new body %.3f mm3 in %d lumps (was %.3f)' % (X.vol(t), t.lumps.count, b.volume * 1000))
     k.c['ds_lead_' + s] = t
     for key in ('ds_box_' + s, 'ds_spk_' + s, 'ds_foam_' + s):
         if k.c.get(key) is not None:
             print('   shares with %s: %.4f' % (key, X.xv(t, k.c[key])))
+    g = X.cp(b)
+    for p, q in zip(pts[:-1], pts[1:]):
+        X.uni(g, X.cyl(p, q, r + 0.5)); X.uni(g, X.sph(q, r + 0.5))
+    for key in ('ds_box_' + s, 'ds_spk_' + s):
+        if k.c.get(key) is not None:
+            print('   the new run 0.5 thicker shares with %s: %.4f' % (key, X.xv(g, k.c[key])))
     return ln
 
 
