@@ -4,16 +4,21 @@ The panel's housing: rev F of the v5 "tapered" design. The display sits in a sla
 from the base to a flat, vented top, with the two speakers firing forward. Every printed part is black; the shell and the
 door are covered with cloth.
 
-**The model is in Autodesk Fusion, not in this repo:** document "HA Panel v5 - tapered", **version 69**. Version 69 is
+**The model is in Autodesk Fusion, not in this repo:** document "HA Panel v5 - tapered", **version 79**. Version 79 is
 work in progress: it waits for its print re-check.
 
-**State (2026-11-23):**
+**State (2026-11-26):**
+- Versions 70 to 79 built the fixes that the adversarial audit of version 69 decided (the pass "the audit's fixes"):
+  changes inside the shell to 15 of the 16 printed parts, and a 17th printed part, the holder that carries the radar
+  board behind the touch board. One block of that pass, the speaker boxes' front faces, is held. The scripts are in
+  [`model-v70/`](model-v70/).
 - Versions 68 and 69 replaced the melted pins and the glue by seven M2 × 6 screws for plastic and two printed clamps, so
   that the microphone strips, the light-sensor board, the USB-C grommet, the radar board and the BME680 hood come out
   again with a driver. The scripts are in [`model-v68/`](model-v68/).
 - **The print files are version 67's:** 17 Bambu Studio projects, four of them sliced in Bambu Studio's window before
   printing. They are held: out of date for the shell, the door, the cap, the grommet and the hood, and without the two
-  clamps, until the print re-check has run on version 69 and the files are made again.
+  clamps, until the print re-check has run and the files are made again. After versions 70 to 79 they are out of
+  date for every printed part but the cradle of the USB-C inlet board, and they lack the radar's holder as well.
 - Next: the print re-check and the new print files, then the PLA fit trial and the black ABS set.
 
 ## The printed parts
@@ -30,8 +35,8 @@ work in progress: it waits for its print re-check.
 Before the set: a calibration plate (a frame, a tower and a hole block with a sideways pilot) and an adhesion test (the
 shell's first 8 mm).
 
-The plates are those of version 67's print files. Version 69 has two more printed parts, the clamps of the microphone
-strips; they are not on a plate yet.
+The plates are those of version 67's print files. Version 79 has three more printed parts, the radar's holder and the
+two clamps of the microphone strips; they are not on a plate yet.
 
 ## Material and print settings, in short
 - **Printer and slicer:** Bambu Lab X2D, both nozzles 0.4 High Flow; Bambu Studio 02.09.01.70.
@@ -59,6 +64,7 @@ strips; they are not on a plate yet.
 | Path | What |
 |---|---|
 | [`model-v68/`](model-v68/) | the scripts that made version 68 of the Fusion model from version 67 (screws and clamps instead of melted pins and glue) and version 69 from 68 (four corrections), with the checks on version 69 |
+| [`model-v70/`](model-v70/) | the scripts that made versions 70 to 79 from version 69 (the fixes the audit of version 69 decided, and the radar's holder), with their checks and the checks of the close on version 79 |
 | [`print-files/`](print-files/) | the scripts that export the printed parts from the Fusion model, set them on the bed and make the Bambu Studio projects |
 | `HA Panel Final.step` | **the first panel's enclosure (v1),** exported from Shapr3D and in the repo since 2026-08-24: the housing of the panel that is built and in use. `main`'s README links to it |
 
