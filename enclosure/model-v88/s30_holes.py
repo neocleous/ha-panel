@@ -62,7 +62,8 @@ def exact(k, b, M, F, r):
     return best
 
 
-def st_read(k, X, names, gs=(1.0, 1.5, 1.6, 2.0, 2.5, 3.0), ref='REF_F_outer', sec=72):
+def st_read(k, X, names, gs=(1.0, 1.5, 1.6, 2.0, 2.5, 3.0), ref='REF_F_outer', sec=72, built=False):
+    """built=True: the holes are read as built (the floor d further in than the table's, nothing more to go)."""
     k.budget(sec)
     M10 = L['old']('m10')
     R = X.body(ref); Rt = X.tbm.copy(R)
@@ -71,9 +72,11 @@ def st_read(k, X, names, gs=(1.0, 1.5, 1.6, 2.0, 2.5, 3.0), ref='REF_F_outer', s
         part, M, F, r, d = HOLES[nm]
         b = X.body(part)
         o = k.unit(tuple(F[i] - M[i] for i in range(3))); u, v = perp(o)
+        if built:
+            F = tuple(F[i] + o[i] * d for i in range(3)); d = 0.0
         ea = tuple(M[i] - o[i] * 3.0 for i in range(3)); eb = tuple(F[i] + o[i] * 15.0 for i in range(3))
         box = [q for i in range(3) for q in (min(ea[i], eb[i]) - 12.0, max(ea[i], eb[i]) + 12.0)]
-        pl = k.region(X, part, 's30_' + nm, box)          # the part cut to a box round the hole: the needles run on this piece
+        pl = k.region(X, part, 's30_' + nm + ('_built' if built else ''), box)   # the part cut to a box round the hole: the needles run on this piece
         depth = math.sqrt(sum((F[i] - M[i]) ** 2 for i in range(3)))
         print('\n%s: %s, mouth %s, floor %s, r %.2f, %.3f deep, inward %s; to go %.2f deeper' % (nm, part, k.r2(M, 3), k.r2(F, 3), r, depth, k.r2(o, 4), d))
         ex = exact(k, b, M, F, r)
@@ -100,7 +103,17 @@ def st_read(k, X, names, gs=(1.0, 1.5, 1.6, 2.0, 2.5, 3.0), ref='REF_F_outer', s
                 a0 = tuple(M[i] + o[i] * s + w[i] * (r + 0.05) for i in range(3)); a1 = tuple(a0[i] + w[i] * 9.0 for i in range(3))
                 st = k.needle_t(X, pl, a0, a1, 0.02)
                 wl.append((round(st[0][1] - st[0][0], 2) if st and st[0][0] < 0.06 else 0.0, round(s, 2)))
-        print('   the wall round it (from r + 0.05 outward), eight sides at four depths: least %s; all %s' % (min(wl), sorted(set(q[0] for q in wl))[:8]))
+        print('   the wall round it (from r + 0.05 outward), eight sides at four depths: least %s; least at each depth from the mouth %s' % (
+            min(wl), [(sd, min(q[0] for q in wl if q[1] == sd)) for sd in sorted(set(q[1] for q in wl))]))
+        sc = X.body('SCREWS_M2x6_env')
+        if sc is not None and r < 1.0:
+            for l in sc.lumps:
+                ws = [k.W(vx.geometry) for vx in l.vertices]
+                ts = [sum((w[i] - M[i]) * o[i] for i in range(3)) for w in ws]
+                offs = [math.sqrt(max(sum((w[i] - M[i]) ** 2 for i in range(3)) - t * t, 0.0)) for w, t in zip(ws, ts)]
+                if max(offs) < 2.2:
+                    print('   the drawn M2 x 6 on this axis: from %.3f to %.3f from the mouth inward (head to tip); tip to the floor %.3f; thread below the mouth %.3f' % (
+                        min(ts), max(ts), depth - max(ts), max(ts) - max(min(ts), 0.0)))
         others = []
         for q in k.current(X, leads=True, kos=False):
             if q.name == part or q.name in ('SCREWS_M2x6_env', 'DRV_screw_heads_env'):
@@ -118,6 +131,18 @@ def st_read(k, X, names, gs=(1.0, 1.5, 1.6, 2.0, 2.5, 3.0), ref='REF_F_outer', s
                 px = tuple(F[i] + o[i] * (thick[0] + e) for i in range(3))
                 print('   %.1f beyond the far face on the axis %s: in the reference %s; in the part %s' % (
                     e, k.r2(px, 2), R.pointContainment(k.Wp(*px)) in PIN, b.pointContainment(k.Wp(*px)) in PIN))
+        if d <= 0.0:
+            ht0 = M10['height'](k, part, F); up = M10['up_dir'](k, part); dd = sum(o[i] * up[i] for i in range(3)); lh = M10['PRINT'][part][3]
+            looks = 'upright (the hole lies in the layers)' if abs(dd) < 0.02 else ('down' if dd > 0 else 'up')
+            lean = math.degrees(math.acos(min(1.0, abs(dd))))
+            row = '   in the print (%s, layers %.2f): the floor\'s middle at height %.3f; its face looks %s; the axis leans %.1f deg from the print\'s upright' % (
+                M10['PRINT'][part][0], lh, ht0, looks, lean)
+            if abs(dd) >= 0.02:
+                row += '; middle lands %s; across the hole the floor spans %.2f of height' % (M10['land'](ht0, lh, looks)[0], 2 * r * math.sin(math.radians(lean)))
+            print(row)
+            if k.late():
+                print('time'); return
+            continue
         T = X.cyl(F, tuple(F[i] + o[i] * d for i in range(3)), r)
         print('   T (the piece to go): %.4f mm3; of it in the part now %.4f' % (X.vol(T), k.xparts(X, T, pl)))
         for g in gs:
