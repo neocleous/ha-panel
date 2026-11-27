@@ -9,7 +9,8 @@
 #           deeper by 'deeper', (c) the grommet's two pilots deeper by s30_holes.HOLES' figure -> k.c[key]
 #   added   what the new door has that the model's lacks (the taller bosses): lumps, each lump's height range and volume beside
 #           its top face's area x taller; its least distance to every body of the unit at home; and moved back along -y (the
-#           door's way off and on, as ../model-v70/p37_checks.slide) by 17 steps to 60: what it shares with any body there
+#           door's way off and on, as ../model-v70/p37_checks.slide) by 17 steps to 60: what it shares with any body there;
+#           then the same way with the door 0.5 and 1.0 high and 0.5 to either side (a margin on the record's way)
 # Run: L.checked('s40_door.py', sha)['main'](what, tag, **kw)  -> s40_<what>_<tag>.txt
 import runpy, math
 import adsk.core, adsk.fusion
@@ -152,7 +153,8 @@ def st_build(k, X, key='sr_door', taller=0.6, deeper=0.6, pilots=True, bosses=Tr
         print('   %s: %.4f mm3 in %d lumps: %s' % (lab, X.vol(q) if n else 0.0, n, X.lumps(q)[:12] if n else ''))
 
 
-def st_added(k, X, key='sr_door', steps=(0.0, 0.2, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 15.0, 20.0, 30.0, 40.0, 60.0), sec=70):
+def st_added(k, X, key='sr_door', steps=(0.0, 0.2, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 15.0, 20.0, 30.0, 40.0, 60.0), sec=70,
+             offs=((0.5, 0.0), (1.0, 0.0), (0.0, 0.5), (0.0, -0.5), (1.0, 0.5), (1.0, -0.5))):
     k.budget(sec)
     b = X.body(PART); t = k.c[key]
     add = less(X, t, b)
@@ -196,6 +198,28 @@ def st_added(k, X, key='sr_door', steps=(0.0, 0.2, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0,
             if abs(v) > 0.0005:
                 hit[n] = round(v, 4)
         print('   back %5.1f: %s' % (d, hit if hit else 'clear'))
+        if k.late():
+            print('time'); return
+    # the same way with the door held a little high or to one side (not the record's way: a margin on it)
+    for dz, dx in offs:
+        sw2 = X.wbox(sweep[0] - abs(dx) - 0.1, sweep[1] + abs(dx) + 0.1, sweep[2], sweep[3], sweep[4], sweep[5] + dz + 0.1); fx = []
+        for q in others:
+            if q.name in ('GROMMET_usbc_F', 'SCREWS_M2x6_env') or q.name.startswith('RENDER_'):
+                continue
+            c = X.tbm.copy(q)
+            if not c.boundingBox.intersects(sw2.boundingBox):
+                continue
+            X.sec(c, X.tbm.copy(sw2))
+            if c.faces.count:
+                fx.append((q.name, c))
+        bad = []
+        for d in steps:
+            m = X.tbm.copy(add); X.move(m, dx, -d, dz)
+            hit = dict((n, round(X.xv(m, c), 4)) for n, c in fx)
+            hit = dict((n, v) for n, v in hit.items() if abs(v) > 0.0005)
+            if hit:
+                bad.append((d, hit))
+        print('   %.1f high, %+.1f to the side, back 0 to %.0f in %d steps: %s' % (dz, dx, max(steps), len(steps), bad if bad else 'clear at every step'))
         if k.late():
             print('time'); return
     g = X.body('GROMMET_usbc_F')
