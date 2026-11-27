@@ -135,7 +135,9 @@ def st_check(k, X):
         for o in k.current(X, leads=True, kos=True):
             if o.name in ('SCREWS_M2x6_env',):
                 continue
-            v = sum(X.xv(X.tbm.copy(u), p) for p in k.parts(X, o.name)) if k.wbb(X, o)[5] > Z_UNDER - 3.0 and k.wbb(X, o)[4] < Z_UNDER else 0.0
+            if not u.boundingBox.intersects(o.boundingBox):
+                continue
+            v = X.xv(X.tbm.copy(u), X.tbm.copy(o))
             if v > 0.0005:
                 hit.append((o.name, round(v, 3)))
         print('   bodies in the 3.0 under the clamp\'s underside, 6 round the axis: %s' % (hit or 'none'))
