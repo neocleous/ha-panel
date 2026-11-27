@@ -69,8 +69,11 @@ def st_read(k, X, names, gs=(1.0, 1.5, 1.6, 2.0, 2.5, 3.0), ref='REF_F_outer', s
     print('cloth reference %s: %.3f mm3, lumps %d, faces %d, world box %s' % (ref, R.volume * 1000.0, R.lumps.count, R.faces.count, k.wbb(X, R)))
     for nm in names:
         part, M, F, r, d = HOLES[nm]
-        b = X.body(part); pl = k.parts(X, part)
+        b = X.body(part)
         o = k.unit(tuple(F[i] - M[i] for i in range(3))); u, v = perp(o)
+        ea = tuple(M[i] - o[i] * 3.0 for i in range(3)); eb = tuple(F[i] + o[i] * 15.0 for i in range(3))
+        box = [q for i in range(3) for q in (min(ea[i], eb[i]) - 12.0, max(ea[i], eb[i]) + 12.0)]
+        pl = k.region(X, part, 's30_' + nm, box)          # the part cut to a box round the hole: the needles run on this piece
         depth = math.sqrt(sum((F[i] - M[i]) ** 2 for i in range(3)))
         print('\n%s: %s, mouth %s, floor %s, r %.2f, %.3f deep, inward %s; to go %.2f deeper' % (nm, part, k.r2(M, 3), k.r2(F, 3), r, depth, k.r2(o, 4), d))
         ex = exact(k, b, M, F, r)
