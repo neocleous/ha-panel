@@ -241,9 +241,9 @@ def mind_t(k, X, t, fixed):
     return best
 
 
-def st_old70(k, X, key, func, kw=None, setg=None, sec=60):
+def st_old70(k, X, key, fun, kw=None, setg=None, sec=60):
     k.budget(sec)
-    m = L['old'](key)
+    m = L['old'](key); func = fun
     g = m[func].__globals__
     if 'dist' in g and g['dist'].__code__.co_argcount == 4:
         g['dist'] = dist_t
