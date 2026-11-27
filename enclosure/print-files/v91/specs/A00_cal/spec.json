@@ -1,0 +1,67 @@
+{
+ "job": "A00_cal",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "0",
+  "brim-type": "no_brim"
+ },
+ "plates": [
+  {
+   "name": "v91 ABS calibration | TPEI + glue",
+   "objects": [
+    {
+     "stl": "../cal/cal_frame.stl",
+     "pos": [
+      128,
+      128,
+      0
+     ]
+    },
+    {
+     "stl": "../cal/cal_tower.stl",
+     "pos": [
+      98,
+      128,
+      0
+     ]
+    },
+    {
+     "stl": "../cal/cal_holes_v67.stl",
+     "pos": [
+      149,
+      128,
+      0
+     ],
+     "params": {
+      "sparse_infill_density": "100%",
+      "sparse_infill_pattern": "zig-zag"
+     }
+    },
+    {
+     "stl": "../cal/cal_add_v91.stl",
+     "pos": [
+      128,
+      100,
+      0
+     ],
+     "params": {
+      "sparse_infill_density": "100%",
+      "sparse_infill_pattern": "zig-zag"
+     }
+    }
+   ]
+  }
+ ],
+ "title": "v91 ABS calibration | TPEI + glue",
+ "desc": "HA panel version 91 print file - calibration plate. black ABS - Textured PEI - with glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing. Frame 120 outside and 108 inside, 5 tall. Tower 20 x 20 x 30. Hole block of version 67 (solid) with the lying 2.7 pilot in its lug. Block of version 91 (solid): two upright and one lying 1.6 pilots, a lying 2.7 pilot 9.0 deep, a 2.0 hole from the first layer, a 4.0 insert hole with 1.6 of wall. Measure as the print sheet of version 91 says.",
+ "deliver": [
+  "2_ABS_calibration_and_adhesion_test",
+  "ABS_00_calibration_v91.3mf"
+ ],
+ "source": "version 67 T0_cal / A0_cal with the block of version 91",
+ "changes": {}
+}

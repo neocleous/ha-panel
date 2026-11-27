@@ -1,0 +1,71 @@
+{
+ "job": "T09_P4b",
+ "process": "process_0.12_HQ.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "initial-layer-print-height": "0.2",
+  "brim-type": "outer_only",
+  "brim-width": "3",
+  "brim-object-gap": "0.1",
+  "enable-support": "1",
+  "support-top-z-distance": "0.2",
+  "support-interface-spacing": "0.5",
+  "bridge-no-support": "0"
+ },
+ "plates": [
+  {
+   "name": "v91 TRIAL PLA P4b grommet | TPEI",
+   "objects": [
+    {
+     "stl": "grommet.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      52,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "map": {
+  "M": [
+   [
+    1,
+    0,
+    0,
+    128.00000047683716
+   ],
+   [
+    0,
+    1,
+    0,
+    209.15851593017578
+   ],
+   [
+    0,
+    0,
+    1,
+    -9.999995231628418
+   ]
+  ],
+  "pos": [
+   0,
+   52,
+   0
+  ]
+ },
+ "title": "v91 TRIAL PLA P4b grommet | TPEI",
+ "desc": "HA panel version 91 print file - USB-C grommet. PLA trial - Textured PEI - no glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "1_PLA_trial",
+  "TRIAL_PLA_09_P4b_grommet_v91.3mf"
+ ],
+ "source": "print_recheck_v79/pl_grommet",
+ "changes": {
+  "bed": "Textured PEI Plate"
+ }
+}

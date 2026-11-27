@@ -1,0 +1,75 @@
+{
+ "job": "A01_P1a",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json",
+  "filament_SupportABS_white.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "brim-type": "no_brim",
+  "enable-support": "1",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0",
+  "bridge-no-support": "0",
+  "support-interface-filament": "2",
+  "enable-prime-tower": "1",
+  "filament-map": "1,2",
+  "wipe-tower-x": "110",
+  "wipe-tower-y": "205",
+  "prime-tower-width": "35",
+  "support-remove-small-overhang": "0",
+  "support-filament": "2"
+ },
+ "plates": [
+  {
+   "name": "v91 ABS P1a base plate | TPEI + glue",
+   "objects": [
+    {
+     "stl": "base.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "map": {
+  "M": [
+   [
+    1.0,
+    -2.4e-08,
+    5.26e-07,
+    128.003317791
+   ],
+   [
+    -9e-09,
+    0.999999999,
+    8e-09,
+    166.742523055
+   ],
+   [
+    0.0,
+    -1e-09,
+    1.000000016,
+    5.267397152686259e-06
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ]
+ },
+ "title": "v91 ABS P1a base plate | TPEI + glue",
+ "desc": "HA panel version 91 print file - base plate, all support in Support for ABS. black ABS - Textured PEI - with glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_01_P1a_base_plate_v91.3mf"
+ ],
+ "source": "print_recheck_v85/f2_base",
+ "changes": {}
+}

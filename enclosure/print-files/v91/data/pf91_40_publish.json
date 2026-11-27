@@ -1,0 +1,451 @@
+{
+ "T00_cal": {
+  "file": "1_PLA_trial/TRIAL_PLA_00_calibration_v91.3mf",
+  "bytes": 685505,
+  "sha256": "00321b62b9de9f540c3c51fac5eca99a7b111a614bb652b40ce16bf98f4ee392",
+  "meta": {
+   "plater_name": "v91 TRIAL PLA calibration | TPEI",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 TRIAL PLA calibration | TPEI"
+  },
+  "min": 44.7,
+  "min_prep": 50.3,
+  "g": [
+   28.51
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:27:47"
+ },
+ "T01_P1a": {
+  "file": "1_PLA_trial/TRIAL_PLA_01_P1a_base_plate_v91.3mf",
+  "bytes": 12034519,
+  "sha256": "db626ddcbd7d37e81411b80ef7e7cdf25415508705d43a98b85225bae6f06eb8",
+  "meta": {
+   "plater_name": "v91 TRIAL PLA P1a base plate | TPEI",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 TRIAL PLA P1a base plate | TPEI"
+  },
+  "min": 125.4,
+  "min_prep": 131.0,
+  "g": [
+   31.62
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:27:51"
+ },
+ "T03_P2": {
+  "file": "1_PLA_trial/TRIAL_PLA_03_P2_carrier_cradle_hood_v91.3mf",
+  "bytes": 4603616,
+  "sha256": "a5e1e779331b4b065f20c4f16b7df73efc08c369abf006159b27120f1c246658",
+  "meta": {
+   "plater_name": "v91 TRIAL PLA P2 carrier cradle hood | TPEI",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 TRIAL PLA P2 carrier cradle hood | TPEI"
+  },
+  "min": 35.9,
+  "min_prep": 41.6,
+  "g": [
+   16.74
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:27:52"
+ },
+ "T04_P7": {
+  "file": "1_PLA_trial/TRIAL_PLA_04_P7_clamps_and_holder_v91.3mf",
+  "bytes": 707959,
+  "sha256": "6203ee4cf451155df6572c47a54c456d531db9af580cfa9de28e22f43387c663",
+  "meta": {
+   "plater_name": "v91 TRIAL PLA P7 clamps and holder | TPEI",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 TRIAL PLA P7 clamps and holder | TPEI"
+  },
+  "min": 22.9,
+  "min_prep": 28.5,
+  "g": [
+   4.34
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:27:52"
+ },
+ "T05_P3b": {
+  "file": "1_PLA_trial/TRIAL_PLA_05_P3b_screen_plate_v91.3mf",
+  "bytes": 866277,
+  "sha256": "6aa3798a4dcbb4c9bf8b553aec86c896d5bf3eb0513e5c08adf50680572602e3",
+  "meta": {
+   "plater_name": "v91 TRIAL PLA P3b screen plate | TPEI",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 TRIAL PLA P3b screen plate | TPEI"
+  },
+  "min": 75.3,
+  "min_prep": 80.9,
+  "g": [
+   82.95
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:27:53"
+ },
+ "T06_P3a": {
+  "file": "1_PLA_trial/TRIAL_PLA_06_P3a_shell_v91.3mf",
+  "bytes": 28543979,
+  "sha256": "7da5d9ab51930b39ef67550225b3d18f6a9df5b2bd8286dbe47601a2f575efdb",
+  "meta": {
+   "plater_name": "v91 TRIAL PLA P3a shell | TPEI",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 TRIAL PLA P3a shell | TPEI"
+  },
+  "min": 455.7,
+  "min_prep": 461.3,
+  "g": [
+   170.62
+  ],
+  "warning": "Unsupported overhangs were detected.\nModel \"assemble_1\" has 2 overhang region(s) that could not get support. Try adjusting the support settings or re-orienting the object.",
+  "t": "2026-11-27 12:28:06"
+ },
+ "T07_P5": {
+  "file": "1_PLA_trial/TRIAL_PLA_07_P5_slab_v91.3mf",
+  "bytes": 4300043,
+  "sha256": "32497fba9c717d0370324ebaa72f09a73720b5cc7f20aa40960cd527bb6bdb32",
+  "meta": {
+   "plater_name": "v91 TRIAL PLA P5 slab | TPEI",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 TRIAL PLA P5 slab | TPEI"
+  },
+  "min": 187.7,
+  "min_prep": 193.3,
+  "g": [
+   36.38
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:07"
+ },
+ "T08_P4a": {
+  "file": "1_PLA_trial/TRIAL_PLA_08_P4a_cap_v91.3mf",
+  "bytes": 2331680,
+  "sha256": "473368ca9be7ff213070e3029a99c1595633c1e57d703a994520778afae16ef5",
+  "meta": {
+   "plater_name": "v91 TRIAL PLA P4a cap | TPEI",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 TRIAL PLA P4a cap | TPEI"
+  },
+  "min": 46.9,
+  "min_prep": 52.5,
+  "g": [
+   9.66
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:08"
+ },
+ "T09_P4b": {
+  "file": "1_PLA_trial/TRIAL_PLA_09_P4b_grommet_v91.3mf",
+  "bytes": 426666,
+  "sha256": "4f6a7cbfaf90608f0d229cc2da2a39402de87f71ece7cac62aa858d83574d2c5",
+  "meta": {
+   "plater_name": "v91 TRIAL PLA P4b grommet | TPEI",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 TRIAL PLA P4b grommet | TPEI"
+  },
+  "min": 20.0,
+  "min_prep": 25.7,
+  "g": [
+   1.72
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:08"
+ },
+ "T10_P6": {
+  "file": "1_PLA_trial/TRIAL_PLA_10_P6_door_v91.3mf",
+  "bytes": 5543392,
+  "sha256": "60dacad75495aa6aa20b8ef8ac3b1a19ab0f68623434e52fadec18f11b2455f2",
+  "meta": {
+   "plater_name": "v91 TRIAL PLA P6 door | TPEI",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 TRIAL PLA P6 door | TPEI"
+  },
+  "min": 125.2,
+  "min_prep": 130.8,
+  "g": [
+   52.53
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:10"
+ },
+ "A00_cal": {
+  "file": "2_ABS_calibration_and_adhesion_test/ABS_00_calibration_v91.3mf",
+  "bytes": 685213,
+  "sha256": "f95ae8e98a7c0001762c7c1eeb7f8469bdff3320feeef5139fd90f5064ba2efe",
+  "meta": {
+   "plater_name": "v91 ABS calibration | TPEI + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS calibration | TPEI + glue"
+  },
+  "min": 60.5,
+  "min_prep": 78.1,
+  "g": [
+   22.81
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:11"
+ },
+ "A00_adh": {
+  "file": "2_ABS_calibration_and_adhesion_test/ABS_00b_adhesion_test_v91.3mf",
+  "bytes": 10947855,
+  "sha256": "27afbe543614758c75bde07004b4de9b986a5fac9d1e03db244bc35cc3f969f0",
+  "meta": {
+   "plater_name": "v91 ABS adhesion test shell 8 mm | TPEI + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1 2",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS adhesion test shell 8 mm | TPEI + glue"
+  },
+  "min": 113.7,
+  "min_prep": 148.4,
+  "g": [
+   27.63,
+   2.17
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:15"
+ },
+ "A01_P1a": {
+  "file": "3_ABS_black_set/ABS_01_P1a_base_plate_v91.3mf",
+  "bytes": 12164901,
+  "sha256": "ff79ab01cec1df3620b13139dac53cd854881ced8b656134f3b8ab10a27645c1",
+  "meta": {
+   "plater_name": "v91 ABS P1a base plate | TPEI + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1 2",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS P1a base plate | TPEI + glue"
+  },
+  "min": 141.4,
+  "min_prep": 174.2,
+  "g": [
+   27.36,
+   3.21
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:20"
+ },
+ "A02_P1b": {
+  "file": "3_ABS_black_set/ABS_02_P1b_boxes_and_clips_v91.3mf",
+  "bytes": 5809232,
+  "sha256": "d93b35aa9c1b6570b7c8481907cc63cbeeb86f66cf814e97576d311b19160191",
+  "meta": {
+   "plater_name": "v91 ABS P1b boxes and clips | TPEI + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1 2",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS P1b boxes and clips | TPEI + glue"
+  },
+  "min": 214.6,
+  "min_prep": 289.7,
+  "g": [
+   80.72,
+   4.2
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:22"
+ },
+ "A03_P2": {
+  "file": "3_ABS_black_set/ABS_03_P2_carrier_cradle_hood_v91.3mf",
+  "bytes": 4596637,
+  "sha256": "119dde75ff0db531a20c58f7f5b1ae5c6aaab5609989219f43e734506b8ec010",
+  "meta": {
+   "plater_name": "v91 ABS P2 carrier cradle hood | TPEI + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS P2 carrier cradle hood | TPEI + glue"
+  },
+  "min": 41.8,
+  "min_prep": 59.4,
+  "g": [
+   13.4
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:24"
+ },
+ "A04_P7": {
+  "file": "3_ABS_black_set/ABS_04_P7_clamps_and_holder_v91.3mf",
+  "bytes": 802603,
+  "sha256": "ec5b21962f76dcc6d9174992415302b6f64822300e72b0566b10b2acbe64751f",
+  "meta": {
+   "plater_name": "v91 ABS P7 clamps and holder | TPEI + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1 2",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS P7 clamps and holder | TPEI + glue"
+  },
+  "min": 32.9,
+  "min_prep": 83.8,
+  "g": [
+   11.46,
+   1.74
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:24"
+ },
+ "A05_P3b": {
+  "file": "3_ABS_black_set/ABS_05_P3b_screen_plate_v91.3mf",
+  "bytes": 893019,
+  "sha256": "6d226f1222470937f8e77670df24a92c7e76f3d65b5ab9662e9cac400fa3c3ab",
+  "meta": {
+   "plater_name": "v91 ABS P3b screen plate | TPEI + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1 2",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS P3b screen plate | TPEI + glue"
+  },
+  "min": 89.8,
+  "min_prep": 110.1,
+  "g": [
+   67.05,
+   1.38
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:24"
+ },
+ "A07_P5": {
+  "file": "3_ABS_black_set/ABS_07_P5_slab_v91.3mf",
+  "bytes": 4129938,
+  "sha256": "1588be73cb2c4878b6b4f60d336fe4036f84421f7b48658dfc60c717ba2c1c3b",
+  "meta": {
+   "plater_name": "v91 ABS P5 slab | Engineering + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1 2",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS P5 slab | Engineering + glue"
+  },
+  "min": 197.7,
+  "min_prep": 223.0,
+  "g": [
+   28.55,
+   4.23
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:26"
+ },
+ "A08_P4a": {
+  "file": "3_ABS_black_set/ABS_08_P4a_cap_v91.3mf",
+  "bytes": 2331672,
+  "sha256": "829abb0b3905cb4a40302c1d245a8c6c7d8c5cdb54908772818be49e42058de4",
+  "meta": {
+   "plater_name": "v91 ABS P4a cap | Engineering + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS P4a cap | Engineering + glue"
+  },
+  "min": 48.1,
+  "min_prep": 65.7,
+  "g": [
+   7.73
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:27"
+ },
+ "A09_P4b": {
+  "file": "3_ABS_black_set/ABS_09_P4b_grommet_v91.3mf",
+  "bytes": 386676,
+  "sha256": "29bf4c2ed8f20d7d06b042d138544247c429b214c06f81e7b6389bac18c17b83",
+  "meta": {
+   "plater_name": "v91 ABS P4b grommet | Engineering + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1 2",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS P4b grommet | Engineering + glue"
+  },
+  "min": 23.8,
+  "min_prep": 74.3,
+  "g": [
+   8.3,
+   0.47
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:27"
+ },
+ "A10_P6": {
+  "file": "3_ABS_black_set/ABS_10_P6_door_v91.3mf",
+  "bytes": 5562153,
+  "sha256": "c5bcfe44a73de4159508e7eccbde793fe6e6a3abc769b15845604a5e20f85eb7",
+  "meta": {
+   "plater_name": "v91 ABS P6 door | TPEI + glue",
+   "filament_map_mode": "Manual",
+   "filament_maps": "1 2",
+   "gcode": [
+    "Metadata/plate_1.gcode"
+   ],
+   "title": "v91 ABS P6 door | TPEI + glue"
+  },
+  "min": 198.0,
+  "min_prep": 234.4,
+  "g": [
+   48.24,
+   0.59
+  ],
+  "warning": "",
+  "t": "2026-11-27 12:28:29"
+ }
+}

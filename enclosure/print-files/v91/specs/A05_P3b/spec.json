@@ -1,0 +1,85 @@
+{
+ "job": "A05_P3b",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json",
+  "filament_SupportABS_white.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "sparse-infill-density": "100%",
+  "sparse-infill-pattern": "zig-zag",
+  "brim-type": "no_brim",
+  "enable-support": "1",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0",
+  "bridge-no-support": "0",
+  "support-interface-filament": "2",
+  "enable-prime-tower": "1",
+  "filament-map": "1,2",
+  "wipe-tower-x": "110",
+  "wipe-tower-y": "205",
+  "prime-tower-width": "35"
+ },
+ "plates": [
+  {
+   "name": "v91 ABS P3b screen plate | TPEI + glue",
+   "objects": [
+    {
+     "stl": "screen.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "stl": "screen_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "map": {
+  "M": [
+   [
+    1.0,
+    -0.0,
+    0.0,
+    128.0
+   ],
+   [
+    -0.0,
+    0.207912017,
+    -0.97814761,
+    240.588556252
+   ],
+   [
+    -0.0,
+    0.978147601,
+    0.207911691,
+    -16.993743295984547
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ]
+ },
+ "title": "v91 ABS P3b screen plate | TPEI + glue",
+ "desc": "HA panel version 91 print file - screen plate, solid. black ABS - Textured PEI - with glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_05_P3b_screen_plate_v91.3mf"
+ ],
+ "source": "print_recheck_v79/f2_screen",
+ "changes": {}
+}

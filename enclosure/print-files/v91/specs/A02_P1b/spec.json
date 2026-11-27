@@ -1,0 +1,117 @@
+{
+ "job": "A02_P1b",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json",
+  "filament_SupportABS_white.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "1",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0",
+  "bridge-no-support": "0",
+  "support-interface-filament": "2",
+  "enable-prime-tower": "1",
+  "filament-map": "1,2",
+  "wipe-tower-x": "110",
+  "wipe-tower-y": "60",
+  "prime-tower-width": "35",
+  "sparse-infill-density": "100%",
+  "sparse-infill-pattern": "zig-zag",
+  "brim-type": "outer_only",
+  "brim-width": "3",
+  "brim-object-gap": "0.1"
+ },
+ "plates": [
+  {
+   "name": "v91 ABS P1b boxes and clips | TPEI + glue",
+   "objects": [
+    {
+     "stl": "spkbox_L.stl",
+     "assemble": 1,
+     "pos": [
+      -50,
+      -20,
+      0
+     ]
+    },
+    {
+     "stl": "spkbox_L_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      -50,
+      -20,
+      0
+     ]
+    },
+    {
+     "stl": "spkbox_R.stl",
+     "assemble": 1,
+     "pos": [
+      50,
+      -20,
+      0
+     ]
+    },
+    {
+     "stl": "spkbox_R_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      50,
+      -20,
+      0
+     ]
+    },
+    {
+     "stl": "clip_L.stl",
+     "assemble": 1,
+     "pos": [
+      -37,
+      45,
+      0
+     ]
+    },
+    {
+     "stl": "clip_L_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      -37,
+      45,
+      0
+     ]
+    },
+    {
+     "stl": "clip_L.stl",
+     "assemble": 1,
+     "pos": [
+      -25,
+      45,
+      0
+     ]
+    },
+    {
+     "stl": "clip_L_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      -25,
+      45,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "title": "v91 ABS P1b boxes and clips | TPEI + glue",
+ "desc": "HA panel version 91 print file - both speaker boxes and both touch clips, solid. black ABS - Textured PEI - with glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_02_P1b_boxes_and_clips_v91.3mf"
+ ],
+ "source": "print_recheck_v91/p_P1b_clips",
+ "changes": {}
+}

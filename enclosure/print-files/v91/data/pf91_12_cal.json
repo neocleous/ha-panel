@@ -1,0 +1,118 @@
+{
+ "block_mm": [
+  40.0,
+  16.0,
+  8.0
+ ],
+ "box_mm3": 5120.0,
+ "vol_mm3": 4919.433,
+ "lumps": 1,
+ "tris": 8656,
+ "frame": "stl x = block x - 20, y = block y - 8, z = block z",
+ "features": [
+  {
+   "name": "P16a",
+   "kind": "upright pilot 1.6, 7.0 deep",
+   "A": [
+    5.0,
+    5.0,
+    1.0
+   ],
+   "B": [
+    5.0,
+    5.0,
+    8.5
+   ],
+   "d": 1.6,
+   "ok": true,
+   "removed_mm3": 14.074
+  },
+  {
+   "name": "P16b",
+   "kind": "upright pilot 1.6, 7.0 deep",
+   "A": [
+    5.0,
+    11.0,
+    1.0
+   ],
+   "B": [
+    5.0,
+    11.0,
+    8.5
+   ],
+   "d": 1.6,
+   "ok": true,
+   "removed_mm3": 14.074
+  },
+  {
+   "name": "H20",
+   "kind": "standing hole 2.0, through",
+   "A": [
+    12.0,
+    8.0,
+    -0.5
+   ],
+   "B": [
+    12.0,
+    8.0,
+    8.5
+   ],
+   "d": 2.0,
+   "ok": true,
+   "removed_mm3": 25.133
+  },
+  {
+   "name": "P16L",
+   "kind": "lying pilot 1.6, 7.0 deep from y 0",
+   "A": [
+    19.0,
+    -0.5,
+    4.0
+   ],
+   "B": [
+    19.0,
+    7.0,
+    4.0
+   ],
+   "d": 1.6,
+   "ok": true,
+   "removed_mm3": 14.074
+  },
+  {
+   "name": "P27L",
+   "kind": "lying pilot 2.7, 9.0 deep from y 16",
+   "A": [
+    28.0,
+    7.0,
+    4.15
+   ],
+   "B": [
+    28.0,
+    16.5,
+    4.15
+   ],
+   "d": 2.7,
+   "ok": true,
+   "removed_mm3": 51.53
+  },
+  {
+   "name": "H40W",
+   "kind": "standing hole 4.0, 6.5 deep, 1.6 of wall to x 40",
+   "A": [
+    36.4,
+    8.0,
+    1.5
+   ],
+   "B": [
+    36.4,
+    8.0,
+    8.5
+   ],
+   "d": 4.0,
+   "ok": true,
+   "removed_mm3": 81.681
+  }
+ ],
+ "s": 15.9,
+ "modified_after": false
+}

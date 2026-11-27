@@ -1,0 +1,77 @@
+{
+ "job": "A03_P2",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "1",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0",
+  "bridge-no-support": "0",
+  "brim-type": "no_brim"
+ },
+ "plates": [
+  {
+   "name": "v91 ABS P2 carrier cradle hood | TPEI + glue",
+   "objects": [
+    {
+     "stl": "carrier.stl",
+     "assemble": 1,
+     "pos": [
+      -38,
+      0,
+      0
+     ]
+    },
+    {
+     "stl": "cradle.stl",
+     "assemble": 1,
+     "pos": [
+      47,
+      -38,
+      0
+     ]
+    },
+    {
+     "stl": "cradle_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      47,
+      -38,
+      0
+     ]
+    },
+    {
+     "stl": "bme_hood.stl",
+     "assemble": 1,
+     "pos": [
+      47,
+      42,
+      0
+     ]
+    },
+    {
+     "stl": "bme_hood_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      47,
+      42,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "title": "v91 ABS P2 carrier cradle hood | TPEI + glue",
+ "desc": "HA panel version 91 print file - ReSpeaker carrier, 5807 cradle, BME680 hood, one material. black ABS - Textured PEI - with glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_03_P2_carrier_cradle_hood_v91.3mf"
+ ],
+ "source": "print_recheck_v85/p_P2_noclip",
+ "changes": {}
+}
