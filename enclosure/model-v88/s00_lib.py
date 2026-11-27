@@ -60,4 +60,27 @@ def checked(fn, h256):
     if hashlib.sha256(src).hexdigest() != h256 or not src.rstrip().endswith(b'# END'):
         raise RuntimeError(fn + ' is not the file checked')
     return runpy.run_path(D + fn)
+
+
+def prev(path, h256):
+    """A script of an earlier pass, read from its folder on the Mac, refused unless its sha256 is the repo's (given). Its own
+    main() writes into its own folder, so this pass calls its inner functions through out() instead."""
+    src = open(path, 'rb').read()
+    if hashlib.sha256(src).hexdigest() != h256:
+        raise RuntimeError(path + ' is not the file in the repo')
+    return runpy.run_path(path)
+
+
+# earlier passes' scripts this pass reuses: (path on the Mac, sha256 of the file in the repo at ea62429)
+OLD = {'d27': (D80 + 'd27_fits.py', 'edf3c824a9d4aed21ce61ba5725a4954ee95faeb3b071e422114cb8d836ab592'),
+       'm10': (D85 + 'm10_screws.py', '176b32f1cbc29d87cca27ee00343bec932bd5653247cfc726eb8c711a74e9122'),
+       'm11': (D85 + 'm11_holes.py', '30afa85686ceb9d5dbb9b5225b8128f5aa1bb6560bee88e2bd5c9082c59000c1'),
+       'm12': (D85 + 'm12_driver.py', 'caad269ca1a739064da2d07a93008614b2177280c1d8fb751d764ad7fac09413'),
+       'm17': (D85 + 'm17_checks.py', '5ba7cf78a98d04d9260df0bcbab1c5101f628f76479ecb800804d94f44887725'),
+       'm18': (D85 + 'm18_inlet.py', '32dc6476a376c87f56073ba09405691f9d839fa37175a0928cc761d65ae1f2ed'),
+       'm20': (D85 + 'm20_close.py', '96939aa7e5a25be7b8ac74223719f03c070dfc323a547fe1dfcdc26cf96bd0b2')}
+
+
+def old(key):
+    return prev(*OLD[key])
 # END
