@@ -13,7 +13,7 @@ import adsk.core, adsk.fusion
 D = '/Users/danielneocleous/Documents/HA_panel_renders/screw_margins_v88/'
 L = runpy.run_path(D + 's00_lib.py')
 SUF = L['SUF']
-MAY = tuple(L['MAY_CHANGE'])
+MAY = tuple(L['MAY_CHANGE']) + ('SCREWS_M2x6_env',)     # and the screws' drawing, which follows its seats (block 3; not a printed part)
 
 
 def _copies(names):
