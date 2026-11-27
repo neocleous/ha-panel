@@ -20,17 +20,18 @@ L = runpy.run_path(D + 's00_lib.py')
 PIN = (adsk.fusion.PointContainment.PointInsidePointContainment, adsk.fusion.PointContainment.PointOnPointContainment)
 
 # the holes of this pass, from ../model-v85/m11_holes.py and m10_m2.txt / m10_holes_b.txt (version 85; the shell and the door are
-# unchanged since): (part, mouth, floor, radius, deeper by)
+# unchanged since): (part, mouth, floor, radius, deeper by). The door's four boss holes go 0.6 deeper, not the brief's 0.5: they
+# stand upright in the door's print (floor at height 7.2), and the grid of 0.2 asks 7.8, not 7.7 (D493; a choice under D150).
 HOLES = {
     'sp_L1': ('HOUSING_F_front', (85.0, 5.7, 60.68), (85.0, -0.51, 59.36), 2.0, 0.6),
     'sp_R1': ('HOUSING_F_front', (-85.0, 5.7, 60.68), (-85.0, -0.51, 59.36), 2.0, 0.6),
     'hood': ('HOUSING_F_front', (-57.87, -50.61, 100.0), (-61.72, -49.05, 100.0), 0.8, 1.1),
     'grom_L': ('HOUSING_F_door', (9.0, -79.39, 9.71), (9.0, -80.72, 5.63), 0.8, 0.9),
     'grom_R': ('HOUSING_F_door', (-9.0, -79.39, 9.71), (-9.0, -80.72, 5.63), 0.8, 0.9),
-    'door_1': ('HOUSING_F_door', (50.0, -67.0, 2.8), (50.0, -67.0, 10.0), 2.0, 0.5),
-    'door_2': ('HOUSING_F_door', (19.0, -74.5, 2.8), (19.0, -74.5, 10.0), 2.0, 0.5),
-    'door_3': ('HOUSING_F_door', (-19.0, -77.0, 2.8), (-19.0, -77.0, 10.0), 2.0, 0.5),
-    'door_4': ('HOUSING_F_door', (-50.0, -67.0, 2.8), (-50.0, -67.0, 10.0), 2.0, 0.5),
+    'door_1': ('HOUSING_F_door', (50.0, -67.0, 2.8), (50.0, -67.0, 10.0), 2.0, 0.6),
+    'door_2': ('HOUSING_F_door', (19.0, -74.5, 2.8), (19.0, -74.5, 10.0), 2.0, 0.6),
+    'door_3': ('HOUSING_F_door', (-19.0, -77.0, 2.8), (-19.0, -77.0, 10.0), 2.0, 0.6),
+    'door_4': ('HOUSING_F_door', (-50.0, -67.0, 2.8), (-50.0, -67.0, 10.0), 2.0, 0.6),
 }
 
 
