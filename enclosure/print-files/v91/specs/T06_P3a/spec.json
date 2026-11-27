@@ -1,0 +1,80 @@
+{
+ "job": "T06_P3a",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "wall-loops": "4",
+  "brim-type": "outer_only",
+  "brim-width": "5",
+  "brim-object-gap": "0.1",
+  "initial-layer-line-width": "0.42",
+  "enable-support": "1",
+  "support-top-z-distance": "0.2",
+  "support-interface-spacing": "0.5",
+  "bridge-no-support": "0"
+ },
+ "plates": [
+  {
+   "name": "v91 TRIAL PLA P3a shell | TPEI",
+   "objects": [
+    {
+     "stl": "shell.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      -30,
+      0
+     ]
+    },
+    {
+     "stl": "shell_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      0,
+      -30,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "map": {
+  "M": [
+   [
+    0.999999961,
+    1.7e-08,
+    -2e-09,
+    128.003284545
+   ],
+   [
+    2e-09,
+    7e-09,
+    0.999999984,
+    36.607776054
+   ],
+   [
+    -0.0,
+    -0.999999939,
+    1.9e-08,
+    6.799166551964105
+   ]
+  ],
+  "pos": [
+   0,
+   -30,
+   0
+  ]
+ },
+ "title": "v91 TRIAL PLA P3a shell | TPEI",
+ "desc": "HA panel version 91 print file - front shell, chin down. PLA trial - Textured PEI - no glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "1_PLA_trial",
+  "TRIAL_PLA_06_P3a_shell_v91.3mf"
+ ],
+ "source": "print_recheck_v91/pl_shell",
+ "changes": {}
+}

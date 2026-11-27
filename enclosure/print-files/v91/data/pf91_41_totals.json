@@ -1,0 +1,267 @@
+{
+ "rows": {
+  "T00_cal": {
+   "min": 44.7,
+   "min_prep": 50.3,
+   "g": [
+    28.51
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "T01_P1a": {
+   "min": 125.4,
+   "min_prep": 131.0,
+   "g": [
+    31.62
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "T02_P1b": {
+   "min": 178.1,
+   "min_prep": 183.7,
+   "g": [
+    78.12
+   ],
+   "held": true,
+   "warning": ""
+  },
+  "T03_P2": {
+   "min": 35.9,
+   "min_prep": 41.6,
+   "g": [
+    16.74
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "T04_P7": {
+   "min": 22.9,
+   "min_prep": 28.5,
+   "g": [
+    4.34
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "T05_P3b": {
+   "min": 75.3,
+   "min_prep": 80.9,
+   "g": [
+    82.95
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "T06_P3a": {
+   "min": 455.7,
+   "min_prep": 461.3,
+   "g": [
+    170.62
+   ],
+   "held": false,
+   "warning": "Unsupported overhangs were detected.\nModel \"assemble_1\" has 2 overhang region(s) that could not get support. Try adjusting the support settings or re-orienting the object."
+  },
+  "T07_P5": {
+   "min": 187.7,
+   "min_prep": 193.3,
+   "g": [
+    36.38
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "T08_P4a": {
+   "min": 46.9,
+   "min_prep": 52.5,
+   "g": [
+    9.66
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "T09_P4b": {
+   "min": 20.0,
+   "min_prep": 25.7,
+   "g": [
+    1.72
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "T10_P6": {
+   "min": 125.2,
+   "min_prep": 130.8,
+   "g": [
+    52.53
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A00_cal": {
+   "min": 60.5,
+   "min_prep": 78.1,
+   "g": [
+    22.81
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A00_adh": {
+   "min": 113.7,
+   "min_prep": 148.4,
+   "g": [
+    27.63,
+    2.17
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A01_P1a": {
+   "min": 141.4,
+   "min_prep": 174.2,
+   "g": [
+    27.36,
+    3.21
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A02_P1b": {
+   "min": 214.6,
+   "min_prep": 289.7,
+   "g": [
+    80.72,
+    4.2
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A03_P2": {
+   "min": 41.8,
+   "min_prep": 59.4,
+   "g": [
+    13.4
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A04_P7": {
+   "min": 32.9,
+   "min_prep": 83.8,
+   "g": [
+    11.46,
+    1.74
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A05_P3b": {
+   "min": 89.8,
+   "min_prep": 110.1,
+   "g": [
+    67.05,
+    1.38
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A06_P3a": {
+   "min": 627.4,
+   "min_prep": 783.9,
+   "g": [
+    211.58,
+    19.96
+   ],
+   "held": true,
+   "warning": ""
+  },
+  "A07_P5": {
+   "min": 197.7,
+   "min_prep": 223.0,
+   "g": [
+    28.55,
+    4.23
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A08_P4a": {
+   "min": 48.1,
+   "min_prep": 65.7,
+   "g": [
+    7.73
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A09_P4b": {
+   "min": 23.8,
+   "min_prep": 74.3,
+   "g": [
+    8.3,
+    0.47
+   ],
+   "held": false,
+   "warning": ""
+  },
+  "A10_P6": {
+   "min": 198.0,
+   "min_prep": 234.4,
+   "g": [
+    48.24,
+    0.59
+   ],
+   "held": false,
+   "warning": ""
+  }
+ },
+ "sets": {
+  "pla_cal": {
+   "plates": 1,
+   "min": 44.7,
+   "h": 0.7,
+   "min_prep": 50.3,
+   "h_prep": 0.8,
+   "g1": 28.51,
+   "g2": 0
+  },
+  "pla": {
+   "plates": 10,
+   "min": 1273.2,
+   "h": 21.2,
+   "min_prep": 1329.4,
+   "h_prep": 22.2,
+   "g1": 484.67,
+   "g2": 0
+  },
+  "abs_cal": {
+   "plates": 1,
+   "min": 60.5,
+   "h": 1.0,
+   "min_prep": 78.1,
+   "h_prep": 1.3,
+   "g1": 22.81,
+   "g2": 0
+  },
+  "abs_adh": {
+   "plates": 1,
+   "min": 113.7,
+   "h": 1.9,
+   "min_prep": 148.4,
+   "h_prep": 2.5,
+   "g1": 27.63,
+   "g2": 2.17
+  },
+  "abs": {
+   "plates": 10,
+   "min": 1615.5,
+   "h": 26.9,
+   "min_prep": 2098.5,
+   "h_prep": 35.0,
+   "g1": 504.37,
+   "g2": 35.77
+  }
+ }
+}

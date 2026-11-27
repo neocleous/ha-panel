@@ -1,0 +1,884 @@
+{
+ "shell": {
+  "M": [
+   [
+    0.999999961,
+    1.7e-08,
+    -2e-09,
+    128.003284545
+   ],
+   [
+    2e-09,
+    7e-09,
+    0.999999984,
+    36.607776054
+   ],
+   [
+    -0.0,
+    -0.999999939,
+    1.9e-08,
+    6.799166551964105
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   29.047,
+   39.4078,
+   0.0
+  ],
+  "bed_hi": [
+   226.953,
+   216.5803,
+   70.2974
+  ],
+  "vol": 111275.742,
+  "area_on_bed_mm2": 6568.31,
+  "area_down_over_45deg_off_bed_mm2": 16393.66,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/shell.stl",
+  "tris": 1176950
+ },
+ "screen": {
+  "M": [
+   [
+    1.0,
+    -0.0,
+    0.0,
+    128.0
+   ],
+   [
+    -0.0,
+    0.207912017,
+    -0.97814761,
+    240.588556252
+   ],
+   [
+    -0.0,
+    0.978147601,
+    0.207911691,
+    -16.993743295984547
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   29.3,
+   65.65,
+   0.0
+  ],
+  "bed_hi": [
+   226.7,
+   190.35,
+   6.4
+  ],
+  "vol": 66415.065,
+  "area_on_bed_mm2": 14710.63,
+  "area_down_over_45deg_off_bed_mm2": 2304.61,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/screen.stl",
+  "tris": 18774
+ },
+ "slab": {
+  "M": [
+   [
+    -0.207911691,
+    0.203368322,
+    -0.956772729,
+    238.275514226
+   ],
+   [
+    0.978147601,
+    0.043227271,
+    -0.203368322,
+    151.439786803
+   ],
+   [
+    0.0,
+    -0.978147601,
+    -0.207911691,
+    29.793747030709405
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   42.0049,
+   13.1211,
+   0.0
+  ],
+  "bed_hi": [
+   213.9951,
+   242.8789,
+   12.0
+  ],
+  "vol": 63004.447,
+  "area_on_bed_mm2": 1638.45,
+  "area_down_over_45deg_off_bed_mm2": 4276.66,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/slab.stl",
+  "tris": 132268
+ },
+ "door": {
+  "M": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    128.001064301
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    197.787918091
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -2.799994468688965
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   48.986,
+   113.5121,
+   0.0
+  ],
+  "bed_hi": [
+   207.014,
+   142.4879,
+   153.6531
+  ],
+  "vol": 50848.616,
+  "area_on_bed_mm2": 845.95,
+  "area_down_over_45deg_off_bed_mm2": 367.74,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/door.stl",
+  "tris": 146614
+ },
+ "base": {
+  "M": [
+   [
+    1.0,
+    -2.4e-08,
+    5.26e-07,
+    128.003317791
+   ],
+   [
+    -9e-09,
+    0.999999999,
+    8e-09,
+    166.742523055
+   ],
+   [
+    0.0,
+    -1e-09,
+    1.000000016,
+    5.267397152686259e-06
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   30.062,
+   83.4734,
+   0.0
+  ],
+  "bed_hi": [
+   225.938,
+   172.5265,
+   13.0
+  ],
+  "vol": 31504.76,
+  "area_on_bed_mm2": 10647.5,
+  "area_down_over_45deg_off_bed_mm2": 2615.49,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/base.stl",
+  "tris": 839720
+ },
+ "spkbox_L": {
+  "M": [
+   [
+    0.999999965,
+    -5.2e-08,
+    6.5e-08,
+    58.282450261
+   ],
+   [
+    -4.2e-08,
+    8e-08,
+    -0.99999987,
+    171.849995723
+   ],
+   [
+    7e-09,
+    1.000000013,
+    -2e-09,
+    52.00000423551185
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   98.2825,
+   87.85,
+   0.0
+  ],
+  "bed_hi": [
+   154.1556,
+   168.05,
+   51.2
+  ],
+  "vol": 26602.068,
+  "area_on_bed_mm2": 1988.02,
+  "area_down_over_45deg_off_bed_mm2": 2279.52,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/spkbox_L.stl",
+  "tris": 45774
+ },
+ "spkbox_R": {
+  "M": [
+   [
+    1.000000058,
+    4.1e-08,
+    -9.7e-08,
+    197.717856053
+   ],
+   [
+    9.4e-08,
+    1.49e-07,
+    -0.999999883,
+    171.850002958
+   ],
+   [
+    1.9e-08,
+    1.000000006,
+    6e-09,
+    52.000005595596875
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   101.8436,
+   87.85,
+   0.0
+  ],
+  "bed_hi": [
+   154.2179,
+   168.05,
+   51.2
+  ],
+  "vol": 26924.448,
+  "area_on_bed_mm2": 1963.85,
+  "area_down_over_45deg_off_bed_mm2": 2539.27,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/spkbox_R.stl",
+  "tris": 50648
+ },
+ "carrier": {
+  "M": [
+   [
+    -0.207911691,
+    0.203368322,
+    -0.956772729,
+    238.914559455
+   ],
+   [
+    0.978147601,
+    0.043227271,
+    -0.203368322,
+    148.815298961
+   ],
+   [
+    0.0,
+    -0.978147601,
+    -0.207911691,
+    14.593747315227596
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   90.707,
+   80.1933,
+   0.0
+  ],
+  "bed_hi": [
+   165.293,
+   175.8067,
+   16.0
+  ],
+  "vol": 13588.193,
+  "area_on_bed_mm2": 4850.56,
+  "area_down_over_45deg_off_bed_mm2": 1.29,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/carrier.stl",
+  "tris": 37106
+ },
+ "cradle": {
+  "M": [
+   [
+    0.0,
+    0.0,
+    -1.0,
+    147.849998951
+   ],
+   [
+    -1.0,
+    0.0,
+    0.0,
+    128.0
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    84.60000610351562
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   121.15,
+   117.0,
+   0.0
+  ],
+  "bed_hi": [
+   134.85,
+   139.0,
+   24.1
+  ],
+  "vol": 1771.224,
+  "area_on_bed_mm2": 233.84,
+  "area_down_over_45deg_off_bed_mm2": 69.82,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/cradle.stl",
+  "tris": 240938
+ },
+ "cap": {
+  "M": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    128.001033783
+   ],
+   [
+    0.0,
+    -1.0,
+    0.0,
+    91.255020142
+   ],
+   [
+    0.0,
+    0.0,
+    -1.0,
+    180.0
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   50.9622,
+   113.855,
+   0.0
+  ],
+  "bed_hi": [
+   205.0378,
+   142.145,
+   7.4
+  ],
+  "vol": 10128.838,
+  "area_on_bed_mm2": 2596.83,
+  "area_down_over_45deg_off_bed_mm2": 425.88,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/cap.stl",
+  "tris": 91942
+ },
+ "clip_L": {
+  "M": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    85.25
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    131.249999404
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -29.999998092651367
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   125.75,
+   118.45,
+   0.0
+  ],
+  "bed_hi": [
+   130.25,
+   134.05,
+   16.0
+  ],
+  "vol": 727.323,
+  "area_on_bed_mm2": 47.67,
+  "area_down_over_45deg_off_bed_mm2": 10.41,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/clip_L.stl",
+  "tris": 1480
+ },
+ "clip_R": {
+  "M": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    170.75
+   ],
+   [
+    0.0,
+    1.0,
+    0.0,
+    131.249999404
+   ],
+   [
+    0.0,
+    0.0,
+    1.0,
+    -29.999998092651367
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   125.75,
+   118.45,
+   0.0
+  ],
+  "bed_hi": [
+   130.25,
+   134.05,
+   16.0
+  ],
+  "vol": 727.324,
+  "area_on_bed_mm2": 47.67,
+  "area_down_over_45deg_off_bed_mm2": 10.41,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/clip_R.stl",
+  "tris": 1480
+ },
+ "shell_chin8": {
+  "M": [
+   [
+    0.999999961,
+    1.7e-08,
+    -2e-09,
+    128.003284545
+   ],
+   [
+    2e-09,
+    7e-09,
+    0.999999984,
+    36.607776054
+   ],
+   [
+    -0.0,
+    -0.999999939,
+    1.9e-08,
+    6.799166551964105
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   29.5393,
+   39.4078,
+   0.0
+  ],
+  "bed_hi": [
+   226.4606,
+   122.7445,
+   8.0032
+  ],
+  "vol": 29040.677,
+  "area_on_bed_mm2": 6568.34,
+  "area_down_over_45deg_off_bed_mm2": 2400.3,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/shell_chin8.stl",
+  "tris": 722786
+ },
+ "bme_hood": {
+  "M": [
+   [
+    -0.650386754208327,
+    0.7596032319098942,
+    4.732913490311364e-06,
+    115.26216452499771
+   ],
+   [
+    0.7510075543381395,
+    0.6430279060351692,
+    -0.15000921767368824,
+    220.99048835039204
+   ],
+   [
+    -0.11395052995665954,
+    -0.09756045373033527,
+    -0.9886845981355872,
+    97.01608548190345
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   111.0567,
+   121.8574,
+   0.0
+  ],
+  "bed_hi": [
+   144.9433,
+   134.1426,
+   17.6009
+  ],
+  "vol": 946.551,
+  "area_on_bed_mm2": 268.93,
+  "area_down_over_45deg_off_bed_mm2": 8.02,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/bme_hood.stl",
+  "tris": 5590
+ },
+ "grommet": {
+  "M": [
+   [
+    1,
+    0,
+    0,
+    128.00000047683716
+   ],
+   [
+    0,
+    1,
+    0,
+    209.15851593017578
+   ],
+   [
+    0,
+    0,
+    1,
+    -9.999995231628418
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   112.4,
+   123.2106,
+   0.0
+  ],
+  "bed_hi": [
+   143.6,
+   132.7894,
+   23.96
+  ],
+  "vol": 863.307,
+  "area_on_bed_mm2": 132.22,
+  "area_down_over_45deg_off_bed_mm2": 181.05,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/grommet.stl",
+  "tris": 10122
+ },
+ "clamp_L": {
+  "M": [
+   [
+    1,
+    0,
+    0,
+    106.59999966621399
+   ],
+   [
+    0,
+    1,
+    0,
+    160.20000076293945
+   ],
+   [
+    0,
+    0,
+    1,
+    -172.6999969482422
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   113.2,
+   120.3,
+   0.0
+  ],
+  "bed_hi": [
+   142.8,
+   135.7,
+   4.8
+  ],
+  "vol": 743.098,
+  "area_on_bed_mm2": 197.71,
+  "area_down_over_45deg_off_bed_mm2": 46.02,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/clamp_L.stl",
+  "tris": 4480
+ },
+ "clamp_R": {
+  "M": [
+   [
+    1,
+    0,
+    0,
+    149.4000005722046
+   ],
+   [
+    0,
+    1,
+    0,
+    160.20000076293945
+   ],
+   [
+    0,
+    0,
+    1,
+    -172.6999969482422
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   113.2,
+   120.3,
+   0.0
+  ],
+  "bed_hi": [
+   142.8,
+   135.7,
+   4.8
+  ],
+  "vol": 743.098,
+  "area_on_bed_mm2": 197.71,
+  "area_down_over_45deg_off_bed_mm2": 46.02,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/clamp_R.stl",
+  "tris": 4480
+ },
+ "holder": {
+  "M": [
+   [
+    1,
+    0,
+    0,
+    106.75000011920929
+   ],
+   [
+    0,
+    1,
+    0,
+    131.64999985694885
+   ],
+   [
+    0,
+    0,
+    1,
+    -27.59999656677246
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   104.75,
+   120.95,
+   0.0
+  ],
+  "bed_hi": [
+   151.25,
+   135.05,
+   34.4
+  ],
+  "vol": 1120.914,
+  "area_on_bed_mm2": 77.14,
+  "area_down_over_45deg_off_bed_mm2": 289.71,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/holder.stl",
+  "tris": 10216
+ },
+ "clip_L_cmp": {
+  "M": [
+   [
+    1,
+    0,
+    0,
+    85.25
+   ],
+   [
+    0,
+    1,
+    0,
+    132.99999928474426
+   ],
+   [
+    0,
+    0,
+    1,
+    -29.999998092651367
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   125.75,
+   120.2,
+   0.0
+  ],
+  "bed_hi": [
+   130.25,
+   135.8,
+   16.0
+  ],
+  "vol": 727.323,
+  "area_on_bed_mm2": 47.67,
+  "area_down_over_45deg_off_bed_mm2": 10.41,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/clip_L_cmp.stl",
+  "tris": 1480
+ },
+ "clip_R_turned": {
+  "M": [
+   [
+    -1,
+    0,
+    0,
+    85.25
+   ],
+   [
+    0,
+    1,
+    0,
+    132.99999928474426
+   ],
+   [
+    0,
+    0,
+    -1,
+    46.000003814697266
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   125.75,
+   120.2,
+   0.0
+  ],
+  "bed_hi": [
+   130.25,
+   135.8,
+   16.0
+  ],
+  "vol": 727.324,
+  "area_on_bed_mm2": 47.67,
+  "area_down_over_45deg_off_bed_mm2": 10.41,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/clip_R_turned.stl",
+  "tris": 1480
+ },
+ "clip_R_mirror": {
+  "M": [
+   [
+    -1,
+    0,
+    0,
+    85.25
+   ],
+   [
+    0,
+    1,
+    0,
+    132.99999928474426
+   ],
+   [
+    0,
+    0,
+    1,
+    -29.999998092651367
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ],
+  "bed_lo": [
+   125.75,
+   120.2,
+   0.0
+  ],
+  "bed_hi": [
+   130.25,
+   135.8,
+   16.0
+  ],
+  "vol": -727.324,
+  "area_on_bed_mm2": 0.0,
+  "area_down_over_45deg_off_bed_mm2": 58.08,
+  "stl": "/Users/danielneocleous/Documents/HA_panel_renders/print_recheck_v91/stl/bed/clip_R_mirror.stl",
+  "tris": 1480
+ }
+}

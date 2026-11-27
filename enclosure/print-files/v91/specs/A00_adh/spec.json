@@ -1,0 +1,87 @@
+{
+ "job": "A00_adh",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json",
+  "filament_SupportABS_white.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "wall-loops": "4",
+  "brim-type": "outer_only",
+  "brim-width": "5",
+  "brim-object-gap": "0.1",
+  "initial-layer-line-width": "0.42",
+  "enable-support": "1",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0",
+  "bridge-no-support": "0",
+  "support-interface-filament": "2",
+  "enable-prime-tower": "1",
+  "filament-map": "1,2",
+  "wipe-tower-x": "110",
+  "wipe-tower-y": "205",
+  "prime-tower-width": "35"
+ },
+ "plates": [
+  {
+   "name": "v91 ABS adhesion test shell 8 mm | TPEI + glue",
+   "objects": [
+    {
+     "stl": "shell_chin8.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      -30,
+      0
+     ]
+    },
+    {
+     "stl": "shell_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      0,
+      -30,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "map": {
+  "M": [
+   [
+    0.999999961,
+    1.7e-08,
+    -2e-09,
+    128.003284545
+   ],
+   [
+    2e-09,
+    7e-09,
+    0.999999984,
+    36.607776054
+   ],
+   [
+    -0.0,
+    -0.999999939,
+    1.9e-08,
+    6.799166551964105
+   ]
+  ],
+  "pos": [
+   0,
+   -30,
+   0
+  ]
+ },
+ "title": "v91 ABS adhesion test shell 8 mm | TPEI + glue",
+ "desc": "HA panel version 91 print file - the shell's first 8.0 mm. black ABS - Textured PEI - with glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "2_ABS_calibration_and_adhesion_test",
+  "ABS_00b_adhesion_test_v91.3mf"
+ ],
+ "source": "print_recheck_v91/f2_chin8",
+ "changes": {}
+}

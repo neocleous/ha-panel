@@ -1,0 +1,126 @@
+{
+ "job": "T02b_P1b",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "1",
+  "support-top-z-distance": "0.2",
+  "support-interface-spacing": "0.5",
+  "bridge-no-support": "0",
+  "sparse-infill-density": "100%",
+  "sparse-infill-pattern": "zig-zag",
+  "brim-type": "outer_only",
+  "brim-width": "3",
+  "brim-object-gap": "0.1"
+ },
+ "plates": [
+  {
+   "name": "v91 TRIAL PLA P1b boxes and clips | TPEI",
+   "objects": [
+    {
+     "stl": "spkbox_L.stl",
+     "assemble": 1,
+     "pos": [
+      -50,
+      -20,
+      0
+     ]
+    },
+    {
+     "stl": "spkbox_L_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      -50,
+      -20,
+      0
+     ]
+    },
+    {
+     "stl": "spkbox_R.stl",
+     "assemble": 1,
+     "pos": [
+      50,
+      -20,
+      0
+     ]
+    },
+    {
+     "stl": "spkbox_R_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      50,
+      -20,
+      0
+     ]
+    },
+    {
+     "stl": "clip_L.stl",
+     "assemble": 1,
+     "pos": [
+      -37,
+      45,
+      0
+     ]
+    },
+    {
+     "stl": "clip_L_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      -37,
+      45,
+      0
+     ]
+    },
+    {
+     "stl": "clip_L.stl",
+     "assemble": 1,
+     "pos": [
+      -25,
+      45,
+      0
+     ]
+    },
+    {
+     "stl": "clip_L_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      -25,
+      45,
+      0
+     ]
+    },
+    {
+     "stl": "spkbox_L_wire_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      -50,
+      -20,
+      0
+     ]
+    },
+    {
+     "stl": "spkbox_R_wire_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      50,
+      -20,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "title": "v91 TRIAL PLA P1b boxes and clips | TPEI - variant with one blocker more",
+ "desc": "work slice for the Architect - not a print file",
+ "source": "print_recheck_v91/p_P1b_clips_pla",
+ "changes": {}
+}

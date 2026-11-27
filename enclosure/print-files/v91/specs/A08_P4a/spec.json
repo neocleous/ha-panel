@@ -1,0 +1,66 @@
+{
+ "job": "A08_P4a",
+ "process": "process_0.12_HQ.json",
+ "filaments": [
+  "filament_BambuABS_black.json"
+ ],
+ "bed": "Engineering Plate",
+ "opts": {
+  "layer-height": "0.1",
+  "initial-layer-print-height": "0.2",
+  "brim-type": "brim_ears",
+  "detect-thin-wall": "1",
+  "enable-support": "0"
+ },
+ "plates": [
+  {
+   "name": "v91 ABS P4a cap | Engineering + glue",
+   "objects": [
+    {
+     "stl": "cap.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      -28,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "map": {
+  "M": [
+   [
+    1.0,
+    0.0,
+    0.0,
+    128.001033783
+   ],
+   [
+    0.0,
+    -1.0,
+    0.0,
+    91.255020142
+   ],
+   [
+    0.0,
+    0.0,
+    -1.0,
+    180.0
+   ]
+  ],
+  "pos": [
+   0,
+   -28,
+   0
+  ]
+ },
+ "title": "v91 ABS P4a cap | Engineering + glue",
+ "desc": "HA panel version 91 print file - top cap, top face down, 0.10 layers, one material. black ABS - Engineering - with glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_08_P4a_cap_v91.3mf"
+ ],
+ "source": "print_recheck_v79/f2_cap",
+ "changes": {}
+}

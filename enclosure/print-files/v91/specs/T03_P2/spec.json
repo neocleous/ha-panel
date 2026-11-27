@@ -1,0 +1,77 @@
+{
+ "job": "T03_P2",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "enable-support": "1",
+  "support-top-z-distance": "0.2",
+  "support-interface-spacing": "0.5",
+  "bridge-no-support": "0",
+  "brim-type": "no_brim"
+ },
+ "plates": [
+  {
+   "name": "v91 TRIAL PLA P2 carrier cradle hood | TPEI",
+   "objects": [
+    {
+     "stl": "carrier.stl",
+     "assemble": 1,
+     "pos": [
+      -38,
+      0,
+      0
+     ]
+    },
+    {
+     "stl": "cradle.stl",
+     "assemble": 1,
+     "pos": [
+      47,
+      -38,
+      0
+     ]
+    },
+    {
+     "stl": "cradle_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      47,
+      -38,
+      0
+     ]
+    },
+    {
+     "stl": "bme_hood.stl",
+     "assemble": 1,
+     "pos": [
+      47,
+      42,
+      0
+     ]
+    },
+    {
+     "stl": "bme_hood_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      47,
+      42,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "title": "v91 TRIAL PLA P2 carrier cradle hood | TPEI",
+ "desc": "HA panel version 91 print file - ReSpeaker carrier, 5807 cradle, BME680 hood. PLA trial - Textured PEI - no glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "1_PLA_trial",
+  "TRIAL_PLA_03_P2_carrier_cradle_hood_v91.3mf"
+ ],
+ "source": "print_recheck_v85/p_P2_noclip_pla",
+ "changes": {}
+}

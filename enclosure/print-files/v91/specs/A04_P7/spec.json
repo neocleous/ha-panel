@@ -1,0 +1,90 @@
+{
+ "job": "A04_P7",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuABS_black.json",
+  "filament_SupportABS_white.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "support-interface-filament": "2",
+  "enable-prime-tower": "1",
+  "filament-map": "1,2",
+  "wipe-tower-x": "110",
+  "wipe-tower-y": "205",
+  "prime-tower-width": "35",
+  "enable-support": "1",
+  "support-top-z-distance": "0",
+  "support-interface-spacing": "0",
+  "bridge-no-support": "0",
+  "brim-type": "no_brim",
+  "wall-generator": "arachne"
+ },
+ "plates": [
+  {
+   "name": "v91 ABS P7 clamps and holder | TPEI + glue",
+   "objects": [
+    {
+     "stl": "clamp_L.stl",
+     "assemble": 1,
+     "pos": [
+      -20,
+      60,
+      0
+     ]
+    },
+    {
+     "stl": "clamp_R.stl",
+     "assemble": 1,
+     "pos": [
+      20,
+      60,
+      0
+     ]
+    },
+    {
+     "stl": "holder.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      -60,
+      0
+     ],
+     "params": {
+      "brim_type": "outer_only",
+      "brim_width": "5",
+      "brim_object_gap": "0.1"
+     }
+    },
+    {
+     "stl": "holder_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      0,
+      -60,
+      0
+     ]
+    },
+    {
+     "stl": "holder_enf.stl",
+     "assemble": 1,
+     "subtype": "support_enforcer",
+     "pos": [
+      0,
+      -60,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "title": "v91 ABS P7 clamps and holder | TPEI + glue",
+ "desc": "HA panel version 91 print file - both microphone clamps and the radar holder. black ABS - Textured PEI - with glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "3_ABS_black_set",
+  "ABS_04_P7_clamps_and_holder_v91.3mf"
+ ],
+ "source": "print_recheck_v91/p_P7_clamps_holder",
+ "changes": {}
+}

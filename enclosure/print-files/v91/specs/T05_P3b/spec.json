@@ -1,0 +1,78 @@
+{
+ "job": "T05_P3b",
+ "process": "process_0.20_Standard.json",
+ "filaments": [
+  "filament_BambuPLABasic_black.json"
+ ],
+ "bed": "Textured PEI Plate",
+ "opts": {
+  "sparse-infill-density": "100%",
+  "sparse-infill-pattern": "zig-zag",
+  "brim-type": "no_brim",
+  "enable-support": "1",
+  "support-top-z-distance": "0.2",
+  "support-interface-spacing": "0.5",
+  "bridge-no-support": "0"
+ },
+ "plates": [
+  {
+   "name": "v91 TRIAL PLA P3b screen plate | TPEI",
+   "objects": [
+    {
+     "stl": "screen.stl",
+     "assemble": 1,
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    },
+    {
+     "stl": "screen_blk.stl",
+     "assemble": 1,
+     "subtype": "support_blocker",
+     "pos": [
+      0,
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ],
+ "map": {
+  "M": [
+   [
+    1.0,
+    -0.0,
+    0.0,
+    128.0
+   ],
+   [
+    -0.0,
+    0.207912017,
+    -0.97814761,
+    240.588556252
+   ],
+   [
+    -0.0,
+    0.978147601,
+    0.207911691,
+    -16.993743295984547
+   ]
+  ],
+  "pos": [
+   0,
+   0,
+   0
+  ]
+ },
+ "title": "v91 TRIAL PLA P3b screen plate | TPEI",
+ "desc": "HA panel version 91 print file - screen plate, solid. PLA trial - Textured PEI - no glue. Sliced headless on Bambu Studio 02.09.02.62. Enter your calibrated Shrinkage in the filament settings and slice again before printing.",
+ "deliver": [
+  "1_PLA_trial",
+  "TRIAL_PLA_05_P3b_screen_plate_v91.3mf"
+ ],
+ "source": "print_recheck_v79/pl_screen",
+ "changes": {}
+}
