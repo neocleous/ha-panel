@@ -6,6 +6,7 @@
 #            and this one
 #   guards   counts, and the 17 guard volumes by both readings against version 85's (the brief's table)
 #   walk     the shell's way down (../model-v80/d27_fits.st_walk): case, side, behind, to the side
+#   walkadd  the same walk for what this pass added to each box only (removed material cannot meet anything)
 #   slide    a box with its driver, foam and lead slid onto the base plate (c3k.K4NS['slide'], 17 positions; as d60_close._slide)
 #   tabkey   the 2.0 key on each box-top screw (k.line, the key's two sections, every 5 along it), from the head's top outward on
 #            the screw's line, against every body of the unit but leads; with the boxes of the model and with their _v85 copies
@@ -86,6 +87,40 @@ def st_walk(k, X, case='boxes', side='L', bs=(0.95, 1.3, 1.6), s=0.0, sec=70):
     F27['st_walk'](k, X, case=case, side=side, bs=bs, s=s, sec=sec)
 
 
+def st_walkadd(k, X, cases=('frame', 'boxes'), sides=('L', 'R'), offs=(0.0, 0.25, -0.25), bs=(0.95, 1.3, 1.6), sec=70):
+    """The shell's way down for what this pass ADDED to each box (the box less its _v85 copy), by d27's cases, crops and lifts.
+    What was removed cannot meet anything, so a walk of the whole box now finds what the same walk of version 85 found, or
+    less, plus what this finds."""
+    k.budget(sec)
+    F27 = runpy.run_path(D80 + 'd27_fits.py')
+    for side in sides:
+        sx = 1 if side == 'L' else -1
+        add = X.tbm.copy(X.body('SPKBOX_' + side)); X.dif(add, X.tbm.copy(X.body('SPKBOX_%s_v85' % side)))
+        print('SPKBOX_%s: added in this pass %.3f mm3 in %d lumps' % (side, X.vol(add), add.lumps.count))
+        for case in cases:
+            names, boxes, near, hs = F27['CASES'][case]
+            crops = [L['crop'](X, 'HOUSING_F_front', bx) for bx in boxes(sx)]
+            m = X.tbm.copy(add)
+            if case == 'frame':
+                X.sec(m, X.wbox(-110, 110, -53.0, -47.0, -1, 85))
+            if case == 'boxes':
+                X.sec(m, X.wbox(-110, 110, -16.0, 8.0, -1, 90))
+            if not m.faces.count:
+                print('   %-6s: nothing added inside the walk\'s crop: the walk is version 85\'s' % case); continue
+            print('   %-6s: added inside the walk\'s crop %.3f mm3, %s' % (case, X.vol(m), X.lumps(m)[:6]))
+            for so in offs:
+                for b in bs:
+                    hit = []
+                    for h in hs:
+                        t = X.move(X.tbm.copy(m), so, -b, -h)
+                        v = sum(X.xv(t, cr) for cr in crops)
+                        if v > 0.0005:
+                            hit.append((h, round(v, 4)))
+                    print('      %.2f to the side, %.2f behind: %s' % (so, b, ('meets at %s' % hit[:6]) if hit else 'clear at every lift (%d to %.1f)' % (len(hs), hs[-1])))
+                    if k.late():
+                        print('time'); return
+
+
 def st_slide(k, X, side='L', tag='bm', sec=66):
     k.budget(sec)
     o = 'R' if side == 'L' else 'L'
@@ -126,7 +161,7 @@ def _main(stage, **kw):
     k = L['load'](); X = k.K()
     print(L['stamp'](), 'before', X.state())
     try:
-        {'matrix': st_matrix, 'compare': st_compare, 'guards': st_guards, 'walk': st_walk, 'slide': st_slide, 'tabkey': st_tabkey}[stage](k, X, **kw)
+        {'matrix': st_matrix, 'compare': st_compare, 'guards': st_guards, 'walk': st_walk, 'walkadd': st_walkadd, 'slide': st_slide, 'tabkey': st_tabkey}[stage](k, X, **kw)
     finally:
         for b in [b for b in X.root.bRepBodies if b.name.startswith('TMP_')]:
             b.deleteMe()
