@@ -19,6 +19,7 @@ import checks  # noqa: E402
 import page as PG  # noqa: E402
 import panel  # noqa: E402
 import render as R  # noqa: E402
+import unitview as UV  # noqa: E402
 from model import Model, wire_words  # noqa: E402
 from svgboard import esc  # noqa: E402
 
@@ -74,7 +75,8 @@ def build():
 </div>"""
 
     # ------------------------------------------------------------------ the unit
-    unit = section("The unit", R.unit_viewer(m, json.load(open(POSITIONS))), "From behind with the door off, and from above. Tap a lead.")
+    label_report = []
+    unit = section("The unit", UV.unit_section(m, json.load(open(POSITIONS)), label_report), "Tap a lead to see it alone.")
 
     # ------------------------------------------------------------------ main board viewer (kept; plain names)
     items = R.board_items(m, "main", ends)
@@ -224,13 +226,15 @@ def build():
 <title>HA panel electronics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-<style>{R.css()}{PG.css()}</style></head><body><div class="wrap">
+<style>{R.css()}{PG.css()}{UV.UNIT_CSS}</style></head><body><div class="wrap">
 {body}
-</div><script>{R.JS}{PG.STEP_JS}</script></body></html>"""
+</div><script>{R.JS}{PG.STEP_JS}{UV.UNIT_JS}</script></body></html>"""
     open(OUT, "w", encoding="utf8").write(page)
     print(f"wrote {OUT} ({len(page) // 1024} KiB); checks passed: {len(passes)}")
     for p in passes:
         print("  +", p)
+    for r in label_report:
+        print("  label:", r)
 
 
 if __name__ == "__main__":

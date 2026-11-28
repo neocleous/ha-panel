@@ -282,11 +282,11 @@ LEAD_STOCK = {1: "black", 2: "black", 3: "black", 4: "black", 5: "black", 13: "b
 
 # Plain names (D572).
 LEAD_NAMES = {1: "20 V lead", 2: "left speaker lead", 3: "right speaker lead", 4: "radar lead", 5: "touch lead",
-              6: "BME680 lead", 7: "light-sensor lead", 8: "Pi wires, pins 1–5", 9: "Pi wires, pins 7–16",
-              10: "Pi wires, pins 35–40", 11: "display power lead", 12: "display ribbon", 13: "left microphone lead",
+              6: "BME680 lead", 7: "light-sensor lead", 8: "Pi wires: power and I²C", 9: "Pi wires: serial, audio clock and mute",
+              10: "Pi wires: audio data", 11: "display power lead", 12: "display ribbon", 13: "left microphone lead",
               14: "right microphone lead", 15: "Pi power cable", 16: "ReSpeaker USB cable"}
 LEAD_SHORT = {1: "20 V", 2: "Left speaker", 3: "Right speaker", 4: "Radar", 5: "Touch", 6: "BME680", 7: "Light sensor",
-              8: "Pi 1–5", 9: "Pi 7–16", 10: "Pi 35–40", 11: "Display power", 12: "Ribbon", 13: "Left mic",
+              8: "Pi: power and I²C", 9: "Pi: serial, audio clock, mute", 10: "Pi: audio data", 11: "Display power", 12: "Ribbon", 13: "Left mic",
               14: "Right mic", 15: "Pi power", 16: "ReSpeaker USB"}
 SOCKET_NAMES = {"J1": "20 V socket", "J2": "Pi power socket", "J3": "Pi wire pads", "J4": "Pi wire pads, I²S",
                 "J5": "radar socket", "J6": "touch socket", "J7": "echo tap pads", "J8": "left speaker socket",

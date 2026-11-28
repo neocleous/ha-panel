@@ -131,6 +131,7 @@ section > *{min-width:0} .steps-card > *,.step > *{min-width:0}
 .t-wt{font:700 13px var(--f-display);letter-spacing:.06em;fill:var(--muted)}
 svg.wire .lead{transition:opacity .18s}
 svg.wire[data-show]:not([data-show="all"]) .lead:not(.on){opacity:.1}
+svg.wire[data-show]:not([data-show="all"]) .hub:not(.on){opacity:.3}
 @media (prefers-reduced-motion: reduce){svg.wire .lead{transition:none}}
 .wlegend{display:flex;flex-wrap:wrap;gap:6px 18px;list-style:none;margin:0;padding:0;font:13px var(--f-body);color:var(--muted)}
 .wlegend li{display:flex;align-items:center;gap:7px} .wlegend .sw{width:22px;height:6px;border-radius:3px;box-shadow:0 0 0 1px var(--muted) inset}
@@ -201,6 +202,7 @@ S.forEach((card, si) => {
     card.querySelector('.next').textContent = (i === steps.length - 1) ? (si < S.length - 1 ? 'Next section' : 'Done') : 'Next step';
     if (stage) { const sh = steps[i].dataset.show || 'all'; stage.setAttribute('data-show', sh);
       stage.querySelectorAll('.lead').forEach(g => g.classList.toggle('on', g.dataset.lead === sh));
+      stage.querySelectorAll('.hub').forEach(g => g.classList.toggle('on', g.dataset.leads.split(' ').indexOf(sh) >= 0));
       if (!stage._full) stage._full = stage.getAttribute('viewBox');
       const lit = stage.querySelector('.lead.on');
       if (lit && stage.clientWidth < 700) { const b = lit.getBBox(), p = 30;
@@ -278,6 +280,7 @@ def wiring_svg(model):
         return items
 
     out_w, out_m, out_s = [], [], []
+    MX0, MX1 = 960, 1150
     bottom = pack([r for r, e in edge.items() if e == "bottom"], "x")
     left = pack([r for r, e in edge.items() if e == "left"], "y", gap=72)
     over = left[-1][1] + (left[-1][2] - 1) * PIT - (BY + BH - 80)
@@ -288,12 +291,17 @@ def wiring_svg(model):
     W = 1280
     H = 1080
     svg = [f'<svg class="wire" viewBox="0 0 {W} {H}" role="img" aria-label="Every lead from its socket to its far end, in the colour of its job">']
+    svg.append('<g class="hub" data-leads="1 2 3 4 5 6 7 8 9 10 15">')
     svg.append(f'<rect class="wb" x="{BX}" y="{BY}" width="{BW}" height="{BH}" rx="10"/>'
                f'<text class="t-wt" x="{BX + BW / 2}" y="{BY + BH / 2 - 8}" text-anchor="middle">MAIN BOARD</text>'
                f'<text class="t-ws" x="{BX + BW / 2}" y="{BY + BH / 2 + 12}" text-anchor="middle">from the door side · sockets in their real order</text>')
+    svg.append('</g>')
 
     def sock_label(ref, x, y, anchor="middle"):
         nm = SOCK_SHORT.get(ref, ref)
+        if anchor == "middle":           # keep the label inside the board's outline
+            half = 3.6 * (len(nm) + len(ref) + 1) + 4
+            x = min(max(x, BX + 8 + half), BX + BW - 8 - half)
         return f'<text class="t-w" x="{x:.1f}" y="{y:.1f}" text-anchor="{anchor}">{esc(nm)} <tspan class="t-ws">{ref}</tspan></text>'
 
     def band(x, y, vertical, ins):
@@ -360,8 +368,8 @@ def wiring_svg(model):
         pins = sorted(k for k in pi_ports if isinstance(k, int))
         x_lo = min(pi_ports[k][0] for k in pins) - 150
         x_hi = pi_ports["usb"][0] + 40 if "usb" in pi_ports else max(pi_ports[k][0] for k in pins) + 40
-        out_m.append(module_box(x_lo, row_b, x_hi - x_lo, 92, "", ""))
-        out_m.append(f'<text class="t-w" x="{x_lo + 8:.1f}" y="{row_b + 20}">Raspberry Pi 5</text><text class="t-ws" x="{x_lo + 8:.1f}" y="{row_b + 34}">header pins</text>')
+        out_m.append('<g class="hub" data-leads="8 9 10 11 12 15 16">' + module_box(x_lo, row_b, x_hi - x_lo, 92, "", ""))
+        out_m.append(f'<text class="t-w" x="{x_lo + 8:.1f}" y="{row_b + 20}">Raspberry Pi 5</text><text class="t-ws" x="{x_lo + 8:.1f}" y="{row_b + 34}">header pins</text></g>')
         for p in pins:
             x, spec, l = pi_ports[p]
             g(l["n"]).append(wire(f"M{x:.1f},{BY + BH} L{x:.1f},{row_b}", spec, [(x, BY + BH + 12, True), (x, row_b - 12, True)]))
@@ -387,6 +395,15 @@ def wiring_svg(model):
             g(11).append(wire(f"M{x_lo - 120:.1f},{y} L{dx + 96:.1f},{y}", spec, [(x_lo - 108, y, False), (dx + 84, y, False)]))
             g(11).append(f'<text class="t-wp" x="{dx + 104:.1f}" y="{y + 4}">{p}</text>')
         g(11).append(module_box(x_lo - 250, row_b + 40, 130, 52, "Display", "its 4-pin header"))
+        # the DSI ribbon: display to the Pi's DSI socket, a bought cable
+        yr = row_b + 48
+        g(12).append(f'<path class="wcable" d="M{x_lo - 120:.1f},{yr} L{x_lo:.1f},{yr}"/>'
+                     f'<text class="t-wp" x="{x_lo + 6:.1f}" y="{yr + 4}">DSI</text>')
+        # the ReSpeaker's USB cable: Pi USB-A, round the right, up into the ReSpeaker's USB-C
+        yu, xr = row_b + 46, MX1 + 40
+        g(16).append(f'<path class="wcable" d="M{x_hi:.1f},{yu} L{xr},{yu} L{xr},{442}"/>'
+                     f'<text class="t-wp" x="{x_hi + 8:.1f}" y="{yu - 8}">USB-A</text>'
+                     f'<text class="t-wp" x="{xr - 8}" y="{434}" text-anchor="end">USB-C</text>')
     # ---- left edge: straight left to the radar and the BME680 board.
     for ref, y0, n in left:
         ws = sorted(wires_at.get(ref, []), key=lambda t: t[0])
@@ -424,7 +441,6 @@ def wiring_svg(model):
             lab = pin_label(mod["pins"][b.split(":")[1]][0])
             g(l["n"]).append(f'<text class="t-wp" x="{x + 4:.1f}" y="{ty + 8}" transform="rotate(-90 {x + 4:.1f} {ty + 8})">{esc(lab)}</text><text class="t-wp" x="{x:.1f}" y="{BY + 12}" text-anchor="middle">{num}</text>')
     # ---- microphone leads: each strip straight across to its ReSpeaker pads, in cable order.
-    MX0, MX1 = 960, 1150
     for k, n in enumerate((13, 14)):
         l = next(x for x in model.leads if x["n"] == n)
         y0 = 126 + k * 170
@@ -440,10 +456,10 @@ def wiring_svg(model):
             g(n).append(f'<text class="t-wp" x="{MX0 - 24}" y="{y + 4:.1f}" text-anchor="end">{pa}</text><text class="t-wp" x="{MX1 - 64}" y="{y + 4:.1f}">{pb} {esc(fn)}</text>')
         b4, b6 = l["bridge"]
         g(n).append(f'<text class="t-ws" x="{MX1 - 64}" y="{y0 + len(l["wires"]) * PIT + 14:.1f}">bridge 4 to 6</text>')
-    out_m.append(module_box(MX1 - 74, 62, 140, 380, "", ""))
+    out_m.append('<g class="hub" data-leads="13 14 16">' + module_box(MX1 - 74, 62, 140, 380, "", ""))
     out_m.append(f'<text class="t-w" x="{MX1 - 66}" y="80">ReSpeaker</text>')
     out_m.append(f'<text class="t-ws" x="{MX1 - 66}" y="100">pads with left/right</text><text class="t-ws" x="{MX1 - 66}" y="112">at ground</text>'
-                 f'<text class="t-ws" x="{MX1 - 66}" y="270">pads with left/right</text><text class="t-ws" x="{MX1 - 66}" y="282">at 3.3 V</text>')
+                 f'<text class="t-ws" x="{MX1 - 66}" y="270">pads with left/right</text><text class="t-ws" x="{MX1 - 66}" y="282">at 3.3 V</text></g>')
     svg += out_m + out_s
     for n, parts in sorted(groups.items(), key=lambda t: t[0]):
         svg.append(f'<g class="lead" data-lead="{n}">' + "".join(parts) + "</g>")
