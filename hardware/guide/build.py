@@ -145,28 +145,33 @@ def build():
                     "Configuration: <code>dtoverlay=rpi-digiampplus,auto_mute_amp</code> · <code>dtparam=uart0=on</code> · <code>usb_max_current_enable=1</code> · EEPROM <code>PSU_MAX_CURRENT=5000</code> · I²C on.")
 
     # ------------------------------------------------------------------ first power: steps with readings
+    TP_NAMES = {"TP1": "20 V in, before the protection chip", "TP2": "20 V, after the protection chip", "TP3": "20 V current monitor",
+                "TP4": "protection chip fault", "TP6": "protection chip shutdown", "TP8": "5 V module input", "TP9": "5 V module output",
+                "TP10": "5 V after the Pi fuse", "TP11": "5 V at the Pi power socket", "TP12": "radar 5 V", "TP13": "5 V module trim",
+                "TP16": "3.3 V", "TP19": "amplifier fault", "F5.2": "amplifier supply, F5's right-hand pad"}
+
     def tpf(ref, expect):
-        return {"id": ref.replace(".", "_"), "label": f"{ref.replace('.', ' pad ')} <small>{where(ref)}</small>", "expect": expect}
+        return {"id": ref.replace(".", "_"), "label": f"{TP_NAMES[ref]} <small>({ref.replace('.', ' pad ')}) · {where(ref)}</small>", "expect": expect}
     power_steps = [
-        {"title": "20 V only", "do": ["Main board on the bench. Inlet board and charger on the 20 V socket. Nothing else plugged.", f"Meter ground on {hc('TP7')}."],
+        {"title": "20 V only", "do": ["Main board on the bench, only the 20 V lead plugged in, its charger on.", "Black probe on the ground test pad <small>(TP7)</small>."],
          "fields": [tpf("TP1", "about 20 V"), tpf("TP2", "about 20 V"), tpf("TP8", "about 20 V"), tpf("F5.2", "about 20 V"),
                     tpf("TP3", "0.279 V per amp drawn"), tpf("TP6", "about 2.7 V")]},
-        {"title": "5 V", "do": ["Still 20 V only."], "note": "All four about equal.",
-         "fields": [tpf("TP9", "4.90–5.10 V"), tpf("TP10", "4.90–5.10 V"), tpf("TP11", "4.90–5.10 V"), tpf("TP12", "4.90–5.10 V"), tpf("TP13", "5 V trim")]},
-        {"title": "3.3 V waits for the Pi", "do": ["Still 20 V only."], "note": "About 0 V. The 3.3 V regulator starts with the Pi.",
+        {"title": "5 V", "do": ["Still 20 V only."], "note": "The four 5 V readings about equal.",
+         "fields": [tpf("TP9", "4.90–5.10 V"), tpf("TP10", "4.90–5.10 V"), tpf("TP11", "4.90–5.10 V"), tpf("TP12", "4.90–5.10 V"), tpf("TP13", "write it down: no set value")]},
+        {"title": "3.3 V waits for the Pi", "do": ["Still 20 V only."], "note": "About 0 V: the 3.3 V regulator starts only with the Pi.",
          "fields": [tpf("TP16", "about 0 V"), tpf("TP19", "about 0 V"), tpf("TP4", "about 0 V")]},
         {"title": "Pi on", "do": ["Plug the Pi power cable, the three Pi housings and the display power lead.", "Boot the Pi."],
          "note": "<code>vcgencmd get_throttled</code> reads <code>0x0</code>.",
          "fields": [tpf("TP16", "3.21–3.34 V"), tpf("TP4", "about 3.3 V"), tpf("TP19", "about 3.3 V")]},
-        {"title": "5 V under load", "do": ["All cores busy, display on.", "Read <code>vcgencmd pmic_read_adc EXT5V_V</code> and TP11."],
+        {"title": "5 V under load", "do": ["All cores busy, display on.", "Read <code>vcgencmd pmic_read_adc EXT5V_V</code>, and the 5 V at the Pi power socket <small>(TP11)</small>."],
          "note": "4.87 V or more. Lower: stop.", "fields": [tpf("TP11", "4.87 V or more")]},
         {"title": "Configure and plug the rest", "do": ["Apply the Pi configuration (Pi header, above).", "Plug the BME680, light-sensor, touch and radar leads.",
                                                         "Switch the 20 V off and on."],
-         "note": "TP9 rises to 4.90–5.10 V once, and the Pi boots.", "fields": [tpf("TP9", "4.90–5.10 V")]},
+         "note": "The 5 V module output rises to 4.90–5.10 V once, and the Pi boots.", "fields": [tpf("TP9", "4.90–5.10 V")]},
         {"title": "The buses", "do": ["Run <code>sudo i2cdetect -y 1</code>.", "Run the radar, Pi under full load."],
          "note": "I²C shows <code>1b</code> touch, <code>48</code> light sensor, <code>UU</code> at <code>4c</code> amplifier, <code>76</code> or <code>77</code> BME680. The radar gives no bad frame on <code>/dev/ttyAMA0</code> at 256000.",
          "fields": [tpf("TP12", "4.90–5.10 V, radar on")]},
-        {"title": "Microphones", "do": ["Both strips on the ReSpeaker; its cable in the Pi.", "Run <code>arecord -l</code>."], "note": "The ReSpeaker is listed. Then the audio bench test."},
+        {"title": "Microphones", "do": ["Both microphone strips soldered to the ReSpeaker; its USB cable in the Pi.", "Run <code>arecord -l</code>."], "note": "The ReSpeaker is listed. Then the audio bench test."},
     ]
     firstpower = section("First power", PG.stepper("power", "First power", power_steps), sid="power")
 
