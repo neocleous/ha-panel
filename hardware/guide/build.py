@@ -75,7 +75,7 @@ def build():
 </header>
 <div class="warn">
 <div><b>The 20 V plug goes on first, on the middle socket</b><p>The three 2-way sockets look the same. On a speaker socket, 20 V can destroy the board.</p></div>
-<div><b>Measure the power module before you solder it</b><p>Pins to component side: about 5.0 mm, carry on. About 8.3 mm, or anything else: stop.</p></div>
+<div><b>Test-fit the power module before you solder anything</b><p>Its body must sit on the rectangle printed for it, clear of the two large capacitors and the coil. If not: stop.</p></div>
 <div><b>Pi pins 2 and 4 are both 5 V</b><p>The display power lead's ground goes on pin 6. Check the row before you press the housing home.</p></div>
 </div>"""
 
@@ -155,9 +155,9 @@ def build():
     power_steps = [
         {"title": "20 V only", "do": ["Main board on the bench, only the 20 V lead plugged in, its charger on.", "Black probe on the ground test pad <small>(TP7)</small>."],
          "fields": [tpf("TP1", "about 20 V"), tpf("TP2", "about 20 V"), tpf("TP8", "about 20 V"), tpf("F5.2", "about 20 V"),
-                    tpf("TP3", "0.279 V per amp drawn"), tpf("TP6", "about 2.7 V")]},
+                    tpf("TP6", "about 2.7 V")]},
         {"title": "5 V", "do": ["Still 20 V only."], "note": "The four 5 V readings about equal.",
-         "fields": [tpf("TP9", "4.90–5.10 V"), tpf("TP10", "4.90–5.10 V"), tpf("TP11", "4.90–5.10 V"), tpf("TP12", "4.90–5.10 V"), tpf("TP13", "write it down: no set value")]},
+         "fields": [tpf("TP9", "4.90–5.10 V"), tpf("TP10", "4.90–5.10 V"), tpf("TP11", "4.90–5.10 V"), tpf("TP12", "4.90–5.10 V")]},
         {"title": "3.3 V waits for the Pi", "do": ["Still 20 V only."], "note": "About 0 V: the 3.3 V regulator starts only with the Pi.",
          "fields": [tpf("TP16", "about 0 V"), tpf("TP19", "about 0 V"), tpf("TP4", "about 0 V")]},
         {"title": "Pi on", "do": ["Plug the Pi power cable, the three Pi housings and the display power lead.", "Boot the Pi."],
