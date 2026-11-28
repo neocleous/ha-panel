@@ -14,6 +14,10 @@ from svgboard import esc
 hc = R.hc
 
 
+def sm(ref):
+    return f'<small class="ref">({esc(ref)})</small>'
+
+
 def nice(value, ref):
     """'0.22u 50V' -> '0.22 µF 50 V'; '22.1k 1%' -> '22.1 kΩ 1 %'; '10u' on an L -> '10 µH'."""
     v = value.replace(" DNP", "")
@@ -59,9 +63,36 @@ def _stamp(steps):
     done = []
     for st in steps:
         cur = st.pop("parts", [])
-        st["data"] = {"cur": " ".join(cur), "done": " ".join(done)}
+        look = st.pop("look", [])
+        st["data"] = {"cur": " ".join(cur), "done": " ".join(done), "look": " ".join(look)}
         done = done + cur
     return steps
+
+
+# End-on view of the open-frame module standing on its pins (Mean Well side view: parts face to module board 9,
+# pins 4 from the board on the parts side, so 5.0 from the parts face; rev 3.2 holes matched about 8.3).
+PS1_PIC = (
+    '<svg class="ps1pic" viewBox="0 0 440 250" role="img" aria-label="The power module seen from one end, standing on its pins">'
+    '<text class="t-ws" x="12" y="18">SEEN FROM ONE END OF THE PIN ROW</text>'
+    # rule against the parts
+    '<rect x="96" y="40" width="8" height="150" fill="var(--muted)"/>'
+    '<text class="t-ws" x="88" y="36" text-anchor="end">steel rule</text>'
+    # parts
+    '<rect x="104" y="62" width="62" height="34" rx="3" fill="var(--body)" stroke="var(--ink)"/>'
+    '<rect x="104" y="112" width="40" height="30" rx="3" fill="var(--body)" stroke="var(--ink)"/>'
+    '<rect x="104" y="152" width="70" height="26" rx="3" fill="var(--body)" stroke="var(--ink)"/>'
+    '<text class="t-ws" x="112" y="84">parts</text>'
+    # module board
+    '<rect x="266" y="44" width="14" height="148" fill="var(--pcb)" stroke="var(--ink)"/>'
+    '<text class="t-ws" x="290" y="70">the module\'s own board</text>'
+    # pins
+    '<path d="M222,192 L222,234" stroke="var(--ink)" stroke-width="7"/>'
+    '<text class="t-ws" x="232" y="230">pins</text>'
+    # dimension
+    '<path d="M104,214 L222,214" stroke="var(--accent)" stroke-width="2"/>'
+    '<path d="M104,206 L104,222 M222,206 L222,222" stroke="var(--accent)" stroke-width="2"/>'
+    '<text x="163" y="246" text-anchor="middle" style="font:700 14px var(--f-body);fill:var(--accent)">about 5.0 mm: carry on</text>'
+    '</svg>')
 
 
 def main_steps(model):
@@ -72,30 +103,38 @@ def main_steps(model):
              "C120", "C106", "C107", "C113", "C114"]
     s0805 = ["R12", "C1", "C10", "C109", "C110", "C116", "C117", "C101", "C102", "C12", "C122", "C123"]
     steps = [
-        {"title": "Measure the power module",
-         "do": ["Put the power module (PS1) on the bench, pins down.", "Measure from its row of pins to its component side."],
-         "note": "About 5.0 mm: carry on. About 8.3 mm: stop, the board is wrong for it. Anything else: stop.",
-         "fields": [{"id": "ps1", "label": "Pins to component side", "expect": "about 5.0 mm"}]},
+        {"title": "Check the 5 V power module",
+         "picture": PS1_PIC,
+         "do": ["Take the 5 V power module (PS1) out of its bag: a small board, 51 × 28 mm, with 13 pins along one long edge and its parts on one face.",
+                "Stand it on its pins and look along the row of pins from one end.",
+                "Lay a steel rule flat across the tops of the parts.",
+                "With calipers, measure from the rule to the middle of the pins."],
+         "note": "About 5.0 mm: carry on. About 8.3 mm: stop, the holes on this board don't match it. Anything else: stop.",
+         "fields": [{"id": "ps1", "label": "Rule to pins", "expect": "about 5.0 mm"}],
+         "look": ["PS1"]},
         {"title": "Check the bare board",
-         "do": [f"Meter on ohms. From {hc('TP7')} (ground) to {hc('TP2')}, {hc('F5 pad 2')}, {hc('TP9')} and {hc('TP16')}."],
-         "note": "Each reads open. Anything else: stop, the board is faulty."},
+         "do": ["Meter on ohms. Black probe on the ground test pad <small>(TP7)</small>.",
+                "Red probe in turn on the test pads for 20 V <small>(TP2)</small>, 5 V <small>(TP9)</small> and 3.3 V <small>(TP16)</small>, and on the amplifier fuse's inner pad <small>(F5 pad 2)</small>."],
+         "note": "Each reads open. Anything else: stop, the board is faulty.",
+         "look": ["TP7", "TP2", "TP9", "TP16", "F5"]},
         {"title": "Open the bags on the day",
-         "do": [f"Open the bags of the amplifier {hc('U100')}, the protection chip {hc('U1')} and the fuses {hc('F4')} {hc('F5')} today, not before."],
-         "note": "Solder them within: U100 168 h; U1 a year; F4, F5 4 weeks; at 30 °C / 60 % or less. Older: bake them first (J-STD-033)."},
+         "do": ["Open these bags today, not before: the amplifier chip <small>(U100)</small>, the protection chip <small>(U1)</small> and the two resettable fuses <small>(F4, F5)</small>."],
+         "note": "Solder them within: amplifier 168 h; protection chip a year; fuses 4 weeks; at 30 °C / 60 % or less. Older: bake them first (J-STD-033).",
+         "look": ["U100", "U1", "F4", "F5"]},
         {"title": "Paste the board",
          "do": ["Check the paste's date: Sn63/Pb37 no-clean, Chip Quik SMD291AXT4.",
                 "Main board's own stencil, 0.12 mm, outline on outline. Tape it at one edge.",
                 "One firm pass of the squeegee. Lift the stencil straight up."],
          "note": "Every pad but the test pads and the through-holes carries paste, the nine empty places too.",
          "tip": "Smeared or thin under the amplifier? Wipe the board clean with a dry cloth and paste again."},
-        {"title": "Place the chips",
-         "do": [f"{hc('U100')} amplifier, 48 pins; {hc('U1')} protection chip, 20 pins; {hc('U2')} 3.3 V regulator, 5 pins.",
-                "Pin 1 at the red dot on the drawing."],
+        {"title": "Place the three chips",
+         "do": [f"The amplifier chip {sm('U100')}, 48 pins.", f"The 20 V protection chip {sm('U1')}, 20 pins.", f"The 3.3 V regulator {sm('U2')}, 5 pins.",
+                "Pin 1 (the dot on the chip) at the red dot on the drawing."],
          "note": "Finest pitch first, while nothing is in the way of the tweezers.",
          "tip": "Set each chip down square in one go; nudge it on its pads, don't drag it through the paste.",
          "parts": smd("U100", "U1", "U2")},
         {"title": "Place the diodes",
-         "do": [f"{hc('D1')} SMBJ22A; {hc('D2')} SMBJ6.0A-E.", "The band (cathode) to pad 1, the red dot."],
+         "do": [f"The 20 V surge diode {sm('D1')}, marked SMBJ22A; the 5 V surge diode {sm('D2')}, SMBJ6.0A-E.", "The band on the body to the red dot on the drawing."],
          "parts": smd("D1", "D2")},
         {"title": "Place the small resistors (0603)",
          "do": group(model, "main", r0603) + ["Leave empty: " + " ".join(hc(r) for r in ["R20", "R21", "R22", "R23", "R24", "R25", "R27"]) + "."],
@@ -109,12 +148,12 @@ def main_steps(model):
          "do": group(model, "main", s0805) + [f"Leave empty: {hc('R8')} {hc('R9')}."],
          "parts": s0805},
         {"title": "Place the fuses and large capacitors",
-         "do": [line(model, "main", ["C8", "C11"]), f"{hc('F4')} 0.2 A (1206); {hc('F5')} 2.6 A (2920).",
-                f"{hc('F1')} 5 A, {hc('F2')} 10 A, {hc('F3')} 1 A."],
+         "do": [line(model, "main", ["C8", "C11"]), f"Resettable fuses: 0.2 A {sm('F4')}, the small one; 2.6 A {sm('F5')}, the large one.",
+                f"Fuses: 5 A {sm('F1')}, 10 A {sm('F2')}, 1 A {sm('F3')}."],
          "note": "F1, F2 and F3 look alike: read the marking on each before it goes down.",
          "parts": ["C8", "C11", "F4", "F5", "F1", "F2", "F3"]},
         {"title": "Place the inductors",
-         "do": [line(model, "main", ["L100", "L101", "L102", "L103"]), f"{hc('L1')} 15 µH, last: the tallest part."],
+         "do": [line(model, "main", ["L100", "L101", "L102", "L103"]), f"The large 15 µH coil {sm('L1')} last: the tallest part."],
          "parts": ["L100", "L101", "L102", "L103", "L1"]},
         {"title": "Check before heating",
          "do": ["Hold the board beside the drawing. Every pasted place has its part, but the nine left empty.",
@@ -126,44 +165,44 @@ def main_steps(model):
                 "Let it cool where it lies until the solder has set; then move it."],
          "note": "One pass. Don't touch or tap the board while the solder is liquid."},
         {"title": "Inspect and touch up",
-         "do": [f"Under magnification: {hc('U100')} and {hc('U1')}, every pin, for bridges and lifted pins.", "Then every other joint."],
+         "do": [f"Under magnification: the amplifier and protection chips {sm('U100, U1')}, every pin, for bridges and lifted pins.", "Then every other joint."],
          "tip": "A bridge: flux on it, a clean iron tip along the pins, or wick. No washing: the paste is no-clean."},
         {"title": "Check the rails",
-         "do": [f"Meter on ohms, from {hc('TP7')} to {hc('TP2')}, {hc('F5 pad 2')}, {hc('TP9')} and {hc('TP16')}."],
+         "do": [f"Meter on ohms, black on the ground test pad {sm('TP7')}; red on 20 V {sm('TP2')}, 5 V {sm('TP9')}, 3.3 V {sm('TP16')} and the amplifier fuse's inner pad {sm('F5 pad 2')}."],
          "note": "None stays at 0 Ω. A reading that climbs while the capacitors charge is fine. 0 Ω: find the bridge before going on."},
         {"title": "Wire link",
-         "do": [f"{hc('LK1')}: 1.0 mm tinned copper wire, from the door side. Solder on the back."],
+         "do": [f"The wire link {sm('LK1')}: 1.0 mm tinned copper wire, from the door side. Solder on the back."],
          "note": "Through-hole parts from here on: in from the door side, soldered on the back, lowest first.",
          "tip": "Solder one end, check it lies flat, then the other.",
          "parts": ["LK1"]},
         {"title": "Pi power socket",
-         "do": [f"{hc('J2')} USB-C socket, flat on the board.", "Solder all 16 contacts and the 4 shell stakes."],
+         "do": [f"The Pi power socket {sm('J2')}, USB-C, flat on the board.", "Solder all 16 contacts and the 4 shell stakes."],
          "note": "Its pin ends reach only 0.5 mm behind the board: work the joint from the back with a fine tip.",
          "parts": ["J2"]},
         {"title": "Plug sockets",
-         "do": [f"2-way: {hc('J1')} 20 V, {hc('J8')} left speaker, {hc('J9')} right speaker.",
-                f"4-way: {hc('J5')} radar, {hc('J6')} touch.",
+         "do": [f"2-way: 20 V {sm('J1')}, left speaker {sm('J8')}, right speaker {sm('J9')}.",
+                f"4-way: radar {sm('J5')}, touch {sm('J6')}.",
                 "Each flat and square on the outline drawn on the board.",
-                f"With a fine marker: a mark beside {hc('J1')}, {hc('J5')} and {hc('J6')}."],
+                "With a fine marker: a mark beside the 20 V, radar and touch sockets."],
          "note": "J1 is the middle one of the three 2-way sockets.",
          "tip": "Solder one pin, check the socket sits flat, re-melt if not, then the rest.",
          "parts": ["J1", "J8", "J9", "J5", "J6"]},
         {"title": "Sensor headers",
-         "do": [f"{hc('J10')} BME680, {hc('J11')} light sensor: 1 × 4 headers, short pins through the board.",
-                f"A mark beside {hc('J10')} and {hc('J11')}: the headers have no key."],
+         "do": [f"BME680 {sm('J10')} and light sensor {sm('J11')}: 1 × 4 pin headers, short pins through the board.",
+                "A mark beside each: the headers have no key."],
          "parts": ["J10", "J11"]},
         {"title": "Small capacitor",
-         "do": [f"{hc('C7')} 22 µF 35 V: + lead in pad 1, the red dot. The stripe on the can is −."],
+         "do": [f"22 µF 35 V {sm('C7')}: the long (+) lead in the hole at the red dot. The stripe on the can is −."],
          "parts": ["C7"]},
         {"title": "Large capacitors",
-         "do": [f"{hc('C5')} {hc('C6')} 120 µF 63 V: + lead in pad 1. The stripe is −.", "Seated on the board."],
+         "do": [f"120 µF 63 V {sm('C5, C6')}: the long (+) lead in the hole at the red dot. The stripe is −.", "Seated on the board."],
          "parts": ["C5", "C6"]},
         {"title": "Power module",
-         "do": [f"{hc('PS1')}: pin 1 at the end the board marks “+Vo”.", "Seated flat; solder the two end pins, check, then the rest."],
+         "do": [f"The 5 V power module {sm('PS1')}: its pin 1 at the end the board marks “+Vo”.", "Seated flat; solder the two end pins, check, then the rest."],
          "parts": ["PS1"]},
         {"title": "Trim and finish",
-         "do": [f"Cut the leads of {hc('C5')} {hc('C6')} {hc('C7')} and {hc('LK1')} to 1.5 mm or less behind the board.",
-                f"{hc('J7')} stays empty. The Pi wires ({hc('J3')}, {hc('J4')}) go on under Leads."],
+         "do": [f"Cut the leads of the three round capacitors and the wire link {sm('C5, C6, C7, LK1')} to 1.5 mm or less behind the board.",
+                f"The echo tap pads {sm('J7')} stay empty. The Pi wires {sm('J3, J4')} go on under Leads."],
          "note": "Behind the board lie the ReSpeaker and the display lead: no pin end may stand out more than 4.0 mm."},
     ]
     return _stamp(steps)
@@ -178,7 +217,7 @@ def touch_steps(model):
                 "One pass; lift straight up."],
          "note": "The HOST pads get no paste.", "tip": "The pattern is already mirrored."},
         {"title": "Place the chip",
-         "do": [f"{hc('U1')} AT42QT1070, 14 pins: pin 1 at the chamfered corner, the red dot."],
+         "do": [f"The touch chip {sm('U1')}, AT42QT1070, 14 pins: pin 1 (the chamfered edge) at the red dot."],
          "parts": ["U1"]},
         {"title": "Place the resistors and capacitors",
          "do": [line(model, "touch", ["R1", "R2", "R3", "R4"]), line(model, "touch", ["C1"]), line(model, "touch", ["C2"])],
@@ -187,7 +226,7 @@ def touch_steps(model):
          "do": ["Front down on a clean sheet; the front has no parts.", "The main board's profile: peak 235 °C, about 240 s.",
                 "Let it cool where it lies."]},
         {"title": "Inspect and check",
-         "do": [f"Under magnification: {hc('U1')}'s pins for bridges.", "Meter: VCC to GND on the HOST pads."],
+         "do": ["Under magnification: the touch chip's pins, for bridges.", "Meter: VCC to GND on the HOST pads."],
          "note": "Not 0 Ω. The touch lead goes on under Leads."},
     ]
     return _stamp(steps)
@@ -199,7 +238,7 @@ def mic_steps(model):
          "do": ["Both strips: hold each to the light. The 0.8 mm sound hole is open.", "Meter: pads 1 to 2 on J1 read open."],
          "note": "Do every step on both strips: they are alike."},
         {"title": "Open the diode bag on the day",
-         "do": [f"Open the bag of {hc('D1')}–{hc('D3')} (ESD321) today, not before."],
+         "do": [f"Open the bag of the three protection diodes {sm('D1–D3')}, ESD321, today, not before."],
          "note": "Solder within 168 h at 30 °C / 60 % or less. Older: bake first."},
         {"title": "Tape the sound hole",
          "do": ["Kapton over the sound hole on the front (gasket side)."],
@@ -211,16 +250,16 @@ def mic_steps(model):
          "do": ["Shared stencil, the strip's pattern. Tape over the touch board's pattern.", "One pass; lift straight up."],
          "note": "No paste in the sound hole or inside the microphone's ring. Any there: wipe the strip and paste again."},
         {"title": "Place the logic chip",
-         "do": [f"{hc('U1')} SN74LVC1G17, 5 pins: pin 1 at the chamfer, the red dot."], "parts": ["U1"]},
+         "do": [f"The logic chip {sm('U1')}, SN74LVC1G17, 5 pins: pin 1 (the chamfer) at the red dot."], "parts": ["U1"]},
         {"title": "Place the diodes",
-         "do": [f"{hc('D1')} {hc('D2')} {hc('D3')}: pin 1 (dot or notch) is ground, at the closed end of the bracket."],
+         "do": [f"The three protection diodes {sm('D1, D2, D3')}: pin 1 (dot or notch) is ground, at the closed end of the bracket printed on the strip."],
          "parts": ["D1", "D2", "D3"]},
         {"title": "Place the resistors and capacitors",
          "do": [line(model, "mic", ["R1"]), line(model, "mic", ["R2"]), line(model, "mic", ["R4"]),
                 line(model, "mic", ["R5"], " (required)"), line(model, "mic", ["C1"]), line(model, "mic", ["C2", "C3"])],
          "parts": ["R1", "R2", "R4", "R5", "C1", "C2", "C3"]},
         {"title": "Place the microphone",
-         "do": [f"{hc('MK1')} IM69D120, last: lid up, its port over the hole.", "Hold it by the lid only."],
+         "do": [f"The microphone {sm('MK1')}, last: lid up, its sound port over the hole.", "Hold it by the lid only."],
          "parts": ["MK1"]},
         {"title": "Hotplate",
          "do": ["Front down, in the jig or on a clean sheet. The main board's profile: peak 235 °C, about 240 s.",
@@ -228,8 +267,8 @@ def mic_steps(model):
          "note": "One pass. The microphone takes 3 reflows in all, and a rework counts as one."},
         {"title": "Untape and check",
          "do": ["Cool: take the Kapton off. Leave the residue; no washing.",
-                f"Diode mode on {hc('D1')}–{hc('D3')}: red on ground, black on the signal pad: conducts; reversed: open.",
-                f"VDD to GND (J1 pads 1, 2): not 0 Ω. {hc('R5')} is there."],
+                f"Meter on diode, each protection diode {sm('D1–D3')}: red on ground, black on the other pad: conducts; reversed: open.",
+                f"Supply to ground, wire pads 1 and 2: not 0 Ω. The 0 Ω link {sm('R5')} is there."],
          "note": "The microphone leads go on under Leads."},
     ]
     return _stamp(steps)
@@ -242,6 +281,10 @@ svg.asm .t-ref.cur{fill:var(--accent)}
 .asm-h{margin:26px 0 10px;font:700 22px var(--f-display)}
 .asm-jump{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:var(--ink);color:var(--panel);font:600 15px var(--f-body);text-decoration:none;margin:0 8px 12px 0}
 .asm-stage{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:6px;margin:0 0 14px}
+.asm-key{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:4px 8px 6px;font:13px var(--f-body);color:var(--muted)}
+.asm-key span{display:inline-block;width:18px;height:12px;border-radius:3px;margin-left:8px}
+.asm-key .k-box{border:2.4px solid var(--accent)} .asm-key .k-solid{background:var(--ink)} .asm-key .k-faint{background:var(--ink);opacity:.18}
+.ps1pic{display:block;max-width:440px;width:100%;height:auto;margin:6px 0 12px}
 .asm-stage svg{display:block;width:100%;height:auto}
 """
 
@@ -255,7 +298,7 @@ document.querySelectorAll('[data-stepper]').forEach(card => {
     const t = e.getAttribute('data-k').split(' ').find(x => x.indexOf('p:') === 0); return t ? [e, t.split(':')[2]] : null; }).filter(Boolean);
   function paint() {
     const st = steps.find(s => s.classList.contains('on')); if (!st) return;
-    const cur = (st.dataset.cur || '').split(' ').filter(Boolean), done = (st.dataset.done || '').split(' ').filter(Boolean);
+    const cur = ((st.dataset.cur || '') + ' ' + (st.dataset.look || '')).split(' ').filter(Boolean), done = (st.dataset.done || '').split(' ').filter(Boolean);
     const any = cur.length > 0;
     els.forEach(([e, r]) => { const c = cur.indexOf(r) >= 0, d = done.indexOf(r) >= 0;
       e.classList.toggle('cur', c); e.classList.toggle('todo', !c && !d); });
@@ -291,7 +334,8 @@ CARDS = {"main": ("asm-main", "Assemble the main board", main_steps),
 
 def card(model, bkey):
     sid, name, fn = CARDS[bkey]
-    stage = f'<div class="asm-stage">{board_svg(model, bkey)}</div>'
+    stage = (f'<div class="asm-stage">{board_svg(model, bkey)}'
+             '<p class="asm-key"><span class="k-box"></span>this step <span class="k-solid"></span>already on the board <span class="k-faint"></span>not yet</p></div>')
     return f'<h3 class="asm-h" id="{sid}-h">{esc(name)}</h3>' + PG.stepper(sid, name.replace("Assemble the ", "").capitalize(), fn(model), stage)
 
 
