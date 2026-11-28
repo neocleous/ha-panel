@@ -239,6 +239,8 @@ ASM_CSS = """
 svg.asm [data-k].todo{opacity:.18}
 svg.asm .hl{fill:none;stroke:var(--accent);stroke-width:2.6;pointer-events:none}
 svg.asm .t-ref.cur{fill:var(--accent)}
+.asm-h{margin:26px 0 10px;font:700 22px var(--f-display)}
+.asm-jump{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:var(--ink);color:var(--panel);font:600 15px var(--f-body);text-decoration:none;margin:0 8px 12px 0}
 .asm-stage{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:6px;margin:0 0 14px}
 .asm-stage svg{display:block;width:100%;height:auto}
 """
@@ -282,14 +284,20 @@ document.querySelectorAll('[data-stepper]').forEach(card => {
 """
 
 
-def section_html(model):
-    cards = []
-    for sid, name, steps, bkey in (("asm-main", "Main board", main_steps(model), "main"),
-                                   ("asm-touch", "Touch board", touch_steps(model), "touch"),
-                                   ("asm-mic", "Microphone strips", mic_steps(model), "mic")):
-        stage = f'<div class="asm-stage">{board_svg(model, bkey)}</div>'
-        cards.append(f'<h3 class="asm-h">{esc(name)}</h3>' + PG.stepper(sid, name, steps, stage))
-    return "".join(cards)
+CARDS = {"main": ("asm-main", "Assemble the main board", main_steps),
+         "touch": ("asm-touch", "Assemble the touch board", touch_steps),
+         "mic": ("asm-mic", "Assemble the microphone strips", mic_steps)}
+
+
+def card(model, bkey):
+    sid, name, fn = CARDS[bkey]
+    stage = f'<div class="asm-stage">{board_svg(model, bkey)}</div>'
+    return f'<h3 class="asm-h" id="{sid}-h">{esc(name)}</h3>' + PG.stepper(sid, name.replace("Assemble the ", "").capitalize(), fn(model), stage)
+
+
+def jump(bkey):
+    sid, name, _fn = CARDS[bkey]
+    return f'<a class="asm-jump" href="#{sid}-h">{esc(name)} — step by step ↓</a>'
 
 
 def check(model):

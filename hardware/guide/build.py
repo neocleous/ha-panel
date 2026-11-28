@@ -96,7 +96,8 @@ def build():
     default = ('<div class="fh">Main board</div><div class="fsub">rev 3.3 · from the door side</div>'
                '<p class="ffit">Tap a part or a lead. Its pads light up with every pad they join.</p>'
                '<p class="fnote">Dashed: left empty. Dashed circles: screw heads.</p>')
-    mainview = section("Main board", R.viewer(m, "main", R.main_board_svg(m, ends), chips, items, default), "To scale. Pads in their job's colour.")
+    mainview = section("Main board", '<div class="asm-jumps">' + ASM.jump("main") + "</div>" + R.viewer(m, "main", R.main_board_svg(m, ends), chips, items, default) + ASM.card(m, "main"),
+                       "To scale. Pads in their job's colour. The assembly steps follow the drawing.")
 
     t_items = R.board_items(m, "touch", {})
     touch_chips = [("Touch board", [(f"touch:{p['ref']}", p["ref"]) for p in m.boards["touch"]["parts"] if not p["ref"].startswith("E")])]
@@ -106,15 +107,14 @@ def build():
     mic_chips = [("Microphone strip", [(f"mic:{p['ref']}", p["ref"]) for p in m.boards["mic"]["parts"]])]
     micview = R.viewer(m, "mic", R.small_board_svg(m, "mic", R.S_MIC, "MICROPHONE STRIP REV 3", "back face, from the back · 28 × 6 mm · two alike", True),
                        mic_chips, mic_items, '<div class="fh">Microphone strip</div><div class="fsub">rev 3 · two alike</div><p class="ffit">Every part is on the back. The microphone goes on last.</p>', legend=False)
-    smalls = section("Touch board and microphone strips", touchview + micview, "To scale, from the back.")
+    smalls = section("Touch board and microphone strips", '<div class="asm-jumps">' + ASM.jump("touch") + ASM.jump("mic") + "</div>" + touchview + ASM.card(m, "touch") + micview + ASM.card(m, "mic"),
+                     "To scale, from the back. Each board's assembly steps follow its drawing.")
 
     # ------------------------------------------------------------------ colours (Daniel's OK, 2026-11-28 13:12)
     legend_rows, _crow = PG.colour_tables(m)
     colours = section("Wire colours", table(["Job", "Colour"], legend_rows),
                       "One colour for one job. A black wire that is not ground gets a mark in its job's colour at both ends. Each lead's wires are in its step, under Leads.", sid="colours")
 
-    # ------------------------------------------------------------------ assembly: one stepper per board, hotplate order
-    before = section("Assemble the boards", ASM.section_html(m), "Surface-mount parts first, in one hotplate pass per board; then the through-hole parts by iron, lowest first.", sid="before")
 
     # ------------------------------------------------------------------ leads: drawing + one step per lead
     lead_steps = []
@@ -198,7 +198,7 @@ def build():
     ]
     openp = section("Not in the records", table(["What", "Missing", "How to find it"], [[f"<b>{esc(a)}</b>", esc(b), esc(c)] for a, b, c in open_plain]))
 
-    body = "\n".join([head, unit, mainview, smalls, colours, before, leads, pifig, firstpower, plist, openp])
+    body = "\n".join([head, unit, mainview, smalls, colours, leads, pifig, firstpower, plist, openp])
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>HA panel electronics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
