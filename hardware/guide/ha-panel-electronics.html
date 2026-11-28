@@ -184,7 +184,7 @@ svg.uscale .ub.on{stroke:var(--ink);stroke-width:1.6}
 
 svg.asm [data-k].todo{opacity:.18}
 svg.asm .p1ring{fill:none;stroke:#e0392b;stroke-width:2.2} svg.asm .p1ring.todo{opacity:0} svg.asm .pad{fill:var(--pad)!important;stroke:var(--padring)!important}
-svg.asm .cline{fill:none;stroke:var(--accent);stroke-width:1.4} svg.asm .clab{font:700 17px var(--f-body);fill:var(--ink);paint-order:stroke;stroke:var(--panel);stroke-width:4px} svg.asm .cref{fill:var(--accent)} svg.asm .cval{font-weight:500}
+svg.asm .cline{stroke:var(--accent);stroke-width:1.6} svg.asm .cpill{fill:var(--panel);stroke:var(--accent);stroke-width:1.4} svg.asm .clab{font:700 15px var(--f-body);fill:var(--ink)} svg.asm .cref{fill:var(--accent)} svg.asm .cval{font-weight:500}
 svg.asm .hl{fill:none;stroke:var(--accent);stroke-width:2.6;pointer-events:none}
 svg.asm .t-ref.cur{fill:var(--accent)}
 .asm-h{margin:26px 0 10px;font:700 22px var(--f-display)}
@@ -422,40 +422,70 @@ document.querySelectorAll('[data-stepper]').forEach(card => {
     let hl = svg.querySelector('g.hls'); if (!hl) { hl = document.createElementNS('http://www.w3.org/2000/svg', 'g'); hl.setAttribute('class', 'hls'); svg.appendChild(hl); }
     hl.innerHTML = '';
     const boxes = {};
-    els.forEach(([e, r]) => { if (cur.indexOf(r) < 0 || e.tagName === 'text') return; const b = e.getBBox(); const o = boxes[r];
+    els.forEach(([e, r]) => { if (cur.indexOf(r) < 0 || e.tagName === 'text') return; const b = e.getBBox(); if (!b.width && !b.height) return; const o = boxes[r];
       boxes[r] = o ? [Math.min(o[0], b.x), Math.min(o[1], b.y), Math.max(o[2], b.x + b.width), Math.max(o[3], b.y + b.height)] : [b.x, b.y, b.x + b.width, b.y + b.height]; });
     Object.values(boxes).forEach(b => { const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect'), p = 4;
       r.setAttribute('x', b[0] - p); r.setAttribute('y', b[1] - p); r.setAttribute('width', b[2] - b[0] + 2 * p); r.setAttribute('height', b[3] - b[1] + 2 * p);
       r.setAttribute('rx', 3); r.setAttribute('class', 'hl'); hl.appendChild(r); });
-    // Call-outs: each lit part gets its name in large type in a column beside the board, with a leader line.
+    // Labels: each lit part gets its name in a pill right beside it. A pill may cover faint (not-yet) parts, never a lit
+    // part, a placed part or another pill; where it cannot touch its part, a short leader joins them, and no leader
+    // crosses another leader, a pill or a lit part.
+    const NS = 'http://www.w3.org/2000/svg';
     const names = JSON.parse(svg.getAttribute('data-names') || '{}');
     const pcb = svg.querySelector('path.pcb').getBBox();
-    const mid = pcb.x + pcb.width / 2, FS = 17, GAP = 25;
-    const cols = { L: [], R: [] };
-    Object.entries(boxes).forEach(([r, b]) => { const cy = (b[1] + b[3]) / 2; cols[(b[0] + b[2]) / 2 < mid ? 'L' : 'R'].push({ r, b, cy }); });
-    let lx0 = 1e9, ly0 = 1e9, lx1 = -1e9, ly1 = -1e9;
-    ['L', 'R'].forEach(side => {
-      const col = cols[side].sort((a, b) => a.cy - b.cy);
-      col.forEach((it, i) => { it.y = Math.max(it.cy, i ? col[i - 1].y + GAP : -1e9); });
-      const over = col.length ? col[col.length - 1].y - (pcb.y + pcb.height + 40) : 0;
-      if (over > 0) col.forEach(it => { it.y -= over; });
-      for (let i = col.length - 2; i >= 0; i--) col[i].y = Math.min(col[i].y, col[i + 1].y - GAP);
-      const x = side === 'L' ? pcb.x - 26 : pcb.x + pcb.width + 26;
-      col.forEach(it => {
-        const ns = 'http://www.w3.org/2000/svg', g = document.createElementNS(ns, 'g');
-        const ex = side === 'L' ? it.b[0] - 4 : it.b[2] + 4;
-        const ln = document.createElementNS(ns, 'polyline');
-        ln.setAttribute('points', `${ex},${it.cy} ${side === 'L' ? x + 8 : x - 8},${it.y} ${x},${it.y}`); ln.setAttribute('class', 'cline');
-        const t = document.createElementNS(ns, 'text');
-        t.setAttribute('x', side === 'L' ? x - 4 : x + 4); t.setAttribute('y', it.y + FS * 0.35); t.setAttribute('class', 'clab');
-        t.setAttribute('text-anchor', side === 'L' ? 'end' : 'start');
-        const a = document.createElementNS(ns, 'tspan'); a.textContent = it.r; a.setAttribute('class', 'cref');
-        const v = document.createElementNS(ns, 'tspan'); v.textContent = names[it.r] ? '  ' + names[it.r] : ''; v.setAttribute('class', 'cval');
-        if (side === 'L') { t.appendChild(v); t.insertBefore(a, v); } else { t.appendChild(a); t.appendChild(v); }
-        g.appendChild(ln); g.appendChild(t); hl.appendChild(g);
-        const bb = t.getBBox(); lx0 = Math.min(lx0, bb.x); ly0 = Math.min(ly0, bb.y); lx1 = Math.max(lx1, bb.x + bb.width); ly1 = Math.max(ly1, bb.y + bb.height);
-      });
+    const items = Object.entries(boxes).map(([r, b]) => ({ r, x: b[0] - 4, y: b[1] - 4, w: b[2] - b[0] + 8, h: b[3] - b[1] + 8 }));
+    const doneBoxes = [];
+    { const db = {}; els.forEach(([e, r]) => { if (done.indexOf(r) < 0 || cur.indexOf(r) >= 0 || e.tagName === 'text') return; const b = e.getBBox(), o = db[r]; if (!b.width && !b.height) return;
+        db[r] = o ? [Math.min(o[0], b.x), Math.min(o[1], b.y), Math.max(o[2], b.x + b.width), Math.max(o[3], b.y + b.height)] : [b.x, b.y, b.x + b.width, b.y + b.height]; });
+      Object.values(db).forEach(b => doneBoxes.push({ x: b[0], y: b[1], w: b[2] - b[0], h: b[3] - b[1] })); }
+    const ov = (a, b, m) => a.x < b.x + b.w + m && b.x < a.x + a.w + m && a.y < b.y + b.h + m && b.y < a.y + a.h + m;
+    const cross = (p1, p2, p3, p4) => { const d = (a, b, c) => (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+      const d1 = d(p3, p4, p1), d2 = d(p3, p4, p2), d3 = d(p1, p2, p3), d4 = d(p1, p2, p4); return d1 * d2 < 0 && d3 * d4 < 0; };
+    const inR = (p, r) => p.x > r.x && p.x < r.x + r.w && p.y > r.y && p.y < r.y + r.h;
+    const segHits = (p, q, r) => inR(p, r) || inR(q, r) || [[{ x: r.x, y: r.y }, { x: r.x + r.w, y: r.y }], [{ x: r.x + r.w, y: r.y }, { x: r.x + r.w, y: r.y + r.h }],
+      [{ x: r.x + r.w, y: r.y + r.h }, { x: r.x, y: r.y + r.h }], [{ x: r.x, y: r.y + r.h }, { x: r.x, y: r.y }]].some(([a, b]) => cross(p, q, a, b));
+    const near = (r, p) => ({ x: Math.max(r.x, Math.min(p.x, r.x + r.w)), y: Math.max(r.y, Math.min(p.y, r.y + r.h)) });
+    items.forEach(it => { it.n = items.filter(o => o !== it && Math.hypot(o.x - it.x, o.y - it.y) < 90).length; });
+    items.sort((a, b) => b.n - a.n);
+    const placed = [], leaders = [];
+    const lim = { x: pcb.x - 150, y: pcb.y - 70, x2: pcb.x + pcb.width + 150, y2: pcb.y + pcb.height + 70 };
+    items.forEach(it => {
+      const g = document.createElementNS(NS, 'g'); g.setAttribute('class', 'callout');
+      const bg = document.createElementNS(NS, 'rect'); bg.setAttribute('class', 'cpill'); bg.setAttribute('rx', 5);
+      const t = document.createElementNS(NS, 'text'); t.setAttribute('class', 'clab');
+      const a = document.createElementNS(NS, 'tspan'); a.textContent = it.r; a.setAttribute('class', 'cref');
+      const v = document.createElementNS(NS, 'tspan'); v.textContent = names[it.r] ? ' ' + names[it.r] : ''; v.setAttribute('class', 'cval');
+      t.appendChild(a); t.appendChild(v); g.appendChild(bg); g.appendChild(t); hl.appendChild(g);
+      const tb = t.getBBox(), W = tb.width + 12, H = tb.height + 6;
+      const cx = it.x + it.w / 2, cy = it.y + it.h / 2;
+      let best = null;
+      for (const d of [1, 8, 18, 30, 46, 64, 86, 110, 140]) {
+        const c = [[it.x + it.w + d, cy - H / 2], [it.x - d - W, cy - H / 2], [cx - W / 2, it.y - d - H], [cx - W / 2, it.y + it.h + d],
+                   [it.x + it.w + d, it.y - d - H], [it.x - d - W, it.y - d - H], [it.x + it.w + d, it.y + it.h + d], [it.x - d - W, it.y + it.h + d],
+                   [it.x + it.w + d, cy - H * 1.6], [it.x + it.w + d, cy + H * 0.6], [it.x - d - W, cy - H * 1.6], [it.x - d - W, cy + H * 0.6]];
+        for (const [x, y] of c) {
+          const L = { x, y, w: W, h: H };
+          if (x < lim.x || y < lim.y || x + W > lim.x2 || y + H > lim.y2) continue;
+          if (placed.some(p => ov(L, p, 3)) || items.some(o => ov(L, o, 1))) continue;
+          let seg = null;
+          if (d > 1) { const q = near(L, { x: cx, y: cy }), p = near(it, q); seg = [p, q];
+            if (leaders.some(s => cross(s[0], s[1], p, q)) || placed.some(r => segHits(p, q, r)) || items.some(o => o !== it && segHits(p, q, o))) continue; }
+          if (leaders.some(s => segHits(s[0], s[1], L))) continue;
+          const score = d + 60 * doneBoxes.filter(b => ov(L, b, 0)).length;
+          if (!best || score < best.score) best = { L, seg, score };
+        }
+        if (best && best.score < 60) break;
+      }
+      if (!best) { g.remove(); return; }
+      const L = best.L; placed.push(L);
+      bg.setAttribute('x', L.x); bg.setAttribute('y', L.y); bg.setAttribute('width', L.w); bg.setAttribute('height', L.h);
+      t.setAttribute('x', L.x + 6); t.setAttribute('y', L.y + L.h / 2 + tb.height * 0.3);
+      if (best.seg) { leaders.push(best.seg); const ln = document.createElementNS(NS, 'line');
+        ln.setAttribute('x1', best.seg[0].x); ln.setAttribute('y1', best.seg[0].y); ln.setAttribute('x2', best.seg[1].x); ln.setAttribute('y2', best.seg[1].y);
+        ln.setAttribute('class', 'cline'); g.insertBefore(ln, bg); }
     });
+    let lx0 = 1e9, ly0 = 1e9, lx1 = -1e9, ly1 = -1e9;
+    placed.forEach(L => { lx0 = Math.min(lx0, L.x); ly0 = Math.min(ly0, L.y); lx1 = Math.max(lx1, L.x + L.w); ly1 = Math.max(ly1, L.y + L.h); });
     const f = full.split(' ').map(Number);
     const x0 = Math.min(f[0], lx0 - 8), y0 = Math.min(f[1], ly0 - 8), x1 = Math.max(f[0] + f[2], lx1 + 8), y1 = Math.max(f[1] + f[3], ly1 + 8);
     svg.setAttribute('viewBox', [x0, y0, x1 - x0, y1 - y0].map(n => n.toFixed(1)).join(' '));
