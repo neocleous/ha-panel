@@ -20,6 +20,7 @@ import page as PG  # noqa: E402
 import panel  # noqa: E402
 import render as R  # noqa: E402
 import unitview as UV  # noqa: E402
+import assembly as ASM  # noqa: E402
 from model import Model, wire_words  # noqa: E402
 from svgboard import esc  # noqa: E402
 
@@ -45,6 +46,10 @@ def build():
     f2, p2, _used = checks.run_colours(m)
     fails += f2
     passes += p2
+    f3 = ASM.check(m)
+    fails += f3
+    if not f3:
+        passes.append("assembly: every fitted part placed once, empty places left empty, surface-mount before through-hole")
     if fails:
         print("BUILD FAILED: the checks found problems", file=sys.stderr)
         for f in fails:
@@ -108,36 +113,8 @@ def build():
     colours = section("Wire colours", table(["Job", "Colour"], legend_rows),
                       "One colour for one job. A black wire that is not ground gets a mark in its job's colour at both ends. Each lead's wires are in its step, under Leads.", sid="colours")
 
-    # ------------------------------------------------------------------ before you solder: steps
-    before_steps = [
-        {"title": "Measure the power module", "do": ["Put the power module (PS1) on the bench, pins down.", "Measure from its row of pins to its component side."],
-         "note": "About 5.0 mm: carry on. About 8.3 mm: stop, the board is wrong for it. Anything else: stop.",
-         "fields": [{"id": "ps1", "label": "Pins to component side", "expect": "about 5.0 mm"}]},
-        {"title": "Open the moisture-sensitive bags on the day",
-         "do": ["Open the bags for the amplifier (U100), the protection chip (U1), fuses F4 and F5, and the strips' diodes (D1–D3) on the day you solder."],
-         "note": "Amplifier and strip diodes: use within 168 h. Protection chip: within a year. F4, F5: within 4 weeks. At 30 °C / 60 % or less; bake anything older first."},
-        {"title": "Check the bare boards",
-         "do": [f"Meter on ohms. Main board: from {hc('TP7')} to {hc('TP2')}, {hc('F5 pad 2')}, {hc('TP9')} and {hc('TP16')}.",
-                "Touch board: VCC to GND on the HOST pads.", "Each strip: pads 1 to 2. Then hold it to the light."],
-         "note": "Every pair reads open. The strip's sound hole is clear."},
-        {"title": "Paste through the stencils",
-         "do": ["Check the paste's date.", "Main board: its own stencil, outline to outline.",
-                "Touch board and strips: their shared stencil, boards face down. The strip in a flush jig, tape over its sound hole."],
-         "tip": "The shared stencil is already mirrored."},
-        {"title": "Place the parts",
-         "do": ["Leave empty: " + " ".join(hc(r) for r in dnp) + " and the echo tap pads (J7).",
-                "Diodes D1, D2: band to pad 1. Chips U1, U2, U100: pin 1 at the dot.",
-                "F1, F2, F3 look alike: read the marking (5 A, 10 A, 1 A).",
-                "Strips: D1–D3 pin 1 to ground; U1 pin 1 at the chamfer; the microphone last, lid up."],
-         "tip": "Tap a part on the board drawing to see where it goes."},
-        {"title": "Reflow", "do": ["One pass per board on the hotplate, parts up. Touch board and strips face down on a clean sheet.", "Follow the paste's profile: about 240 s, peak 235 °C."],
-         "note": "No washing."},
-        {"title": "Solder the through-hole parts",
-         "do": ["Low to high: LK1 (1.0 mm tinned wire) · the Pi power socket (J2), all 16 contacts and 4 shell stakes · the 2-way and 4-way sockets · the two headers · C7 · C5, C6 · the power module, pin 1 at “+Vo”.",
-                "Cut the leads of C5, C6, C7 and LK1 to 1.5 mm or less."],
-         "note": "C5, C6, C7: + lead in pad 1. The stripe is −."},
-    ]
-    before = section("Before you solder", PG.stepper("before", "Before you solder", before_steps), sid="before")
+    # ------------------------------------------------------------------ assembly: one stepper per board, hotplate order
+    before = section("Assemble the boards", ASM.section_html(m), "Surface-mount parts first, in one hotplate pass per board; then the through-hole parts by iron, lowest first.", sid="before")
 
     # ------------------------------------------------------------------ leads: drawing + one step per lead
     lead_steps = []
@@ -226,9 +203,9 @@ def build():
 <title>HA panel electronics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;600&display=swap" rel="stylesheet">
-<style>{R.css()}{PG.css()}{UV.UNIT_CSS}</style></head><body><div class="wrap">
+<style>{R.css()}{PG.css()}{UV.UNIT_CSS}{ASM.ASM_CSS}</style></head><body><div class="wrap">
 {body}
-</div><script>{R.JS}{PG.STEP_JS}{UV.UNIT_JS}</script></body></html>"""
+</div><script>{R.JS}{PG.STEP_JS}{UV.UNIT_JS}{ASM.ASM_JS}</script></body></html>"""
     open(OUT, "w", encoding="utf8").write(page)
     print(f"wrote {OUT} ({len(page) // 1024} KiB); checks passed: {len(passes)}")
     for p in passes:

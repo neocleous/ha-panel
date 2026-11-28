@@ -156,7 +156,8 @@ def colour_tables(model):
 
 # ------------------------------------------------------------------------------------------------ steps
 def step_html(i, n, sid, st):
-    out = [f'<div class="step{" on" if i == 0 else ""}" data-i="{i}"' + (f' data-show="{st["show"]}"' if st.get("show") else "") + ">",
+    extra = "".join(f' data-{k}="{esc(v)}"' for k, v in st.get("data", {}).items())
+    out = [f'<div class="step{" on" if i == 0 else ""}" data-i="{i}"' + (f' data-show="{st["show"]}"' if st.get("show") else "") + extra + ">",
            f'<h3>{esc(st["title"])}</h3>']
     if st.get("picture"):
         out.append(st["picture"])
