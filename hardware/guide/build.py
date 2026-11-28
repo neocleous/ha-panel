@@ -113,7 +113,7 @@ def build():
     # ------------------------------------------------------------------ colours (Daniel's OK, 2026-11-28 13:12)
     legend_rows, _crow = PG.colour_tables(m)
     colours = section("Wire colours", table(["Job", "Colour"], legend_rows),
-                      "One colour for one job. A black wire that is not ground gets a mark in its job's colour at both ends. Each lead's wires are in its step, under Leads.", sid="colours")
+                      "One colour for one job. A black wire that is not ground gets a mark in its job's colour at both ends. Each lead's wires are in its step, under Make the leads.", sid="colours")
 
 
     # ------------------------------------------------------------------ leads: drawing + one step per lead
@@ -132,13 +132,8 @@ def build():
         nm = panel.LEAD_NAMES[l["n"]]
         lead_steps.append({"title": nm[0].upper() + nm[1:], "show": str(l["n"]), "do": st["do"],
                            "table": table([head_a or "From", head_b or "To", "Wire"], rows), "note": st["note"], "tip": st["tip"]})
-    order = " → ".join(f'{panel.SOCKET_NAMES[r]} <small>({r})</small>' for r in panel.PLUG_ORDER)
-    lead_steps.append({"title": "Plug the leads into the main board", "show": "all",
-                       "do": [f"In this order: {order}."],
-                       "note": "The 20 V plug goes on first, on the middle 2-way socket. Match each plug's mark to the mark on the board.",
-                       "tip": "The Pi power cable goes on last and comes off first."})
     stage = PG.wiring_legend() + '<div class="wiring">' + PG.wiring_svg(m) + "</div>"
-    leads = section("Leads", PG.stepper("leads", "Leads", lead_steps, stage=stage), sid="leads")
+    leads = section("Make the leads", PG.stepper("leads", "Make the leads", lead_steps, stage=stage), sid="leads")
 
     # ------------------------------------------------------------------ Pi header (lookup)
     pifig = section("Pi header", '<div class="diagram">' + R.pi_header_svg(m) + "</div>",
@@ -150,30 +145,66 @@ def build():
                 "TP10": "5 V after the Pi fuse", "TP11": "5 V at the Pi power socket", "TP12": "radar 5 V", "TP13": "5 V module trim",
                 "TP16": "3.3 V", "TP19": "amplifier fault", "F5.2": "amplifier supply, F5's right-hand pad"}
 
+    sm = ASM.sm
+
     def tpf(ref, expect):
         return {"id": ref.replace(".", "_"), "label": f"{TP_NAMES[ref]} <small>({ref.replace('.', ' pad ')}) · {where(ref)}</small>", "expect": expect}
     power_steps = [
-        {"title": "20 V only", "do": ["Main board on the bench, only the 20 V lead plugged in, its charger on.", "Black probe on the ground test pad <small>(TP7)</small>."],
+        {"title": "20 V only",
+         "do": ["Main board on the bench. Charger off.", "Plug only the 20 V lead, its inlet board on the charger.",
+                f"Black probe on the ground test pad {sm('TP7')}.",
+                "Charger on."],
+         "note": "Each pad below: mm from the left edge and up from the socket edge, door side up. Any reading out of range: charger off, stop.",
          "fields": [tpf("TP1", "about 20 V"), tpf("TP2", "about 20 V"), tpf("TP8", "about 20 V"), tpf("F5.2", "about 20 V"),
-                    tpf("TP6", "about 2.7 V")]},
-        {"title": "5 V", "do": ["Still 20 V only."], "note": "The four 5 V readings about equal.",
-         "fields": [tpf("TP9", "4.90–5.10 V"), tpf("TP10", "4.90–5.10 V"), tpf("TP11", "4.90–5.10 V"), tpf("TP12", "4.90–5.10 V")]},
-        {"title": "3.3 V waits for the Pi", "do": ["Still 20 V only."], "note": "About 0 V: the 3.3 V regulator starts only with the Pi.",
-         "fields": [tpf("TP16", "about 0 V"), tpf("TP19", "about 0 V"), tpf("TP4", "about 0 V")]},
-        {"title": "Pi on", "do": ["Plug the Pi power cable, the three Pi housings and the display power lead.", "Boot the Pi."],
-         "note": "<code>vcgencmd get_throttled</code> reads <code>0x0</code>.",
+                    tpf("TP6", "about 2.7 V"), tpf("TP9", "4.90–5.10 V"), tpf("TP10", "4.90–5.10 V"), tpf("TP11", "4.90–5.10 V"),
+                    tpf("TP12", "4.90–5.10 V"), tpf("TP16", "about 0 V"), tpf("TP19", "about 0 V"), tpf("TP4", "about 0 V")]},
+        {"title": "Pi on",
+         "do": ["Charger off.", "Plug the three Pi housings, the display power lead and the display ribbon, then the Pi power cable.", "Charger on."],
+         "note": "Pass: <code>vcgencmd get_throttled</code> reads <code>0x0</code>, and the readings below.",
          "fields": [tpf("TP16", "3.21–3.34 V"), tpf("TP4", "about 3.3 V"), tpf("TP19", "about 3.3 V")]},
-        {"title": "5 V under load", "do": ["All cores busy, display on.", "Read <code>vcgencmd pmic_read_adc EXT5V_V</code>, and the 5 V at the Pi power socket <small>(TP11)</small>."],
-         "note": "4.87 V or more. Lower: stop.", "fields": [tpf("TP11", "4.87 V or more")]},
-        {"title": "Configure and plug the rest", "do": ["Apply the Pi configuration (Pi header, above).", "Plug the BME680, light-sensor, touch and radar leads.",
-                                                        "Switch the 20 V off and on."],
-         "note": "The 5 V module output rises to 4.90–5.10 V once, and the Pi boots.", "fields": [tpf("TP9", "4.90–5.10 V")]},
-        {"title": "The buses", "do": ["Run <code>sudo i2cdetect -y 1</code>.", "Run the radar, Pi under full load."],
-         "note": "I²C shows <code>1b</code> touch, <code>48</code> light sensor, <code>UU</code> at <code>4c</code> amplifier, <code>76</code> or <code>77</code> BME680. The radar gives no bad frame on <code>/dev/ttyAMA0</code> at 256000.",
-         "fields": [tpf("TP12", "4.90–5.10 V, radar on")]},
-        {"title": "Microphones", "do": ["Both microphone strips soldered to the ReSpeaker; its USB cable in the Pi.", "Run <code>arecord -l</code>."], "note": "The ReSpeaker is listed. Then the audio bench test."},
+        {"title": "5 V under load",
+         "do": ["Display on; run <code>stress-ng --cpu 4 --timeout 120</code>.",
+                f"While it runs, read <code>vcgencmd pmic_read_adc EXT5V_V</code> and the 5 V at the Pi power socket {sm('TP11')}."],
+         "note": "Pass: both 4.87 V or more. Lower: stop; the 5 V needs trimming before use.", "fields": [tpf("TP11", "4.87 V or more")]},
+        {"title": "Configure and plug the sensors",
+         "do": ["Set in <code>config.txt</code>: <code>dtoverlay=rpi-digiampplus,auto_mute_amp</code>, <code>dtparam=uart0=on</code>, <code>usb_max_current_enable=1</code>; I²C on. EEPROM: <code>PSU_MAX_CURRENT=5000</code>.",
+                "Shut the Pi down; charger off.", "Plug the BME680, light-sensor, touch and radar leads.", "Charger on."],
+         "note": "Pass: the Pi boots first time. No boot, or a restart: stop.", "fields": [tpf("TP9", "4.90–5.10 V")]},
+        {"title": "The buses",
+         "do": ["Run <code>sudo i2cdetect -y 1</code>.",
+                "Pi under full load, radar running: <code>stty -F /dev/ttyAMA0 256000 raw; timeout 10 xxd /dev/ttyAMA0</code>."],
+         "note": "Pass: I²C shows <code>1b</code> touch, <code>48</code> light sensor, <code>UU</code> at <code>4c</code> amplifier, <code>76</code> or <code>77</code> BME680. "
+                 "Radar: every frame starts <code>F4 F3 F2 F1</code> and ends <code>F8 F7 F6 F5</code>; none broken.",
+         },
+        {"title": "Microphones",
+         "do": ["ReSpeaker's USB cable in the Pi.", "Run <code>arecord -l</code>."], "note": "Pass: the ReSpeaker is listed."},
     ]
     firstpower = section("First power", PG.stepper("power", "First power", power_steps), sid="power")
+
+    # ------------------------------------------------------------------ fit in the unit (after first power)
+    order = " → ".join(f'{panel.SOCKET_NAMES[r]} <small>({r})</small>' for r in panel.PLUG_ORDER)
+    fit_steps = [
+        {"title": "Speaker leads through the boxes", "show": "2",
+         "do": ["Thread each speaker lead's contacts from inside its box out through the hole in its rear wall.",
+                "Hot-melt round the lead in the hole, from outside.",
+                "Push the contacts into a 2-way XH housing: + (the red-marked wire) in the place over the speaker socket's square pad. Tug each wire: it stays."],
+         "note": "Beep each wire from the housing to its tab: + in the place over the square pad. Fail: re-seat. Keep the left lead clear of the ReSpeaker USB cable while the left box slides back."},
+        {"title": "Radar lead on its holder", "show": "4",
+         "do": ["Tie the radar lead through the slot in the holder's top plate, 10 mm behind the radar.", "Run it over the Pi to the board."]},
+        {"title": "BME680 lead in its tray", "show": "6",
+         "do": ["Thread the lead through the tray's slot.", "Wrap a plug of 2 mm foam round it in the slot."]},
+        {"title": "Plug the leads", "show": "all",
+         "do": [f"Plug in this order: {order}.", "Match each plug's mark to the mark beside its socket."],
+         "note": "The 20 V plug goes first, on the middle 2-way socket. The Pi power cable goes last.",
+         "tip": "Speaker plugs: long-nose pliers on the housing's top and bottom; press home with closed tweezers."},
+        {"title": "Coil the microphone leads", "show": "13",
+         "do": ["Once the module is home: coil each microphone lead's spare in three turns, about 19 mm across.", "Bind each coil with tape; lay it behind the screen plate."]},
+        {"title": "Speakers",
+         "do": ["Charger on; wait for the Pi to boot.", "Run <code>speaker-test -c 2 -t wav -l 1</code>."],
+         "note": "Pass: “Front Left” from the left speaker, “Front Right” from the right."},
+    ]
+    fstage = PG.wiring_legend() + '<div class="wiring">' + PG.wiring_svg(m) + "</div>"
+    fitunit = section("Fit in the unit", PG.stepper("fit", "Fit in the unit", fit_steps, stage=fstage), sid="fit")
 
     # ------------------------------------------------------------------ parts (lookup)
     def parts_rows(bkey):
@@ -203,7 +234,7 @@ def build():
     ]
     openp = section("Not in the records", table(["What", "Missing", "How to find it"], [[f"<b>{esc(a)}</b>", esc(b), esc(c)] for a, b, c in open_plain]))
 
-    body = "\n".join([head, unit, mainview, smalls, colours, leads, pifig, firstpower, plist, openp])
+    body = "\n".join([head, unit, mainview, smalls, colours, leads, pifig, firstpower, fitunit, plist, openp])
     page = f"""<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>HA panel electronics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
