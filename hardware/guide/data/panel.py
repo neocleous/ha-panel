@@ -217,3 +217,133 @@ OPEN.append(("Touch board revision in the harness list", "The harness list names
              "For the Architect: rev E at the harness list's next issue."))
 OPEN.append(("Plugging order in the records", "The harness list and the main board README put the speakers before the 20 V plug; your ruling puts the 20 V plug first, on the middle socket. The page follows the ruling.",
              "For the Architect: bring the harness list and README in line."))
+
+# ============================================================================================ revision of 2026-11-28
+# D572, D573 and Daniel's rulings of 2026-11-28 13:12 on the colour table:
+#  - the strip's ten colours are black, brown, red, orange, yellow, green, blue, purple, grey, white (1a);
+#  - the two sensor grounds are brown strip wire with a black mark at both ends, drawn black (2a);
+#  - speakers: + red, − black ("they are obviously distinct from power and ground").
+
+NET_NAMES.update({
+    "AMP_FAULT_N": "amplifier fault", "AMP_GPIO0": "amplifier setting 0", "AMP_GPIO1": "amplifier setting 1",
+    "AMP_GPIO2": "amplifier setting 2", "BST_AN": "amplifier boost, A−", "BST_AP": "amplifier boost, A+",
+    "BST_BN": "amplifier boost, B−", "BST_BP": "amplifier boost, B+", "CN": "charge pump −", "CP": "charge pump +",
+    "CPVSS": "charge-pump supply", "DAC_A": "amplifier DAC A", "DAC_B": "amplifier DAC B", "DVDD_REG": "amplifier core supply",
+    "EF_DVDT": "protection chip ramp", "EF_FLT_N": "protection chip fault", "EF_ILIM": "current limit setting",
+    "EF_IMON": "current monitor", "EF_OVP": "over-voltage setting", "EF_PGOOD": "power good", "EF_SHDN": "protection chip on/off",
+    "EF_UVLO": "under-voltage setting", "GVDD": "amplifier gate supply", "INA_N": "amplifier input A−", "INA_P": "amplifier input A+",
+    "INB_N": "amplifier input B−", "INB_P": "amplifier input B+", "NID_RC": "5 V module on/off", "NID_TRIM": "5 V trim",
+    "OUT_AN": "amplifier output A−", "OUT_AP": "amplifier output A+", "OUT_BN": "amplifier output B−", "OUT_BP": "amplifier output B+",
+    "PI_CC1": "Pi USB-C CC1", "PI_CC2": "Pi USB-C CC2", "RS_BCLK": "echo tap, bit clock", "RS_LRCLK": "echo tap, frame clock",
+    "RS_OUT": "echo tap, data", "RS_REF": "echo tap, reference", "RS_SCL": "echo tap, I²C clock", "RS_SDA": "echo tap, I²C data",
+    "SPK_GAIN": "speaker gain setting", "E0": "touch pad 1", "E1": "touch pad 2", "E2": "touch pad 3", "E3": "touch pad 4",
+    "KEY0": "touch line 1", "KEY1": "touch line 2", "KEY2": "touch line 3", "KEY3": "touch line 4",
+    "CLK_MIC": "clock at the microphone", "DATA_MIC": "data at the microphone", "MIC_LR": "left/right select at the microphone",
+    "VDD_MIC": "3.3 V at the microphone", "+5V": "5 V", "+3V3": "3.3 V", "3V3_SENS": "3.3 V for the sensors",
+    "VBUS_PI": "5 V for the Pi", "5V_PI_F": "5 V for the Pi, after its fuse", "5V_RADAR": "5 V for the radar",
+    "PI_3V3": "the Pi's 3.3 V (sense)", "VIN_PIGTAIL": "20 V in", "VIN_EF": "20 V in, after the first fuse",
+    "+20V": "20 V protected", "PVDD": "20 V for the amplifier", "NID_VIN": "20 V for the 5 V module", "LDO_IN": "5 V for the 3.3 V regulator",
+    "3V3_AMP": "3.3 V for the amplifier", "VDD_C": "3.3 V for the microphone", "CLK_C": "microphone clock", "DATA_C": "microphone data",
+    "SEL_C": "left/right select", "PI_TXD": "serial, Pi to radar", "LD_TX": "serial, radar to Pi", "PI_RXD": "serial, radar to Pi",
+    "PI_BCLK": "I²S bit clock", "PI_LRCLK": "I²S frame clock", "PI_DOUT": "I²S out", "PI_DIN": "I²S in", "I2C_SDA": "I²C data",
+    "I2C_SCL": "I²C clock", "SDA": "I²C data", "SCL": "I²C clock", "AMP_MUTE_N": "amplifier mute",
+    "I2S_BCLK": "I²S bit clock", "I2S_LRCLK": "I²S frame clock", "I2S_DOUT": "I²S out",
+    "SPK_L_P": "left speaker +", "SPK_L_N": "left speaker −", "SPK_R_P": "right speaker +", "SPK_R_N": "right speaker −",
+    "GND": "ground", "PI_5V": "the Pi's 5 V",
+})
+
+# One colour for one job, everywhere on the page (light, dark).
+JOBS = {
+    "vplus": ("V+, and speaker +", "red", "#d3302a", "#ff6a61"),
+    "gnd": ("Ground, and speaker −", "black", "#23282b", "#d3dbdf"),
+    "sda": ("I²C data", "blue", "#1c63c4", "#6ba8ff"),
+    "scl": ("I²C clock", "yellow", "#d9a400", "#f0c24d"),
+    "tx": ("Serial, Pi to radar", "green", "#1f8655", "#5ed195"),
+    "rx": ("Serial, radar to Pi", "purple", "#7442bf", "#b48cff"),
+    "aclk": ("Audio clock", "white", "#f4f4f1", "#f4f4f1"),
+    "adat": ("Audio data", "orange", "#e07000", "#ffa640"),
+    "ctl": ("Control", "grey", "#8a9399", "#a9b3b8"),
+}
+# Speakers: + red, − black (Daniel, 2026-11-28 13:12).
+NET_JOB = {
+    "VIN_PIGTAIL": "vplus", "5V_RADAR": "vplus", "+3V3": "vplus", "3V3_SENS": "vplus", "PI_3V3": "vplus", "PI_5V": "vplus", "VDD_C": "vplus",
+    "SPK_L_P": "vplus", "SPK_R_P": "vplus",
+    "GND": "gnd", "SPK_L_N": "gnd", "SPK_R_N": "gnd",
+    "I2C_SDA": "sda", "I2C_SCL": "scl", "PI_TXD": "tx", "LD_TX": "rx", "PI_RXD": "rx",
+    "PI_BCLK": "aclk", "PI_LRCLK": "aclk", "CLK_C": "aclk", "PI_DOUT": "adat", "PI_DIN": "adat", "DATA_C": "adat",
+    "AMP_MUTE_N": "ctl", "SEL_C": "ctl",
+}
+# The ten colours of the Adafruit 3141 strip (Daniel, 1a) and how many of each it has.
+STRIP_COLOURS = ["black", "brown", "red", "orange", "yellow", "green", "blue", "purple", "grey", "white"]
+STRIP_PER_COLOUR = 4
+# What each lead is cut from: "black" = all-black pre-crimped jumpers; "strip" = the Adafruit 3141 strip.
+LEAD_STOCK = {1: "black", 2: "black", 3: "black", 4: "black", 5: "black", 13: "black", 14: "black",
+              6: "strip", 7: "strip", 8: "strip", 9: "strip", 10: "strip", 11: "strip"}
+
+# Plain names (D572).
+LEAD_NAMES = {1: "20 V lead", 2: "left speaker lead", 3: "right speaker lead", 4: "radar lead", 5: "touch lead",
+              6: "BME680 lead", 7: "light-sensor lead", 8: "Pi wires, pins 1–5", 9: "Pi wires, pins 7–16",
+              10: "Pi wires, pins 35–40", 11: "display power lead", 12: "display ribbon", 13: "left microphone lead",
+              14: "right microphone lead", 15: "Pi power cable", 16: "ReSpeaker USB cable"}
+LEAD_SHORT = {1: "20 V", 2: "Left speaker", 3: "Right speaker", 4: "Radar", 5: "Touch", 6: "BME680", 7: "Light sensor",
+              8: "Pi 1–5", 9: "Pi 7–16", 10: "Pi 35–40", 11: "Display power", 12: "Ribbon", 13: "Left mic",
+              14: "Right mic", 15: "Pi power", 16: "ReSpeaker USB"}
+SOCKET_NAMES = {"J1": "20 V socket", "J2": "Pi power socket", "J3": "Pi wire pads", "J4": "Pi wire pads, I²S",
+                "J5": "radar socket", "J6": "touch socket", "J7": "echo tap pads", "J8": "left speaker socket",
+                "J9": "right speaker socket", "J10": "BME680 header", "J11": "light-sensor header"}
+MODULES["veml6030"]["name"] = "Light sensor"
+MODULES["bme680"]["name"] = "BME680 board"
+MODULES["inlet"]["name"] = "Inlet board"
+MODULES["display"]["name"] = "Display"
+
+# The steps for each lead (D572: Do, Note, Tip). Facts: harness list 2026-11-27 §1–§5.
+# Which wire goes where, its colour and its mark come from the model and are tabled under each step; they are not typed here.
+MARK = "Mark each wire at both ends as in the table."
+LEAD_STEPS = {
+    1: {"do": ["Cut one black jumper in half.", MARK, "Solder the cut ends to the inlet board's + and − pads. 90 mm free.",
+               "Mark the plug, and the board beside the 20 V socket."],
+        "note": "This plug goes on the middle of the three 2-way sockets, and goes on first. On a speaker socket it can destroy the board.",
+        "tip": "Mark before you cut: the two halves look the same."},
+    2: {"do": ["Cut one black jumper in half.", MARK, "Solder to the driver's tabs before the driver goes into its box. Connector pointing up, toward the box roof.",
+               "Run 35 mm inside the box to the 4 mm hole in its rear wall, out through it, and hot-melt round the lead in the hole. About 135 mm free."],
+        "note": "Keep it clear of the ReSpeaker USB cable while the left box slides back.",
+        "tip": "Plug and pull it with long-nose pliers on the housing's top and bottom; press it home with closed tweezers."},
+    3: {"do": ["Cut one black jumper in half.", MARK, "Solder to the driver's tabs before the driver goes into its box. Connector pointing up.",
+               "Run 35 mm inside the box to the 4 mm hole, out through it, and hot-melt round the lead in the hole. About 127 mm free."],
+        "note": "", "tip": ""},
+    4: {"do": ["Cut two black jumpers in half; take four halves.", MARK, "Solder to the radar by its printed labels. Its OUT pin stays free. 118 mm free.",
+               "Tie the lead through the slot in the holder's top plate, 10 mm behind the radar; run it over the Pi.",
+               "Mark the housing, and the board beside the radar socket."],
+        "note": "", "tip": "In service the BME680 plug comes off first, then this one."},
+    5: {"do": ["Cut two black jumpers in half; take four halves.", MARK, "Solder to the touch board's HOST pads by their labels. 87 mm free.",
+               "Mark the housing, and the board beside the touch socket."],
+        "note": "This lead also reaches the radar socket. Check the mark before you plug it.", "tip": ""},
+    6: {"do": ["Take the four strip wires in the table.", MARK, "Cut the contacts off one end and solder to the BME680 board by its labels. 93 mm free.",
+               "Push the other contacts into a 1 × 4 housing in the table's order.", "Thread the lead through the tray's slot, with a plug of 2 mm foam round it there.",
+               "Mark the housing, and the board beside the BME680 header."],
+        "note": "The header has no key. The red wire goes on pin 1.", "tip": ""},
+    7: {"do": ["Take the four strip wires in the table.", MARK, "Cut the contacts off one end and solder to the light sensor by its labels. 116 mm free.",
+               "Push the other contacts into a 1 × 4 housing in the table's order.", "Mark the housing, and the board beside the light-sensor header."],
+        "note": "The header has no key. The red wire goes on pin 1.", "tip": ""},
+    8: {"do": ["Take the three strip wires in the table.", "Cut the contacts off one end. Push each wire in from the board's back face and solder it on the door side. 70 mm free.",
+               "Push the other contacts into a 1 × 3 housing for Pi pins 1, 3 and 5."],
+        "note": "", "tip": "Solder these before the board goes on its carrier."},
+    9: {"do": ["Take the six strip wires in the table.", "Cut the contacts off one end; in from the back face, soldered on the door side. 70 mm free.",
+               "Push the other contacts into a 2 × 5 housing for Pi pins 7 to 16. Pins 7, 11, 13 and 16 stay empty."],
+        "note": "", "tip": ""},
+    10: {"do": ["Take the four strip wires in the table.", "Cut the contacts off one end; in from the back face, soldered on the door side. 70 mm free.",
+                "Push the other contacts into a 2 × 3 housing for Pi pins 35 to 40. Pins 36 and 37 stay empty."],
+         "note": "The two orange wires are not alike: I²S in goes to Pi pin 38, I²S out to pin 40.", "tip": "Tag the I²S out wire before you cut its contact."},
+    11: {"do": ["Plug the display's own lead onto its 4-pin header.", "Find its 5 V and ground wires with the meter (see Not in the records).",
+                "Splice the two strip wires in the table onto them, under heat-shrink. 180 mm in all.",
+                "Put their contacts into the lead's own 1 × 3 housing, on Pi pins 2 and 6."],
+         "note": "Pins 2 and 4 are both 5 V. Check the row before you press the housing home.", "tip": "Insulate the lead's two unused wires."},
+    13: {"do": ["Cut both housings off one 5-way cable.", MARK, "Solder one end to the left strip's pads 1 to 5.",
+                "Solder the other end to the ReSpeaker's emptied microphone pads whose left/right pad reads ground. Bridge the two ground pads. 230 mm free."],
+         "note": "Coil the spare in three turns, about 19 mm across, behind the screen plate.", "tip": "Find the pads with the meter first (see Not in the records)."},
+    14: {"do": ["Cut both housings off one 5-way cable.", MARK, "Solder one end to the right strip's pads 1 to 5.",
+                "Solder the other end to the emptied pads whose left/right pad reads 3.3 V. Bridge the two ground pads. 230 mm free."],
+         "note": "", "tip": ""},
+}
+# Ruling 2a: the sensor leads' grounds are brown strip wire with a black mark (the strip has four black wires, the leads need six grounds).
+SENSOR_GROUND_LEADS = {6, 7}

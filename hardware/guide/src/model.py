@@ -163,3 +163,42 @@ class Model:
         for x in list(parent):
             groups[find(x)].add(x)
         return list(groups.values())
+
+
+# --------------------------------------------------------------------------------------------- wire colours (D573)
+def wire_net(model, a, b):
+    for pid in (a, b):
+        kind, label, net, role = model.pin_info(pid)
+        if net:
+            return net
+    for pid in (a, b):
+        role = model.pin_info(pid)[3]
+        if role:
+            return role
+    return None
+
+
+def wire_spec(model, lead, a, b):
+    """The job of one conductor, the colour of its insulation and the colour of its mark (or None)."""
+    net = wire_net(model, a, b)
+    job = panel.NET_JOB.get(net)
+    if job is None:
+        raise SystemExit(f"lead {lead['n']}: no job for net {net} ({a} → {b})")
+    colour = panel.JOBS[job][1]
+    stock = panel.LEAD_STOCK[lead["n"]]
+    if stock == "black":
+        ins, mark = "black", (None if colour == "black" else colour)
+    elif job == "gnd" and lead["n"] in panel.SENSOR_GROUND_LEADS:
+        ins, mark = "brown", "black"
+    else:
+        ins, mark = colour, None
+    return {"net": net, "job": job, "draw": colour, "insulation": ins, "mark": mark}
+
+
+def wire_words(spec):
+    if spec["mark"]:
+        return f"{spec['insulation']} wire, {spec['mark']} mark"
+    return spec["insulation"]
+
+
+Model.wire_spec = lambda self, lead, a, b: wire_spec(self, lead, a, b)

@@ -8,18 +8,19 @@ from collections import defaultdict
 import panel
 from model import net_class
 from svgboard import View, esc, part_svg, prim_svg
+import page as PG
 
 S_MAIN, S_TOUCH, S_MIC = 12.0, 8.0, 28.0
 MARGIN = 150  # px around the main board for lead stubs and tags
 
 
 def nt(net):
-    """A net as a coloured tag."""
+    """A net in plain words, with its job's colour where it has one."""
     if not net:
-        return '<span class="nt nc">not connected</span>'
-    c = net_class(net)
+        return '<span class="muted">not connected</span>'
+    job = panel.NET_JOB.get(net)
     name = panel.NET_NAMES.get(net, net)
-    return f'<span class="nt{" f-" + c if c else ""}">{esc(name)}</span>' + (f' <span class="via">{esc(net)}</span>' if name != net else "")
+    return PG.jt(job, name) if job else esc(name)
 
 
 def hc(x):
@@ -97,7 +98,7 @@ svg.wd{{display:block;width:100%;height:auto;font-family:var(--f-body)}}
 .scale{{stroke:var(--ink);stroke-width:1.5}} .t-scale{{font:600 11px var(--f-mono);fill:var(--muted)}}
 .elec{{fill:var(--pad);fill-opacity:.35;stroke:var(--padring);stroke-dasharray:4 3}}
 .pin-used{{stroke:var(--ink);stroke-width:1}} .pin-free{{fill:var(--panel);stroke:var(--muted);stroke-width:1}}
-.t-pin{{font:12px var(--f-mono);fill:var(--ink)}} .t-pin.off{{fill:var(--muted)}} .t-pinb{{font:700 11px var(--f-mono);fill:var(--panel)}}
+.t-pin{{font:12px var(--f-mono);fill:var(--ink)}} .t-pinb.dk{{fill:var(--ink)}} .pin-used.f-aclk{{stroke:var(--ink)}} .t-pin.off{{fill:var(--muted)}} .t-pinb{{font:700 11px var(--f-mono);fill:var(--panel)}}
 .housing{{fill:none;stroke:var(--accent);stroke-width:2;stroke-dasharray:5 3}} .t-house{{font:700 12px var(--f-mono);fill:var(--accent)}}
 .part{{fill:var(--panel);stroke:var(--ink);stroke-width:1.4}} .t-part{{font:600 14px var(--f-body);fill:var(--ink)}} .t-sub{{font:12px var(--f-body);fill:var(--muted)}}
 .modbox{{fill:var(--modbg);stroke:var(--ink);stroke-width:1.4}} .modbox.unk{{stroke-dasharray:6 4}}
@@ -128,7 +129,6 @@ svg.bd.focus [data-k]{{opacity:.12;transition:opacity .18s}}
 svg.bd.focus [data-k].on{{opacity:1}}
 svg.bd.focus g.self > .body{{stroke:var(--accent);stroke-width:2.6}}
 @media (prefers-reduced-motion: reduce){{svg.bd.focus [data-k]{{transition:none}}}}
-{netcls}
 .u-case{{fill:var(--rule);fill-opacity:.45;stroke:var(--muted);stroke-width:.8}} .u-board{{fill:var(--pcb);stroke:var(--pcbline);stroke-width:1.4}}
 .u-mod{{fill:var(--modbg);fill-opacity:.9;stroke:var(--ink);stroke-width:1}} .u-lead{{fill:var(--ink);fill-opacity:.85;stroke:none}}
 .t-uname{{font:600 11px var(--f-body);fill:var(--ink);paint-order:stroke;stroke:var(--panel);stroke-width:3.5px}}
@@ -181,7 +181,7 @@ def part_panel(model, bkey, part, npads, ends):
     if maker.strip():
         h.append(f'<p class="ffit">{esc(maker)}' + (f' · DigiKey <code>{esc(dk)}</code>' if dk else "") + "</p>")
     if part["dnp"]:
-        h.append('<p class="ffit"><b>Leave empty.</b> Its pads get paste like the others.</p>')
+        h.append('<p class="ffit"><b>Leave empty.</b></p>')
     rows = []
     for pad in sorted(part["pads"], key=lambda p: (len(p["num"]), p["num"])):
         net = pad["net"]
@@ -189,7 +189,7 @@ def part_panel(model, bkey, part, npads, ends):
         joins = ""
         if pid in ends:
             l, other = ends[pid]
-            joins = f"lead {l['n']} → {esc(pin_text(model, other))}"
+            joins = f"the {esc(panel.LEAD_NAMES[l['n']])}, to {PG.end_name(model, other)}"
         elif net and net != "GND":
             others = [f"{r}.{n}" for r, n in npads[net] if r != part["ref"]]
             joins = ", ".join(others[:8]) + (" …" if len(others) > 8 else "")
@@ -207,19 +207,14 @@ def part_panel(model, bkey, part, npads, ends):
 
 
 def lead_panel(model, l):
-    h = [f'<div class="fh"><span class="fref">Lead {l["n"]}</span> {esc(l["name"])}</div>',
-         f'<div class="fsub">free length {l["free"]} mm · {esc(l["stock"])}</div>',
-         f'<p class="ffit">{esc(l["plug"])}' + (f'. {esc(l["mark"])}' if l.get("mark") else "") + "</p>"]
+    from model import wire_words
+    h = [f'<div class="fh">{esc(panel.LEAD_NAMES[l["n"]][0].upper() + panel.LEAD_NAMES[l["n"]][1:])}</div>',
+         f'<div class="fsub">{l["free"]} mm free</div>']
     rows = []
     for a, b in l["wires"]:
-        _, la, na, _ = model.pin_info(a)
-        _, lb, nb, _ = model.pin_info(b)
-        net = na or nb
-        name = l.get("wire_names", {}).get(a, "")
-        rows.append(f"<tr><td>{esc(name)}</td><td>{esc(la)}</td><td>{esc(lb)}</td><td>{nt(net)}</td></tr>")
-    h.append('<div class="tw"><table class="ft"><thead><tr><th></th><th>From</th><th>To</th><th>Net</th></tr></thead><tbody>' + "".join(rows) + "</tbody></table></div>")
-    if l.get("note"):
-        h.append(f'<p class="fnote">{esc(l["note"])}.</p>')
+        s = model.wire_spec(l, a, b)
+        rows.append(f"<tr><td>{PG.end_name(model, a)}</td><td>{PG.end_name(model, b)}</td><td>{PG.jt(s['job'], esc(wire_words(s)))}</td></tr>")
+    h.append('<div class="tw"><table class="ft"><thead><tr><th>From</th><th>To</th><th>Wire</th></tr></thead><tbody>' + "".join(rows) + "</tbody></table></div>")
     return "".join(h)
 
 
@@ -242,7 +237,7 @@ def viewer(model, bkey, view_svg, chips, items, default_html, legend=True):
     data = {"order": [i["id"] for i in items], "items": items}
     leg = ""
     if legend:
-        leg = '<ul class="legend">' + "".join(f'<li><span class="sw f-{c}"></span>{esc(n)}</li>' for c, n, *_ in panel.NET_CLASSES) + "</ul>"
+        leg = PG.wiring_legend()
     return f"""{leg}<div class="viewer bleed" data-viewer="{bkey}">
 <div class="vbar"><div class="vgroups">{chips_html}</div>
 <div class="vnav"><button type="button" data-nav="prev" aria-label="Previous">←</button><span class="vpos">all parts</span><button type="button" data-nav="next" aria-label="Next">→</button><button type="button" data-nav="all">Whole view</button></div></div>
@@ -274,7 +269,7 @@ def main_board_svg(model, ends):
     ox, oy = MARGIN, 70
     v = View(b, S_MAIN, ox, oy)
     out = [f'<svg class="wd bd" viewBox="0 0 {W + 2 * MARGIN:.0f} {H + oy + MARGIN + 40:.0f}" role="img" aria-label="Main board to scale, seen from the door side, every part on its pads">']
-    out.append(f'<text class="t-board" x="{ox}" y="30">MAIN BOARD REV 3.3</text><text class="t-boardsub" x="{ox}" y="50">seen from the door side, as it stands behind the display · 87.0 × 57.9 mm · 1 mm = {S_MAIN:g} px</text>')
+    out.append(f'<text class="t-board" x="{ox}" y="30">MAIN BOARD REV 3.3</text><text class="t-boardsub" x="{ox}" y="50">from the door side · 87.0 × 57.9 mm</text>')
     out.append(f'<path class="pcb" d="{v.path_outline()}"/>')
     for t in b["texts"]:
         if t["layer"] == "F.SilkS" and t["text"] != "+":
@@ -310,7 +305,7 @@ def main_board_svg(model, ends):
             for i, t in enumerate(row):
                 fan[id(t[2])] = (i - (len(row) - 1) / 2) * 9
         for X, Y, pad in pts:
-            c = net_class(pad["net"]) or "gnd"
+            c = panel.NET_JOB.get(pad["net"]) or "gnd"
             if side == "none":
                 continue
             o = fan[id(pad)]
@@ -318,7 +313,7 @@ def main_board_svg(model, ends):
                 d = f"M{X:.1f},{Y:.1f} L{X - 10:.1f},{Y + o:.1f} L{ox - 40:.1f},{Y + o:.1f}"
             else:
                 d = f"M{X:.1f},{Y:.1f} L{X + o:.1f},{Y + 10:.1f} L{X + o:.1f},{edge_y + 50:.1f}"
-            out.append(f'<g data-k="l:{n}"><path class="fhalo" d="{d}"/><path class="fw n-{c}" d="{d}"/></g>')
+            out.append(f'<g data-k="l:{n}"><path class="fhalo" d="{d}"/><path class="fw s-{c}" d="{d}"/></g>')
         xs = [X for X, _, _ in pts]; ys = [Y for _, Y, _ in pts]
         if side == "left":
             tx, ty = ox - 40 - 26, sum(ys) / len(ys)
@@ -326,16 +321,20 @@ def main_board_svg(model, ends):
             tx, ty = sum(xs) / len(xs), edge_y + 50 + 16
         else:  # an interior header: the tag sits just above it, the plug goes straight out toward the door
             tx, ty = sum(xs) / len(xs), min(ys) - 30
-        out.append(f'<g data-k="l:{n}"><rect class="wtag" x="{tx - 22:.1f}" y="{ty - 12:.1f}" width="44" height="24" rx="12"/>'
-                   f'<text class="t-wtag" x="{tx:.1f}" y="{ty + 4.5:.1f}" text-anchor="middle">L{n}</text></g>')
+        lab = panel.LEAD_SHORT[n]
+        tw = 12 + 7.6 * len(lab)
+        if side == "left":
+            tx = ox - 40 - tw / 2 - 4
+        out.append(f'<g data-k="l:{n}"><rect class="wtag" x="{tx - tw / 2:.1f}" y="{ty - 12:.1f}" width="{tw:.1f}" height="24" rx="12"/>'
+                   f'<text class="t-wtag" x="{tx:.1f}" y="{ty + 4.5:.1f}" text-anchor="middle">{esc(lab)}</text></g>')
     # The first plug: 20 V on the middle socket.
     j1 = model.parts[("main", "J1")]
     xs = [v.xy(p["xy"])[0] for p in j1["pads"]]
     ys = [v.xy(p["xy"])[1] for p in j1["pads"]]
     out.append(f'<rect class="first" x="{min(xs) - 34:.1f}" y="{min(ys) - 30:.1f}" width="{max(xs) - min(xs) + 68:.1f}" height="{edge_y + 84 - (min(ys) - 30):.1f}" rx="8"/>'
-               f'<text class="t-first" x="{(min(xs) + max(xs)) / 2:.1f}" y="{edge_y + 100:.1f}" text-anchor="middle">20 V · plugged first · the middle socket</text>')
+               f'<text class="t-first" x="{(min(xs) + max(xs)) / 2:.1f}" y="{edge_y + 100:.1f}" text-anchor="middle">plugged first</text>')
     # Edge names and a 10 mm scale bar.
-    out.append(f'<text class="t-edge" x="{ox + W / 2:.1f}" y="{edge_y + 128:.1f}" text-anchor="middle">BOTTOM EDGE · SOCKETS · TOWARD THE BASE</text>')
+    out.append(f'')
     out.append(f'<text class="t-edge" x="{ox - 10:.1f}" y="{oy - 10:.1f}" text-anchor="end">← RIGHT SPEAKER</text><text class="t-edge" x="{ox + W + 10:.1f}" y="{oy - 10:.1f}">LEFT SPEAKER →</text>')
     sx, sy = ox + W - 10 * S_MAIN, oy - 22
     out.append(f'<line class="scale" x1="{sx:.1f}" y1="{sy}" x2="{sx + 10 * S_MAIN:.1f}" y2="{sy}"/><text class="t-scale" x="{sx - 6:.1f}" y="{sy + 4}" text-anchor="end">10 mm</text>')
@@ -368,6 +367,9 @@ def small_board_svg(model, bkey, scale, title, sub, mirror):
 
 
 # ----------------------------------------------------------------------------------------------------- Pi header
+PI_SHORT = {"PI_3V3": "3.3 V", "PI_5V": "5 V", "GND": "ground", "I2C_SDA": "I²C data", "I2C_SCL": "I²C clock", "PI_TXD": "to radar",
+            "PI_RXD": "from radar", "PI_BCLK": "bit clock", "PI_LRCLK": "frame clock", "PI_DIN": "I²S in", "PI_DOUT": "I²S out",
+            "AMP_MUTE_N": "mute"}
 def pi_header_svg(model):
     wired = {}
     for l in model.leads:
@@ -376,24 +378,25 @@ def pi_header_svg(model):
                 if x.startswith("pi:"):
                     n = int(x[3:])
                     net = model.pin_info(y)[2] or model.pin_info(y)[3]
-                    wired[n] = (l, l.get("wire_names", {}).get(y, f"L{l['n']}"), net)
+                    wired[n] = (l, "", net)
     P, X0 = 50, 110
     yE, yO = 120, 175
-    out = ['<svg class="wd wide" viewBox="0 0 1150 300" role="img" aria-label="Raspberry Pi 5 header as fitted">',
-           '<text class="t-part" x="70" y="34">Raspberry Pi 5 header, from above</text><text class="t-sub" x="70" y="54">edge row (even pins) at the top · pin 1 is the square pad at the left of the inner row, next to the mounting hole</text>']
+    out = ['<svg class="wd wide" viewBox="0 0 1150 320" role="img" aria-label="Raspberry Pi 5 header as fitted">',
+           '<text class="t-part" x="70" y="34">Raspberry Pi 5 header, from above</text><text class="t-sub" x="70" y="54">even pins along the board edge · pin 1 square, next to the mounting hole</text>']
     for n in range(1, 41):
         col = (n - 1) // 2
         x = X0 + col * P
         y = yE if n % 2 == 0 else yO
         if n in wired:
             l, name, net = wired[n]
-            c = net_class(net) or "gnd"
-            shape = f'<rect class="pin-used c-{c}" x="{x - 13}" y="{y - 13}" width="26" height="26" rx="{2 if n == 1 else 13}"/>'
-            lab = f'<text class="t-pinb" x="{x}" y="{y + 4}" text-anchor="middle">{n}</text>'
+            c = panel.NET_JOB.get(net) or "gnd"
+            shape = f'<rect class="pin-used f-{c}" x="{x - 13}" y="{y - 13}" width="26" height="26" rx="{2 if n == 1 else 13}"/>'
+            lab = f'<text class="t-pinb{" dk" if c == "aclk" else ""}" x="{x}" y="{y + 4}" text-anchor="middle">{n}</text>'
             ty = y - 22 if n % 2 == 0 else y + 34
             tag = f'<text class="t-pin" x="{x}" y="{ty}" text-anchor="middle">{esc(name)}</text>'
-            fn = panel.PI_HEADER[n].split()[-1]
-            fy = y - 38 if n % 2 == 0 else y + 50
+            fn = PI_SHORT.get(panel.PI_PIN_ROLE.get(n), "")
+            stag = 14 if col % 2 else 0
+            fy = (y - 26 - stag) if n % 2 == 0 else (y + 38 + stag)
             tag += f'<text class="t-pin off" x="{x}" y="{fy}" text-anchor="middle" style="font-size:10px">{esc(fn)}</text>'
             out.append(f'<g data-k="l:{l["n"]}">{shape}{lab}{tag}</g>')
         else:
@@ -539,7 +542,7 @@ document.querySelectorAll('.viewer').forEach(V => {
     const p = k.find(x => x.startsWith('p:'));
     if (p && byId[p.slice(2)]) { select(p.slice(2)); return; }
     const l = k.find(x => x.startsWith('l:'));
-    if (l && byId['L' + l.slice(2)]) { select('L' + l.slice(2)); }
+    if (l) { const id = byId['L' + l.slice(2)] ? 'L' + l.slice(2) : 'U' + l.slice(2); if (byId[id]) select(id); }
   });
   V.addEventListener('keydown', ev => { if (ev.key === 'Escape') clear(); });
 });
@@ -560,7 +563,7 @@ UNIT_BODIES = [
     ("PI5_F", "Raspberry Pi 5", "module", None), ("PI5_F_cooler", "Pi cooler", "module", None),
     ("GPIO_plugA_env", "Pi housings 1, 2 and display lead", "module", None), ("GPIO_plugB_env", "Pi housing 3", "module", None),
     ("PD_5807_env", "Inlet board", "module", None), ("LD2410C_env_F", "Radar", "module", None), ("BME680_env", "BME680 board", "module", None),
-    ("VEML_env", "VEML6030 board", "module", None), ("SPK_L", "Left driver", "module", None), ("SPK_R", "Right driver", "module", None),
+    ("VEML_env", "Light sensor", "module", None), ("SPK_L", "Left driver", "module", None), ("SPK_R", "Right driver", "module", None),
     ("MAIN_J2_plug_env", "Pi power plug", "module", None), ("RESP_usbc_plug_env", "ReSpeaker USB plug", "module", None),
     ("LEAD_PIGTAIL_20V", "Lead 1", "lead", 1), ("LEAD_SPK_L", "Lead 2", "lead", 2), ("LEAD_SPK_R", "Lead 3", "lead", 3),
     ("LEAD_RADAR", "Lead 4", "lead", 4), ("LEAD_TOUCH", "Lead 5", "lead", 5), ("LEAD_BME680", "Lead 6", "lead", 6),
@@ -598,40 +601,57 @@ def unit_svg(model, pos):
     Yp = lambda y: plan_top + (yp1 - y) * k
     H = plan_top + plan_h + 40
     out = [f'<svg class="wd bd" viewBox="0 0 {W + 2 * pad:.0f} {H:.0f}" role="img" aria-label="The unit to scale from the back with the door off, and from above">']
-    out.append(f'<text class="t-board" x="{pad}" y="34">FROM THE BACK, DOOR OFF</text><text class="t-boardsub" x="{pad}" y="54">model version 91 · 1 mm = {k:g} px · the left speaker is on the right, as you stand behind the unit</text>')
-    out.append(f'<text class="t-board" x="{pad}" y="{plan_top - 40:.0f}">FROM ABOVE</text><text class="t-boardsub" x="{pad}" y="{plan_top - 20:.0f}">the screen at the top, the door at the bottom</text>')
+    out.append(f'<text class="t-board" x="{pad}" y="34">FROM BEHIND, DOOR OFF</text><text class="t-boardsub" x="{pad}" y="54">the left speaker is on your right</text>')
+    out.append(f'<text class="t-board" x="{pad}" y="{plan_top - 40:.0f}">FROM ABOVE</text><text class="t-boardsub" x="{pad}" y="{plan_top - 20:.0f}">screen at the top, door at the bottom</text>')
     kinds = {"case": "u-case", "board": "u-board", "module": "u-mod", "lead": "u-lead"}
     # Back view: draw far to near (a viewer behind the unit sees the most negative y first).
     def order_back(item):
         return -B[item[0]]["bbox"][4]
     def order_plan(item):
         return B[item[0]]["bbox"][5]
+    # Names of boards and modules, placed first so the lead names keep clear of them.
+    name_labels = []
+    for name, label, kind, lead in UNIT_BODIES:
+        if kind in ("board", "module") and name in B and name not in ("VEML_env", "MIC_strip_L_env", "MIC_strip_R_env", "RESP_top_env", "PI5_F_cooler", "MAIN_PS1", "MAIN_J2_plug_env", "RESP_usbc_plug_env", "GPIO_plugA_env", "GPIO_plugB_env"):
+            bb = B[name]["bbox"]
+            if name in ("PI5_F", "PD_5807_env", "SPK_L", "SPK_R"):
+                cx, cy, view = X((bb[0] + bb[3]) / 2), Yp((bb[1] + bb[4]) / 2) + 22, "plan"
+            elif name == "RESP_pcb":
+                cx, cy, view = X((bb[0] + bb[3]) / 2), Zb((bb[2] + bb[5]) / 2), "back"
+            elif name == "MAIN_pcb":
+                cx, cy, view = X(bb[0]) + 50, Zb(bb[5]) + 16, "back"
+            else:
+                cx, cy, view = X((bb[0] + bb[3]) / 2), Zb(bb[5]) - 4, "back"
+            name_labels.append((view, name, label, cx, cy))
+    pills = []
     for view, Yf, key, order in (("back", Zb, "back", order_back), ("plan", Yp, "plan", order_plan)):
         for name, label, kind, lead in sorted([u for u in UNIT_BODIES if u[0] in B], key=order):
             tok = f"l:{lead}" if lead else f"u:{name}"
             d = _poly_path(B[name][key], X, Yf)
             out.append(f'<path class="{kinds[kind]}{" lead-" + str(lead) if lead else ""}" data-k="{tok}" d="{d}"><title>{esc(label)}</title></path>')
-        # lead numbers at each lead's middle
+        # lead names on each lead, nudged apart where they would overlap
+        from shapely.geometry import Polygon as _P
+        placed = [(cx, cy - 4, 6.4 * len(lb) + 6) for v, _n, lb, cx, cy in name_labels if v == view]
         for name, label, kind, lead in UNIT_BODIES:
-            if lead and name in B:
-                bb = B[name]["bbox"]
-                cx = X((bb[0] + bb[3]) / 2)
-                cy = Yf((bb[2] + bb[5]) / 2) if view == "back" else Yf((bb[1] + bb[4]) / 2)
-                out.append(f'<g data-k="l:{lead}"><circle class="wtag" cx="{cx:.1f}" cy="{cy:.1f}" r="11"/><text class="t-wtag" x="{cx:.1f}" y="{cy + 4.5:.1f}" text-anchor="middle" style="font-size:11px">{lead}</text></g>')
-    # Names of boards and modules (back view only, where they stand).
-    for name, label, kind, lead in UNIT_BODIES:
-        if kind in ("board", "module") and name in B and name not in ("RESP_top_env", "PI5_F_cooler", "MAIN_PS1", "MAIN_J2_plug_env", "RESP_usbc_plug_env", "GPIO_plugA_env", "GPIO_plugB_env"):
-            bb = B[name]["bbox"]
-            view_y = Zb(bb[5]) - 4 if name not in ("PI5_F", "PD_5807_env") else None
-            if name in ("PI5_F", "PD_5807_env", "SPK_L", "SPK_R"):
-                cx, cy = X((bb[0] + bb[3]) / 2), Yp((bb[1] + bb[4]) / 2) + 22
-            elif name == "RESP_pcb":
-                cx, cy = X((bb[0] + bb[3]) / 2), Zb((bb[2] + bb[5]) / 2)
-            elif name == "MAIN_pcb":
-                cx, cy = X(bb[0]) + 50, Zb(bb[5]) + 16
-            else:
-                cx, cy = X((bb[0] + bb[3]) / 2), view_y
-            out.append(f'<text class="t-uname" data-k="u:{name}" x="{cx:.1f}" y="{cy:.1f}" text-anchor="middle">{esc(label)}</text>')
+            if not (lead and name in B):
+                continue
+            polys = [_P(p[0]) for p in B[name][key] if len(p[0]) >= 3]
+            if not polys:
+                continue
+            big = max(polys, key=lambda q: q.area)
+            rp = big.representative_point()
+            cx, cy = X(rp.x), Yf(rp.y)
+            lab = panel.LEAD_SHORT[lead]
+            tw = 10 + 6.4 * len(lab)
+            for _ in range(12):
+                if all(abs(cx - px) > (tw + pw) / 2 + 4 or abs(cy - py) > 24 for px, py, pw in placed):
+                    break
+                cy += 24
+            placed.append((cx, cy, tw))
+            pills.append(f'<g data-k="l:{lead}"><rect class="wtag" x="{cx - tw / 2:.1f}" y="{cy - 10:.1f}" width="{tw:.1f}" height="20" rx="10"/><text class="t-wtag" x="{cx:.1f}" y="{cy + 4:.1f}" text-anchor="middle" style="font-size:10.5px">{esc(lab)}</text></g>')
+    for v, name, label, cx, cy in name_labels:
+        out.append(f'<text class="t-uname" data-k="u:{name}" x="{cx:.1f}" y="{cy:.1f}" text-anchor="middle">{esc(label)}</text>')
+    out += pills
     sx = X(x1m) - 20 * k
     out.append(f'<line class="scale" x1="{sx:.1f}" y1="70" x2="{sx + 20 * k:.1f}" y2="70"/><text class="t-scale" x="{sx - 6:.1f}" y="74" text-anchor="end">20 mm</text>')
     out.append("</svg>")
@@ -642,13 +662,13 @@ def unit_viewer(model, pos):
     ends = lead_ends(model)
     items = []
     for l in model.leads:
-        items.append({"id": f"U{l['n']}", "label": f"lead {l['n']}", "tokens": [f"l:{l['n']}"], "own": [f"l:{l['n']}"], "html": lead_panel(model, l)})
+        items.append({"id": f"U{l['n']}", "label": panel.LEAD_NAMES[l['n']], "tokens": [f"l:{l['n']}"], "own": [f"l:{l['n']}"], "html": lead_panel(model, l)})
     for c in model.cables:
-        items.append({"id": f"U{c['n']}", "label": f"lead {c['n']}", "tokens": [f"l:{c['n']}"], "own": [f"l:{c['n']}"],
-                      "html": f'<div class="fh"><span class="fref">Lead {c["n"]}</span> {esc(c["name"])}</div><div class="fsub">bought as it is</div><p class="ffit">{esc(c["what"])}: {esc(c["ends"][0])} to {esc(c["ends"][1])}.</p>'})
+        items.append({"id": f"U{c['n']}", "label": panel.LEAD_NAMES[c['n']], "tokens": [f"l:{c['n']}"], "own": [f"l:{c['n']}"],
+                      "html": f'<div class="fh">{esc(panel.LEAD_NAMES[c["n"]][0].upper() + panel.LEAD_NAMES[c["n"]][1:])}</div><div class="fsub">bought</div><p class="ffit">{esc(c["what"])}.</p>'})
     items.sort(key=lambda i: int(i["id"][1:]))
-    chips = [("Leads", [(i["id"], str(int(i["id"][1:]))) for i in items])]
-    default = ('<div class="fh">The unit</div><div class="fsub">model version 91 · read-only</div>'
-               '<p class="ffit">Every board, module and lead at its place. Tap a lead, or a number, to light it in both views and see both of its ends.</p>'
-               '<p class="fnote">Grey: printed parts. Light: circuit boards. Blue-grey: bought modules. Dark: leads.</p>')
+    chips = [("Leads", [(i["id"], panel.LEAD_SHORT[int(i["id"][1:])]) for i in items])]
+    default = ('<div class="fh">The unit</div><div class="fsub">model, version 91</div>'
+               '<p class="ffit">Tap a lead to light it in both views.</p>'
+               '<p class="fnote">Grey: printed parts. Light: boards. Blue-grey: bought modules. Dark: leads.</p>')
     return viewer(model, "unit", unit_svg(model, pos), chips, items, default, legend=False)

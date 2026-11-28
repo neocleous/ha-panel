@@ -10,7 +10,7 @@ from __future__ import annotations
 import html
 import math
 
-from model import net_class
+import panel
 
 GND_LIKE = {"GND"}
 
@@ -93,8 +93,8 @@ def pad_svg(v, pad, tokens, extra_cls=""):
     w, h = pad["size"][0] * v.s, pad["size"][1] * v.s
     ang = -pad["angle"] if not v.mirror else pad["angle"]
     net = pad["net"]
-    c = net_class(net) if net else None
-    cls = "pad" + (f" pn c-{c}" if c else "") + (" pnc" if net is None else "") + (" " + extra_cls if extra_cls else "")
+    job = panel.NET_JOB.get(net) if net else None
+    cls = "pad" + (f" pj f-{job}" if job else "") + (" pnc" if net is None else "") + (" " + extra_cls if extra_cls else "")
     k = " ".join(tokens + ([f"n:{v.b['key']}:{net}"] if net else []))
     shape = pad["shape"]
     if shape == "circle" or (shape == "oval" and abs(w - h) < 0.01):

@@ -172,3 +172,31 @@ def run(model):
         fails.append(f"the 2-way sockets left to right are {[p['ref'] for p in xh2]}; J1 must be the middle one and first in the order")
     passes.append("the three 2-way sockets left to right (seen from the door) are " + ", ".join(p["ref"] for p in xh2) + "; J1 in the middle, plugged first")
     return fails, passes
+
+
+def run_colours(model):
+    """D573: one colour for one job; a black wire that is not a ground carries its job's mark; the strip's counts."""
+    from collections import Counter
+    fails, used = [], Counter()
+    jobs_by_colour = {}
+    for l in model.leads:
+        for a, b in l["wires"]:
+            s = model.wire_spec(l, a, b)
+            jobs_by_colour.setdefault(s["draw"], set()).add(s["job"])
+            if s["insulation"] == "black" and s["mark"] is None and s["job"] != "gnd":
+                fails.append(f"{panel.LEAD_NAMES[l['n']]}: an unmarked black wire that is not a ground ({a} → {b})")
+            if s["insulation"] == "black" and s["mark"] and s["mark"] != s["draw"]:
+                fails.append(f"{panel.LEAD_NAMES[l['n']]}: mark {s['mark']} is not the job colour {s['draw']}")
+            if panel.LEAD_STOCK[l["n"]] == "strip":
+                if s["insulation"] not in panel.STRIP_COLOURS:
+                    fails.append(f"{panel.LEAD_NAMES[l['n']]}: {s['insulation']} is not a colour of the strip")
+                used[s["insulation"]] += 1
+    for c, js in jobs_by_colour.items():
+        if len(js) > 1:
+            fails.append(f"colour {c} is drawn for {sorted(js)}")
+    for c, n in used.items():
+        if n > panel.STRIP_PER_COLOUR:
+            fails.append(f"the strip has {panel.STRIP_PER_COLOUR} {c} wires; the leads use {n}")
+    passes = [f"every conductor drawn in its job's colour; every black wire that is not a ground marked; strip wires used: "
+              + ", ".join(f"{c} {n}" for c, n in sorted(used.items(), key=lambda x: -x[1]))]
+    return fails, passes, used
