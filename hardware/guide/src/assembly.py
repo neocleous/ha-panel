@@ -66,7 +66,32 @@ def board_svg(model, bkey):
         r = max(pad["size"]) * scale / 2 + 3.5
         rings.append(f'<circle class="p1ring" data-k="p:{bkey}:{ref}" cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}"/>')
     s = s.replace("</svg>", "".join(rings) + "</svg>")
-    return s.replace('<svg class="wd bd"', '<svg class="wd bd asm"', 1)
+    # What each part's call-out says: its value, or a plain name where a value would not help.
+    import json
+    names = {}
+    for p in model.boards[bkey]["parts"]:
+        r = p["ref"]
+        v = NAMES.get((bkey, r)) or NAMES.get(r)
+        if v is None:
+            v = nice(str(p["value"] or ""), r).split(",")[0]
+            if bkey == "main" and r in ("C103",):
+                v += ", 50 V"
+            if bkey == "main" and r in ("C105", "C112", "C118", "C119", "C120"):
+                v += ", 25 V"
+        names[r] = v
+    s = s.replace('<svg class="wd bd"', f"<svg data-names='{esc(json.dumps(names, ensure_ascii=False))}' class=\"wd bd asm\"", 1)
+    return s
+
+
+NAMES = {("main", "U100"): "amplifier", ("main", "U1"): "protection chip", ("main", "U2"): "3.3 V regulator",
+         ("main", "D1"): "20 V surge diode", ("main", "D2"): "5 V surge diode", ("main", "F1"): "5 A fuse", ("main", "F2"): "10 A fuse",
+         ("main", "F3"): "1 A fuse", ("main", "F4"): "0.2 A resettable", ("main", "F5"): "2.6 A resettable", ("main", "L1"): "15 µH",
+         ("main", "PS1"): "5 V module", ("main", "LK1"): "wire link", ("main", "J1"): "20 V socket", ("main", "J2"): "Pi power socket",
+         ("main", "J5"): "radar socket", ("main", "J6"): "touch socket", ("main", "J8"): "left speaker", ("main", "J9"): "right speaker",
+         ("main", "J10"): "BME680 header", ("main", "J11"): "light-sensor header", ("main", "J7"): "stays empty",
+         ("main", "TP7"): "ground", ("main", "TP2"): "20 V", ("main", "TP9"): "5 V", ("main", "TP16"): "3.3 V",
+         ("touch", "U1"): "touch chip", ("mic", "U1"): "logic chip", ("mic", "MK1"): "microphone",
+         ("mic", "D1"): "protection diode", ("mic", "D2"): "protection diode", ("mic", "D3"): "protection diode"}
 
 
 POLAR = {"main": ["U100", "U1", "U2", "D1", "D2", "C5", "C6", "C7", "PS1"], "touch": ["U1"], "mic": ["U1", "D1", "D2", "D3"]}
@@ -269,11 +294,13 @@ def mic_steps(model):
 ASM_CSS = """
 svg.asm [data-k].todo{opacity:.18}
 svg.asm .p1ring{fill:none;stroke:#e0392b;stroke-width:2.2} svg.asm .p1ring.todo{opacity:0} svg.asm .pad{fill:var(--pad)!important;stroke:var(--padring)!important}
+svg.asm .cline{fill:none;stroke:var(--accent);stroke-width:1.4} svg.asm .clab{font:700 17px var(--f-body);fill:var(--ink);paint-order:stroke;stroke:var(--panel);stroke-width:4px} svg.asm .cref{fill:var(--accent)} svg.asm .cval{font-weight:500}
 svg.asm .hl{fill:none;stroke:var(--accent);stroke-width:2.6;pointer-events:none}
 svg.asm .t-ref.cur{fill:var(--accent)}
 .asm-h{margin:26px 0 10px;font:700 22px var(--f-display)}
 .asm-jump{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;background:var(--ink);color:var(--panel);font:600 15px var(--f-body);text-decoration:none;margin:0 8px 12px 0}
-.asm-stage{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:6px;margin:0 0 14px}
+.asm-stage{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:6px;margin:0 0 14px;overflow-x:auto}
+@media (max-width:700px){.asm-stage svg{min-width:900px}}
 .asm-key{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin:4px 8px 6px;font:13px var(--f-body);color:var(--muted)}
 .asm-key span{display:inline-block;width:18px;height:12px;border-radius:3px;margin-left:8px}
 .asm-key .k-box{border:2.4px solid var(--accent)} .asm-key .k-solid{background:var(--ink)} .asm-key .k-faint{background:var(--ink);opacity:.18}
@@ -303,15 +330,38 @@ document.querySelectorAll('[data-stepper]').forEach(card => {
     Object.values(boxes).forEach(b => { const r = document.createElementNS('http://www.w3.org/2000/svg', 'rect'), p = 4;
       r.setAttribute('x', b[0] - p); r.setAttribute('y', b[1] - p); r.setAttribute('width', b[2] - b[0] + 2 * p); r.setAttribute('height', b[3] - b[1] + 2 * p);
       r.setAttribute('rx', 3); r.setAttribute('class', 'hl'); hl.appendChild(r); });
-    svg.setAttribute('viewBox', full);
-    if (any && svg.clientWidth < 700) {
-      let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9;
-      els.forEach(([e, r]) => { if (cur.indexOf(r) < 0 || !e.getBBox) return; const b = e.getBBox();
-        x0 = Math.min(x0, b.x); y0 = Math.min(y0, b.y); x1 = Math.max(x1, b.x + b.width); y1 = Math.max(y1, b.y + b.height); });
-      const f = full.split(' ').map(Number), w = Math.max(x1 - x0 + 80, f[2] * 0.45), h = Math.max(y1 - y0 + 80, f[3] * 0.45);
-      const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-      svg.setAttribute('viewBox', [cx - w / 2, cy - h / 2, w, h].map(n => n.toFixed(1)).join(' '));
-    }
+    // Call-outs: each lit part gets its name in large type in a column beside the board, with a leader line.
+    const names = JSON.parse(svg.getAttribute('data-names') || '{}');
+    const pcb = svg.querySelector('path.pcb').getBBox();
+    const mid = pcb.x + pcb.width / 2, FS = 17, GAP = 25;
+    const cols = { L: [], R: [] };
+    Object.entries(boxes).forEach(([r, b]) => { const cy = (b[1] + b[3]) / 2; cols[(b[0] + b[2]) / 2 < mid ? 'L' : 'R'].push({ r, b, cy }); });
+    let lx0 = 1e9, ly0 = 1e9, lx1 = -1e9, ly1 = -1e9;
+    ['L', 'R'].forEach(side => {
+      const col = cols[side].sort((a, b) => a.cy - b.cy);
+      col.forEach((it, i) => { it.y = Math.max(it.cy, i ? col[i - 1].y + GAP : -1e9); });
+      const over = col.length ? col[col.length - 1].y - (pcb.y + pcb.height + 40) : 0;
+      if (over > 0) col.forEach(it => { it.y -= over; });
+      for (let i = col.length - 2; i >= 0; i--) col[i].y = Math.min(col[i].y, col[i + 1].y - GAP);
+      const x = side === 'L' ? pcb.x - 26 : pcb.x + pcb.width + 26;
+      col.forEach(it => {
+        const ns = 'http://www.w3.org/2000/svg', g = document.createElementNS(ns, 'g');
+        const ex = side === 'L' ? it.b[0] - 4 : it.b[2] + 4;
+        const ln = document.createElementNS(ns, 'polyline');
+        ln.setAttribute('points', `${ex},${it.cy} ${side === 'L' ? x + 8 : x - 8},${it.y} ${x},${it.y}`); ln.setAttribute('class', 'cline');
+        const t = document.createElementNS(ns, 'text');
+        t.setAttribute('x', side === 'L' ? x - 4 : x + 4); t.setAttribute('y', it.y + FS * 0.35); t.setAttribute('class', 'clab');
+        t.setAttribute('text-anchor', side === 'L' ? 'end' : 'start');
+        const a = document.createElementNS(ns, 'tspan'); a.textContent = it.r; a.setAttribute('class', 'cref');
+        const v = document.createElementNS(ns, 'tspan'); v.textContent = names[it.r] ? '  ' + names[it.r] : ''; v.setAttribute('class', 'cval');
+        if (side === 'L') { t.appendChild(v); t.insertBefore(a, v); } else { t.appendChild(a); t.appendChild(v); }
+        g.appendChild(ln); g.appendChild(t); hl.appendChild(g);
+        const bb = t.getBBox(); lx0 = Math.min(lx0, bb.x); ly0 = Math.min(ly0, bb.y); lx1 = Math.max(lx1, bb.x + bb.width); ly1 = Math.max(ly1, bb.y + bb.height);
+      });
+    });
+    const f = full.split(' ').map(Number);
+    const x0 = Math.min(f[0], lx0 - 8), y0 = Math.min(f[1], ly0 - 8), x1 = Math.max(f[0] + f[2], lx1 + 8), y1 = Math.max(f[1] + f[3], ly1 + 8);
+    svg.setAttribute('viewBox', [x0, y0, x1 - x0, y1 - y0].map(n => n.toFixed(1)).join(' '));
   }
   const mo = new MutationObserver(paint); steps.forEach(s => mo.observe(s, { attributes: true, attributeFilter: ['class'] }));
   paint();
